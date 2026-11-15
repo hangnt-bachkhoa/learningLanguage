@@ -229,7 +229,7 @@ public class LearningService : ILearningService
 
             if (desiredFormat == "VI_TO_EN")
             {
-                qType = "meaning";
+                qType = "vi_to_en";
                 prompt = $"Chọn từ tiếng Anh có nghĩa là: \"{v.MeaningVi.Trim()}\"";
                 correctOption = v.Word.Trim();
                 distractors = Select3TierDistractors(v, isWordField: true, correctOption);
@@ -237,9 +237,7 @@ public class LearningService : ILearningService
             else if (desiredFormat == "LISTENING")
             {
                 qType = "listening";
-                prompt = !string.IsNullOrWhiteSpace(v.Phonetic)
-                    ? $"Nghe phát âm hoặc nhìn phiên âm /{v.Phonetic}/ để chọn từ đúng:"
-                    : "Nghe phát âm của từ và chọn từ tiếng Anh tương ứng:";
+                prompt = "Nghe phát âm của từ và chọn từ tiếng Anh tương ứng:";
                 correctOption = v.Word.Trim();
                 distractors = Select3TierDistractors(v, isWordField: true, correctOption);
             }

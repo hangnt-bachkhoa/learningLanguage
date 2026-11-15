@@ -111,9 +111,11 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
                   @if (q.questionType === 'context') {
                     <span>📝 Ngữ cảnh TOEIC</span>
                   } @else if (q.questionType === 'listening') {
-                    <span>🎧 Nghe & Phiên âm</span>
+                    <span>🎧 Nghe & Chọn từ</span>
+                  } @else if (isViToEn(q)) {
+                    <span>🇻🇳 ➔ 🇬🇧 Chọn từ tiếng Anh</span>
                   } @else {
-                    <span>📖 Nghĩa & Phát âm</span>
+                    <span>📖 Nghĩa của từ</span>
                   }
                 </div>
 
@@ -125,18 +127,23 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
                       <p class="context-vi">"{{ q.exampleVi }}"</p>
                     }
                   } @else if (q.questionType === 'listening') {
+                    <!-- Dạng 3: LISTENING - Ẩn hoàn toàn chữ và phiên âm, chỉ để lại nút nghe âm thanh -->
                     <div class="listening-action-box">
                       <button class="speaker-large-btn" (click)="state.speak(q.word || '')" title="Bấm để nghe phát âm">
                         <span class="speaker-icon">🔊</span>
                         <span class="speaker-label">Nghe phát âm</span>
                       </button>
-                      @if (q.phonetic) {
-                        <div class="phonetic-pill">/{{ q.phonetic }}/</div>
-                      }
                     </div>
                     <h3 class="listening-prompt">{{ q.prompt }}</h3>
+                  } @else if (isViToEn(q)) {
+                    <!-- Dạng 4: VI_TO_EN - Chọn từ tiếng Anh từ nghĩa tiếng Việt -->
+                    <!-- TUYỆT ĐỐI KHÔNG HIỂN THỊ TỪ TIẾNG ANH VÀ PHIÊN ÂM VÌ ĐÓ LÀ ĐÁP ÁN! -->
+                    <div class="word-lead-box vi-lead-box">
+                      <p class="vi-prompt-sub">Chọn từ tiếng Anh có nghĩa là:</p>
+                      <h2 class="quiz-word vi-meaning-target">"{{ extractMeaning(q) }}"</h2>
+                    </div>
                   } @else {
-                    <!-- Dạng 1: Nghĩa & Từ -->
+                    <!-- Dạng 1: EN_TO_VI - Nghĩa tiếng Việt của từ tiếng Anh -->
                     <div class="word-lead-box">
                       <h2 class="quiz-word">{{ q.word }}</h2>
                       <div class="word-meta-row">
@@ -455,6 +462,35 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
 
     .word-lead-box {
       margin-bottom: 8px;
+    }
+
+    /* Dạng VI_TO_EN: Làm nổi bật nghĩa tiếng Việt cần tìm từ tiếng Anh */
+    .vi-lead-box {
+      margin: 4px auto 14px;
+      padding: 12px 18px;
+      background: rgba(120, 129, 93, 0.09);
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .vi-prompt-sub {
+      font-size: 14px;
+      color: var(--ink-muted);
+      margin: 0 0 6px;
+      font-weight: 500;
+    }
+
+    .vi-meaning-target {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0;
+      letter-spacing: -0.3px;
     }
 
     .quiz-word {
@@ -1234,7 +1270,8 @@ export class QuizComponent implements OnInit {
         word: g.word,
         phonetic: g.phonetic,
         spriteKey: g.spriteKey,
-        questionType: g.format === 'CONTEXT_CLOZE' ? 'context' : (g.format === 'LISTENING' ? 'listening' : 'meaning'),
+        questionType: g.format === 'CONTEXT_CLOZE' ? 'context' : (g.format === 'LISTENING' ? 'listening' : (g.format === 'VI_TO_EN' ? 'vi_to_en' : 'meaning')),
+        format: g.format,
         exampleEn: g.exampleEn,
         exampleVi: g.exampleVi,
         options: g.options,
@@ -1258,6 +1295,31 @@ export class QuizComponent implements OnInit {
     this.queue.set([...questions]);
     this.totalInitial.set(questions.length > 0 ? questions.length : 10);
     this.isLoading.set(false);
+  }
+
+  isViToEn(q: QuizQuestionDto | null | undefined): boolean {
+    if (!q) return false;
+    if (q.format === 'VI_TO_EN' || q.questionType === 'vi_to_en') return true;
+    if (q.prompt && (
+      q.prompt.includes('Chọn từ tiếng Anh') ||
+      q.prompt.includes('Từ nào sau đây là') ||
+      q.prompt.includes('từ tiếng Anh có nghĩa')
+    )) {
+      return true;
+    }
+    return false;
+  }
+
+  extractMeaning(q: QuizQuestionDto | null | undefined): string {
+    if (!q || !q.prompt) return '';
+    const match = q.prompt.match(/["“]([^"”]+)["”]/);
+    if (match && match[1]) {
+      return match[1];
+    }
+    return q.prompt.replace(/^Chọn từ tiếng Anh có nghĩa là:?\s*/i, '')
+                   .replace(/^Từ nào sau đây là:?\s*/i, '')
+                   .replace(/[:?]/g, '')
+                   .trim();
   }
 
   selectOption(idx: number) {

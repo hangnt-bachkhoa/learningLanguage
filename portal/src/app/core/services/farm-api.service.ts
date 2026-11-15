@@ -126,7 +126,8 @@ export interface QuizQuestionDto {
   word: string | null;
   phonetic: string | null;
   spriteKey?: string | null;
-  questionType?: 'meaning' | 'context' | 'listening';
+  questionType?: 'meaning' | 'context' | 'listening' | 'vi_to_en';
+  format?: 'EN_TO_VI' | 'CONTEXT_CLOZE' | 'LISTENING' | 'VI_TO_EN';
   exampleEn?: string | null;
   exampleVi?: string | null;
   options: string[];
