@@ -1,0 +1,1 @@
+import{Bb as n,T as e,ua as i}from"./chunk-AI7JPM4V.js";var a=class r{constructor(){this.sanitizer=e(n)}transform(t){return t?this.sanitizer.bypassSecurityTrustHtml(t):""}static{this.\u0275fac=function(m){return new(m||r)}}static{this.\u0275pipe=i({name:"safeHtml",type:r,pure:!0})}};export{a};
