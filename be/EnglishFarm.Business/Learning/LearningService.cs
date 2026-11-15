@@ -393,16 +393,16 @@ public class LearningService : ILearningService
             }
         }
 
-        // 4. Ma trận phần thưởng định mức theo hạng Sao (Algorithm 4: 3-Star Delta Reward)
-        // 3★: 2 Hạt, 2 Nước, 1 Phân bón, 50 Xu, 100 XP
-        // 2★: 1 Hạt, 2 Nước, 0 Phân bón, 35 Xu, 70 XP
-        // 1★: 1 Hạt, 1 Nước, 0 Phân bón, 20 Xu, 40 XP
+        // 4. Ma trận phần thưởng định mức theo hạng Sao (Rule 2: 10 - 20 - 30 XP Scale)
+        // 3★: 2 Hạt, 2 Nước, 1 Phân bón, 50 Xu, 30 XP
+        // 2★: 1 Hạt, 2 Nước, 0 Phân bón, 35 Xu, 20 XP
+        // 1★: 1 Hạt, 1 Nước, 0 Phân bón, 20 Xu, 10 XP
         // 0★: 0
         (int Seeds, int Water, int Fert, int Coins, int Xp) GetTierReward(int star) => star switch
         {
-            3 => (2, 2, 1, 50, 100),
-            2 => (1, 2, 0, 35, 70),
-            1 => (1, 1, 0, 20, 40),
+            3 => (2, 2, 1, 50, 30),
+            2 => (1, 2, 0, 35, 20),
+            1 => (1, 1, 0, 20, 10),
             _ => (0, 0, 0, 0, 0)
         };
 

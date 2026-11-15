@@ -1173,6 +1173,12 @@ export class QuizComponent implements OnInit {
     this.selectedOptionIdx.set(null);
     this.feedbackState.set('none');
 
+    // Chế độ Offline / Client-Side (GitHub Pages tĩnh): Tải câu hỏi từ Smart Engine ngay lập tức
+    if (!this.state.isApiConnected()) {
+      this.loadDefaultQuestions(lessonId);
+      return;
+    }
+
     this.farmApi.getQuizSession(lessonId).subscribe({
       next: (session: QuizSessionDto) => {
         if (session && session.questions && session.questions.length > 0) {
@@ -1216,21 +1222,28 @@ export class QuizComponent implements OnInit {
     const vocabs = (rawList && rawList.length > 0)
       ? rawList
       : (DEFAULT_VOCABULARIES[lessonId]?.length ? DEFAULT_VOCABULARIES[lessonId] : (DEFAULT_VOCABULARIES[1] || []));
-    const generated = this.quizEngine.generateSessionQuestions(lessonId, vocabs, this.state.userWordStats());
+    let generated = this.quizEngine.generateSessionQuestions(lessonId, vocabs, this.state.userWordStats());
 
-    const questions: QuizQuestionDto[] = generated.map(g => ({
-      id: g.id,
-      lessonId: g.lessonId,
-      prompt: g.prompt,
-      word: g.word,
-      phonetic: g.phonetic,
-      spriteKey: g.spriteKey,
-      questionType: g.format === 'CONTEXT_CLOZE' ? 'context' : (g.format === 'LISTENING' ? 'listening' : 'meaning'),
-      exampleEn: g.exampleEn,
-      exampleVi: g.exampleVi,
-      options: g.options,
-      correctOptionIndex: g.correctIndex
-    }));
+    // Bảo hiểm an toàn tuyệt đối: Nếu sinh rỗng, dùng dữ liệu mặc định từ default-quiz-questions
+    let questions: QuizQuestionDto[];
+    if (generated && generated.length > 0) {
+      questions = generated.map(g => ({
+        id: g.id,
+        lessonId: g.lessonId,
+        prompt: g.prompt,
+        word: g.word,
+        phonetic: g.phonetic,
+        spriteKey: g.spriteKey,
+        questionType: g.format === 'CONTEXT_CLOZE' ? 'context' : (g.format === 'LISTENING' ? 'listening' : 'meaning'),
+        exampleEn: g.exampleEn,
+        exampleVi: g.exampleVi,
+        options: g.options,
+        correctOptionIndex: g.correctIndex
+      }));
+    } else {
+      const fallbackSession = getDefaultQuizSession(lessonId);
+      questions = fallbackSession.questions;
+    }
 
     const lesson = this.state.lessons().find(l => l.id === lessonId);
     const title = lesson?.title || `Chủ đề ${lessonId}`;

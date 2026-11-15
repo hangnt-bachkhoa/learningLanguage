@@ -22,10 +22,136 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
           <button class="cat-tab" [class.active]="selectedCat() === 'care'" (click)="selectedCat.set('care')">Chăm sóc</button>
           <button class="cat-tab" [class.active]="selectedCat() === 'decor'" (click)="selectedCat.set('decor')">Trang trí</button>
           <button class="cat-tab" [class.active]="selectedCat() === 'bundle'" (click)="selectedCat.set('bundle')">Gói Combo</button>
+          <button class="cat-tab market-tab" [class.active]="selectedCat() === 'market'" (click)="selectedCat.set('market')">🌾 Chợ Nông Sản</button>
         </div>
       </div>
 
-      <div class="products-grid">
+      <!-- CHẾ ĐỘ 1: CHỢ NÔNG SẢN & TRAO ĐỔI VẬT TƯ (END-GAME CROP SINK) -->
+      @if (selectedCat() === 'market') {
+        <div class="market-exchange-view">
+          <!-- 1. BÁN NÔNG SẢN LẤY XU -->
+          <div class="vintage-card market-section">
+            <div class="section-title-row">
+              <span class="section-emoji">🪙</span>
+              <div>
+                <h3 class="section-heading">Thu Mua Nông Sản (Bán Lấy Xu Vàng)</h3>
+                <p class="section-sub">Bán các loại củ quả, hoa trái thu hoạch để tích lũy Xu mua sắm vật phẩm và mở rộng ô đất.</p>
+              </div>
+            </div>
+
+            <div class="crops-exchange-grid">
+              @for (crop of allHarvestedCrops(); track crop.id) {
+                @let qty = state.inventory().harvested[crop.id] || 0;
+                @let unitPrice = getCropSellPrice(crop.id);
+
+                <div class="vintage-card crop-sell-card" [class.has-stock]="qty > 0">
+                  <div class="crop-sell-header">
+                    <span class="crop-sell-icon">{{ crop.icon }}</span>
+                    <div>
+                      <h4 class="crop-sell-name">{{ crop.nameVi }}</h4>
+                      <span class="crop-sell-price">🪙 +{{ unitPrice }} Xu / củ, quả</span>
+                    </div>
+                  </div>
+
+                  <div class="crop-stock-row">
+                    <span class="stock-label">Trong kho:</span>
+                    <span class="stock-qty" [class.zero]="qty === 0"><strong>{{ qty }}</strong> nông sản</span>
+                  </div>
+
+                  <div class="crop-sell-actions">
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      [disabled]="qty < 1"
+                      (click)="state.sellHarvestedCrop(crop.id, 1)">
+                      Bán 1 (+{{ unitPrice }} Xu)
+                    </button>
+                    @if (qty > 1) {
+                      <button
+                        class="btn btn-primary btn-sm"
+                        (click)="state.sellHarvestedCrop(crop.id, qty)">
+                        Bán hết (+{{ unitPrice * qty }} Xu)
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- 2. TRẠM TRAO ĐỔI VẬT TƯ NÔNG NGHIỆP (3 CROPS -> 1 FERTILIZER / 2 CROPS -> 2 WATER) -->
+          <div class="vintage-card market-section">
+            <div class="section-title-row">
+              <span class="section-emoji">⚡</span>
+              <div>
+                <h3 class="section-heading">Trạm Trao Đổi Vật Tư (Tái Tạo Mùa Vụ)</h3>
+                <p class="section-sub">Đổi nông sản dư thừa lấy Phân bón vi sinh (thúc chín tức thì) hoặc Nước tưới cây.</p>
+              </div>
+            </div>
+
+            <div class="exchange-cards-row">
+              <!-- ĐỔI 3 NÔNG SẢN -> 1 PHÂN BÓN -->
+              <div class="vintage-card trade-recipe-card">
+                <div class="recipe-badge">⚡ Công thức VIP</div>
+                <div class="recipe-visual">
+                  <span class="recipe-icon">🌾 x3</span>
+                  <span class="recipe-arrow">➔</span>
+                  <span class="recipe-icon">⚡ x1 Phân bón</span>
+                </div>
+                <h4 class="recipe-title">Đổi 3 Nông sản lấy 1 Phân bón</h4>
+                <p class="recipe-desc">Chọn loại nông sản bạn có từ 3 củ/quả trở lên để đổi lấy phân bón tăng tốc:</p>
+
+                <div class="trade-selector-row">
+                  <select #fertSelect class="market-select">
+                    @for (crop of eligibleForFertilizer(); track crop.id) {
+                      <option [value]="crop.id">{{ crop.icon }} {{ crop.nameVi }} (có {{ state.inventory().harvested[crop.id] }})</option>
+                    }
+                  </select>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    [disabled]="eligibleForFertilizer().length === 0"
+                    (click)="state.tradeCropsForFertilizer(fertSelect.value)">
+                    Đổi ngay
+                  </button>
+                </div>
+                @if (eligibleForFertilizer().length === 0) {
+                  <span class="trade-warn-hint">⚠️ Cần ít nhất 3 củ/quả cùng loại để đổi.</span>
+                }
+              </div>
+
+              <!-- ĐỔI 2 NÔNG SẢN -> 2 NƯỚC TƯỚI -->
+              <div class="vintage-card trade-recipe-card">
+                <div class="recipe-badge blue">💧 Công thức thường</div>
+                <div class="recipe-visual">
+                  <span class="recipe-icon">🌾 x2</span>
+                  <span class="recipe-arrow">➔</span>
+                  <span class="recipe-icon">💧 x2 Nước tưới</span>
+                </div>
+                <h4 class="recipe-title">Đổi 2 Nông sản lấy 2 Lượt nước</h4>
+                <p class="recipe-desc">Chọn loại nông sản bạn có từ 2 củ/quả trở lên để bổ sung nước tưới:</p>
+
+                <div class="trade-selector-row">
+                  <select #waterSelect class="market-select">
+                    @for (crop of eligibleForWater(); track crop.id) {
+                      <option [value]="crop.id">{{ crop.icon }} {{ crop.nameVi }} (có {{ state.inventory().harvested[crop.id] }})</option>
+                    }
+                  </select>
+                  <button
+                    class="btn btn-secondary btn-sm"
+                    [disabled]="eligibleForWater().length === 0"
+                    (click)="state.tradeCropsForWater(waterSelect.value)">
+                    Đổi ngay
+                  </button>
+                </div>
+                @if (eligibleForWater().length === 0) {
+                  <span class="trade-warn-hint">⚠️ Cần ít nhất 2 củ/quả cùng loại để đổi.</span>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <!-- CHẾ ĐỘ 2: CỬA HÀNG MUA VẬT PHẨM (SEEDS, CARE, DECOR, BUNDLE) -->
+        <div class="products-grid">
         @for (prod of filteredProducts(); track prod.id) {
           @let isLocked = prod.cropKey ? !state.isCropUnlocked(prod.cropKey) : false;
           @let lockInfo = prod.cropKey ? state.getCropLockInfo(prod.cropKey) : null;
@@ -70,6 +196,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
           </div>
         }
       </div>
+      }
     </div>
   `,
   styles: [`
@@ -91,6 +218,165 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       background: var(--navy);
       color: #FFFDF9;
       border-color: var(--navy);
+    }
+    .market-tab {
+      background: #EAEFE6;
+      border-color: #BACDB0;
+      color: #385E2B;
+    }
+    .market-tab.active {
+      background: #385E2B;
+      color: #FFFDF9;
+      border-color: #385E2B;
+    }
+    .market-exchange-view {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .market-section {
+      padding: 20px;
+    }
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .section-emoji {
+      font-size: 28px;
+    }
+    .section-heading {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0;
+    }
+    .section-sub {
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      margin: 2px 0 0;
+    }
+    .crops-exchange-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .crop-sell-card {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #FAF6EE;
+      border: 1px solid var(--border);
+    }
+    .crop-sell-card.has-stock {
+      background: #FCF9F2;
+      border-color: #C8D8BE;
+    }
+    .crop-sell-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .crop-sell-icon {
+      font-size: 26px;
+    }
+    .crop-sell-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0;
+    }
+    .crop-sell-price {
+      font-size: 11.5px;
+      color: #7A5B0B;
+      font-weight: 600;
+    }
+    .crop-stock-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    .stock-qty.zero {
+      color: #A65E65;
+    }
+    .crop-sell-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .exchange-cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .trade-recipe-card {
+      padding: 18px;
+      background: #FAF6EE;
+      border: 1.5px solid var(--border);
+      position: relative;
+    }
+    .recipe-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #E8EFE3;
+      color: #385E2B;
+    }
+    .recipe-badge.blue {
+      background: #E2ECF5;
+      color: #265B82;
+    }
+    .recipe-visual {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 6px 0 10px;
+    }
+    .recipe-arrow {
+      color: var(--ink-muted);
+    }
+    .recipe-title {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0 0 4px;
+    }
+    .recipe-desc {
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-bottom: 12px;
+    }
+    .trade-selector-row {
+      display: flex;
+      gap: 8px;
+    }
+    .market-select {
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: #FFFDF8;
+      font-family: inherit;
+      font-size: 12.5px;
+      color: var(--navy);
+    }
+    .trade-warn-hint {
+      display: inline-block;
+      font-size: 11px;
+      color: #9C3848;
+      margin-top: 6px;
     }
     .products-grid {
       display: grid;
@@ -233,6 +519,17 @@ export class ShopComponent {
       cropKey: 'carrot'
     },
     {
+      id: 's_potato',
+      cat: 'seeds',
+      name: 'Hạt giống Khoai tây',
+      price: 15,
+      sprite: 's_potato',
+      duration: '2 lượt tưới',
+      usage: 'Thu hoạch khoai tây bùi bở để mở bài Daily Routines.',
+      desc: 'Củ khoai tây giàu tinh bột, cây trồng thiết yếu.',
+      cropKey: 'potato'
+    },
+    {
       id: 's_corn',
       cat: 'seeds',
       name: 'Hạt giống Bắp ngô',
@@ -253,6 +550,17 @@ export class ShopComponent {
       usage: 'Trồng giàn cà chua đỏ mọng nước.',
       desc: 'Nông sản chủ lực mùa vụ.',
       cropKey: 'tomato'
+    },
+    {
+      id: 's_strawberry',
+      cat: 'seeds',
+      name: 'Hạt giống Dâu tây',
+      price: 25,
+      sprite: 's_strawberry',
+      duration: '3 lượt tưới',
+      usage: 'Trồng dâu tây chín đỏ mọng để mở bài Food & Drinks.',
+      desc: 'Trái dâu tây thơm ngọt thanh tao mang lại giá trị cao.',
+      cropKey: 'strawberry'
     },
     {
       id: 's_sunflower',
@@ -373,6 +681,26 @@ export class ShopComponent {
       desc: 'Đèn sắt rèn cổ điển phong cách châu Âu.'
     },
     {
+      id: 'd_fence',
+      cat: 'decor',
+      name: 'Hàng rào gỗ mộc (Wooden Fence)',
+      price: 60,
+      sprite: 'bundle',
+      duration: 'Vĩnh viễn',
+      usage: 'Hàng rào gỗ thông vintage bảo vệ và làm đẹp khu vườn.',
+      desc: 'Thiết kế mộc mạc kiểu trang trại tự nhiên Bắc Âu.'
+    },
+    {
+      id: 'd_scarecrow',
+      cat: 'decor',
+      name: 'Bù nhìn rơm nông trại (Scarecrow)',
+      price: 100,
+      sprite: 'lamp',
+      duration: 'Vĩnh viễn',
+      usage: 'Biểu tượng của vụ mùa bội thu, xua chim chóc khỏi luống đất.',
+      desc: 'Bù nhìn rơm thủ công phong cách Naturalist mộc mạc.'
+    },
+    {
       id: 'b_starter',
       cat: 'bundle',
       name: 'Gói Khởi Đầu Vườn Học',
@@ -392,5 +720,42 @@ export class ShopComponent {
 
   getSprite(key: string): string {
     return SPRITES[key] || SPRITES['bundle'];
+  }
+
+  allHarvestedCrops() {
+    return [
+      { id: 'carrot', nameVi: 'Cà rốt', icon: '🥕' },
+      { id: 'potato', nameVi: 'Khoai tây', icon: '🥔' },
+      { id: 'corn', nameVi: 'Bắp ngô', icon: '🌽' },
+      { id: 'tomato', nameVi: 'Cà chua', icon: '🍅' },
+      { id: 'strawberry', nameVi: 'Dâu tây', icon: '🍓' },
+      { id: 'sunflower', nameVi: 'Hướng dương', icon: '🌻' },
+      { id: 'tulip', nameVi: 'Hoa tulip', icon: '🌷' },
+      { id: 'rose', nameVi: 'Hoa hồng', icon: '🌹' },
+      { id: 'lemon', nameVi: 'Chanh', icon: '🍋' },
+      { id: 'kiwi', nameVi: 'Kiwi', icon: '🥝' },
+      { id: 'mango', nameVi: 'Xoài', icon: '🥭' },
+      { id: 'apple', nameVi: 'Táo', icon: '🍎' },
+      { id: 'cherry', nameVi: 'Cherry', icon: '🍒' }
+    ];
+  }
+
+  getCropSellPrice(cropId: string): number {
+    const prices: Record<string, number> = {
+      carrot: 5, potato: 8, corn: 10, tomato: 12, strawberry: 15,
+      sunflower: 14, tulip: 16, rose: 18, lemon: 18, kiwi: 22,
+      mango: 25, apple: 28, cherry: 35
+    };
+    return prices[cropId] || 8;
+  }
+
+  eligibleForFertilizer() {
+    const harvested = this.state.inventory().harvested;
+    return this.allHarvestedCrops().filter(c => (harvested[c.id] || 0) >= 3);
+  }
+
+  eligibleForWater() {
+    const harvested = this.state.inventory().harvested;
+    return this.allHarvestedCrops().filter(c => (harvested[c.id] || 0) >= 2);
   }
 }

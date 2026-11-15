@@ -20,7 +20,10 @@ import { GameStateService } from '../../../core/services/game-state.service';
         </h1>
       </div>
       <div class="topbar-right">
-        <div class="stat-pill">★ {{ state.xp() }}<span class="hide-mobile"> XP</span></div>
+        <div class="stat-pill level-pill" title="Cấp độ hiện tại">Lv.{{ state.level() }}</div>
+        <div class="stat-pill" title="Tiến độ thăng cấp: {{ state.currentXp() }}/{{ state.xpRequired() }} XP (Tối đa 1000 XP)">
+          ★ {{ state.currentXp() }}/{{ state.xpRequired() }}<span class="hide-mobile"> XP</span>
+        </div>
         <div class="stat-pill gold">🪙 {{ state.coins() }}<span class="hide-mobile"> Xu</span></div>
         <button class="cart-btn" (click)="openCart.emit()" title="Mở giỏ hàng">
           <span>🛒</span>
@@ -113,7 +116,7 @@ import { GameStateService } from '../../../core/services/game-state.service';
       border-radius: 999px;
     }
 
-    /* ================= RESPONSIVE MOBILE (< 600px) ================= */
+    /* ================= RESPONSIVE MOBILE (< 600px & < 480px) ================= */
     @media (max-width: 600px) {
       .topbar {
         height: 52px;
@@ -135,6 +138,40 @@ import { GameStateService } from '../../../core/services/game-state.service';
       .cart-btn {
         padding: 4px 8px;
         font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topbar {
+        padding: 0 8px;
+      }
+      .topbar-left {
+        gap: 8px;
+      }
+      .nav-toggle-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 17px;
+      }
+      .page-title {
+        font-size: 14px;
+      }
+      .page-title .title-text {
+        max-width: 95px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .topbar-right {
+        gap: 4px;
+      }
+      .stat-pill {
+        padding: 3px 5px;
+        font-size: 10px;
+      }
+      .cart-btn {
+        padding: 3px 6px;
+        font-size: 12px;
       }
     }
   `]

@@ -34,6 +34,26 @@ export const CROP_CATALOG: CropCatalog[] = [
     requiredLessonTitle: 'Fruits & Vegetables'
   },
   {
+    id: 'potato',
+    nameVi: 'Khoai tây',
+    seedNameVi: 'Hạt giống Khoai tây',
+    shopId: 's_potato',
+    price: 15,
+    duration: '3 phút (2 lượt tưới)',
+    usage: 'Trồng củ khoai tây bùi bở để mở khóa bài học Daily Routines.',
+    desc: 'Củ khoai tây giàu tinh bột, cây trồng kinh tế mộc mạc và thiết yếu.',
+    initialSeeds: 3,
+    initialHarvested: 3,
+    matureSvg: FARM_ASSETS.readyPotato,
+    emblemSvg: `<ellipse cx="8" cy="8" rx="3.5" ry="2.5" fill="#C99E5C"/><circle cx="7" cy="7.5" r="0.6" fill="#7A5624"/>`,
+    tier: 1,
+    tierNameVi: 'Hạng I - Mầm non',
+    requiredLevel: 1,
+    requiredXp: 30,
+    requiredLessonId: 2,
+    requiredLessonTitle: 'Animals'
+  },
+  {
     id: 'corn',
     nameVi: 'Bắp ngô',
     seedNameVi: 'Hạt giống Ngô',
@@ -75,6 +95,26 @@ export const CROP_CATALOG: CropCatalog[] = [
     requiredXp: 100,
     requiredLessonId: 5,
     requiredLessonTitle: 'Kinh doanh (Business)'
+  },
+  {
+    id: 'strawberry',
+    nameVi: 'Dâu tây',
+    seedNameVi: 'Hạt giống Dâu tây',
+    shopId: 's_strawberry',
+    price: 25,
+    duration: '6 phút (3 lượt tưới)',
+    usage: 'Gieo hạt dâu tây chín đỏ mọng để mở khóa bài Food & Drinks.',
+    desc: 'Những trái dâu tây đỏ tươi chua ngọt hấp dẫn, giá trị cao.',
+    initialSeeds: 3,
+    initialHarvested: 2,
+    matureSvg: FARM_ASSETS.readyStrawberry,
+    emblemSvg: `<path d="M5 6 C5 5 11 5 11 6 C10 9 8 11 8 11 C8 11 6 9 5 6 Z" fill="#E62E43"/><circle cx="8" cy="8" r="0.5" fill="#FFDF73"/>`,
+    tier: 2,
+    tierNameVi: 'Hạng II - Hoa trái',
+    requiredLevel: 2,
+    requiredXp: 80,
+    requiredLessonId: 4,
+    requiredLessonTitle: 'Food & Drinks'
   },
   {
     id: 'sunflower',

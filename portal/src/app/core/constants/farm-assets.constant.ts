@@ -278,6 +278,35 @@ export const FARM_ASSETS = {
     </svg>
   `,
 
+  // 12. KHOAI TÂY (POTATO)
+  readyPotato: `
+    <svg viewBox="0 0 90 90" width="100%" height="100%">
+      <ellipse cx="45" cy="74" rx="16" ry="6" fill="#382210"/>
+      <ellipse cx="45" cy="54" rx="18" ry="14" fill="#C99E5C" stroke="#7A5624" stroke-width="2.5"/>
+      <ellipse cx="40" cy="50" rx="2" ry="1.2" fill="#7A5624"/>
+      <ellipse cx="50" cy="56" rx="1.8" ry="1" fill="#7A5624"/>
+      <ellipse cx="44" cy="60" rx="1.5" ry="0.8" fill="#7A5624"/>
+      <path d="M45 40 C40 32 36 30 42 22 C48 26 46 34 45 40 Z" fill="#6DA838" stroke="#375C16" stroke-width="1.8"/>
+      <path d="M45 40 C50 32 54 30 48 22 C42 26 44 34 45 40 Z" fill="#84C447" stroke="#375C16" stroke-width="1.8"/>
+    </svg>
+  `,
+
+  // 13. DÂU TÂY (STRAWBERRY)
+  readyStrawberry: `
+    <svg viewBox="0 0 90 90" width="100%" height="100%">
+      <ellipse cx="45" cy="74" rx="16" ry="6" fill="#382210"/>
+      <path d="M30 40 C28 28 62 28 60 40 C58 56 48 68 45 70 C42 68 32 56 30 40 Z" fill="#E62E43" stroke="#871020" stroke-width="2.5"/>
+      <ellipse cx="38" cy="40" rx="1.2" ry="1.8" fill="#FFDF73"/>
+      <ellipse cx="52" cy="40" rx="1.2" ry="1.8" fill="#FFDF73"/>
+      <ellipse cx="45" cy="48" rx="1.2" ry="1.8" fill="#FFDF73"/>
+      <ellipse cx="39" cy="54" rx="1" ry="1.5" fill="#FFDF73"/>
+      <ellipse cx="51" cy="54" rx="1" ry="1.5" fill="#FFDF73"/>
+      <ellipse cx="45" cy="62" rx="0.9" ry="1.2" fill="#FFDF73"/>
+      <polygon points="45,30 35,26 41,33 45,34 49,33 55,26 45,30" fill="#4B8C24" stroke="#264A10" stroke-width="1.5"/>
+      <path d="M45 30 Q47 20 44 14" stroke="#264A10" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  `,
+
   // Ô ĐẤT BỊ KHÓA (PADLOCK ĐỒNG CỔ ĐIỂN)
   lockedPadlock: `
     <svg viewBox="0 0 70 70" width="100%" height="100%">

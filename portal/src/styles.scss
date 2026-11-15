@@ -178,6 +178,13 @@ input, textarea {
   border-color: #ECD8A5;
 }
 
+.stat-pill.level-pill {
+  background: rgba(38, 56, 71, 0.08);
+  color: var(--navy);
+  font-weight: 800;
+  border-color: var(--navy-light);
+}
+
 .archival-divider {
   display: flex;
   align-items: center;

@@ -1,6 +1,6 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameStateService } from '../../core/services/game-state.service';
+import { GameStateService, getPlotUnlockRequirement, PlotUnlockRequirement } from '../../core/services/game-state.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { FarmPlot } from '../../core/models/game.models';
@@ -220,6 +220,61 @@ import { FarmPlot } from '../../core/models/game.models';
               </div>
             </div>
           }
+        </div>
+      }
+
+      <!-- MODAL MỞ KHÓA Ô ĐẤT #5 - #9 (RULE 5) -->
+      @if (selectedLockedPlotIndex() !== null) {
+        @let req = getPlotReq();
+        <div class="unlock-plot-backdrop" (click)="selectedLockedPlotIndex.set(null)"></div>
+        <div class="vintage-card unlock-plot-modal">
+          <div class="modal-header">
+            <h3 class="modal-title">🔓 Mở Khóa Ô Đất #{{ (selectedLockedPlotIndex() || 0) + 1 }}</h3>
+            <button class="modal-close-btn" (click)="selectedLockedPlotIndex.set(null)">✕</button>
+          </div>
+          <p class="modal-desc">Chọn 1 trong 2 phương thức để mở rộng diện tích canh tác:</p>
+
+          <div class="unlock-options-stack">
+            <!-- Cách 1: Bằng Xu -->
+            <div class="unlock-option-card">
+              <div class="option-info">
+                <span class="option-badge coin-badge">Cách 1: Tiền tệ</span>
+                <h4 class="option-name">🪙 {{ req?.coinPrice }} Xu</h4>
+                <p class="option-hint">Hiện có: {{ state.coins() }} Xu</p>
+              </div>
+              <button
+                class="btn btn-primary btn-sm"
+                [disabled]="state.coins() < (req?.coinPrice || 0)"
+                (click)="unlockWithCoins()">
+                Mở bằng Xu
+              </button>
+            </div>
+
+            <!-- Cách 2: Bằng Level + Nông sản -->
+            <div class="unlock-option-card">
+              <div class="option-info">
+                <span class="option-badge farm-badge">Cách 2: Nông nghiệp</span>
+                <h4 class="option-name">
+                  Lv.{{ req?.minLevel }}
+                  @for (c of req?.requiredCrops; track c.cropId) {
+                    + {{ c.qty }}x {{ c.cropNameVi }}
+                  }
+                </h4>
+                <p class="option-hint">
+                  Level: Lv.{{ state.level() }}/{{ req?.minLevel }}
+                  @for (c of req?.requiredCrops; track c.cropId) {
+                    · {{ c.cropNameVi }}: {{ state.inventory().harvested[c.cropId] || 0 }}/{{ c.qty }}
+                  }
+                </p>
+              </div>
+              <button
+                class="btn btn-secondary btn-sm"
+                [disabled]="!canUnlockPlotWithCrops(req)"
+                (click)="unlockWithCrops()">
+                Mở bằng Nông sản
+              </button>
+            </div>
+          </div>
         </div>
       }
     </div>
@@ -926,6 +981,97 @@ import { FarmPlot } from '../../core/models/game.models';
         height: 48px;
       }
     }
+
+    /* Modal Mở Khóa Ô Đất #5 - #9 (Rule 5) */
+    .unlock-plot-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 32, 44, 0.55);
+      backdrop-filter: blur(3px);
+      z-index: 210;
+    }
+    .unlock-plot-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 440px;
+      z-index: 220;
+      padding: 22px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0;
+    }
+    .modal-close-btn {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .modal-desc {
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      margin-bottom: 14px;
+    }
+    .unlock-options-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .unlock-option-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #FAF6EF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .option-info {
+      flex: 1;
+    }
+    .option-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 3px;
+    }
+    .coin-badge {
+      background: #FFF3D6;
+      color: #7A5B0B;
+    }
+    .farm-badge {
+      background: #E8EFE3;
+      color: #385E2B;
+    }
+    .option-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0 0 2px;
+    }
+    .option-hint {
+      font-size: 11px;
+      color: var(--ink-muted);
+      margin: 0;
+    }
   `]
 })
 export class FarmComponent {
@@ -934,11 +1080,14 @@ export class FarmComponent {
   soilBackground = FARM_ASSETS.tilledSoil;
 
   activeTab = signal<'garden' | 'catalog'>('garden');
+  selectedLockedPlotIndex = signal<number | null>(null);
 
   seedOptions = [
     { id: 'carrot', name: 'Cà rốt', icon: '🥕' },
+    { id: 'potato', name: 'Khoai tây', icon: '🥔' },
     { id: 'corn', name: 'Bắp ngô', icon: '🌽' },
     { id: 'tomato', name: 'Cà chua', icon: '🍅' },
+    { id: 'strawberry', name: 'Dâu tây', icon: '🍓' },
     { id: 'sunflower', name: 'Hướng dương', icon: '🌻' },
     { id: 'rose', name: 'Hoa hồng', icon: '🌹' },
     { id: 'tulip', name: 'Hoa tulip', icon: '🌷' },
@@ -1094,8 +1243,8 @@ export class FarmComponent {
 
   getCropIcon(cropKey?: string): string {
     const icons: Record<string, string> = {
-      carrot: '🥕', corn: '🌽', tomato: '🍅',
-      sunflower: '🌻', rose: '🌹', tulip: '🌷',
+      carrot: '🥕', potato: '🥔', corn: '🌽', tomato: '🍅',
+      strawberry: '🍓', sunflower: '🌻', rose: '🌹', tulip: '🌷',
       mango: '🥭', kiwi: '🥝', lemon: '🍋',
       apple: '🍎', cherry: '🍒'
     };
@@ -1104,8 +1253,8 @@ export class FarmComponent {
 
   getCropName(cropKey?: string): string {
     const names: Record<string, string> = {
-      carrot: 'Cà rốt', corn: 'Bắp', tomato: 'Cà chua',
-      sunflower: 'H.Dương', rose: 'Hoa hồng', tulip: 'Tulip',
+      carrot: 'Cà rốt', potato: 'Khoai tây', corn: 'Bắp ngô', tomato: 'Cà chua',
+      strawberry: 'Dâu tây', sunflower: 'H.Dương', rose: 'Hoa hồng', tulip: 'Tulip',
       mango: 'Xoài', kiwi: 'Kiwi', lemon: 'Chanh',
       apple: 'Táo', cherry: 'Cherry'
     };
@@ -1123,6 +1272,8 @@ export class FarmComponent {
     }
     if (status === 'ready') {
       switch (cropKey) {
+        case 'potato': return this.assets.readyPotato;
+        case 'strawberry': return this.assets.readyStrawberry;
         case 'corn': return this.assets.readyCorn;
         case 'tomato': return this.assets.readyTomato;
         case 'sunflower': return this.assets.readySunflower;
@@ -1141,6 +1292,34 @@ export class FarmComponent {
     return '';
   }
 
+  getPlotReq(): PlotUnlockRequirement | null {
+    const idx = this.selectedLockedPlotIndex();
+    if (idx === null) return null;
+    return getPlotUnlockRequirement(idx);
+  }
+
+  canUnlockPlotWithCrops(req: PlotUnlockRequirement | null): boolean {
+    if (!req) return false;
+    if (this.state.level() < req.minLevel) return false;
+    return req.requiredCrops.every(c => (this.state.inventory().harvested[c.cropId] || 0) >= c.qty);
+  }
+
+  unlockWithCoins() {
+    const idx = this.selectedLockedPlotIndex();
+    if (idx === null) return;
+    if (this.state.unlockPlotWithCoins(idx)) {
+      this.selectedLockedPlotIndex.set(null);
+    }
+  }
+
+  unlockWithCrops() {
+    const idx = this.selectedLockedPlotIndex();
+    if (idx === null) return;
+    if (this.state.unlockPlotWithCrops(idx)) {
+      this.selectedLockedPlotIndex.set(null);
+    }
+  }
+
   totalSeeds(): number {
     return Object.values(this.state.inventory().seeds).reduce((a, b) => a + b, 0);
   }
@@ -1153,6 +1332,12 @@ export class FarmComponent {
     const plot = this.state.plots()[index];
     if (!plot) return;
     const status = (plot.status || '').toLowerCase();
+
+    // 0. Nếu ô đất bị khóa -> mở modal lựa chọn mở khóa (Rule 5)
+    if (status === 'locked') {
+      this.selectedLockedPlotIndex.set(index);
+      return;
+    }
 
     // 1. Nếu ô đất chín -> bấm vào là thu hoạch ngay
     if (status === 'ready') {

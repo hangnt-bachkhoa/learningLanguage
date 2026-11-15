@@ -44,6 +44,50 @@ export interface UserRewardState {
   lastBonusRollDate: string;    // YYYY-MM-DD cho reset hàng ngày
 }
 
+export interface UserProgression {
+  level: number;                 // starts at 1
+  currentXp: number;             // 0..1000, resets to 0 on level up
+  coins: number;
+  pityFertilizerMisses: number;
+  pitySeedMisses: number;
+  dailyBonusRollsUsed: number;
+  lastBonusRollDate: string;     // YYYY-MM-DD
+}
+
+export interface UnlockRequirement {
+  minLevel: number;
+  requiredCrops: { cropId: string; qty: number; cropNameVi?: string }[];
+}
+
+export function xpRequiredForLevel(level: number): number {
+  return Math.min(1000, 50 + (level - 1) * 50);
+}
+
+export function applyXpWithReset(level: number, currentXp: number, xpGained: number) {
+  const MAX_XP = 1000;
+  let nextLevel = level;
+  let nextXp = Math.min(MAX_XP, currentXp + xpGained);
+  let leveledUp = false;
+
+  const threshold = xpRequiredForLevel(nextLevel);
+  if (nextXp >= threshold) {
+    nextLevel += 1;
+    nextXp = 0; // Reset XP to 0 upon leveling up
+    leveledUp = true;
+  }
+
+  return { level: nextLevel, currentXp: nextXp, xpRequired: xpRequiredForLevel(nextLevel), leveledUp };
+}
+
+export function canUnlockTarget(
+  userLevel: number,
+  harvested: Record<string, number>,
+  req: UnlockRequirement
+): boolean {
+  if (userLevel < req.minLevel) return false;
+  return req.requiredCrops.every(c => (harvested[c.cropId] ?? 0) >= c.qty);
+}
+
 export interface BalancedQuizRewardResult {
   newStars: number;
   updatedBestStars: number;
@@ -72,11 +116,12 @@ export function calculateBalancedQuizReward(
   const ratio = totalQuestions > 0 ? firstTryCorrect / totalQuestions : 0;
   const newStars = ratio === 1 ? 3 : ratio >= 0.8 ? 2 : 1;
 
+  // Rule 2: 3-Star Delta Rewards (10 - 20 - 30 XP Scale, 20 - 35 - 50 Coins)
   const tierMap: Record<number, { xp: number; coins: number }> = {
     0: { xp: 0, coins: 0 },
-    1: { xp: 40, coins: 20 },
-    2: { xp: 70, coins: 35 },
-    3: { xp: 100, coins: 50 }
+    1: { xp: 10, coins: 20 },
+    2: { xp: 20, coins: 35 },
+    3: { xp: 30, coins: 50 }
   };
 
   let xpGained = 0;

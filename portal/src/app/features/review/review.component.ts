@@ -1033,7 +1033,7 @@ export class ReviewComponent implements OnInit {
     this.api.completeReview(lessonId, hard, good, easy).subscribe({
       next: (res: CompleteReviewResultDto) => {
         // Tự động cộng Nước tưới, Phân bón, Xu & XP
-        this.state.xp.update(x => x + res.rewardXp);
+        this.state.addXp(res.rewardXp);
         this.state.coins.update(c => c + res.rewardCoins);
         this.state.inventory.update(inv => ({
           ...inv,
@@ -1047,7 +1047,7 @@ export class ReviewComponent implements OnInit {
       },
       error: () => {
         // Fallback cập nhật offline
-        this.state.xp.update(x => x + xpGained);
+        this.state.addXp(xpGained);
         this.state.coins.update(c => c + 20);
         this.state.inventory.update(inv => ({
           ...inv,

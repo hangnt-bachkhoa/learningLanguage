@@ -94,9 +94,15 @@ import { LessonDto } from '../../core/services/farm-api.service';
                   </div>
                 }
               } @else {
+                @let check = state.canUnlockLesson(lesson.id);
                 <div class="status-badge status-locked">
                   <span class="lock-icon">🔒</span>
-                  <span>Cần {{ lesson.requiredCropQty }}x {{ lesson.requiredCropName || 'Nông sản' }}</span>
+                  <span>
+                    Lv.{{ check.req.minLevel }}
+                    @for (c of check.req.requiredCrops; track c.cropId) {
+                      · {{ c.qty }}x {{ c.cropNameVi }}
+                    }
+                  </span>
                 </div>
               }
             </div>
@@ -113,17 +119,14 @@ import { LessonDto } from '../../core/services/farm-api.service';
                   </button>
                 </div>
               } @else {
-                @let cropKey = lesson.requiredCropId === 1 ? 'carrot' : lesson.requiredCropId === 2 ? 'corn' : 'tomato';
-                @let currentHarvested = state.inventory().harvested[cropKey] || 0;
-                @let canUnlock = currentHarvested >= (lesson.requiredCropQty || 2);
-
-                @if (canUnlock) {
+                @let check = state.canUnlockLesson(lesson.id);
+                @if (check.canUnlock) {
                   <button class="btn btn-unlock-now" (click)="state.unlockLessonWithCrops(lesson.id)">
-                    <span>🔓 Mở khóa ngay (-{{ lesson.requiredCropQty }} {{ lesson.requiredCropName || 'Nông sản' }})</span>
+                    <span>🔓 Mở khóa ngay (Đủ Level & Nông sản)</span>
                   </button>
                 } @else {
                   <div class="crop-hint">
-                    <span>Thu hoạch {{ lesson.requiredCropName || 'Nông sản' }} để mở (Có: {{ currentHarvested }}/{{ lesson.requiredCropQty }})</span>
+                    <span>{{ check.missingReasons.join(' · ') }}</span>
                   </div>
                 }
               }

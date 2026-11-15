@@ -4,9 +4,70 @@ import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryIte
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
 import { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
-import { UserWordStat, UserLessonProgress, UserRewardState, calculateBalancedQuizReward, BalancedQuizRewardResult } from './quiz-engine.service';
+import {
+  UserWordStat,
+  UserLessonProgress,
+  UserRewardState,
+  calculateBalancedQuizReward,
+  BalancedQuizRewardResult,
+  UserProgression,
+  UnlockRequirement,
+  xpRequiredForLevel,
+  applyXpWithReset,
+  canUnlockTarget
+} from './quiz-engine.service';
 
 export { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
+export { xpRequiredForLevel, applyXpWithReset, canUnlockTarget } from './quiz-engine.service';
+
+export interface PlotUnlockRequirement {
+  index: number;
+  coinPrice: number;
+  minLevel: number;
+  requiredCrops: { cropId: string; qty: number; cropNameVi: string }[];
+}
+
+export function getPlotUnlockRequirement(plotIndex: number): PlotUnlockRequirement {
+  switch (plotIndex) {
+    case 4: // Plot #5
+      return {
+        index: 4,
+        coinPrice: 30,
+        minLevel: 2,
+        requiredCrops: [{ cropId: 'corn', qty: 2, cropNameVi: 'Bắp ngô' }]
+      };
+    case 5: // Plot #6
+      return {
+        index: 5,
+        coinPrice: 50,
+        minLevel: 3,
+        requiredCrops: [{ cropId: 'tomato', qty: 3, cropNameVi: 'Cà chua' }]
+      };
+    case 6: // Plot #7
+      return {
+        index: 6,
+        coinPrice: 80,
+        minLevel: 4,
+        requiredCrops: [{ cropId: 'strawberry', qty: 2, cropNameVi: 'Dâu tây' }]
+      };
+    case 7: // Plot #8
+      return {
+        index: 7,
+        coinPrice: 120,
+        minLevel: 5,
+        requiredCrops: [{ cropId: 'apple', qty: 2, cropNameVi: 'Táo' }]
+      };
+    case 8: // Plot #9
+      return {
+        index: 8,
+        coinPrice: 160,
+        minLevel: 6,
+        requiredCrops: [{ cropId: 'sunflower', qty: 2, cropNameVi: 'Hoa hướng dương' }]
+      };
+    default:
+      return { index: plotIndex, coinPrice: 20, minLevel: 1, requiredCrops: [] };
+  }
+}
 
 export interface CropLockInfo {
   isUnlocked: boolean;
@@ -53,35 +114,52 @@ export class GameStateService {
     this.isMobileSidebarOpen.set(true);
   }
 
-  // Player Stats
-  xp = signal<number>(180);
-  coins = signal<number>(120);
-  level = signal<number>(2);
+  // Player Stats & Leveling (Rule 3: Reset XP on Level-Up, Cap at 1000 XP)
+  level = signal<number>(1);
+  currentXp = signal<number>(0);
+  coins = signal<number>(100);
+  xpRequired = computed(() => xpRequiredForLevel(this.level()));
+
+  get xp() {
+    return this.currentXp;
+  }
+
+  addXp(gainedXp: number) {
+    if (gainedXp <= 0) return;
+    const res = applyXpWithReset(this.level(), this.currentXp(), gainedXp);
+    this.level.set(res.level);
+    this.currentXp.set(res.currentXp);
+    if (res.leveledUp) {
+      this.showToast(`🎉 CHÚC MỪNG! Bạn đã thăng cấp Level ${res.level}!`);
+    }
+  }
 
   // Cart
   cart = signal<CartItem[]>([]);
   cartCount = computed(() => this.cart().reduce((sum, item) => sum + item.qty, 0));
   cartTotal = computed(() => this.cart().reduce((sum, item) => sum + item.item.price * item.qty, 0));
 
-  // Farm Plots (3x3 Flat Grid)
+  // Farm Plots (3x3 Flat Grid: #1-#4 mở sẵn, #5-#9 khóa cần mở bằng Coins hoặc Level + Nông sản)
   plots = signal<FarmPlot[]>([
-    { id: 1, index: 0, status: 'seeded', crop: 'carrot', isWatered: true, growthProgress: 10 },
-    { id: 2, index: 1, status: 'growing', crop: 'carrot', isWatered: true, growthProgress: 35 },
-    { id: 3, index: 2, status: 'growing', crop: 'carrot', isWatered: true, growthProgress: 75 },
+    { id: 1, index: 0, status: 'seeded', crop: 'carrot', isWatered: true, growthProgress: 15 },
+    { id: 2, index: 1, status: 'growing', crop: 'carrot', isWatered: true, growthProgress: 45 },
+    { id: 3, index: 2, status: 'growing', crop: 'carrot', isWatered: true, growthProgress: 85 },
     { id: 4, index: 3, status: 'ready', crop: 'carrot', isWatered: true, growthProgress: 100 },
-    { id: 5, index: 4, status: 'ready', crop: 'carrot', isWatered: true, growthProgress: 100 },
-    { id: 6, index: 5, status: 'empty', isWatered: false, growthProgress: 0 },
-    { id: 7, index: 6, status: 'empty', isWatered: false, growthProgress: 0 },
-    { id: 8, index: 7, status: 'empty', isWatered: false, growthProgress: 0 },
-    { id: 9, index: 8, status: 'empty', isWatered: false, growthProgress: 0 }
+    { id: 5, index: 4, status: 'locked', isWatered: false, growthProgress: 0 },
+    { id: 6, index: 5, status: 'locked', isWatered: false, growthProgress: 0 },
+    { id: 7, index: 6, status: 'locked', isWatered: false, growthProgress: 0 },
+    { id: 8, index: 7, status: 'locked', isWatered: false, growthProgress: 0 },
+    { id: 9, index: 8, status: 'locked', isWatered: false, growthProgress: 0 }
   ]);
 
   // Inventory
   inventory = signal<UserInventory>({
     seeds: {
       carrot: 3,
+      potato: 3,
       corn: 2,
       tomato: 2,
+      strawberry: 3,
       sunflower: 3,
       rose: 3,
       tulip: 3,
@@ -92,20 +170,22 @@ export class GameStateService {
       cherry: 3
     },
     harvested: {
-      carrot: 2,
-      corn: 1,
-      tomato: 0,
-      sunflower: 0,
+      carrot: 3,
+      potato: 3,
+      corn: 2,
+      tomato: 2,
+      strawberry: 1,
+      sunflower: 1,
       rose: 0,
       tulip: 0,
       mango: 0,
       kiwi: 0,
       lemon: 0,
-      apple: 0,
+      apple: 1,
       cherry: 0
     },
     care: { water: 15, fertilizer: 5 },
-    decor: { lamp: 0 }
+    decor: { lamp: 0, fence: 0, scarecrow: 0 }
   });
 
   // Lessons từ Backend / Fallback Offline
@@ -223,9 +303,10 @@ export class GameStateService {
       const data = {
         version: 1,
         savedAt: new Date().toISOString(),
-        xp: this.xp(),
-        coins: this.coins(),
         level: this.level(),
+        currentXp: this.currentXp(),
+        xp: this.currentXp(),
+        coins: this.coins(),
         plots: this.plots(),
         inventory: this.inventory(),
         lessons: this.lessons(),
@@ -254,11 +335,23 @@ export class GameStateService {
       if (raw) {
         const data = JSON.parse(raw);
         if (data && typeof data === 'object') {
-          if (typeof data.xp === 'number') this.xp.set(data.xp);
-          if (typeof data.coins === 'number') this.coins.set(data.coins);
           if (typeof data.level === 'number') this.level.set(data.level);
+          if (typeof data.currentXp === 'number') {
+            this.currentXp.set(Math.min(1000, data.currentXp));
+          } else if (typeof data.xp === 'number') {
+            const req = xpRequiredForLevel(this.level());
+            this.currentXp.set(Math.min(1000, data.xp >= req ? 0 : data.xp));
+          }
+          if (typeof data.coins === 'number') this.coins.set(data.coins);
           if (Array.isArray(data.plots) && data.plots.length > 0) this.plots.set(data.plots);
-          if (data.inventory && typeof data.inventory === 'object') this.inventory.set(data.inventory);
+          if (data.inventory && typeof data.inventory === 'object') {
+            this.inventory.update(current => ({
+              seeds: { ...current.seeds, ...(data.inventory.seeds || {}) },
+              harvested: { ...current.harvested, ...(data.inventory.harvested || {}) },
+              care: { ...current.care, ...(data.inventory.care || {}) },
+              decor: { ...current.decor, ...(data.inventory.decor || {}) }
+            }));
+          }
           if (Array.isArray(data.lessons) && data.lessons.length >= DEFAULT_LESSONS.length) {
             this.lessons.set(data.lessons);
           } else {
@@ -494,6 +587,89 @@ export class GameStateService {
     };
   }
 
+  getLessonUnlockRequirement(lessonId: number): UnlockRequirement {
+    const lesson = this.lessons().find(l => l.id === lessonId);
+    if (lesson && lesson.requiredCrops && lesson.requiredCrops.length > 0) {
+      return {
+        minLevel: lesson.requiredLevel || 1,
+        requiredCrops: lesson.requiredCrops
+      };
+    }
+
+    switch (lessonId) {
+      case 1:
+        return { minLevel: 1, requiredCrops: [] }; // Fruits & Vegetables: Mở sẵn
+      case 2:
+        return { minLevel: 2, requiredCrops: [{ cropId: 'carrot', qty: 3, cropNameVi: 'Cà rốt' }] }; // Animals
+      case 3:
+        return {
+          minLevel: 3,
+          requiredCrops: [
+            { cropId: 'potato', qty: 3, cropNameVi: 'Khoai tây' },
+            { cropId: 'corn', qty: 2, cropNameVi: 'Bắp ngô' }
+          ]
+        }; // Daily Routines
+      case 4:
+        return {
+          minLevel: 4,
+          requiredCrops: [
+            { cropId: 'tomato', qty: 3, cropNameVi: 'Cà chua' },
+            { cropId: 'strawberry', qty: 2, cropNameVi: 'Dâu tây' }
+          ]
+        }; // Food & Drinks
+      case 5:
+        return {
+          minLevel: 5,
+          requiredCrops: [
+            { cropId: 'apple', qty: 2, cropNameVi: 'Táo' },
+            { cropId: 'sunflower', qty: 2, cropNameVi: 'Hoa hướng dương' }
+          ]
+        }; // Nature & Weather
+      default: {
+        const minLvl = Math.min(20, Math.floor(lessonId / 2) + 2);
+        const cropPool = [
+          { cropId: 'tulip', qty: 2, cropNameVi: 'Hoa tulip' },
+          { cropId: 'rose', qty: 2, cropNameVi: 'Hoa hồng' },
+          { cropId: 'lemon', qty: 2, cropNameVi: 'Chanh' },
+          { cropId: 'kiwi', qty: 2, cropNameVi: 'Kiwi' },
+          { cropId: 'mango', qty: 2, cropNameVi: 'Xoài' },
+          { cropId: 'cherry', qty: 2, cropNameVi: 'Cherry' }
+        ];
+        return {
+          minLevel: minLvl,
+          requiredCrops: [cropPool[(lessonId - 6) % cropPool.length]]
+        };
+      }
+    }
+  }
+
+  canUnlockLesson(lessonId: number): { canUnlock: boolean; missingReasons: string[]; req: UnlockRequirement } {
+    const lesson = this.lessons().find(l => l.id === lessonId);
+    const req = this.getLessonUnlockRequirement(lessonId);
+    if (!lesson || lesson.isUnlocked) {
+      return { canUnlock: false, missingReasons: [], req };
+    }
+
+    const missingReasons: string[] = [];
+
+    if (this.level() < req.minLevel) {
+      missingReasons.push(`Cần đạt Level ${req.minLevel} (hiện có: Lv.${this.level()})`);
+    }
+
+    for (const c of req.requiredCrops) {
+      const available = this.inventory().harvested[c.cropId] || 0;
+      if (available < c.qty) {
+        missingReasons.push(`Cần ${c.qty}x ${c.cropNameVi || c.cropId} (hiện có: ${available})`);
+      }
+    }
+
+    return {
+      canUnlock: missingReasons.length === 0,
+      missingReasons,
+      req
+    };
+  }
+
   unlockLessonWithCrops(lessonId: number): boolean {
     const lesson = this.lessons().find(l => l.id === lessonId);
     if (!lesson) return false;
@@ -502,27 +678,161 @@ export class GameStateService {
       return false;
     }
 
-    const cropKey = lesson.requiredCropId === 1 ? 'carrot' : lesson.requiredCropId === 2 ? 'corn' : 'tomato';
-    const available = this.inventory().harvested[cropKey] || 0;
-    const required = lesson.requiredCropQty || 2;
-
-    if (available < required) {
-      this.showToast(`Bạn cần ${required}x ${lesson.requiredCropName || 'Nông sản'} (hiện có: ${available}) để mở khóa chủ đề này!`);
+    const check = this.canUnlockLesson(lessonId);
+    if (!check.canUnlock) {
+      this.showToast(`🔒 Chưa thể mở khóa: ${check.missingReasons.join(' · ')}`);
       return false;
     }
 
-    // Trừ nông sản
-    this.inventory.update(inv => ({
-      ...inv,
-      harvested: {
-        ...inv.harvested,
-        [cropKey]: inv.harvested[cropKey] - required
+    const req = check.req;
+
+    // Trừ số lượng nông sản thu hoạch
+    this.inventory.update(inv => {
+      const nextHarvested = { ...inv.harvested };
+      for (const c of req.requiredCrops) {
+        nextHarvested[c.cropId] = Math.max(0, (nextHarvested[c.cropId] || 0) - c.qty);
       }
-    }));
+      return {
+        ...inv,
+        harvested: nextHarvested
+      };
+    });
 
     // Cập nhật mở khóa bài học
     this.lessons.update(list => list.map(l => l.id === lessonId ? { ...l, isUnlocked: true } : l));
     this.showToast(`🎉 Mở khóa thành công chủ đề "${lesson.title}"! Giống cây tương ứng đã sẵn sàng.`);
+    this.saveToStorage();
+    return true;
+  }
+
+  // =========================================================================
+  // RULE 5: MỞ KHÓA Ô ĐẤT #5 - #9 (BẰNG XU HOẶC LEVEL + NÔNG SẢN)
+  // =========================================================================
+
+  unlockPlotWithCoins(plotIndex: number): boolean {
+    const plot = this.plots()[plotIndex];
+    if (!plot || plot.status !== 'locked') return false;
+
+    const req = getPlotUnlockRequirement(plotIndex);
+    if (this.coins() < req.coinPrice) {
+      this.showToast(`Bạn cần ${req.coinPrice} Xu (hiện có: ${this.coins()} Xu) để mở ô đất này!`);
+      return false;
+    }
+
+    this.coins.update(c => c - req.coinPrice);
+    this.plots.update(list => list.map((p, i) => i === plotIndex ? { ...p, status: 'empty' } : p));
+    this.showToast(`🎉 Đã mở khóa ô đất #${plotIndex + 1} bằng ${req.coinPrice} Xu!`);
+    this.saveToStorage();
+    return true;
+  }
+
+  unlockPlotWithCrops(plotIndex: number): boolean {
+    const plot = this.plots()[plotIndex];
+    if (!plot || plot.status !== 'locked') return false;
+
+    const req = getPlotUnlockRequirement(plotIndex);
+    if (this.level() < req.minLevel) {
+      this.showToast(`Cần đạt Level ${req.minLevel} (hiện có: Lv.${this.level()}) để mở ô đất này!`);
+      return false;
+    }
+
+    for (const c of req.requiredCrops) {
+      const available = this.inventory().harvested[c.cropId] || 0;
+      if (available < c.qty) {
+        this.showToast(`Cần ${c.qty}x ${c.cropNameVi} (hiện có: ${available}) để mở ô đất!`);
+        return false;
+      }
+    }
+
+    // Trừ nông sản
+    this.inventory.update(inv => {
+      const nextHarvested = { ...inv.harvested };
+      for (const c of req.requiredCrops) {
+        nextHarvested[c.cropId] = Math.max(0, (nextHarvested[c.cropId] || 0) - c.qty);
+      }
+      return { ...inv, harvested: nextHarvested };
+    });
+
+    this.plots.update(list => list.map((p, i) => i === plotIndex ? { ...p, status: 'empty' } : p));
+    this.showToast(`🎉 Đã mở khóa ô đất #${plotIndex + 1} bằng nông sản thành công!`);
+    this.saveToStorage();
+    return true;
+  }
+
+  // =========================================================================
+  // RULE 5: END-GAME CROP SINK (CHỢ NÔNG SẢN & TRAO ĐỔI VẬT TƯ)
+  // =========================================================================
+
+  sellHarvestedCrop(cropId: string, qty: number = 1): boolean {
+    const current = this.inventory().harvested[cropId] || 0;
+    if (current < qty) {
+      this.showToast('Bạn không đủ số lượng nông sản để bán!');
+      return false;
+    }
+    const crop = CROP_CATALOG.find(c => c.id === cropId);
+    const name = crop?.nameVi || cropId;
+    const unitPrice = Math.max(5, Math.floor((crop?.price || 15) * 0.7));
+    const totalEarned = unitPrice * qty;
+
+    this.inventory.update(inv => ({
+      ...inv,
+      harvested: {
+        ...inv.harvested,
+        [cropId]: (inv.harvested[cropId] || 0) - qty
+      }
+    }));
+    this.coins.update(c => c + totalEarned);
+    this.showToast(`🌾 Đã bán ${qty}x ${name}, nhận +${totalEarned} Xu!`);
+    this.saveToStorage();
+    return true;
+  }
+
+  tradeCropsForFertilizer(cropId: string): boolean {
+    const current = this.inventory().harvested[cropId] || 0;
+    if (current < 3) {
+      this.showToast(`Bạn cần ít nhất 3 nông sản (hiện có: ${current}) để đổi 1 Phân bón!`);
+      return false;
+    }
+    const crop = CROP_CATALOG.find(c => c.id === cropId);
+    const name = crop?.nameVi || cropId;
+
+    this.inventory.update(inv => ({
+      ...inv,
+      harvested: {
+        ...inv.harvested,
+        [cropId]: (inv.harvested[cropId] || 0) - 3
+      },
+      care: {
+        ...inv.care,
+        fertilizer: (inv.care.fertilizer || 0) + 1
+      }
+    }));
+    this.showToast(`⚡ Đã đổi 3x ${name} lấy +1 Phân bón vi sinh!`);
+    this.saveToStorage();
+    return true;
+  }
+
+  tradeCropsForWater(cropId: string): boolean {
+    const current = this.inventory().harvested[cropId] || 0;
+    if (current < 2) {
+      this.showToast(`Bạn cần ít nhất 2 nông sản (hiện có: ${current}) để đổi 2 Lượt nước!`);
+      return false;
+    }
+    const crop = CROP_CATALOG.find(c => c.id === cropId);
+    const name = crop?.nameVi || cropId;
+
+    this.inventory.update(inv => ({
+      ...inv,
+      harvested: {
+        ...inv.harvested,
+        [cropId]: (inv.harvested[cropId] || 0) - 2
+      },
+      care: {
+        ...inv.care,
+        water: (inv.care.water || 0) + 2
+      }
+    }));
+    this.showToast(`💧 Đã đổi 2x ${name} lấy +2 Lượt nước tưới!`);
     this.saveToStorage();
     return true;
   }
@@ -729,8 +1039,15 @@ export class GameStateService {
       message = `Bạn đã hoàn thành phiên ôn tập ${rewardRes.newStars}★! Giữ vững thành tích cũ ${oldStars}★.`;
     }
 
-    // Rule 1 & 2: Cập nhật XP & Coins (Strict Quiz-Only XP & Coins qua Delta)
-    if (rewardRes.xpGained > 0) this.xp.update(x => x + rewardRes.xpGained);
+    // Rule 1, 2 & 3: Cập nhật XP & Coins (Strict Quiz-Only XP & Coins qua Delta, Level-up reset XP)
+    if (rewardRes.xpGained > 0) {
+      const levelRes = applyXpWithReset(this.level(), this.currentXp(), rewardRes.xpGained);
+      this.level.set(levelRes.level);
+      this.currentXp.set(levelRes.currentXp);
+      if (levelRes.leveledUp) {
+        this.showToast(`🎉 CHÚC MỪNG! Bạn đã thăng cấp Level ${levelRes.level}!`);
+      }
+    }
     if (rewardRes.coinsGained > 0) this.coins.update(c => c + rewardRes.coinsGained);
 
     // Rule 3: Cập nhật Farm Drops (5% Phân bón & 1% Hạt giống có sẵn)
@@ -930,7 +1247,7 @@ export class GameStateService {
     const gainedXp = cropConfig ? cropConfig.price * 2 : 20;
 
     // Tăng XP, Coins
-    this.xp.update(x => x + gainedXp);
+    this.addXp(gainedXp);
     this.coins.update(c => c + gainedCoins);
 
     // Cộng nông sản

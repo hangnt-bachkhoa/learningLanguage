@@ -25,9 +25,11 @@ export interface LessonDto {
   levelTag: string;
   orderIndex: number;
   isUnlocked: boolean;
-  requiredCropId: number | null;
-  requiredCropQty: number;
-  requiredCropName: string | null;
+  requiredLevel?: number;
+  requiredCropId?: number | null;
+  requiredCropQty?: number;
+  requiredCropName?: string | null;
+  requiredCrops?: { cropId: string; qty: number; cropNameVi: string }[];
   bestStarsClaimed?: number;
 }
 
