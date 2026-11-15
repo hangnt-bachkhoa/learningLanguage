@@ -15,6 +15,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Data\toeic_grammar_seed.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\EnglishFarm.Entities\EnglishFarm.Entities.csproj" />
     <ProjectReference Include="..\EnglishFarm.DB\EnglishFarm.DB.csproj" />
     <ProjectReference Include="..\EnglishFarm.Models\EnglishFarm.Models.csproj" />

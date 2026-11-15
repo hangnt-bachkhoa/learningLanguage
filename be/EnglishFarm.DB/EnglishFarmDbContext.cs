@@ -1,4 +1,5 @@
 using EnglishFarm.Entities.Farm;
+using EnglishFarm.Entities.Grammar;
 using EnglishFarm.Entities.Learning;
 using EnglishFarm.Entities.Shop;
 using EnglishFarm.Entities.User;
@@ -25,6 +26,11 @@ public class EnglishFarmDbContext : DbContext
     public DbSet<ShopProductEntity> ShopProducts => Set<ShopProductEntity>();
     public DbSet<ShopOrderEntity> ShopOrders => Set<ShopOrderEntity>();
     public DbSet<ShopOrderItemEntity> ShopOrderItems => Set<ShopOrderItemEntity>();
+
+    // TOEIC Grammar Module
+    public DbSet<GrammarTopicEntity> GrammarTopics => Set<GrammarTopicEntity>();
+    public DbSet<GrammarQuestionEntity> GrammarQuestions => Set<GrammarQuestionEntity>();
+    public DbSet<UserGrammarProgressEntity> UserGrammarProgresses => Set<UserGrammarProgressEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

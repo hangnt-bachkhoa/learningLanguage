@@ -278,7 +278,8 @@ export class SidebarComponent {
 
   navItems = [
     { path: '/', label: 'Trang chủ', icon: '🏠', exact: true },
-    { path: '/lessons', label: 'Học tập', icon: '📖', exact: false },
+    { path: '/lessons', label: 'Từ vựng', icon: '📖', exact: false },
+    { path: '/grammar', label: 'Ngữ pháp', icon: '📜', exact: false },
     { path: '/farm', label: 'Nông trại', icon: '🌱', exact: false },
     { path: '/shop', label: 'Cửa hàng', icon: '🏪', exact: false },
     { path: '/inventory', label: 'Kho đồ', icon: '🎒', exact: false },

@@ -37,7 +37,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         </a>
 
         <!-- Sổ 2: Grammar Learning Planner (Xanh navy với cột Hy Lạp) -->
-        <a routerLink="/quiz" class="leather-book book-navy">
+        <a routerLink="/grammar" class="leather-book book-navy" title="Mở sổ tay Ngữ pháp TOEIC">
           <div class="book-emboss-border">
             <div class="book-title-main">Grammar</div>
             <div class="book-sub">Learning Planner</div>

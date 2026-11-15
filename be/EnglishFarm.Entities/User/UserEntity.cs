@@ -1,5 +1,6 @@
 using EnglishFarm.Entities.Common;
 using EnglishFarm.Entities.Farm;
+using EnglishFarm.Entities.Grammar;
 using EnglishFarm.Entities.Learning;
 
 namespace EnglishFarm.Entities.User;
@@ -21,4 +22,5 @@ public class UserEntity : BaseEntity
     public virtual ICollection<FarmPlotEntity> FarmPlots { get; set; } = new List<FarmPlotEntity>();
     public virtual ICollection<UserInventoryEntity> Inventories { get; set; } = new List<UserInventoryEntity>();
     public virtual ICollection<UserLessonProgressEntity> LessonProgresses { get; set; } = new List<UserLessonProgressEntity>();
+    public virtual ICollection<UserGrammarProgressEntity> GrammarProgresses { get; set; } = new List<UserGrammarProgressEntity>();
 }

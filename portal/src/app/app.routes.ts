@@ -18,6 +18,18 @@ export const routes: Routes = [
     loadComponent: () => import('./features/vocab/vocab.component').then(m => m.VocabComponent)
   },
   {
+    path: 'grammar',
+    loadComponent: () => import('./features/grammar/grammar-list.component').then(m => m.GrammarListComponent)
+  },
+  {
+    path: 'grammar/:code',
+    loadComponent: () => import('./features/grammar/grammar-detail.component').then(m => m.GrammarDetailComponent)
+  },
+  {
+    path: 'grammar/:code/quiz',
+    loadComponent: () => import('./features/grammar/grammar-quiz.component').then(m => m.GrammarQuizComponent)
+  },
+  {
     path: 'quiz',
     loadComponent: () => import('./features/quiz/quiz.component').then(m => m.QuizComponent)
   },

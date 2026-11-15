@@ -1,5 +1,6 @@
 using EnglishFarm.Business.Common;
 using EnglishFarm.Business.Farm;
+using EnglishFarm.Business.Grammar;
 using EnglishFarm.Business.Learning;
 using EnglishFarm.Business.Shop;
 using EnglishFarm.Business.User;
@@ -27,6 +28,7 @@ public static class EnglishFarmCollectionExtensions
         services.AddScoped<IShopService, ShopService>();
         services.AddScoped<ILearningService, LearningService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IGrammarService, GrammarService>();
 
         return services;
     }

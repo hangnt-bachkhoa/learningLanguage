@@ -338,3 +338,64 @@ BEGIN
     VALUES (@NewUserId, 1, 'carrot', 3);
 END
 GO
+
+-- 14. BẢNG GrammarTopics, GrammarQuestions, UserGrammarProgresses
+IF OBJECT_ID('dbo.GrammarTopics', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.GrammarTopics (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        Code NVARCHAR(50) NOT NULL,
+        Level NVARCHAR(30) NOT NULL,
+        ToeicTarget NVARCHAR(50) NOT NULL,
+        OrderIndex INT NOT NULL DEFAULT 1,
+        TitleEn NVARCHAR(200) NOT NULL,
+        TitleVi NVARCHAR(200) NOT NULL,
+        Summary NVARCHAR(1000) NOT NULL,
+        RulesJson NVARCHAR(MAX) NOT NULL DEFAULT '[]',
+        TrapsJson NVARCHAR(MAX) NOT NULL DEFAULT '[]',
+        ExamplesJson NVARCHAR(MAX) NOT NULL DEFAULT '[]',
+        CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
+        UpdatedAt DATETIME2 NULL,
+        IsDeleted BIT NOT NULL DEFAULT 0
+    );
+    CREATE UNIQUE INDEX IX_GrammarTopics_Code ON dbo.GrammarTopics(Code);
+    CREATE INDEX IX_GrammarTopics_OrderIndex ON dbo.GrammarTopics(OrderIndex);
+END
+GO
+
+IF OBJECT_ID('dbo.GrammarQuestions', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.GrammarQuestions (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        GrammarTopicId INT NOT NULL,
+        Prompt NVARCHAR(MAX) NOT NULL,
+        OptionsJson NVARCHAR(MAX) NOT NULL,
+        CorrectIndex INT NOT NULL DEFAULT 0,
+        ExplanationVi NVARCHAR(MAX) NOT NULL,
+        CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
+        UpdatedAt DATETIME2 NULL,
+        IsDeleted BIT NOT NULL DEFAULT 0,
+        CONSTRAINT FK_GrammarQuestions_GrammarTopics FOREIGN KEY (GrammarTopicId) REFERENCES dbo.GrammarTopics(Id) ON DELETE CASCADE
+    );
+    CREATE INDEX IX_GrammarQuestions_GrammarTopicId ON dbo.GrammarQuestions(GrammarTopicId);
+END
+GO
+
+IF OBJECT_ID('dbo.UserGrammarProgresses', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.UserGrammarProgresses (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        UserId INT NOT NULL,
+        GrammarTopicId INT NOT NULL,
+        IsStudied BIT NOT NULL DEFAULT 0,
+        BestStarsClaimed INT NOT NULL DEFAULT 0,
+        LastPracticedAt DATETIME2 NULL,
+        CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
+        UpdatedAt DATETIME2 NULL,
+        IsDeleted BIT NOT NULL DEFAULT 0,
+        CONSTRAINT FK_UserGrammarProgresses_Users FOREIGN KEY (UserId) REFERENCES dbo.Users(Id) ON DELETE CASCADE,
+        CONSTRAINT FK_UserGrammarProgresses_GrammarTopics FOREIGN KEY (GrammarTopicId) REFERENCES dbo.GrammarTopics(Id) ON DELETE CASCADE
+    );
+    CREATE UNIQUE INDEX IX_UserGrammarProgresses_User_Topic ON dbo.UserGrammarProgresses(UserId, GrammarTopicId);
+END
+GO
