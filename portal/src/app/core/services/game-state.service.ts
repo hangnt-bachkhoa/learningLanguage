@@ -635,13 +635,12 @@ export class GameStateService {
     });
   }
 
-  markWordLearned(word: string) {
+  markWordLearned(word: string, notify: boolean = false) {
     if (!this.learnedWords().includes(word)) {
       this.learnedWords.update(list => [...list, word]);
-      // NGUYÊN TẮC: Học Flashcard / Đã học nhận 0 XP và 0 Coins (chỉ lưu tiến độ thuộc từ)
-      this.showToast(`✓ Đã thuộc từ "${word}" (Học Flashcard)`);
-    } else {
-      this.showToast(`Bạn đã thuộc từ "${word}" từ trước!`);
+      if (notify) {
+        this.showToast(`✓ Đã thuộc từ "${word}"`);
+      }
     }
     this.saveToStorage();
   }

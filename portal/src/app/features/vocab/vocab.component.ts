@@ -103,7 +103,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
           [class.already-learned]="state.learnedWords().includes(currentWord.word)"
           (click)="markLearned()">
           <span>✓</span>
-          <span>{{ state.learnedWords().includes(currentWord.word) ? 'Đã thuộc (Ôn lại)' : 'Đã học (+10 XP)' }}</span>
+          <span>{{ currentIndex() === displayWords.length - 1 ? 'Đã học (Xong)' : 'Đã học · Từ tiếp ›' }}</span>
         </button>
       </div>
 
@@ -582,7 +582,11 @@ export class VocabComponent implements OnInit {
   }
 
   markLearned() {
-    this.state.markWordLearned(this.currentWord.word);
-    this.nextWord();
+    this.state.markWordLearned(this.currentWord.word, false);
+    if (this.currentIndex() < this.displayWords.length - 1) {
+      this.nextWord();
+    } else {
+      this.state.showToast('🎉 Bạn đã xem hết từ vựng! Hãy bấm "Luyện tập" để làm bài kiểm tra và nhận thưởng.');
+    }
   }
 }
