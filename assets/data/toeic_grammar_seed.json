@@ -1,0 +1,413 @@
+[
+  {
+    "code": "gr_01_pos",
+    "level": "Pre-A1",
+    "toeicTarget": "0-350",
+    "orderIndex": 1,
+    "titleEn": "Parts of Speech (N, V, Adj, Adv)",
+    "titleVi": "Từ loại cơ bản (Danh, Động, Tính, Trạng)",
+    "summary": "Nhận diện vị trí và hậu tố của Danh từ, Động từ, Tính từ và Trạng từ trong câu TOEIC Part 5.",
+    "rules": [
+      "a/an/the/my/our + (Adv) + Adj + N",
+      "be / become / seem / remain / look + Adj",
+      "V + Adv hoặc Adv + V; Adv + Adj"
+    ],
+    "traps": [
+      "Các từ tận cùng -ly nhưng là Tính từ (không phải Trạng từ): friendly, costly, timely, daily, weekly.",
+      "Cấu trúc find / make / keep + O + Adj."
+    ],
+    "examples": [
+      {
+        "en": "The reliable supplier delivered the goods promptly.",
+        "vi": "Nhà cung cấp đáng tin cậy đã giao hàng nhanh chóng."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Ms. Kim gave a ______ presentation on quarterly sales.",
+        "options": ["succeed", "success", "successful", "successfully"],
+        "correctIndex": 2,
+        "explanationVi": "Sau mạo từ 'a' và trước danh từ 'presentation' cần một Tính từ."
+      },
+      {
+        "prompt": "The new software operates ______ even during peak hours.",
+        "options": ["smooth", "smoothly", "smoothness", "smoother"],
+        "correctIndex": 1,
+        "explanationVi": "Bổ nghĩa cho động từ thường 'operates' cần một Trạng từ."
+      }
+    ]
+  },
+  {
+    "code": "gr_02_pronouns",
+    "level": "Pre-A1",
+    "toeicTarget": "0-350",
+    "orderIndex": 2,
+    "titleEn": "Pronouns & Possessives",
+    "titleVi": "Đại từ & Tính từ sở hữu",
+    "summary": "Phân biệt Đại từ nhân xưng, Tân ngữ, Tính từ sở hữu, Đại từ sở hữu và Đại từ phản thân.",
+    "rules": [
+      "Đại từ chủ ngữ (I/he/she/we/they) đứng trước V chính.",
+      "Tính từ sở hữu (my/your/his/her/its/our/their) luôn đi kèm Danh từ phía sau.",
+      "Đại từ sở hữu (mine/yours/hers/ours/theirs) đứng độc lập thay cho Tính từ sở hữu + N."
+    ],
+    "traps": [
+      "Phân biệt 'its' (của nó) và 'it's' (viết tắt của it is / it has).",
+      "by + đại từ phản thân (by oneself) mang nghĩa tự mình làm."
+    ],
+    "examples": [
+      {
+        "en": "Please submit your expense report to us by Friday.",
+        "vi": "Vui lòng nộp báo cáo chi phí của bạn cho chúng tôi trước thứ Sáu."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "The director will review the contract ______ before signing.",
+        "options": ["he", "him", "his", "himself"],
+        "correctIndex": 3,
+        "explanationVi": "Dùng đại từ phản thân 'himself' để nhấn mạnh chính giám đốc tự mình thực hiện."
+      }
+    ]
+  },
+  {
+    "code": "gr_03_simple_tenses",
+    "level": "Pre-A1",
+    "toeicTarget": "0-350",
+    "orderIndex": 3,
+    "titleEn": "Simple Present, Past & Future",
+    "titleVi": "Ba thì cơ bản (Hiện tại, Quá khứ, Tương lai đơn)",
+    "summary": "Nắm vững công thức và dấu hiệu thời gian của 3 thì đơn nền tảng.",
+    "rules": [
+      "Hiện tại đơn: S + V(s/es) — dùng cho lịch trình, thói quen, sự thật (always, regularly, quarterly).",
+      "Quá khứ đơn: S + V2/ed — hành động đã chấm dứt trong quá khứ (yesterday, ago, last week).",
+      "Tương lai đơn: S + will + V-bare — dự đoán hoặc kế hoạch sắp tới (tomorrow, next month, soon)."
+    ],
+    "traps": [
+      "Mệnh đề thời gian/điều kiện (when, if, before, after, until) không dùng 'will', dùng Hiện tại đơn thay thế."
+    ],
+    "examples": [
+      {
+        "en": "Our company launched a new app last month and will expand next year.",
+        "vi": "Công ty chúng tôi đã ra mắt ứng dụng mới tháng trước và sẽ mở rộng vào năm tới."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Mr. Tanaka ______ the regional office in Osaka two years ago.",
+        "options": ["visits", "visited", "will visit", "visiting"],
+        "correctIndex": 1,
+        "explanationVi": "Cụm 'two years ago' là dấu hiệu chắc chắn của thì Quá khứ đơn."
+      }
+    ]
+  },
+  {
+    "code": "gr_04_sv_agreement",
+    "level": "Pre-A1",
+    "toeicTarget": "0-350",
+    "orderIndex": 4,
+    "titleEn": "Subject-Verb Agreement",
+    "titleVi": "Sự hòa hợp Chủ ngữ – Động từ",
+    "summary": "Chia động từ số ít hay số nhiều chính xác khi gặp cụm danh từ dài.",
+    "rules": [
+      "Danh từ không đếm được (information, equipment, luggage, advice, news) + V số ít.",
+      "Cụm N1 + giới từ + N2 → chia động từ theo N1.",
+      "The number of + N(nhiều) + V số ít; A number of + N(nhiều) + V số nhiều."
+    ],
+    "traps": [
+      "Each / Every / Either / Neither (+ of + N số nhiều) luôn đi với động từ số ít.",
+      "Either A or B / Neither A nor B chia động từ theo chủ ngữ B gần nhất."
+    ],
+    "examples": [
+      {
+        "en": "The number of online orders has increased significantly.",
+        "vi": "Số lượng đơn hàng trực tuyến đã tăng đáng kể."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "All the equipment in the laboratory ______ regularly.",
+        "options": ["are checked", "is checked", "were checking", "check"],
+        "correctIndex": 1,
+        "explanationVi": "'equipment' là danh từ không đếm được nên động từ chia ở số ít."
+      }
+    ]
+  },
+  {
+    "code": "gr_05_cont_perfect",
+    "level": "A2",
+    "toeicTarget": "350-550",
+    "orderIndex": 5,
+    "titleEn": "Continuous & Perfect Tenses",
+    "titleVi": "Các thì Tiếp diễn & Hoàn thành",
+    "summary": "Diễn tả hành động đang diễn ra hoặc kéo dài từ quá khứ đến hiện tại.",
+    "rules": [
+      "Hiện tại tiếp diễn: S + am/is/are + V-ing (now, currently, at the moment).",
+      "Hiện tại hoàn thành: S + have/has + V3/ed (since, for, recently, so far, over the past 5 years).",
+      "Quá khứ hoàn thành: By the time S + V2/ed, S + had + V3/ed."
+    ],
+    "traps": [
+      "Động từ trạng thái (know, belong, own, contain) không chia ở thì tiếp diễn."
+    ],
+    "examples": [
+      {
+        "en": "We have collaborated with this agency since 2022.",
+        "vi": "Chúng tôi đã hợp tác với công ty này từ năm 2022."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Sales figures ______ steadily over the past three quarters.",
+        "options": ["grow", "grew", "have grown", "will grow"],
+        "correctIndex": 2,
+        "explanationVi": "Cụm 'over the past + khoảng thời gian' đi với thì Hiện tại hoàn thành."
+      }
+    ]
+  },
+  {
+    "code": "gr_06_prepositions",
+    "level": "A2",
+    "toeicTarget": "350-550",
+    "orderIndex": 6,
+    "titleEn": "Prepositions of Time & Place",
+    "titleVi": "Giới từ Thời gian, Địa điểm & Hạn chót",
+    "summary": "Phân biệt chuẩn xác at/on/in, for/during và by/until trong văn bản công sở.",
+    "rules": [
+      "at + giờ/dịp ngắn; on + ngày/thứ; in + tháng/năm/mùa.",
+      "for + khoảng thời gian; during + danh từ sự kiện.",
+      "by + mốc hạn chót (trước hoặc đúng lúc đó); until + hành động kéo dài tới mốc."
+    ],
+    "traps": [
+      "Không dùng liên từ 'while' trước cụm danh từ (phải dùng 'during')."
+    ],
+    "examples": [
+      {
+        "en": "Please finalize the budget by Wednesday afternoon.",
+        "vi": "Vui lòng chốt ngân sách trước chiều thứ Tư."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Visitors are asked to remain seated ______ the presentation.",
+        "options": ["while", "during", "since", "until"],
+        "correctIndex": 1,
+        "explanationVi": "'the presentation' là cụm danh từ nên cần giới từ 'during'."
+      }
+    ]
+  },
+  {
+    "code": "gr_07_comparisons",
+    "level": "A2",
+    "toeicTarget": "350-550",
+    "orderIndex": 7,
+    "titleEn": "Comparatives & Superlatives",
+    "titleVi": "So sánh bằng, So sánh hơn & So sánh nhất",
+    "summary": "Cấu trúc so sánh và các trạng từ nhấn mạnh thường gặp trong TOEIC.",
+    "rules": [
+      "So sánh bằng: as + Adj/Adv + as.",
+      "So sánh hơn: Adj/Adv-er + than hoặc more/less + Adj/Adv + than.",
+      "So sánh nhất: the + Adj/Adv-est hoặc the most/least + Adj/Adv."
+    ],
+    "traps": [
+      "Chỉ dùng much / far / even / a lot / significantly để nhấn mạnh so sánh hơn (KHÔNG dùng very)."
+    ],
+    "examples": [
+      {
+        "en": "The new printer is much faster than the previous model.",
+        "vi": "Máy in mới nhanh hơn nhiều so với mẫu trước."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "This quarter's profit is ______ higher than expected.",
+        "options": ["very", "significantly", "too", "so"],
+        "correctIndex": 1,
+        "explanationVi": "Dùng 'significantly' để bổ nghĩa nhấn mạnh cho tính từ so sánh hơn 'higher'."
+      }
+    ]
+  },
+  {
+    "code": "gr_08_conjunctions",
+    "level": "A2",
+    "toeicTarget": "350-550",
+    "orderIndex": 8,
+    "titleEn": "Conjunctions vs. Prepositions",
+    "titleVi": "Liên từ nối mệnh đề & Giới từ nối cụm danh từ",
+    "summary": "Phân biệt cặp từ đồng nghĩa khác loại từ: because/because of, although/despite.",
+    "rules": [
+      "Liên từ (because, although, while, if, unless) + Mệnh đề (S + V).",
+      "Giới từ (because of, due to, despite, in spite of, during) + Cụm Danh từ / V-ing.",
+      "Liên từ tương quan: both A and B; either A or B; neither A nor B; not only A but also B."
+    ],
+    "traps": [
+      "Kiểm tra phía sau chỗ trống có động từ chia thì hay không để chọn Liên từ hay Giới từ."
+    ],
+    "examples": [
+      {
+        "en": "Despite the heavy rain, the outdoor event started on time.",
+        "vi": "Mặc dù trời mưa to, sự kiện ngoài trời vẫn bắt đầu đúng giờ."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "______ the system upgrade, the website will be unavailable tonight.",
+        "options": ["Because", "Although", "Due to", "While"],
+        "correctIndex": 2,
+        "explanationVi": "'the system upgrade' là cụm danh từ nên chọn giới từ 'Due to'."
+      }
+    ]
+  },
+  {
+    "code": "gr_09_passive",
+    "level": "B1-B2",
+    "toeicTarget": "550-750",
+    "orderIndex": 9,
+    "titleEn": "Passive Voice",
+    "titleVi": "Câu bị động",
+    "summary": "Cấu trúc bị động qua các thì và mẹo nhận diện nhanh theo tân ngữ.",
+    "rules": [
+      "Công thức chung: S + be + V3/ed (+ by O).",
+      "Khiếm khuyết bị động: will / can / must / should + be + V3/ed.",
+      "Hoàn thành bị động: have / has / had + been + V3/ed."
+    ],
+    "traps": [
+      "Sau chỗ trống không có Danh từ làm tân ngữ (hoặc gặp giới từ by/in/on/to) → ưu tiên Bị động."
+    ],
+    "examples": [
+      {
+        "en": "All invoices must be approved by the finance department.",
+        "vi": "Mọi hóa đơn phải được phòng tài chính phê duyệt."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "The updated schedule ______ to all employees yesterday.",
+        "options": ["sent", "was sent", "has sent", "sending"],
+        "correctIndex": 1,
+        "explanationVi": "Chủ ngữ 'schedule' bị tác động và không có tân ngữ trực tiếp phía sau → Bị động quá khứ đơn."
+      }
+    ]
+  },
+  {
+    "code": "gr_10_verbals",
+    "level": "B1-B2",
+    "toeicTarget": "550-750",
+    "orderIndex": 10,
+    "titleEn": "To-V, Gerunds & Participles",
+    "titleVi": "Động từ nguyên mẫu, Danh động từ & Phân từ",
+    "summary": "Cách dùng To-V, V-ing sau giới từ/động từ và phân từ V-ing/V-ed làm tính từ.",
+    "rules": [
+      "want, decide, plan, expect, agree, refuse + To-V; ask/allow/require + O + To-V.",
+      "avoid, consider, suggest, recommend, finish + V-ing; Mọi giới từ + V-ing.",
+      "Phân từ V-ing (chủ động/tính chất) vs. V-ed (bị động/cảm xúc)."
+    ],
+    "traps": [
+      "look forward to / be dedicated to / object to: 'to' ở đây là giới từ → theo sau phải là V-ing."
+    ],
+    "examples": [
+      {
+        "en": "Please review the attached document and avoid making late changes.",
+        "vi": "Vui lòng xem tài liệu đính kèm và tránh chỉnh sửa muộn."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "We look forward to ______ your proposal next week.",
+        "options": ["receive", "receiving", "received", "reception"],
+        "correctIndex": 1,
+        "explanationVi": "'look forward to' kết thúc bằng giới từ 'to', theo sau là Danh động từ (V-ing)."
+      }
+    ]
+  },
+  {
+    "code": "gr_11_relatives",
+    "level": "B1-B2",
+    "toeicTarget": "550-750",
+    "orderIndex": 11,
+    "titleEn": "Relative Clauses & Reduction",
+    "titleVi": "Mệnh đề quan hệ & Rút gọn",
+    "summary": "Sử dụng who/whom/which/that/whose và kỹ thuật rút gọn V-ing/V3-ed.",
+    "rules": [
+      "who (người, S/O), whom (người, O), which (vật), whose + N (sở hữu).",
+      "Rút gọn chủ động: bỏ đại từ quan hệ, đổi V → V-ing.",
+      "Rút gọn bị động: bỏ đại từ quan hệ + be, giữ lại V3/ed."
+    ],
+    "traps": [
+      "'that' không đứng sau dấu phẩy và không đứng ngay sau giới từ."
+    ],
+    "examples": [
+      {
+        "en": "Customers purchasing over $100 receive free shipping.",
+        "vi": "Khách hàng mua trên 100 đô la được miễn phí vận chuyển."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "The applicants ______ for the interview must bring their ID.",
+        "options": ["select", "selecting", "selected", "selection"],
+        "correctIndex": 2,
+        "explanationVi": "Rút gọn mệnh đề quan hệ mang nghĩa bị động ('who are selected' → 'selected')."
+      }
+    ]
+  },
+  {
+    "code": "gr_12_conditionals",
+    "level": "B2-C1",
+    "toeicTarget": "750-990+",
+    "orderIndex": 12,
+    "titleEn": "Conditionals & Inversion",
+    "titleVi": "Câu điều kiện & Đảo ngữ",
+    "summary": "Câu điều kiện loại 1, 2, 3 và dạng đảo ngữ trang trọng thường gặp ở mức điểm cao.",
+    "rules": [
+      "Loại 1: If S + V(HT), S + will V-bare → Đảo ngữ: Should + S + V-bare, ...",
+      "Loại 2: If S + V2/ed (were), S + would V-bare → Đảo ngữ: Were + S (+ to V), ...",
+      "Loại 3: If S + had + V3/ed, S + would have + V3/ed → Đảo ngữ: Had + S + V3/ed, ..."
+    ],
+    "traps": [
+      "Đảo ngữ phủ định đầu câu (Never, Seldom, Rarely, Not only) phải đảo trợ động từ lên trước chủ ngữ."
+    ],
+    "examples": [
+      {
+        "en": "Should you need any assistance, please contact our support desk.",
+        "vi": "Nếu bạn cần bất kỳ hỗ trợ nào, vui lòng liên hệ bộ phận hỗ trợ."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "______ the team submitted the bid earlier, we would have won the contract.",
+        "options": ["If", "Should", "Were", "Had"],
+        "correctIndex": 3,
+        "explanationVi": "Vế sau là 'would have won' (điều kiện loại 3), dùng đảo ngữ 'Had + S + V3/ed'."
+      }
+    ]
+  },
+  {
+    "code": "gr_13_subjunctive",
+    "level": "B2-C1",
+    "toeicTarget": "750-990+",
+    "orderIndex": 13,
+    "titleEn": "Subjunctive Mood",
+    "titleVi": "Thức giả định",
+    "summary": "Cấu trúc câu yêu cầu, đề xuất và tính cấp thiết luôn dùng động từ nguyên mẫu.",
+    "rules": [
+      "S + suggest / recommend / insist / demand / request / require + that + S + (should) + V-bare.",
+      "It is + essential / important / necessary / vital / mandatory + that + S + (should) + V-bare."
+    ],
+    "traps": [
+      "Dù chủ ngữ sau 'that' là số ít (he/she/the manager), động từ vẫn giữ nguyên mẫu V-bare (hoặc 'be + V3/ed' nếu bị động), KHÔNG thêm -s/-es."
+    ],
+    "examples": [
+      {
+        "en": "The auditor insisted that the report be revised immediately.",
+        "vi": "Kiểm toán viên yêu cầu bản báo cáo phải được chỉnh sửa ngay lập tức."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "It is essential that every employee ______ the safety briefing.",
+        "options": ["attends", "attended", "attend", "attending"],
+        "correctIndex": 2,
+        "explanationVi": "Cấu trúc thức giả định sau 'It is essential that' luôn dùng động từ nguyên mẫu không 'to' (attend)."
+      }
+    ]
+  }
+]
