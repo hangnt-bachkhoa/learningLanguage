@@ -36,7 +36,12 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         <!-- Hàng đầu: Tiêu đề từ vựng + Icon loa + Tranh hoa vẽ Botanical bên phải -->
         <div class="word-hero-row">
           <div class="word-hero-left">
-            <h1 class="word-text">{{ currentWord.word }}</h1>
+            <div class="word-status-tag-row">
+              <h1 class="word-text">{{ currentWord.word }}</h1>
+              @if (state.learnedWords().includes(currentWord.word)) {
+                <span class="word-learned-badge">✅ Đã thuộc</span>
+              }
+            </div>
             <div class="ipa-audio-row">
               <span class="ipa-string">{{ currentWord.ipa }}</span>
               <button class="speaker-pill" (click)="state.speak(currentWord.word)" title="Nghe phát âm">🔊</button>
@@ -83,16 +88,22 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         </div>
       </div>
 
-      <!-- 2 Nút thao tác dưới chân: Đánh dấu & Đã học -->
+      <!-- 2 Nút thao tác dưới chân: Đánh dấu & Đã học (Lưu trực tiếp vào localStorage) -->
       <div class="vocab-footer-actions">
-        <button class="btn btn-secondary bookmark-btn" (click)="toggleBookmark()">
-          <span class="bookmark-icon">🔖</span>
-          <span>Đánh dấu</span>
+        <button
+          class="btn btn-secondary bookmark-btn"
+          [class.bookmarked]="state.bookmarkedWords().includes(currentWord.word)"
+          (click)="toggleBookmark()">
+          <span class="bookmark-icon">{{ state.bookmarkedWords().includes(currentWord.word) ? '⭐' : '🔖' }}</span>
+          <span>{{ state.bookmarkedWords().includes(currentWord.word) ? 'Đã đánh dấu' : 'Đánh dấu' }}</span>
         </button>
 
-        <button class="btn btn-primary learned-btn" (click)="markLearned()">
+        <button
+          class="btn btn-primary learned-btn"
+          [class.already-learned]="state.learnedWords().includes(currentWord.word)"
+          (click)="markLearned()">
           <span>✓</span>
-          <span>Đã học</span>
+          <span>{{ state.learnedWords().includes(currentWord.word) ? 'Đã thuộc (Ôn lại)' : 'Đã học (+10 XP)' }}</span>
         </button>
       </div>
 
@@ -302,6 +313,21 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       grid-template-columns: 1fr 2fr;
       gap: 12px;
     }
+    .word-status-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .word-learned-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2.5px 8px;
+      border-radius: 999px;
+      background: #EDF7E8;
+      color: #2F631E;
+      border: 1px solid #C4E3B5;
+    }
     .bookmark-btn {
       background: #EAE2D2;
       border: 1px solid var(--border-strong);
@@ -309,6 +335,17 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       border-radius: 12px;
       font-weight: 600;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .bookmark-btn.bookmarked {
+      background: #FFF4D9;
+      border-color: #ECD8A5;
+      color: #7A5B17;
+      font-weight: 700;
     }
     .learned-btn {
       background: var(--rose);
@@ -319,6 +356,14 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       font-weight: 700;
       font-size: 15px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .learned-btn.already-learned {
+      background: #557A46;
     }
     .quiz-cta-banner {
       margin-top: 14px;
@@ -533,12 +578,11 @@ export class VocabComponent implements OnInit {
   }
 
   toggleBookmark() {
-    this.state.showToast(`Đã lưu "${this.currentWord.word}" vào sổ tay ghi nhớ!`);
+    this.state.toggleBookmark(this.currentWord.word);
   }
 
   markLearned() {
-    this.state.xp.update(x => x + 10);
-    this.state.showToast(`✓ Đã thuộc từ "${this.currentWord.word}" (+10 XP)`);
+    this.state.markWordLearned(this.currentWord.word);
     this.nextWord();
   }
 }

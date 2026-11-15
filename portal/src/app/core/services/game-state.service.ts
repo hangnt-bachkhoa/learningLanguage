@@ -2,6 +2,7 @@ import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessage, ShopItem } from '../models/game.models';
 import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryItemDto } from './farm-api.service';
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
+import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
 
 export const DEFAULT_LESSONS: LessonDto[] = [
   { id: 1, title: 'Fruits & Vegetables', languageCode: 'en', levelTag: 'Pre-A1', orderIndex: 1, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null, bestStarsClaimed: 0 },
@@ -33,6 +34,7 @@ export interface CropLockInfo {
 })
 export class GameStateService {
   private readonly STORAGE_KEY = 'english_farm_v1';
+  private readonly VOCAB_STORAGE_KEY = 'english_farm_vocabularies';
   private api = inject(FarmApiService);
 
   // Trạng thái kết nối Backend
@@ -118,6 +120,11 @@ export class GameStateService {
   lessons = signal<LessonDto[]>(DEFAULT_LESSONS);
   activeLessonId = signal<number>(1);
   activeVocabularies = signal<VocabularyDto[]>([]);
+
+  // Dữ liệu từ vựng Offline & Tiến độ học từ vựng (Lưu vĩnh viễn trong localStorage)
+  learnedWords = signal<string[]>([]);
+  bookmarkedWords = signal<string[]>([]);
+  vocabulariesByLesson = signal<Record<number, VocabularyDto[]>>(DEFAULT_VOCABULARIES);
 
   // Learning Planners
   books = signal<PlannerBook[]>([
@@ -212,9 +219,17 @@ export class GameStateService {
         plots: this.plots(),
         inventory: this.inventory(),
         lessons: this.lessons(),
-        books: this.books()
+        books: this.books(),
+        activeLessonId: this.activeLessonId(),
+        learnedWords: this.learnedWords(),
+        bookmarkedWords: this.bookmarkedWords()
       };
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+
+      // Lưu trữ toàn bộ 1,300+ từ vựng vào localStorage
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(this.vocabulariesByLesson()));
+      }
     } catch (e) {
       console.warn('Không thể lưu localStorage:', e);
     }
@@ -223,17 +238,37 @@ export class GameStateService {
   loadFromStorage() {
     try {
       const raw = localStorage.getItem(this.STORAGE_KEY);
-      if (!raw) return;
-      const data = JSON.parse(raw);
-      if (!data || typeof data !== 'object') return;
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (data && typeof data === 'object') {
+          if (typeof data.xp === 'number') this.xp.set(data.xp);
+          if (typeof data.coins === 'number') this.coins.set(data.coins);
+          if (typeof data.level === 'number') this.level.set(data.level);
+          if (Array.isArray(data.plots) && data.plots.length > 0) this.plots.set(data.plots);
+          if (data.inventory && typeof data.inventory === 'object') this.inventory.set(data.inventory);
+          if (Array.isArray(data.lessons) && data.lessons.length > 0) this.lessons.set(data.lessons);
+          if (Array.isArray(data.books) && data.books.length > 0) this.books.set(data.books);
+          if (typeof data.activeLessonId === 'number') this.activeLessonId.set(data.activeLessonId);
+          if (Array.isArray(data.learnedWords)) this.learnedWords.set(data.learnedWords);
+          if (Array.isArray(data.bookmarkedWords)) this.bookmarkedWords.set(data.bookmarkedWords);
+        }
+      }
 
-      if (typeof data.xp === 'number') this.xp.set(data.xp);
-      if (typeof data.coins === 'number') this.coins.set(data.coins);
-      if (typeof data.level === 'number') this.level.set(data.level);
-      if (Array.isArray(data.plots) && data.plots.length > 0) this.plots.set(data.plots);
-      if (data.inventory && typeof data.inventory === 'object') this.inventory.set(data.inventory);
-      if (Array.isArray(data.lessons) && data.lessons.length > 0) this.lessons.set(data.lessons);
-      if (Array.isArray(data.books) && data.books.length > 0) this.books.set(data.books);
+      // Nạp toàn bộ dữ liệu từ vựng từ localStorage
+      const rawVocabs = localStorage.getItem(this.VOCAB_STORAGE_KEY);
+      if (rawVocabs) {
+        try {
+          const parsed = JSON.parse(rawVocabs);
+          if (parsed && typeof parsed === 'object') {
+            this.vocabulariesByLesson.set(parsed);
+          }
+        } catch {}
+      } else {
+        // Tự động lưu khởi tạo vào localStorage để dùng hoàn toàn offline
+        try {
+          localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(DEFAULT_VOCABULARIES));
+        } catch {}
+      }
     } catch (e) {
       console.warn('Lỗi đọc localStorage:', e);
     }
@@ -531,12 +566,49 @@ export class GameStateService {
 
   loadVocabulariesForLesson(lessonId: number) {
     this.activeLessonId.set(lessonId);
+
+    // 1. Nạp ngay từ danh mục từ vựng trong localStorage (Hoạt động offline hoàn hảo trên GitHub Pages)
+    const localList = this.vocabulariesByLesson()[lessonId];
+    if (localList && localList.length > 0) {
+      this.activeVocabularies.set(localList);
+    }
+
+    // 2. Thử cập nhật từ Backend nếu có API
     this.api.getVocabularies(lessonId).subscribe({
       next: (vocabs) => {
-        this.activeVocabularies.set(vocabs);
+        if (vocabs && vocabs.length > 0) {
+          this.activeVocabularies.set(vocabs);
+          this.vocabulariesByLesson.update(map => ({
+            ...map,
+            [lessonId]: vocabs
+          }));
+          this.saveToStorage();
+        }
       },
       error: () => {}
     });
+  }
+
+  markWordLearned(word: string) {
+    if (!this.learnedWords().includes(word)) {
+      this.learnedWords.update(list => [...list, word]);
+      this.xp.update(x => x + 10);
+      this.showToast(`✓ Đã thuộc từ "${word}" (+10 XP)`);
+    } else {
+      this.showToast(`Bạn đã thuộc từ "${word}" từ trước!`);
+    }
+    this.saveToStorage();
+  }
+
+  toggleBookmark(word: string) {
+    if (this.bookmarkedWords().includes(word)) {
+      this.bookmarkedWords.update(list => list.filter(w => w !== word));
+      this.showToast(`Đã bỏ đánh dấu "${word}"`);
+    } else {
+      this.bookmarkedWords.update(list => [...list, word]);
+      this.showToast(`🔖 Đã lưu "${word}" vào sổ tay ghi nhớ!`);
+    }
+    this.saveToStorage();
   }
 
   refreshProfile() {
