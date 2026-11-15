@@ -116,7 +116,7 @@ export interface QuizQuestionDto {
   prompt: string;
   word: string | null;
   phonetic: string | null;
-  spriteKey: string | null;
+  spriteKey?: string | null;
   questionType?: 'meaning' | 'context' | 'listening';
   exampleEn?: string | null;
   exampleVi?: string | null;

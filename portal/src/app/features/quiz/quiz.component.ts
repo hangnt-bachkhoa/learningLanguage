@@ -5,6 +5,7 @@ import { GameStateService } from '../../core/services/game-state.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { FarmApiService, QuizQuestionDto, QuizSubmitResultDto, QuizSessionDto } from '../../core/services/farm-api.service';
+import { getDefaultQuizSession } from '../../core/constants/default-quiz-questions.constant';
 
 @Component({
   selector: 'app-quiz',
@@ -1083,30 +1084,51 @@ export class QuizComponent implements OnInit {
 
     this.farmApi.getQuizSession(lessonId).subscribe({
       next: (session: QuizSessionDto) => {
-        this.sessionId.set(session.sessionId);
-        this.lessonTitle.set(session.lessonTitle);
-        this.requiredCropName.set(session.requiredCropName || 'Nông sản');
-        this.bestStarsClaimed.set(session.bestStarsClaimed || 0);
+        if (session && session.questions && session.questions.length > 0) {
+          this.sessionId.set(session.sessionId);
+          this.lessonTitle.set(session.lessonTitle);
+          this.requiredCropName.set(session.requiredCropName || 'Nông sản');
+          this.bestStarsClaimed.set(session.bestStarsClaimed || 0);
 
-        const list = session.questions || [];
-        this.queue.set([...list]);
-        this.totalInitial.set(list.length > 0 ? list.length : 10);
-        this.isLoading.set(false);
+          const list = session.questions;
+          this.queue.set([...list]);
+          this.totalInitial.set(list.length > 0 ? list.length : 10);
+          this.isLoading.set(false);
+        } else {
+          this.loadDefaultQuestions(lessonId);
+        }
       },
       error: () => {
         // Fallback gọi getQuizQuestions nếu quiz-session chưa khởi tạo xong
         this.farmApi.getQuizQuestions(lessonId).subscribe({
           next: (questions) => {
-            this.queue.set([...questions]);
-            this.totalInitial.set(questions.length > 0 ? questions.length : 10);
-            this.isLoading.set(false);
+            if (questions && questions.length > 0) {
+              this.queue.set([...questions]);
+              this.totalInitial.set(questions.length > 0 ? questions.length : 10);
+              this.isLoading.set(false);
+            } else {
+              this.loadDefaultQuestions(lessonId);
+            }
           },
           error: () => {
-            this.isLoading.set(false);
+            // Khi chạy tĩnh trên GitHub Pages không có backend API, tự động nạp bộ câu hỏi offline
+            this.loadDefaultQuestions(lessonId);
           }
         });
       }
     });
+  }
+
+  private loadDefaultQuestions(lessonId: number) {
+    const defaultSession = getDefaultQuizSession(lessonId);
+    this.sessionId.set(defaultSession.sessionId);
+    this.lessonTitle.set(defaultSession.lessonTitle);
+    this.requiredCropName.set(defaultSession.requiredCropName || 'Cà rốt');
+    this.bestStarsClaimed.set(defaultSession.bestStarsClaimed || 0);
+
+    this.queue.set([...defaultSession.questions]);
+    this.totalInitial.set(defaultSession.questions.length);
+    this.isLoading.set(false);
   }
 
   selectOption(idx: number) {
@@ -1212,6 +1234,25 @@ export class QuizComponent implements OnInit {
         const firstTryCorrect = Array.from(this.firstTryResults.values()).filter(v => v).length;
         const fallbackStars = firstTryCorrect >= 10 ? 3 : (firstTryCorrect >= 8 ? 2 : 1);
 
+        const earnedCoins = fallbackStars === 3 ? 50 : (fallbackStars === 2 ? 35 : 20);
+        const earnedXp = fallbackStars === 3 ? 100 : (fallbackStars === 2 ? 70 : 40);
+
+        this.state.xp.update(x => x + earnedXp);
+        this.state.coins.update(c => c + earnedCoins);
+        this.state.inventory.update(inv => ({
+          ...inv,
+          care: {
+            ...inv.care,
+            water: (inv.care.water || 0) + 2,
+            fertilizer: (inv.care.fertilizer || 0) + (fallbackStars === 3 ? 1 : 0)
+          },
+          seeds: {
+            ...inv.seeds,
+            carrot: (inv.seeds['carrot'] || 0) + 1
+          }
+        }));
+        this.state.showToast(`🎉 Hoàn thành bài thi! +${earnedXp} XP, +${earnedCoins} Xu, +2 Nước tưới, +1 Túi hạt!`);
+
         this.result.set({
           lessonId: this.lessonId(),
           stars: fallbackStars,
@@ -1226,8 +1267,8 @@ export class QuizComponent implements OnInit {
           rewardSeeds: 1,
           rewardWater: 2,
           rewardFertilizer: fallbackStars === 3 ? 1 : 0,
-          rewardCoins: fallbackStars === 3 ? 50 : (fallbackStars === 2 ? 35 : 20),
-          rewardXp: fallbackStars === 3 ? 100 : (fallbackStars === 2 ? 70 : 40),
+          rewardCoins: earnedCoins,
+          rewardXp: earnedXp,
           cropName: this.requiredCropName(),
           message: 'Bạn đã hoàn tất xuất sắc bài kiểm tra trắc nghiệm!'
         });
