@@ -133,74 +133,122 @@ public class LearningService : ILearningService
             weightedList.Add(extra);
         }
 
-        // Lấy danh sách toàn bộ nghĩa và từ để làm distractor (đáp án nhiễu)
-        var allMeanings = vocabs.Select(v => v.MeaningVi.Trim()).Distinct().ToList();
-        var allWords = vocabs.Select(v => v.Word.Trim()).Distinct().ToList();
+        // Thuật toán 2: Sinh 4 dạng câu hỏi (typeCycle: EN_TO_VI, CONTEXT_CLOZE, LISTENING, VI_TO_EN)
+        // và bốc Distractor 3 tầng (Tier 1: cùng bài & cùng từ loại -> Tier 2: cùng bài & khác từ loại -> Tier 3: khác bài & cùng từ loại)
+        var otherVocabs = await _vocabRepo.Query().Where(x => x.LessonId != lessonId).Take(100).ToListAsync(ct);
 
-        // Bốc thêm từ các bài khác nếu danh sách distractor trong bài quá ít (< 4)
-        if (allMeanings.Count < 4)
+        List<string> Select3TierDistractors(VocabularyEntity target, bool isWordField, string correctVal)
         {
-            var fallbackVocabs = await _vocabRepo.Query().Take(20).ToListAsync(ct);
-            allMeanings.AddRange(fallbackVocabs.Select(v => v.MeaningVi.Trim()));
-            allWords.AddRange(fallbackVocabs.Select(v => v.Word.Trim()));
-            allMeanings = allMeanings.Distinct().ToList();
-            allWords = allWords.Distinct().ToList();
+            var targetType = (target.WordType ?? "noun").Trim().ToLowerInvariant();
+            var chosen = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { correctVal.Trim() };
+            var result = new List<string>();
+
+            string GetVal(VocabularyEntity item) => (isWordField ? item.Word : item.MeaningVi).Trim();
+
+            // Tier 1: Cùng bài học VÀ cùng từ loại (wordType)
+            foreach (var item in vocabs.OrderBy(_ => random.Next()))
+            {
+                if (item.Id == target.Id) continue;
+                var vType = (item.WordType ?? "noun").Trim().ToLowerInvariant();
+                var val = GetVal(item);
+                if (vType == targetType && !string.IsNullOrWhiteSpace(val) && chosen.Add(val))
+                {
+                    result.Add(val);
+                    if (result.Count == 3) return result;
+                }
+            }
+
+            // Tier 2: Cùng bài học VÀ khác từ loại
+            foreach (var item in vocabs.OrderBy(_ => random.Next()))
+            {
+                if (item.Id == target.Id) continue;
+                var val = GetVal(item);
+                if (!string.IsNullOrWhiteSpace(val) && chosen.Add(val))
+                {
+                    result.Add(val);
+                    if (result.Count == 3) return result;
+                }
+            }
+
+            // Tier 3: Khác bài học VÀ cùng từ loại (safety net)
+            foreach (var item in otherVocabs.OrderBy(_ => random.Next()))
+            {
+                if (item.Id == target.Id) continue;
+                var vType = (item.WordType ?? "noun").Trim().ToLowerInvariant();
+                var val = GetVal(item);
+                if (vType == targetType && !string.IsNullOrWhiteSpace(val) && chosen.Add(val))
+                {
+                    result.Add(val);
+                    if (result.Count == 3) return result;
+                }
+            }
+
+            // Dự phòng cuối cùng
+            foreach (var item in otherVocabs.OrderBy(_ => random.Next()))
+            {
+                var val = GetVal(item);
+                if (!string.IsNullOrWhiteSpace(val) && chosen.Add(val))
+                {
+                    result.Add(val);
+                    if (result.Count == 3) return result;
+                }
+            }
+
+            return result;
         }
 
+        var typeCycle = new[] { "EN_TO_VI", "CONTEXT_CLOZE", "LISTENING", "VI_TO_EN" };
         var questions = new List<QuizQuestionResponseModel>();
 
         for (int i = 0; i < weightedList.Count; i++)
         {
             var v = weightedList[i];
-            int questionIndex = i + 1;
-
-            // Phân bổ dạng câu hỏi:
-            // i in [0..3] -> Dạng 1 (Nghĩa & Phát âm: Từ -> Chọn Tiếng Việt)
-            // i in [4..6] -> Dạng 2 (Ngữ cảnh TOEIC điền chỗ trống, nếu có ExampleEn)
-            // i in [7..9] -> Dạng 3 (Nghe / Phiên âm đoán từ)
+            string desiredFormat = typeCycle[i % typeCycle.Length];
             string qType = "meaning";
-            string prompt = $"Từ \"{v.Word}\" có nghĩa là gì?";
-            string correctOption = v.MeaningVi.Trim();
-            List<string> distractors;
+            string prompt = string.Empty;
+            string correctOption = string.Empty;
+            List<string> distractors = new();
 
-            if (i >= 4 && i <= 6 && !string.IsNullOrWhiteSpace(v.ExampleEn) && v.ExampleEn.Contains(v.Word, StringComparison.OrdinalIgnoreCase))
+            if (desiredFormat == "CONTEXT_CLOZE" && !string.IsNullOrWhiteSpace(v.ExampleEn))
             {
-                qType = "context";
-                string blankExample = Regex.Replace(v.ExampleEn, Regex.Escape(v.Word), "_______", RegexOptions.IgnoreCase);
-                prompt = $"Chọn từ thích hợp điền vào chỗ trống:\n\"{blankExample}\"";
-                correctOption = v.Word.Trim();
-
-                distractors = allWords
-                    .Where(w => !string.Equals(w, correctOption, StringComparison.OrdinalIgnoreCase))
-                    .OrderBy(_ => random.Next())
-                    .Take(3)
-                    .ToList();
+                var clozeRegex = new Regex($@"\b{Regex.Escape(v.Word.Trim())}(s|es|ed|ing)?\b", RegexOptions.IgnoreCase);
+                var match = clozeRegex.Match(v.ExampleEn);
+                if (match.Success)
+                {
+                    qType = "context";
+                    string blankExample = clozeRegex.Replace(v.ExampleEn, "_______");
+                    prompt = $"Điền từ thích hợp vào chỗ trống:\n\"{blankExample}\"";
+                    correctOption = match.Value;
+                    distractors = Select3TierDistractors(v, isWordField: true, correctOption);
+                }
+                else
+                {
+                    desiredFormat = "EN_TO_VI";
+                }
             }
-            else if (i >= 7)
+
+            if (desiredFormat == "VI_TO_EN")
+            {
+                qType = "meaning";
+                prompt = $"Chọn từ tiếng Anh có nghĩa là: \"{v.MeaningVi.Trim()}\"";
+                correctOption = v.Word.Trim();
+                distractors = Select3TierDistractors(v, isWordField: true, correctOption);
+            }
+            else if (desiredFormat == "LISTENING")
             {
                 qType = "listening";
                 prompt = !string.IsNullOrWhiteSpace(v.Phonetic)
                     ? $"Nghe phát âm hoặc nhìn phiên âm /{v.Phonetic}/ để chọn từ đúng:"
-                    : $"Nghe phát âm của từ và chọn từ tiếng Anh tương ứng:";
+                    : "Nghe phát âm của từ và chọn từ tiếng Anh tương ứng:";
                 correctOption = v.Word.Trim();
-
-                distractors = allWords
-                    .Where(w => !string.Equals(w, correctOption, StringComparison.OrdinalIgnoreCase))
-                    .OrderBy(_ => random.Next())
-                    .Take(3)
-                    .ToList();
+                distractors = Select3TierDistractors(v, isWordField: true, correctOption);
             }
-            else
+            else if (desiredFormat == "EN_TO_VI" || string.IsNullOrEmpty(prompt))
             {
                 qType = "meaning";
                 prompt = $"Từ \"{v.Word}\" có nghĩa là gì?";
                 correctOption = v.MeaningVi.Trim();
-
-                distractors = allMeanings
-                    .Where(m => !string.Equals(m, correctOption, StringComparison.OrdinalIgnoreCase))
-                    .OrderBy(_ => random.Next())
-                    .Take(3)
-                    .ToList();
+                distractors = Select3TierDistractors(v, isWordField: false, correctOption);
             }
 
             var options = new List<string> { correctOption };
@@ -210,7 +258,7 @@ public class LearningService : ILearningService
 
             questions.Add(new QuizQuestionResponseModel
             {
-                Id = v.Id, // Gắn ID của từ vựng để theo dõi FirstTry & UserWordStats
+                Id = v.Id,
                 LessonId = lessonId,
                 Prompt = prompt,
                 Word = v.Word,
@@ -345,14 +393,14 @@ public class LearningService : ILearningService
             }
         }
 
-        // 4. Ma trận phần thưởng định mức theo hạng Sao
-        // 3★: 1 Hạt, 2 Nước, 1 Phân bón, 50 Xu, 100 XP
+        // 4. Ma trận phần thưởng định mức theo hạng Sao (Algorithm 4: 3-Star Delta Reward)
+        // 3★: 2 Hạt, 2 Nước, 1 Phân bón, 50 Xu, 100 XP
         // 2★: 1 Hạt, 2 Nước, 0 Phân bón, 35 Xu, 70 XP
         // 1★: 1 Hạt, 1 Nước, 0 Phân bón, 20 Xu, 40 XP
         // 0★: 0
         (int Seeds, int Water, int Fert, int Coins, int Xp) GetTierReward(int star) => star switch
         {
-            3 => (1, 2, 1, 50, 100),
+            3 => (2, 2, 1, 50, 100),
             2 => (1, 2, 0, 35, 70),
             1 => (1, 1, 0, 20, 40),
             _ => (0, 0, 0, 0, 0)
@@ -388,10 +436,14 @@ public class LearningService : ILearningService
         }
         else
         {
-            // Làm lại bài đã đạt hạng: chỉ nhận XP ôn tập nhỏ (+10 XP)
-            deltaXp = 10;
-            rewardGranted = true;
-            message = $"Bạn đã hoàn thành phiên ôn tập! Nhận thưởng khích lệ +10 XP.";
+            // Làm lại bài đã đạt hạng: không nhân đôi thưởng (Anti-Exploit Idempotency)
+            deltaSeeds = 0;
+            deltaWater = 0;
+            deltaFert = 0;
+            deltaCoins = 0;
+            deltaXp = 0;
+            rewardGranted = false;
+            message = $"Bạn đã hoàn thành phiên ôn tập {newStars}★! Giữ vững thành tích cũ {oldStars}★.";
         }
 
         // 5. Cập nhật Coins & XP vào User

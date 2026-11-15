@@ -6,6 +6,8 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { FarmApiService, QuizQuestionDto, QuizSubmitResultDto, QuizSessionDto } from '../../core/services/farm-api.service';
 import { getDefaultQuizSession } from '../../core/constants/default-quiz-questions.constant';
+import { QuizEngineService } from '../../core/services/quiz-engine.service';
+import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.constant';
 
 @Component({
   selector: 'app-quiz',
@@ -68,7 +70,7 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
                   @if (feedbackState() === 'correct') {
                     <div class="sheet-header correct-header">
                       <span class="status-icon">✓</span>
-                      <span class="status-title">Tuyệt vời! Chính xác.</span>
+                      <span class="status-title">Chính xác!</span>
                     </div>
                     @if (feedbackDetail()?.explanation; as exp) {
                       <p class="sheet-sub">{{ exp }}</p>
@@ -76,11 +78,7 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
                   } @else {
                     <div class="sheet-header wrong-header">
                       <span class="status-icon">✕</span>
-                      <span class="status-title">Chưa chính xác!</span>
-                    </div>
-                    <div class="correct-answer-reveal">
-                      <span class="reveal-label">Đáp án đúng là:</span>
-                      <span class="reveal-text">{{ feedbackDetail()?.correctText }}</span>
+                      <span class="status-title">Chưa chính xác · Đáp án đúng: {{ feedbackDetail()?.correctText }}</span>
                     </div>
                     @if (feedbackDetail()?.explanation; as exp) {
                       <p class="sheet-sub">{{ exp }}</p>
@@ -88,13 +86,17 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
                   }
                 </div>
 
-                <!-- NÚT TIẾP TỤC ĐỂ CHUYỂN HÀNG ĐỢI -->
+                <!-- NÚT TIẾP TỤC ĐỂ CHUYỂN HÀNG ĐỢI (Algorithm 3) -->
                 <button
                   class="btn sheet-action-btn"
                   [class.btn-success]="feedbackState() === 'correct'"
                   [class.btn-danger]="feedbackState() === 'wrong'"
                   (click)="continueQueue()">
-                  {{ queue().length === 1 && feedbackState() === 'correct' ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
+                  @if (feedbackState() === 'correct') {
+                    {{ queue().length === 1 ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
+                  } @else {
+                    Đã hiểu ›
+                  }
                 </button>
               </div>
             </div>
@@ -180,7 +182,11 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
                       [class.btn-success]="feedbackState() === 'correct'"
                       [class.btn-danger]="feedbackState() === 'wrong'"
                       (click)="continueQueue()">
-                      {{ queue().length === 1 && feedbackState() === 'correct' ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
+                      @if (feedbackState() === 'correct') {
+                        {{ queue().length === 1 ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
+                      } @else {
+                        Đã hiểu ›
+                      }
                     </button>
                   }
                 </div>
@@ -636,13 +642,13 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
     }
 
     .sheet-correct {
-      background: #EAF4E8;
-      border: 1.5px solid #81C784;
+      background: #D7ECD9;
+      border: 1.5px solid #78815D;
     }
 
     .sheet-wrong {
-      background: #FDECEB;
-      border: 1.5px solid #E57373;
+      background: #FBE8E6;
+      border: 1.5px solid #A65E65;
     }
 
     .sheet-content {
@@ -661,17 +667,17 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 15.5px;
+      font-weight: 700;
       margin-bottom: 3px;
     }
 
     .correct-header {
-      color: #2E6830;
+      color: #3B5B3B;
     }
 
     .wrong-header {
-      color: #C0392B;
+      color: #8C3E44;
     }
 
     .status-icon {
@@ -712,21 +718,21 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
     }
 
     .btn-success {
-      background: #4E6B4E;
+      background: #78815D;
       color: #FFF;
     }
 
     .btn-success:hover {
-      background: #3F573F;
+      background: #636A4B;
     }
 
     .btn-danger {
-      background: #C06C58;
+      background: #A65E65;
       color: #FFF;
     }
 
     .btn-danger:hover {
-      background: #A95643;
+      background: #8F4E55;
     }
 
     /* ================= RESULTS SCREEN ================= */
@@ -996,6 +1002,7 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
 })
 export class QuizComponent implements OnInit {
   state = inject(GameStateService);
+  quizEngine = inject(QuizEngineService);
   assets = FARM_ASSETS;
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -1120,14 +1127,36 @@ export class QuizComponent implements OnInit {
   }
 
   private loadDefaultQuestions(lessonId: number) {
-    const defaultSession = getDefaultQuizSession(lessonId);
-    this.sessionId.set(defaultSession.sessionId);
-    this.lessonTitle.set(defaultSession.lessonTitle);
-    this.requiredCropName.set(defaultSession.requiredCropName || 'Cà rốt');
-    this.bestStarsClaimed.set(defaultSession.bestStarsClaimed || 0);
+    // Thuật toán 1 & 2: Smart Pool Sampling + Multi-Format Generator + 3-Tier Distractors
+    const vocabs = this.state.vocabulariesByLesson()[lessonId] || DEFAULT_VOCABULARIES[lessonId] || DEFAULT_VOCABULARIES[1] || [];
+    const generated = this.quizEngine.generateSessionQuestions(lessonId, vocabs, this.state.userWordStats());
 
-    this.queue.set([...defaultSession.questions]);
-    this.totalInitial.set(defaultSession.questions.length);
+    const questions: QuizQuestionDto[] = generated.map(g => ({
+      id: g.id,
+      lessonId: g.lessonId,
+      prompt: g.prompt,
+      word: g.word,
+      phonetic: g.phonetic,
+      spriteKey: g.spriteKey,
+      questionType: g.format === 'CONTEXT_CLOZE' ? 'context' : (g.format === 'LISTENING' ? 'listening' : 'meaning'),
+      exampleEn: g.exampleEn,
+      exampleVi: g.exampleVi,
+      options: g.options,
+      correctOptionIndex: g.correctIndex
+    }));
+
+    const lesson = this.state.lessons().find(l => l.id === lessonId);
+    const title = lesson?.title || `Chủ đề ${lessonId}`;
+    const requiredCrop = lesson?.requiredCropName || 'Cà rốt';
+    const stars = this.state.userLessonProgress()[lessonId]?.bestStarsClaimed || lesson?.bestStarsClaimed || 0;
+
+    this.sessionId.set(`local_quiz_${lessonId}_${Date.now()}`);
+    this.lessonTitle.set(title);
+    this.requiredCropName.set(requiredCrop);
+    this.bestStarsClaimed.set(stars);
+
+    this.queue.set([...questions]);
+    this.totalInitial.set(questions.length > 0 ? questions.length : 10);
     this.isLoading.set(false);
   }
 
@@ -1146,7 +1175,7 @@ export class QuizComponent implements OnInit {
     const isCorrect = selected === correctIdx;
     const correctText = q.options[correctIdx] || '';
 
-    // GHI NHẬN KẾT QUẢ CHO LẦN ĐẦU TIÊN GẶP CÂU NÀY
+    // Thuật toán 3: GHI NHẬN KẾT QUẢ CHO LẦN ĐẦU TIÊN GẶP CÂU NÀY
     if (!this.firstTryResults.has(q.id)) {
       this.firstTryResults.set(q.id, isCorrect);
     }
@@ -1156,7 +1185,7 @@ export class QuizComponent implements OnInit {
       this.feedbackDetail.set({
         prompt: q.prompt,
         correctText: correctText,
-        explanation: q.exampleEn ? `Ví dụ: "${q.exampleEn}"` : undefined
+        explanation: q.exampleEn ? `Ví dụ: "${q.exampleEn}"` : (q.exampleVi ? `Dịch: "${q.exampleVi}"` : undefined)
       });
       // Phát âm từ nếu có
       if (q.word) {
@@ -1167,7 +1196,7 @@ export class QuizComponent implements OnInit {
       this.feedbackDetail.set({
         prompt: q.prompt,
         correctText: correctText,
-        explanation: q.exampleVi ? `Dịch: "${q.exampleVi}"` : undefined
+        explanation: q.exampleVi ? `Dịch: "${q.exampleVi}"` : (q.exampleEn ? `Ví dụ: "${q.exampleEn}"` : undefined)
       });
     }
   }
@@ -1188,10 +1217,10 @@ export class QuizComponent implements OnInit {
       });
       currentQueue.shift(); // Bỏ câu đầu hàng đợi
     } else {
-      // Trả lời sai: bỏ khỏi đầu hàng đợi và ĐẨY XUỐNG CUỐI HÀNG ĐỢI
+      // Thuật toán 3: Error Recycling Loop - Trả lời sai: bỏ khỏi đầu hàng đợi và ĐẨY XUỐNG CUỐI HÀNG ĐỢI
       const wrongItem = currentQueue.shift();
       if (wrongItem) {
-        currentQueue.push(wrongItem);
+        currentQueue.push({ ...wrongItem });
       }
     }
 
@@ -1211,8 +1240,13 @@ export class QuizComponent implements OnInit {
 
     const firstTryMap: Record<number, boolean> = {};
     this.firstTryResults.forEach((val, key) => {
-      firstTryMap[key] = val;
+      // Chuẩn hóa ID từ vựng
+      const vocabId = key > 10000 ? (key % 100) : key;
+      firstTryMap[vocabId] = val;
     });
+
+    // Thuật toán 4: Chấm điểm an toàn & Tính thưởng chênh lệch Delta Reward trong LocalStorage
+    const localResult = this.state.recordQuizCompletion(this.lessonId(), firstTryMap);
 
     const payload = {
       lessonId: this.lessonId(),
@@ -1221,60 +1255,19 @@ export class QuizComponent implements OnInit {
       totalTries: this.totalTriesCount()
     };
 
+    // Nếu có Backend API, đồng thời gửi lên server để đồng bộ
     this.farmApi.submitQuizSession(payload).subscribe({
       next: (res) => {
         this.result.set(res);
         this.isSubmitting.set(false);
         this.isFinished.set(true);
-        // Cập nhật lại số Xu, XP và túi đồ trên Header Nông trại
         this.state.refreshProfile();
       },
       error: () => {
-        // Fallback mô phỏng nếu API có lỗi tạm thời
-        const firstTryCorrect = Array.from(this.firstTryResults.values()).filter(v => v).length;
-        const fallbackStars = firstTryCorrect >= 10 ? 3 : (firstTryCorrect >= 8 ? 2 : 1);
-
-        const earnedCoins = fallbackStars === 3 ? 50 : (fallbackStars === 2 ? 35 : 20);
-        const earnedXp = fallbackStars === 3 ? 100 : (fallbackStars === 2 ? 70 : 40);
-
-        this.state.xp.update(x => x + earnedXp);
-        this.state.coins.update(c => c + earnedCoins);
-        this.state.inventory.update(inv => ({
-          ...inv,
-          care: {
-            ...inv.care,
-            water: (inv.care.water || 0) + 2,
-            fertilizer: (inv.care.fertilizer || 0) + (fallbackStars === 3 ? 1 : 0)
-          },
-          seeds: {
-            ...inv.seeds,
-            carrot: (inv.seeds['carrot'] || 0) + 1
-          }
-        }));
-        this.state.showToast(`🎉 Hoàn thành bài thi! +${earnedXp} XP, +${earnedCoins} Xu, +2 Nước tưới, +1 Túi hạt!`);
-
-        this.result.set({
-          lessonId: this.lessonId(),
-          stars: fallbackStars,
-          bestStarsClaimed: Math.max(this.bestStarsClaimed(), fallbackStars),
-          isNewRecord: fallbackStars > this.bestStarsClaimed(),
-          totalQuestions: this.totalInitial(),
-          firstTryCorrectCount: firstTryCorrect,
-          correctAnswers: firstTryCorrect,
-          scorePercent: Math.round((firstTryCorrect / this.totalInitial()) * 100),
-          isPassed: true,
-          rewardGranted: true,
-          rewardSeeds: 1,
-          rewardWater: 2,
-          rewardFertilizer: fallbackStars === 3 ? 1 : 0,
-          rewardCoins: earnedCoins,
-          rewardXp: earnedXp,
-          cropName: this.requiredCropName(),
-          message: 'Bạn đã hoàn tất xuất sắc bài kiểm tra trắc nghiệm!'
-        });
+        // Hoạt động offline hoàn hảo trên GitHub Pages không cần backend
+        this.result.set(localResult);
         this.isSubmitting.set(false);
         this.isFinished.set(true);
-        this.state.refreshProfile();
       }
     });
   }

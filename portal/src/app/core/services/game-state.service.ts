@@ -1,8 +1,9 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessage, ShopItem } from '../models/game.models';
-import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryItemDto } from './farm-api.service';
+import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryItemDto, QuizSubmitResultDto } from './farm-api.service';
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
+import { UserWordStat, UserLessonProgress, TIER_REWARDS } from './quiz-engine.service';
 
 export const DEFAULT_LESSONS: LessonDto[] = [
   { id: 1, title: 'Fruits & Vegetables', languageCode: 'en', levelTag: 'Pre-A1', orderIndex: 1, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null, bestStarsClaimed: 0 },
@@ -35,6 +36,8 @@ export interface CropLockInfo {
 export class GameStateService {
   private readonly STORAGE_KEY = 'english_farm_v1';
   private readonly VOCAB_STORAGE_KEY = 'english_farm_vocabularies';
+  private readonly WORD_STATS_KEY = 'english_farm_word_stats';
+  private readonly LESSON_PROGRESS_KEY = 'english_farm_lesson_progress';
   private api = inject(FarmApiService);
 
   // Trạng thái kết nối Backend
@@ -169,6 +172,12 @@ export class GameStateService {
   selectedTool = signal<'plant' | 'water' | 'fertilize' | 'harvest'>('plant');
   selectedSeed = signal<string>('carrot');
 
+  // Thống kê từng từ (UserWordStats: attempts, wrongCount, lastSeenAt) cho Smart Pool Sampling
+  userWordStats = signal<Record<number, UserWordStat>>({});
+
+  // Tiến độ sao bài học (UserLessonProgress: bestStarsClaimed 0..3, bestScorePercent)
+  userLessonProgress = signal<Record<number, UserLessonProgress>>({});
+
   private isHydrated = false;
 
   constructor() {
@@ -229,6 +238,8 @@ export class GameStateService {
       // Lưu trữ toàn bộ 1,300+ từ vựng vào localStorage
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(this.vocabulariesByLesson()));
+        localStorage.setItem(this.WORD_STATS_KEY, JSON.stringify(this.userWordStats()));
+        localStorage.setItem(this.LESSON_PROGRESS_KEY, JSON.stringify(this.userLessonProgress()));
       }
     } catch (e) {
       console.warn('Không thể lưu localStorage:', e);
@@ -252,6 +263,30 @@ export class GameStateService {
           if (Array.isArray(data.learnedWords)) this.learnedWords.set(data.learnedWords);
           if (Array.isArray(data.bookmarkedWords)) this.bookmarkedWords.set(data.bookmarkedWords);
         }
+      }
+
+      // Nạp UserWordStats & UserLessonProgress
+      const rawWordStats = localStorage.getItem(this.WORD_STATS_KEY);
+      if (rawWordStats) {
+        try {
+          const parsed = JSON.parse(rawWordStats);
+          if (parsed && typeof parsed === 'object') this.userWordStats.set(parsed);
+        } catch {}
+      }
+
+      const rawProgress = localStorage.getItem(this.LESSON_PROGRESS_KEY);
+      if (rawProgress) {
+        try {
+          const parsed = JSON.parse(rawProgress);
+          if (parsed && typeof parsed === 'object') {
+            this.userLessonProgress.set(parsed);
+            // Đồng bộ lại BestStarsClaimed vào lessons signal
+            this.lessons.update(list => list.map(l => {
+              const p = parsed[l.id];
+              return p ? { ...l, bestStarsClaimed: p.bestStarsClaimed } : l;
+            }));
+          }
+        } catch {}
       }
 
       // Nạp toàn bộ dữ liệu từ vựng từ localStorage
@@ -592,12 +627,162 @@ export class GameStateService {
   markWordLearned(word: string) {
     if (!this.learnedWords().includes(word)) {
       this.learnedWords.update(list => [...list, word]);
-      this.xp.update(x => x + 10);
-      this.showToast(`✓ Đã thuộc từ "${word}" (+10 XP)`);
+      // NGUYÊN TẮC: Học Flashcard / Đã học nhận 0 XP và 0 Coins (chỉ lưu tiến độ thuộc từ)
+      this.showToast(`✓ Đã thuộc từ "${word}" (Học Flashcard)`);
     } else {
       this.showToast(`Bạn đã thuộc từ "${word}" từ trước!`);
     }
     this.saveToStorage();
+  }
+
+  /**
+   * Thuật toán 4: Chấm điểm bài Quiz (First-try 3-Star Rating & Delta Reward Economy)
+   * Chống cày thưởng lặp lại (Anti-Exploit Idempotency):
+   * Chỉ thưởng phần chênh lệch (Delta) khi người học đạt kỷ lục sao cao hơn.
+   * Cập nhật UserWordStats để phục vụ Smart Pool Sampling cho các phiên sau.
+   */
+  recordQuizCompletion(lessonId: number, firstTryResults: Record<number, boolean>): QuizSubmitResultDto {
+    const entries = Object.entries(firstTryResults);
+    const totalQuestions = Math.max(10, entries.length);
+    const firstTryCorrectCount = entries.filter(([_, isOk]) => isOk).length;
+
+    // Phân hạng sao theo tỷ lệ đúng lần thử đầu tiên
+    let newStars = 1;
+    if (firstTryCorrectCount >= 10) {
+      newStars = 3; // 10/10 (100%): 3 Sao
+    } else if (firstTryCorrectCount >= 8) {
+      newStars = 2; // 8-9/10 (80-90%): 2 Sao
+    } else {
+      newStars = 1; // < 8/10: 1 Sao (Người học đã sửa hết lỗi để hoàn thành)
+    }
+
+    const currentProgress = this.userLessonProgress()[lessonId];
+    const oldStars = currentProgress?.bestStarsClaimed || 0;
+    const isNewRecord = newStars > oldStars;
+
+    let deltaSeeds = 0;
+    let deltaWater = 0;
+    let deltaFertilizer = 0;
+    let deltaCoins = 0;
+    let deltaXp = 0;
+    let message = '';
+
+    if (isNewRecord) {
+      const oldR = TIER_REWARDS[oldStars] || TIER_REWARDS[0];
+      const newR = TIER_REWARDS[newStars];
+
+      deltaSeeds = newR.seeds - oldR.seeds;
+      deltaWater = newR.water - oldR.water;
+      deltaFertilizer = newR.fertilizer - oldR.fertilizer;
+      deltaCoins = newR.coins - oldR.coins;
+      deltaXp = newR.xp - oldR.xp;
+
+      message = `Xuất sắc! Bạn đạt kỷ lục mới ${newStars}★ và nhận thưởng chênh lệch Nông trại!`;
+
+      // Cập nhật UserLessonProgress
+      this.userLessonProgress.update(map => ({
+        ...map,
+        [lessonId]: {
+          userId: 1,
+          lessonId,
+          bestScorePercent: Math.round((firstTryCorrectCount / totalQuestions) * 100),
+          bestStarsClaimed: newStars,
+          firstPassedAt: currentProgress?.firstPassedAt || new Date().toISOString()
+        }
+      }));
+
+      // Cập nhật BestStarsClaimed vào Lesson tương ứng
+      this.lessons.update(list => list.map(l => {
+        if (l.id === lessonId) {
+          return { ...l, bestStarsClaimed: newStars, isUnlocked: true };
+        }
+        return l;
+      }));
+    } else {
+      // Replaying a lesson with equal or fewer stars: KHÔNG nhân đôi phần thưởng
+      message = `Bạn đã hoàn thành phiên ôn tập ${newStars}★! Giữ vững thành tích cũ ${oldStars}★.`;
+    }
+
+    // Tra cứu mã cây trồng
+    const lesson = this.lessons().find(l => l.id === lessonId);
+    const cropCode = (lesson?.requiredCropName || 'carrot').toLowerCase();
+    const seedKey = cropCode.includes('ngô') || cropCode.includes('corn') ? 'corn'
+      : cropCode.includes('chua') || cropCode.includes('tomato') ? 'tomato'
+      : cropCode.includes('hướng dương') ? 'sunflower'
+      : cropCode.includes('hồng') ? 'rose'
+      : cropCode.includes('tulip') ? 'tulip'
+      : cropCode.includes('xoài') ? 'mango'
+      : cropCode.includes('kiwi') ? 'kiwi'
+      : cropCode.includes('chanh') ? 'lemon'
+      : cropCode.includes('táo') ? 'apple'
+      : cropCode.includes('cherry') ? 'cherry'
+      : 'carrot';
+
+    // Cập nhật tiền tệ và kinh nghiệm (Quiz-Only XP & Coins)
+    if (deltaCoins > 0) this.coins.update(c => c + deltaCoins);
+    if (deltaXp > 0) this.xp.update(x => x + deltaXp);
+
+    // Cập nhật vật phẩm Nông trại
+    if (deltaSeeds > 0 || deltaWater > 0 || deltaFertilizer > 0) {
+      this.inventory.update(inv => {
+        const next = { ...inv };
+        if (deltaSeeds > 0) {
+          next.seeds = { ...next.seeds, [seedKey]: (next.seeds[seedKey] || 0) + deltaSeeds };
+        }
+        if (deltaWater > 0 || deltaFertilizer > 0) {
+          next.care = {
+            water: (next.care.water || 0) + deltaWater,
+            fertilizer: (next.care.fertilizer || 0) + deltaFertilizer
+          };
+        }
+        return next;
+      });
+    }
+
+    // Cập nhật UserWordStats cho toàn bộ các từ trong phiên
+    const nowIso = new Date().toISOString();
+    this.userWordStats.update(stats => {
+      const nextStats = { ...stats };
+      for (const [vocabIdStr, isOk] of entries) {
+        const vocabId = Number(vocabIdStr);
+        const prev = nextStats[vocabId] || {
+          userId: 1,
+          vocabId,
+          attempts: 0,
+          wrongCount: 0,
+          lastSeenAt: nowIso
+        };
+        nextStats[vocabId] = {
+          ...prev,
+          attempts: prev.attempts + 1,
+          wrongCount: isOk ? prev.wrongCount : prev.wrongCount + 1,
+          lastSeenAt: nowIso
+        };
+      }
+      return nextStats;
+    });
+
+    this.saveToStorage();
+
+    return {
+      lessonId,
+      stars: newStars,
+      bestStarsClaimed: Math.max(oldStars, newStars),
+      isNewRecord,
+      totalQuestions,
+      firstTryCorrectCount,
+      correctAnswers: firstTryCorrectCount,
+      scorePercent: Math.round((firstTryCorrectCount / totalQuestions) * 100),
+      isPassed: true,
+      rewardGranted: isNewRecord,
+      rewardSeeds: deltaSeeds,
+      rewardWater: deltaWater,
+      rewardFertilizer: deltaFertilizer,
+      rewardCoins: deltaCoins,
+      rewardXp: deltaXp,
+      cropName: lesson?.requiredCropName || 'Cà rốt',
+      message
+    };
   }
 
   toggleBookmark(word: string) {
