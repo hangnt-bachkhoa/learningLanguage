@@ -9,6 +9,11 @@ import { GameStateService } from '../../../core/services/game-state.service';
   template: `
     <header class="topbar">
       <div class="topbar-left">
+        <!-- NÚT ĐÓNG / MỞ THANH ĐIỀU HƯỚNG (COLLAPSE / EXPAND) -->
+        <button class="nav-toggle-btn" (click)="state.toggleSidebar()" title="Đóng / Mở menu điều hướng">
+          <span class="toggle-icon">☰</span>
+        </button>
+
         <h1 class="page-title">
           <span class="title-logo">🌱</span>
           <span class="title-text">{{ title }}</span>
@@ -39,7 +44,35 @@ import { GameStateService } from '../../../core/services/game-state.service';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 24px;
+      padding: 0 20px;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-toggle-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      color: var(--navy);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      transition: all 0.15s ease;
+    }
+    .nav-toggle-btn:hover {
+      background: #EDE5D6;
+      border-color: var(--navy);
+      transform: scale(1.03);
+    }
+    .toggle-icon {
+      line-height: 1;
     }
     .page-title {
       font-family: var(--font-serif);

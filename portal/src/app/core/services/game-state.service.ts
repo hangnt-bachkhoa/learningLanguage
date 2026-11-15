@@ -39,6 +39,26 @@ export class GameStateService {
   isApiConnected = signal<boolean>(false);
   isLoading = signal<boolean>(false);
 
+  // Quản lý đóng / mở thanh điều hướng (Sidebar Collapse/Expand)
+  isMobileSidebarOpen = signal<boolean>(false);
+  isDesktopSidebarCollapsed = signal<boolean>(false);
+
+  toggleSidebar() {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      this.isMobileSidebarOpen.update(v => !v);
+    } else {
+      this.isDesktopSidebarCollapsed.update(v => !v);
+    }
+  }
+
+  closeMobileSidebar() {
+    this.isMobileSidebarOpen.set(false);
+  }
+
+  openMobileSidebar() {
+    this.isMobileSidebarOpen.set(true);
+  }
+
   // Player Stats
   xp = signal<number>(180);
   coins = signal<number>(120);

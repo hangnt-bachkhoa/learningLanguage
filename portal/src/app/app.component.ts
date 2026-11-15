@@ -1,10 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { TopbarComponent } from './shared/components/topbar/topbar.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { CartModalComponent } from './shared/components/cart-modal/cart-modal.component';
+import { GameStateService } from './core/services/game-state.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ import { CartModalComponent } from './shared/components/cart-modal/cart-modal.co
   template: `
     <div class="app-shell">
       <app-sidebar></app-sidebar>
-      <div class="main-content">
+      <div class="main-content" [class.desktop-collapsed]="state.isDesktopSidebarCollapsed()">
         <app-topbar (openCart)="isCartOpen.set(true)"></app-topbar>
         <main class="content-body">
           <router-outlet></router-outlet>
@@ -47,13 +48,17 @@ import { CartModalComponent } from './shared/components/cart-modal/cart-modal.co
       display: flex;
       flex-direction: column;
       min-width: 0;
+      transition: margin-left 0.25s ease;
+    }
+    .main-content.desktop-collapsed {
+      margin-left: 0 !important;
     }
     @media (max-width: 768px) {
       .main-content {
-        margin-left: 0;
+        margin-left: 0 !important;
       }
       .content-body {
-        padding: 14px 14px 84px; /* Chừa không gian cho Bottom Navigation Bar */
+        padding: 14px 14px 40px;
       }
     }
     .content-body {
@@ -66,5 +71,6 @@ import { CartModalComponent } from './shared/components/cart-modal/cart-modal.co
   `]
 })
 export class AppComponent {
+  state = inject(GameStateService);
   isCartOpen = signal<boolean>(false);
 }
