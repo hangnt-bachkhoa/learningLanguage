@@ -97,11 +97,16 @@ public class FarmService : IFarmService
         seedInv.Quantity -= 1;
         _inventoryRepo.Update(seedInv);
 
-        // Chuyển trạng thái ô đất
+        // Chuyển trạng thái ô đất theo mốc thời gian UTC (Rule 1)
+        var now = DateTime.UtcNow;
+        int growthMinutes = crop.GrowthMinutes > 0 ? crop.GrowthMinutes : 5;
+
         plot.CropId = crop.Id;
         plot.Status = PlotStatus.Seeded;
         plot.GrowthProgress = 0;
-        plot.PlantedAt = DateTime.UtcNow;
+        plot.PlantedAt = now;
+        plot.PlantedAtUtc = now;
+        plot.HarvestableAtUtc = now.AddMinutes(growthMinutes);
         plot.IsWatered = false;
         _plotRepo.Update(plot);
 
@@ -114,34 +119,50 @@ public class FarmService : IFarmService
 
     public async Task<FarmPlotResponseModel> WaterPlotAsync(int userId, int plotIndex, CancellationToken ct = default)
     {
+        return await ApplyCareAsync(userId, new ApplyCareRequestModel
+        {
+            PlotIndex = plotIndex,
+            CareType = "water"
+        }, ct);
+    }
+
+    public async Task<FarmPlotResponseModel> ApplyCareAsync(int userId, ApplyCareRequestModel model, CancellationToken ct = default)
+    {
         using var tx = await _uow.BeginTransactionAsync(ct);
 
         var plot = await _plotRepo.Query(tracking: true)
-            .Include(x => x.Crop)
-            .FirstOrDefaultAsync(x => x.UserId == userId && x.PlotIndex == plotIndex, ct)
-            ?? throw new InvalidOperationException("Ô đất không tồn tại");
+            .Include(p => p.Crop)
+            .FirstOrDefaultAsync(p => p.UserId == userId && p.PlotIndex == model.PlotIndex, ct)
+            ?? throw new KeyNotFoundException("Ô đất không tồn tại.");
 
-        if (plot.Status != PlotStatus.Seeded && plot.Status != PlotStatus.Growing)
-            throw new InvalidOperationException("Ô đất không có cây cần tưới nước");
+        var now = DateTime.UtcNow;
+        if (plot.Crop == null || plot.HarvestableAtUtc == null)
+            throw new InvalidOperationException("Ô đất chưa có cây trồng.");
 
-        var waterInv = await _inventoryRepo.Query(tracking: true)
-            .FirstOrDefaultAsync(x => x.UserId == userId && x.ItemType == InventoryItemType.Water, ct);
-        if (waterInv == null || waterInv.Quantity <= 0)
-            throw new InvalidOperationException("Bạn đã hết nước tưới!");
+        // Anti-Waste Guard: Nếu cây đã chín, từ chối chăm sóc tránh lãng phí vật phẩm (Rule 3)
+        if (now >= plot.HarvestableAtUtc.Value)
+            throw new InvalidOperationException("Cây đã chín, hãy thu hoạch!");
 
-        waterInv.Quantity -= 1;
-        _inventoryRepo.Update(waterInv);
+        string care = model.CareType.ToLowerInvariant();
+        int reduceMinutes = care == "fertilizer" ? 5 : 2;
+        var itemType = care == "fertilizer" ? InventoryItemType.Fertilizer : InventoryItemType.Water;
 
-        plot.IsWatered = true;
-        plot.GrowthProgress = Math.Min(100, plot.GrowthProgress + 50);
-        if (plot.GrowthProgress >= 100)
-        {
-            plot.Status = PlotStatus.Ready;
-        }
-        else
-        {
-            plot.Status = PlotStatus.Growing;
-        }
+        var inv = await _inventoryRepo.Query(tracking: true)
+            .FirstOrDefaultAsync(i => i.UserId == userId && i.ItemType == itemType, ct);
+        if (inv == null || inv.Quantity < 1)
+            throw new InvalidOperationException("Không đủ vật phẩm trong kho.");
+
+        inv.Quantity -= 1;
+        _inventoryRepo.Update(inv);
+
+        var shifted = plot.HarvestableAtUtc.Value.AddMinutes(-reduceMinutes);
+        plot.HarvestableAtUtc = shifted < now ? now : shifted;
+        if (care == "water") plot.IsWatered = true;
+        plot.Status = plot.HarvestableAtUtc <= now ? PlotStatus.Ready : PlotStatus.Growing;
+
+        int totalSec = Math.Max(1, (plot.Crop?.GrowthMinutes ?? 5) * 60);
+        int remSec = Math.Max(0, (int)Math.Ceiling((plot.HarvestableAtUtc.Value - now).TotalSeconds));
+        plot.GrowthProgress = plot.Status == PlotStatus.Ready ? 100 : Math.Min(99, Math.Max(0, (int)Math.Floor(((totalSec - remSec) / (double)totalSec) * 100)));
 
         _plotRepo.Update(plot);
         await _uow.SaveChangesAsync(ct);
@@ -159,8 +180,13 @@ public class FarmService : IFarmService
             .FirstOrDefaultAsync(x => x.UserId == userId && x.PlotIndex == plotIndex, ct)
             ?? throw new InvalidOperationException("Ô đất không tồn tại");
 
-        if (plot.Status != PlotStatus.Ready || plot.Crop == null)
-            throw new InvalidOperationException("Cây chưa chín để thu hoạch");
+        var now = DateTime.UtcNow;
+        if (plot.Crop == null)
+            throw new InvalidOperationException("Ô đất chưa có cây trồng.");
+
+        // Anti-Clock-Tampering Guard: Kiểm tra nghiêm ngặt mốc UTC server trước khi cho phép thu hoạch (Rule 5)
+        if (plot.Status != PlotStatus.Ready && (!plot.HarvestableAtUtc.HasValue || now < plot.HarvestableAtUtc.Value))
+            throw new InvalidOperationException("Cây chưa chín để thu hoạch.");
 
         var user = await _userRepo.Query(tracking: true)
             .FirstOrDefaultAsync(x => x.Id == userId, ct)
@@ -192,11 +218,13 @@ public class FarmService : IFarmService
             _inventoryRepo.Update(cropInv);
         }
 
-        // Đưa ô đất về trạng thái Empty
+        // Đưa ô đất về trạng thái Empty hoàn chỉnh (Rule 5)
         plot.Status = PlotStatus.Empty;
         plot.CropId = null;
         plot.GrowthProgress = 0;
         plot.PlantedAt = null;
+        plot.PlantedAtUtc = null;
+        plot.HarvestableAtUtc = null;
         plot.IsWatered = false;
         _plotRepo.Update(plot);
 

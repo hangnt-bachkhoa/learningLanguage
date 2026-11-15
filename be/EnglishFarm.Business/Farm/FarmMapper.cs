@@ -7,6 +7,13 @@ public static class FarmMapper
 {
     public static FarmPlotResponseModel ToResponse(FarmPlotEntity entity)
     {
+        var now = DateTime.UtcNow;
+        int remainingSec = 0;
+        if (entity.HarvestableAtUtc.HasValue)
+        {
+            remainingSec = Math.Max(0, (int)Math.Ceiling((entity.HarvestableAtUtc.Value - now).TotalSeconds));
+        }
+
         return new FarmPlotResponseModel
         {
             Id = entity.Id,
@@ -17,7 +24,11 @@ public static class FarmMapper
             CropNameVi = entity.Crop?.NameVi,
             IsWatered = entity.IsWatered,
             GrowthProgress = entity.GrowthProgress,
-            PlantedAt = entity.PlantedAt
+            PlantedAt = entity.PlantedAt,
+            PlantedAtUtc = entity.PlantedAtUtc ?? entity.PlantedAt,
+            HarvestableAtUtc = entity.HarvestableAtUtc,
+            RemainingSeconds = remainingSec,
+            ServerUtcNow = now
         };
     }
 

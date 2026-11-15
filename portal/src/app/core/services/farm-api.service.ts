@@ -6,6 +6,7 @@ export interface ApiResponse<T> {
   code: number;
   message: string;
   data: T;
+  serverUtcNow?: string;
 }
 
 export interface UserProfileDto {
@@ -56,6 +57,8 @@ export interface FarmPlotDto {
   isWatered: boolean;
   growthProgress: number;
   plantedAt: string | null;
+  plantedAtUtc?: string | null;
+  harvestableAtUtc?: string | null;
 }
 
 export interface UserInventoryItemDto {
@@ -216,6 +219,13 @@ export class FarmApiService {
   waterPlot(plotIndex: number): Observable<boolean> {
     return this.http.post<ApiResponse<boolean>>(`${this.baseUrl}/farm/water/${plotIndex}`, {})
       .pipe(map(r => r.data));
+  }
+
+  applyCare(plotIndex: number, careType: 'water' | 'fertilizer'): Observable<FarmPlotDto> {
+    return this.http.post<ApiResponse<FarmPlotDto>>(`${this.baseUrl}/farm/care`, {
+      plotIndex,
+      careType
+    }).pipe(map(r => r.data));
   }
 
   harvestPlot(plotIndex: number): Observable<boolean> {

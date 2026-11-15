@@ -13,6 +13,8 @@ public class FarmPlotEntity : BaseEntity
     public bool IsWatered { get; set; }
     public int GrowthProgress { get; set; } = 0; // 0 -> 100%
     public DateTime? PlantedAt { get; set; }
+    public DateTime? PlantedAtUtc { get; set; }
+    public DateTime? HarvestableAtUtc { get; set; }
 
     public virtual UserEntity? User { get; set; }
 }

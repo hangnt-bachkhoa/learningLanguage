@@ -186,6 +186,8 @@ BEGIN
         IsWatered BIT NOT NULL DEFAULT 0,
         GrowthProgress INT NOT NULL DEFAULT 0,
         PlantedAt DATETIME2 NULL,
+        PlantedAtUtc DATETIME2 NULL,
+        HarvestableAtUtc DATETIME2 NULL,
         CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
         UpdatedAt DATETIME2 NULL,
         IsDeleted BIT NOT NULL DEFAULT 0,
@@ -270,9 +272,13 @@ IF NOT EXISTS (SELECT 1 FROM dbo.CropCatalogs WHERE Code = 'carrot')
 BEGIN
     INSERT INTO dbo.CropCatalogs (Code, NameVi, SeedPriceCoins, GrowthMinutes, HarvestXp, HarvestCoins)
     VALUES 
-    ('carrot', N'Cà rốt', 10, 2, 20, 15),
-    ('corn', N'Bắp ngô', 20, 5, 35, 30),
-    ('tomato', N'Cà chua', 30, 8, 50, 45);
+    ('carrot', N'Cà rốt', 10, 5, 20, 15),
+    ('potato', N'Khoai tây', 15, 6, 25, 20),
+    ('corn', N'Bắp ngô', 20, 8, 35, 30),
+    ('tomato', N'Cà chua', 30, 10, 50, 45),
+    ('strawberry', N'Dâu tây', 40, 12, 60, 55),
+    ('apple', N'Táo đỏ', 50, 15, 80, 70),
+    ('sunflower', N'Hoa hướng dương', 50, 15, 80, 70);
 END
 GO
 

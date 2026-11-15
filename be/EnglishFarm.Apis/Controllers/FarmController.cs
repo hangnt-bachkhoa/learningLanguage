@@ -34,6 +34,13 @@ public class FarmController : ApiControllerBase
         return await ExecuteFunction(() => _farmService.WaterPlotAsync(userId, plotIndex));
     }
 
+    [HttpPost("care")]
+    public async Task<IActionResult> ApplyCareAsync([FromBody] ApplyCareRequestModel model)
+    {
+        int userId = 1;
+        return await ExecuteFunction(() => _farmService.ApplyCareAsync(userId, model));
+    }
+
     [HttpPost("harvest/{plotIndex:int}")]
     public async Task<IActionResult> HarvestAsync(int plotIndex)
     {

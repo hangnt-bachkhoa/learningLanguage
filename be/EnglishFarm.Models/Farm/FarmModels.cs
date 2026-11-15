@@ -19,6 +19,16 @@ public class WaterPlotRequestModel
     public int PlotIndex { get; set; }
 }
 
+public class ApplyCareRequestModel
+{
+    [Required]
+    [Range(0, 8)]
+    public int PlotIndex { get; set; }
+
+    [Required]
+    public string CareType { get; set; } = string.Empty; // "water" | "fertilizer"
+}
+
 public class FarmPlotResponseModel
 {
     public int Id { get; set; }
@@ -30,6 +40,10 @@ public class FarmPlotResponseModel
     public bool IsWatered { get; set; }
     public int GrowthProgress { get; set; }
     public DateTime? PlantedAt { get; set; }
+    public DateTime? PlantedAtUtc { get; set; }
+    public DateTime? HarvestableAtUtc { get; set; }
+    public int RemainingSeconds { get; set; }
+    public DateTime ServerUtcNow { get; set; } = DateTime.UtcNow;
 }
 
 public class UserInventoryResponseModel

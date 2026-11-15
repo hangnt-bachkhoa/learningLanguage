@@ -5,6 +5,7 @@ export interface CropCatalog {
   shopId: string;
   price: number;
   duration: string;
+  growthMinutes: number; // Thời gian sinh trưởng tính bằng phút (Rule 2)
   usage: string;
   desc: string;
   initialSeeds: number;
@@ -29,7 +30,9 @@ export interface FarmPlot {
   crop?: string;
   isWatered: boolean;
   growthProgress: number; // 0..100
-  plantedAt?: Date;
+  plantedAt?: Date | string;
+  plantedAtUtc?: string; // Mốc thời gian gieo hạt theo chuẩn UTC ISO (Rule 1)
+  harvestableAtUtc?: string; // Mốc thời gian chín sẵn sàng thu hoạch (Rule 1 & 3)
 }
 
 export interface UserInventory {

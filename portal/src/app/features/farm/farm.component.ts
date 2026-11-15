@@ -1,9 +1,13 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { interval } from 'rxjs';
 import { GameStateService, getPlotUnlockRequirement, PlotUnlockRequirement } from '../../core/services/game-state.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
+import { CROP_CATALOG } from '../../core/constants/crop-catalog.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { FarmPlot } from '../../core/models/game.models';
+import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/growth-countdown.util';
 
 @Component({
   selector: 'app-farm',
@@ -68,10 +72,15 @@ import { FarmPlot } from '../../core/models/game.models';
                   </div>
                 }
 
-                <!-- 4. Thanh tiến độ khi đang lớn -->
-                @if (plot.status === 'growing') {
-                  <div class="growth-bar-wrap" title="Tiến độ lớn: {{ plot.growthProgress }}%">
-                    <div class="growth-bar-fill" [style.width.%]="plot.growthProgress"></div>
+                <!-- 4. Đồng hồ đếm ngược mm:ss và Thanh tiến độ thời gian thực (Rule 4) -->
+                @if (plot.crop && (plot.status === 'seeded' || plot.status === 'growing')) {
+                  @let cd = getPlotCountdown(plot);
+                  <div class="crop-countdown-badge" title="Thời gian còn lại: {{ cd.label }}">
+                    <span class="countdown-clock-icon">⏱️</span>
+                    <span class="countdown-text">{{ cd.label }}</span>
+                  </div>
+                  <div class="growth-bar-wrap" title="Tiến độ lớn: {{ cd.progress }}%">
+                    <div class="growth-bar-fill" [style.width.%]="cd.progress"></div>
                   </div>
                 }
 
@@ -556,6 +565,34 @@ import { FarmPlot } from '../../core/models/game.models';
       color: var(--navy);
       letter-spacing: -0.2px;
     }
+    /* Huy hiệu đếm ngược thời gian thực mm:ss */
+    .crop-countdown-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(248, 244, 235, 0.94);
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      padding: 1px 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      z-index: 5;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+      pointer-events: none;
+    }
+    .countdown-clock-icon {
+      font-size: 9.5px;
+      line-height: 1;
+    }
+    .countdown-text {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--navy);
+      font-family: monospace;
+      letter-spacing: -0.3px;
+    }
+
     /* Thanh tiến độ sinh trưởng */
     .growth-bar-wrap {
       position: absolute;
@@ -905,6 +942,18 @@ import { FarmPlot } from '../../core/models/game.models';
         padding: 1px 4px;
         gap: 2px;
       }
+      .crop-countdown-badge {
+        top: 2px;
+        right: 2px;
+        padding: 0.5px 4px;
+        gap: 1.5px;
+      }
+      .countdown-clock-icon {
+        font-size: 8px;
+      }
+      .countdown-text {
+        font-size: 7.5px;
+      }
       .tag-icon {
         font-size: 9.5px;
       }
@@ -1074,13 +1123,38 @@ import { FarmPlot } from '../../core/models/game.models';
     }
   `]
 })
-export class FarmComponent {
+export class FarmComponent implements OnInit {
   state = inject(GameStateService);
   assets = FARM_ASSETS;
   soilBackground = FARM_ASSETS.tilledSoil;
+  private destroyRef = inject(DestroyRef);
 
   activeTab = signal<'garden' | 'catalog'>('garden');
   selectedLockedPlotIndex = signal<number | null>(null);
+
+  ngOnInit() {
+    // Khởi tạo và đồng bộ trạng thái sinh trưởng ban đầu
+    this.state.recalculatePlotStates();
+
+    // Vòng lặp đếm ngược 1 giây thời gian thực (Rule 4 & 5)
+    // Tự động dọn dẹp khi Component destroy qua takeUntilDestroyed
+    interval(1000).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => {
+      this.state.recalculatePlotStates();
+    });
+  }
+
+  getPlotCountdown(plot: FarmPlot): PlotCountdownResult {
+    const cropConfig = CROP_CATALOG.find(c => c.id === plot.crop);
+    const growthMinutes = cropConfig?.growthMinutes || 5;
+    return computePlotCountdown(
+      plot.plantedAtUtc,
+      plot.harvestableAtUtc,
+      growthMinutes,
+      this.state.serverClockOffsetMs()
+    );
+  }
 
   seedOptions = [
     { id: 'carrot', name: 'Cà rốt', icon: '🥕' },
@@ -1102,16 +1176,25 @@ export class FarmComponent {
     {
       id: 'carrot',
       nameVi: 'Cà rốt giòn ngọt',
-      growthTime: '2 phút (2 lượt tưới)',
+      growthTime: '5 phút (Tưới -2p, Phân -5p)',
       coins: 15,
       xp: 20,
       desc: 'Cây củ cam giàu vitamin A. Thu hoạch để nhận Xu và mở khóa bài học.',
       icon: FARM_ASSETS.readyCarrot
     },
     {
+      id: 'potato',
+      nameVi: 'Khoai tây bùi bở',
+      growthTime: '6 phút (Tưới -2p, Phân -5p)',
+      coins: 20,
+      xp: 25,
+      desc: 'Củ khoai tây mộc mạc giàu tinh bột, thiết yếu cho nông trại.',
+      icon: FARM_ASSETS.readyPotato
+    },
+    {
       id: 'corn',
       nameVi: 'Bắp ngô vàng',
-      growthTime: '5 phút (3 lượt tưới)',
+      growthTime: '8 phút (Tưới -2p, Phân -5p)',
       coins: 30,
       xp: 35,
       desc: 'Bắp ngô vàng óng ả giàu dinh dưỡng, giá bán cao tại Cửa hàng.',
@@ -1120,16 +1203,25 @@ export class FarmComponent {
     {
       id: 'tomato',
       nameVi: 'Cà chua mọng nước',
-      growthTime: '8 phút (4 lượt tưới)',
+      growthTime: '10 phút (Tưới -2p, Phân -5p)',
       coins: 45,
       xp: 50,
       desc: 'Cà chua đỏ chín mọng, giúp tăng nhanh điểm kinh nghiệm và nông sản.',
       icon: FARM_ASSETS.readyTomato
     },
     {
+      id: 'strawberry',
+      nameVi: 'Dâu tây đỏ ngọt',
+      growthTime: '12 phút (Tưới -2p, Phân -5p)',
+      coins: 40,
+      xp: 45,
+      desc: 'Những trái dâu tây đỏ tươi mọng nước, giá trị cao.',
+      icon: FARM_ASSETS.readyStrawberry
+    },
+    {
       id: 'sunflower',
       nameVi: 'Hoa hướng dương',
-      growthTime: '4 phút (2 lượt tưới)',
+      growthTime: '15 phút (Tưới -2p, Phân -5p)',
       coins: 25,
       xp: 30,
       desc: 'Đóa hoa vàng rực rỡ đón ánh mặt trời, biểu tượng của sự kiên trì.',
@@ -1138,7 +1230,7 @@ export class FarmComponent {
     {
       id: 'rose',
       nameVi: 'Hoa hồng nhung',
-      growthTime: '5 phút (3 lượt tưới)',
+      growthTime: '15 phút (Tưới -2p, Phân -5p)',
       coins: 35,
       xp: 40,
       desc: 'Hoa hồng kiêu sa đỏ thắm, tô điểm sắc màu cho nông trại của bạn.',
@@ -1147,7 +1239,7 @@ export class FarmComponent {
     {
       id: 'tulip',
       nameVi: 'Hoa tulip Hà Lan',
-      growthTime: '4 phút (2 lượt tưới)',
+      growthTime: '12 phút (Tưới -2p, Phân -5p)',
       coins: 30,
       xp: 35,
       desc: 'Búp hoa tulip màu tím hồng duyên dáng, dễ trồng và nhanh lớn.',
@@ -1156,7 +1248,7 @@ export class FarmComponent {
     {
       id: 'mango',
       nameVi: 'Xoài cát ngọt lịm',
-      growthTime: '7 phút (3 lượt tưới)',
+      growthTime: '18 phút (Tưới -2p, Phân -5p)',
       coins: 50,
       xp: 55,
       desc: 'Cây xoài quả vàng căng tròn, mang lại năng suất và lợi nhuận cao.',
@@ -1165,7 +1257,7 @@ export class FarmComponent {
     {
       id: 'kiwi',
       nameVi: 'Kiwi xanh mát',
-      growthTime: '6 phút (3 lượt tưới)',
+      growthTime: '18 phút (Tưới -2p, Phân -5p)',
       coins: 45,
       xp: 50,
       desc: 'Quả kiwi ruột xanh ngọc ngọt dịu thanh mát, giàu vitamin C.',
@@ -1174,7 +1266,7 @@ export class FarmComponent {
     {
       id: 'lemon',
       nameVi: 'Chanh vàng tươi',
-      growthTime: '5 phút (2 lượt tưới)',
+      growthTime: '15 phút (Tưới -2p, Phân -5p)',
       coins: 35,
       xp: 40,
       desc: 'Cây chanh vàng thơm ngát, dễ chăm sóc và cho trái đều đặn.',
@@ -1183,7 +1275,7 @@ export class FarmComponent {
     {
       id: 'apple',
       nameVi: 'Táo đỏ chín mọng',
-      growthTime: '8 phút (4 lượt tưới)',
+      growthTime: '15 phút (Tưới -2p, Phân -5p)',
       coins: 60,
       xp: 65,
       desc: 'Cây táo đỏ ngọt giòn kinh điển, mang lại nhiều Xu và điểm XP.',
@@ -1192,7 +1284,7 @@ export class FarmComponent {
     {
       id: 'cherry',
       nameVi: 'Cherry đỏ mọng',
-      growthTime: '10 phút (4 lượt tưới)',
+      growthTime: '20 phút (Tưới -2p, Phân -5p)',
       coins: 80,
       xp: 85,
       desc: 'Cặp cherry đỏ mọng thượng hạng, phần thưởng giá trị cao nhất.',
@@ -1204,7 +1296,7 @@ export class FarmComponent {
     const readyPlot = this.state.plots().find(p => (p.status || '').toLowerCase() === 'ready');
     if (readyPlot) {
       const crop = readyPlot.crop || 'carrot';
-      const cat = this.catalogList.find(c => c.id === crop);
+      const cat = CROP_CATALOG.find(c => c.id === crop);
       return {
         name: cat?.nameVi || 'Nông sản chín',
         status: 'Sẵn sàng thu hoạch!',
@@ -1218,11 +1310,12 @@ export class FarmComponent {
     });
     if (growingPlot) {
       const crop = growingPlot.crop || 'carrot';
-      const cat = this.catalogList.find(c => c.id === crop);
+      const cat = CROP_CATALOG.find(c => c.id === crop);
+      const cd = this.getPlotCountdown(growingPlot);
       return {
         name: cat?.nameVi || 'Cây non',
-        status: growingPlot.isWatered ? 'Đang lớn tươi tốt' : 'Cần tưới nước!',
-        time: `${100 - growingPlot.growthProgress}% còn lại`,
+        status: growingPlot.isWatered ? 'Đang lớn tươi tốt (Đã tưới)' : 'Cần chăm sóc (-2p tưới, -5p phân)',
+        time: `⏱️ ${cd.label} (${cd.progress}%)`,
         icon: this.getPlantSprite(growingPlot)
       };
     }
@@ -1362,24 +1455,7 @@ export class FarmComponent {
     } else if (tool === 'harvest') {
       this.state.harvestPlot(index);
     } else if (tool === 'fertilize') {
-      if (status === 'growing' || status === 'seeded') {
-        if (this.state.inventory().care.fertilizer > 0) {
-          this.state.inventory.update(inv => ({
-            ...inv,
-            care: { ...inv.care, fertilizer: inv.care.fertilizer - 1 }
-          }));
-          this.state.plots.update(list => list.map((p, i) => i === index ? {
-            ...p,
-            status: 'ready',
-            growthProgress: 100
-          } : p));
-          this.state.showToast('⚡ Bón phân thành công! Cây đã chín ngay lập tức.');
-        } else {
-          this.state.showToast('Bạn đã hết phân bón!');
-        }
-      } else {
-        this.state.showToast('Chỉ có thể bón phân cho cây đang sinh trưởng!');
-      }
+      this.state.fertilizePlot(index);
     } else {
       // Nhấp vào cây đang lớn -> ưu tiên tưới nước
       if (status === 'seeded' || status === 'growing') {

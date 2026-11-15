@@ -1299,12 +1299,19 @@ export class QuizComponent implements OnInit {
 
   isViToEn(q: QuizQuestionDto | null | undefined): boolean {
     if (!q) return false;
+    if (q.questionType === 'context' || q.questionType === 'listening') return false;
     if (q.format === 'VI_TO_EN' || q.questionType === 'vi_to_en') return true;
     if (q.prompt && (
       q.prompt.includes('Chọn từ tiếng Anh') ||
       q.prompt.includes('Từ nào sau đây là') ||
-      q.prompt.includes('từ tiếng Anh có nghĩa')
+      q.prompt.includes('từ tiếng Anh có nghĩa') ||
+      q.prompt.toLowerCase().includes('tiếng anh')
     )) {
+      return true;
+    }
+    // Nếu các đáp án A, B, C, D chứa từ tiếng Anh chính (q.word) -> chắc chắn là câu hỏi chọn từ tiếng Anh
+    const targetWord = q.word ? q.word.trim().toLowerCase() : '';
+    if (targetWord && q.options && q.options.some(opt => opt.trim().toLowerCase() === targetWord)) {
       return true;
     }
     return false;
@@ -1314,12 +1321,13 @@ export class QuizComponent implements OnInit {
     if (!q || !q.prompt) return '';
     const match = q.prompt.match(/["“]([^"”]+)["”]/);
     if (match && match[1]) {
-      return match[1];
+      return match[1].replace(/["“”]/g, '').trim();
     }
-    return q.prompt.replace(/^Chọn từ tiếng Anh có nghĩa là:?\s*/i, '')
-                   .replace(/^Từ nào sau đây là:?\s*/i, '')
-                   .replace(/[:?]/g, '')
-                   .trim();
+    const cleaned = q.prompt.replace(/^Chọn từ tiếng Anh có nghĩa là:?\s*/i, '')
+                           .replace(/^Từ nào sau đây là:?\s*/i, '')
+                           .replace(/["“”:?]/g, '')
+                           .trim();
+    return cleaned || q.prompt;
   }
 
   selectOption(idx: number) {

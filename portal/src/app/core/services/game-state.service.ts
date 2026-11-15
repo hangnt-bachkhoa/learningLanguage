@@ -4,6 +4,7 @@ import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryIte
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
 import { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
+import { computePlotCountdown, PlotCountdownResult } from '../utils/growth-countdown.util';
 import {
   UserWordStat,
   UserLessonProgress,
@@ -93,6 +94,17 @@ export class GameStateService {
   // Trạng thái kết nối Backend
   isApiConnected = signal<boolean>(false);
   isLoading = signal<boolean>(false);
+
+  // Đồng bộ thời gian thực với Server (Rule 5: Anti-Clock-Tampering)
+  serverClockOffsetMs = signal<number>(0);
+
+  syncServerTime(serverUtcNow?: string | null) {
+    if (!serverUtcNow) return;
+    const serverMs = new Date(serverUtcNow).getTime();
+    if (!isNaN(serverMs)) {
+      this.serverClockOffsetMs.set(serverMs - Date.now());
+    }
+  }
 
   // Quản lý đóng / mở thanh điều hướng (Sidebar Collapse/Expand)
   isMobileSidebarOpen = signal<boolean>(false);
@@ -343,7 +355,10 @@ export class GameStateService {
             this.currentXp.set(Math.min(1000, data.xp >= req ? 0 : data.xp));
           }
           if (typeof data.coins === 'number') this.coins.set(data.coins);
-          if (Array.isArray(data.plots) && data.plots.length > 0) this.plots.set(data.plots);
+          if (Array.isArray(data.plots) && data.plots.length > 0) {
+            this.plots.set(data.plots);
+            this.recalculatePlotStates();
+          }
           if (data.inventory && typeof data.inventory === 'object') {
             this.inventory.update(current => ({
               seeds: { ...current.seeds, ...(data.inventory.seeds || {}) },
@@ -1143,6 +1158,49 @@ export class GameStateService {
     this.initFromApi();
   }
 
+  // Cập nhật trạng thái thời gian thực cho toàn bộ các ô đất (Rule 1 & Rule 4)
+  recalculatePlotStates() {
+    const offset = this.serverClockOffsetMs();
+    let hasChanged = false;
+
+    const updated = this.plots().map(p => {
+      const status = (p.status || '').toLowerCase();
+      if (status === 'locked' || status === 'empty' || !p.crop) {
+        return p;
+      }
+
+      const cropConfig = CROP_CATALOG.find(c => c.id === p.crop);
+      const growthMinutes = cropConfig?.growthMinutes || 5;
+
+      // Nâng cấp tương thích nếu trước đó chưa lưu mốc UTC
+      let harvestUtc = p.harvestableAtUtc;
+      let plantedUtc = p.plantedAtUtc;
+      if (!harvestUtc) {
+        const nowMs = Date.now() + offset;
+        plantedUtc = p.plantedAt ? new Date(p.plantedAt).toISOString() : new Date(nowMs).toISOString();
+        harvestUtc = new Date(new Date(plantedUtc).getTime() + growthMinutes * 60 * 1000).toISOString();
+        hasChanged = true;
+      }
+
+      const countdown = computePlotCountdown(plantedUtc, harvestUtc, growthMinutes, offset);
+      if (p.status !== countdown.status || p.growthProgress !== countdown.progress) {
+        hasChanged = true;
+        return {
+          ...p,
+          plantedAtUtc: plantedUtc,
+          harvestableAtUtc: harvestUtc,
+          status: countdown.status as PlotStatus,
+          growthProgress: countdown.progress
+        };
+      }
+      return p;
+    });
+
+    if (hasChanged) {
+      this.plots.set(updated);
+    }
+  }
+
   // Farm Actions
   plantSeed(plotIndex: number) {
     const plot = this.plots()[plotIndex];
@@ -1163,23 +1221,33 @@ export class GameStateService {
       return;
     }
 
+    const cropConfig = CROP_CATALOG.find(c => c.id === seed);
+    const growthMinutes = cropConfig?.growthMinutes || 5;
+    const nowMs = Date.now() + this.serverClockOffsetMs();
+    const now = new Date(nowMs);
+    const plantedAtUtc = now.toISOString();
+    const harvestableAtUtc = new Date(nowMs + growthMinutes * 60 * 1000).toISOString();
+
     // Trừ hạt giống cục bộ
     this.inventory.update(inv => ({
       ...inv,
       seeds: { ...inv.seeds, [seed]: currentQty - 1 }
     }));
 
-    // Cập nhật ô đất cục bộ
+    // Cập nhật ô đất cục bộ theo mốc thời gian UTC (Rule 1)
     this.plots.update(list => list.map((p, idx) => idx === plotIndex ? {
       ...p,
       status: 'seeded',
       crop: seed,
       isWatered: false,
       growthProgress: 0,
-      plantedAt: new Date()
+      plantedAt: now,
+      plantedAtUtc,
+      harvestableAtUtc
     } : p));
 
-    this.showToast(`🌱 Đã gieo hạt ${seed} vào ô đất #${plotIndex + 1}!`);
+    this.saveToStorage();
+    this.showToast(`🌱 Đã gieo ${cropConfig?.nameVi || seed} (#${plotIndex + 1}) · Chín sau ${growthMinutes} phút!`);
 
     // Gửi lên Backend API nếu đang online
     if (this.isApiConnected()) {
@@ -1192,43 +1260,127 @@ export class GameStateService {
   waterPlot(plotIndex: number) {
     const plot = this.plots()[plotIndex];
     const status = (plot.status || '').toLowerCase();
-    if (status !== 'seeded' && status !== 'growing') {
+    if (status === 'locked' || status === 'empty' || !plot.crop) {
       this.showToast('Ô đất này không có cây cần tưới!');
       return;
     }
-    if (plot.growthProgress >= 100) {
-      this.showToast('Cây đã chín rồi, hãy thu hoạch!');
+
+    const nowMs = Date.now() + this.serverClockOffsetMs();
+    const harvestMs = plot.harvestableAtUtc ? new Date(plot.harvestableAtUtc).getTime() : nowMs;
+
+    // Clamping & Anti-Waste Guard (Rule 3)
+    if (status === 'ready' || nowMs >= harvestMs) {
+      this.showToast('Cây đã chín, hãy thu hoạch!');
       return;
     }
+
     if (this.inventory().care.water <= 0) {
       this.showToast('Bạn đã hết nước tưới! Mua thêm tại Cửa hàng.');
       return;
     }
 
-    // Trừ nước cục bộ
+    // Trừ 1 nước tưới
     this.inventory.update(inv => ({
       ...inv,
       care: { ...inv.care, water: Math.max(0, inv.care.water - 1) }
     }));
 
-    // Tăng trưởng
-    this.plots.update(list => list.map((p, idx) => {
-      if (idx !== plotIndex) return p;
-      const newProgress = Math.min(100, p.growthProgress + 50);
-      return {
-        ...p,
-        isWatered: true,
-        status: newProgress >= 100 ? 'ready' : 'growing',
-        growthProgress: newProgress
-      };
-    }));
+    // Tưới nước: Rút ngắn 2 phút sinh trưởng (Rule 3)
+    const newHarvestMs = Math.max(nowMs, harvestMs - 2 * 60 * 1000);
+    const isReady = newHarvestMs <= nowMs;
+    const updatedHarvestableAtUtc = new Date(newHarvestMs).toISOString();
 
-    this.showToast(`💧 Đã tưới nước cho ô #${plotIndex + 1}! Cây lớn nhanh hơn.`);
+    const cropConfig = CROP_CATALOG.find(c => c.id === plot.crop);
+    const growthMinutes = cropConfig?.growthMinutes || 5;
+    const totalSec = Math.max(1, growthMinutes * 60);
+    const remainingSec = Math.max(0, Math.ceil((newHarvestMs - nowMs) / 1000));
+    const progress = isReady ? 100 : Math.min(99, Math.max(0, Math.floor(((totalSec - remainingSec) / totalSec) * 100)));
+
+    this.plots.update(list => list.map((p, idx) => idx === plotIndex ? {
+      ...p,
+      isWatered: true,
+      harvestableAtUtc: updatedHarvestableAtUtc,
+      status: isReady ? 'ready' : (progress < 30 ? 'seeded' : 'growing'),
+      growthProgress: progress
+    } : p));
+
+    this.saveToStorage();
+    if (isReady) {
+      this.showToast(`💧 Đã tưới nước (-2 phút)! Cây đã chín ngay lập tức.`);
+    } else {
+      this.showToast(`💧 Đã tưới nước (-2 phút) cho ô #${plotIndex + 1}!`);
+    }
 
     if (this.isApiConnected()) {
-      this.api.waterPlot(plotIndex).subscribe({
+      this.api.applyCare(plotIndex, 'water').subscribe({
         next: () => this.refreshProfile(),
-        error: (err) => console.warn('Lỗi ghi nhận tưới nước lên backend:', err)
+        error: () => {
+          this.api.waterPlot(plotIndex).subscribe({
+            next: () => this.refreshProfile(),
+            error: (err) => console.warn('Lỗi ghi nhận tưới nước lên backend:', err)
+          });
+        }
+      });
+    }
+  }
+
+  fertilizePlot(plotIndex: number) {
+    const plot = this.plots()[plotIndex];
+    const status = (plot.status || '').toLowerCase();
+    if (status === 'locked' || status === 'empty' || !plot.crop) {
+      this.showToast('Ô đất này không có cây cần bón phân!');
+      return;
+    }
+
+    const nowMs = Date.now() + this.serverClockOffsetMs();
+    const harvestMs = plot.harvestableAtUtc ? new Date(plot.harvestableAtUtc).getTime() : nowMs;
+
+    // Clamping & Anti-Waste Guard (Rule 3)
+    if (status === 'ready' || nowMs >= harvestMs) {
+      this.showToast('Cây đã chín, hãy thu hoạch!');
+      return;
+    }
+
+    if (this.inventory().care.fertilizer <= 0) {
+      this.showToast('Bạn đã hết phân bón! Hãy hoàn thành bài Quiz để nhận thêm.');
+      return;
+    }
+
+    // Trừ 1 phân bón
+    this.inventory.update(inv => ({
+      ...inv,
+      care: { ...inv.care, fertilizer: Math.max(0, inv.care.fertilizer - 1) }
+    }));
+
+    // Bón phân: Rút ngắn 5 phút sinh trưởng (Rule 3)
+    const newHarvestMs = Math.max(nowMs, harvestMs - 5 * 60 * 1000);
+    const isReady = newHarvestMs <= nowMs;
+    const updatedHarvestableAtUtc = new Date(newHarvestMs).toISOString();
+
+    const cropConfig = CROP_CATALOG.find(c => c.id === plot.crop);
+    const growthMinutes = cropConfig?.growthMinutes || 5;
+    const totalSec = Math.max(1, growthMinutes * 60);
+    const remainingSec = Math.max(0, Math.ceil((newHarvestMs - nowMs) / 1000));
+    const progress = isReady ? 100 : Math.min(99, Math.max(0, Math.floor(((totalSec - remainingSec) / totalSec) * 100)));
+
+    this.plots.update(list => list.map((p, idx) => idx === plotIndex ? {
+      ...p,
+      harvestableAtUtc: updatedHarvestableAtUtc,
+      status: isReady ? 'ready' : (progress < 30 ? 'seeded' : 'growing'),
+      growthProgress: progress
+    } : p));
+
+    this.saveToStorage();
+    if (isReady) {
+      this.showToast(`⚡ Bón phân (-5 phút)! Cây đã chín ngay lập tức.`);
+    } else {
+      this.showToast(`⚡ Bón phân (-5 phút) cho ô #${plotIndex + 1}!`);
+    }
+
+    if (this.isApiConnected()) {
+      this.api.applyCare(plotIndex, 'fertilizer').subscribe({
+        next: () => this.refreshProfile(),
+        error: (err) => console.warn('Lỗi ghi nhận bón phân lên backend:', err)
       });
     }
   }
@@ -1236,7 +1388,10 @@ export class GameStateService {
   harvestPlot(plotIndex: number) {
     const plot = this.plots()[plotIndex];
     const status = (plot.status || '').toLowerCase();
-    if (status !== 'ready' || !plot.crop) {
+    const nowMs = Date.now() + this.serverClockOffsetMs();
+    const isReady = status === 'ready' || (plot.harvestableAtUtc && new Date(plot.harvestableAtUtc).getTime() <= nowMs);
+
+    if (!isReady || !plot.crop) {
       this.showToast('Cây chưa chín để thu hoạch!');
       return;
     }
@@ -1259,15 +1414,19 @@ export class GameStateService {
       }
     }));
 
-    // Reset ô đất
+    // Đưa ô đất về trạng thái Empty hoàn chỉnh
     this.plots.update(list => list.map((p, idx) => idx === plotIndex ? {
       ...p,
       status: 'empty',
       crop: undefined,
       isWatered: false,
-      growthProgress: 0
+      growthProgress: 0,
+      plantedAt: undefined,
+      plantedAtUtc: undefined,
+      harvestableAtUtc: undefined
     } : p));
 
+    this.saveToStorage();
     this.showToast(`✨ Thu hoạch ${cropConfig?.nameVi || 'nông sản'} thành công! +${gainedXp} XP, +${gainedCoins} Xu 🪙`);
 
     if (this.isApiConnected()) {
