@@ -1,0 +1,117 @@
+export interface CropCatalog {
+  id: string;
+  nameVi: string;
+  seedNameVi: string;
+  shopId: string;
+  price: number;
+  duration: string;
+  usage: string;
+  desc: string;
+  initialSeeds: number;
+  initialHarvested: number;
+  matureSvg: string;
+  emblemSvg: string;
+  // Phân cấp hạt giống & Điều kiện mở khóa
+  tier: number; // 1: Mầm non, 2: Hoa trái, 3: Làm vườn, 4: Thượng hạng
+  tierNameVi: string;
+  requiredLevel: number;
+  requiredXp: number;
+  requiredLessonId?: number;
+  requiredLessonTitle?: string;
+}
+
+export type PlotStatus = 'locked' | 'empty' | 'seeded' | 'growing' | 'ready';
+
+export interface FarmPlot {
+  id: number;
+  index: number;
+  status: PlotStatus;
+  crop?: string;
+  isWatered: boolean;
+  growthProgress: number; // 0..100
+  plantedAt?: Date;
+}
+
+export interface UserInventory {
+  seeds: Record<string, number>;
+  harvested: Record<string, number>;
+  care: {
+    water: number;
+    fertilizer: number;
+  };
+  decor: Record<string, number>;
+}
+
+export interface PlannerBook {
+  id: string;
+  title: string;
+  moduleType: string;
+  coverColor: string;
+  learned: number;
+  total: number;
+  unlocked: boolean;
+  unlockCondition?: string;
+  note?: string;
+}
+
+export interface VocabularyWord {
+  id: number;
+  lessonId: number;
+  word: string;
+  phonetic?: string;
+  ipaUs?: string;
+  wordType: string;
+  meaningVi: string;
+  exampleEn: string;
+  exampleVi: string;
+  spriteKey: string;
+  learned: boolean;
+}
+
+export interface QuizQuestion {
+  id: number;
+  lessonId: number;
+  prompt: string;
+  spriteKey: string;
+  options: string[];
+  correctIndex: number;
+}
+
+export interface ShopItem {
+  id: string;
+  cat: 'seeds' | 'care' | 'decor' | 'bundle';
+  name: string;
+  price: number;
+  sprite: string;
+  duration: string;
+  usage: string;
+  desc: string;
+  cropKey?: string;
+  tier?: number;
+  tierNameVi?: string;
+  requiredLevel?: number;
+  requiredXp?: number;
+  requiredLessonId?: number;
+  requiredLessonTitle?: string;
+}
+
+export interface CartItem {
+  item: ShopItem;
+  qty: number;
+}
+
+export interface ReviewSchedule {
+  lessonId: number;
+  title: string;
+  date: string;
+  firstDone: boolean;
+  day1Done: boolean;
+  day3Done: boolean;
+  day7Done: boolean;
+  day14Done: boolean;
+}
+
+export interface ToastMessage {
+  id: number;
+  text: string;
+}

@@ -1,0 +1,38 @@
+# =========================================================================
+# .gitignore for English Farm (Angular + .NET 8 Web API)
+# =========================================================================
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Node.js & Angular
+**/node_modules/
+**/dist/
+**/.angular/
+**/.angular/cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json.bak
+
+# .NET & C# build artifacts
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/.idea/
+*.user
+*.userprefs
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Temporary & Log files
+*.log
+*.tmp

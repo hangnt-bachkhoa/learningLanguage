@@ -1,0 +1,1178 @@
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { GameStateService } from '../../core/services/game-state.service';
+import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
+import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
+import { FarmApiService, QuizQuestionDto, QuizSubmitResultDto, QuizSessionDto } from '../../core/services/farm-api.service';
+
+@Component({
+  selector: 'app-quiz',
+  standalone: true,
+  imports: [CommonModule, RouterLink, SafeHtmlPipe],
+  template: `
+    <div class="quiz-screen">
+      <!-- ======================================================== -->
+      <!-- CHẾ ĐỘ 1: ĐANG THỰC HIỆN BÀI THI QUIZ THEO PHONG CÁCH DUOLINGO -->
+      <!-- ======================================================== -->
+      @if (!isFinished()) {
+        <!-- HEADER: TIẾN ĐỘ ĐƠN ĐIỆU + 5 GIỌT SƯƠNG XẾP HẠNG SAO -->
+        <header class="quiz-header">
+          <a [routerLink]="['/lessons']" class="back-link" title="Rời bài kiểm tra">
+            <span class="chevron">‹</span>
+            <span class="header-title">{{ lessonTitle() }}</span>
+          </a>
+
+          <!-- THANH TIẾN ĐỘ ĐƠN ĐIỆU (MONOTONIC PROGRESS BAR) -->
+          <div class="progress-container">
+            <div class="progress-bar-rail">
+              <div class="progress-bar-fill" [style.width.%]="progressPercent()"></div>
+            </div>
+            <span class="progress-count">{{ masteredIds().size }}/{{ totalInitial() }}</span>
+          </div>
+
+          <!-- 5 GIỌT SƯƠNG: CHỈ BÁO XẾP HẠNG 3 SAO -->
+          <div class="dew-drops-row" [title]="dewDropsTooltip()">
+            @for (drop of dewDropsState(); track $index) {
+              <span class="dew-drop" [class.dew-active]="drop" [class.dew-lost]="!drop">
+                💧
+              </span>
+            }
+          </div>
+        </header>
+
+        @if (isLoading()) {
+          <div class="vintage-card state-card">
+            <span class="pulse-icon">⏳</span>
+            <p>Đang chuẩn bị 10 câu hỏi có trọng số thông minh...</p>
+          </div>
+        } @else if (queue().length === 0 && !isSubmitting()) {
+          <div class="vintage-card state-card">
+            <span class="empty-icon">🍃</span>
+            <p>Chủ đề này chưa có câu hỏi kiểm tra.</p>
+            <a routerLink="/lessons" class="btn btn-secondary">Về danh sách bài học</a>
+          </div>
+        } @else {
+          <!-- ======================================================== -->
+          <!-- THÔNG BÁO BANNER PHÍA TRÊN NỘI DUNG KIỂM TRA (TOP BANNER) -->
+          <!-- CHIỀU RỘNG BẰNG NỘI DUNG CONTENT BÊN DƯỚI                -->
+          <!-- ======================================================== -->
+          @if (feedbackState() !== 'none') {
+            <div
+              class="feedback-banner"
+              [class.sheet-correct]="feedbackState() === 'correct'"
+              [class.sheet-wrong]="feedbackState() === 'wrong'">
+              <div class="sheet-content">
+                <div class="sheet-info">
+                  @if (feedbackState() === 'correct') {
+                    <div class="sheet-header correct-header">
+                      <span class="status-icon">✓</span>
+                      <span class="status-title">Tuyệt vời! Chính xác.</span>
+                    </div>
+                    @if (feedbackDetail()?.explanation; as exp) {
+                      <p class="sheet-sub">{{ exp }}</p>
+                    }
+                  } @else {
+                    <div class="sheet-header wrong-header">
+                      <span class="status-icon">✕</span>
+                      <span class="status-title">Chưa chính xác!</span>
+                    </div>
+                    <div class="correct-answer-reveal">
+                      <span class="reveal-label">Đáp án đúng là:</span>
+                      <span class="reveal-text">{{ feedbackDetail()?.correctText }}</span>
+                    </div>
+                    @if (feedbackDetail()?.explanation; as exp) {
+                      <p class="sheet-sub">{{ exp }}</p>
+                    }
+                  }
+                </div>
+
+                <!-- NÚT TIẾP TỤC ĐỂ CHUYỂN HÀNG ĐỢI -->
+                <button
+                  class="btn sheet-action-btn"
+                  [class.btn-success]="feedbackState() === 'correct'"
+                  [class.btn-danger]="feedbackState() === 'wrong'"
+                  (click)="continueQueue()">
+                  {{ queue().length === 1 && feedbackState() === 'correct' ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
+                </button>
+              </div>
+            </div>
+          }
+
+          @if (currentQuestion(); as q) {
+            <!-- THẺ CÂU HỎI PHẲNG (2D FLAT NATURALIST) -->
+            <main class="question-container">
+              <div class="vintage-card question-card">
+                <!-- HUY HIỆU DẠNG CÂU HỎI -->
+                <div class="question-type-badge">
+                  @if (q.questionType === 'context') {
+                    <span>📝 Ngữ cảnh TOEIC</span>
+                  } @else if (q.questionType === 'listening') {
+                    <span>🎧 Nghe & Phiên âm</span>
+                  } @else {
+                    <span>📖 Nghĩa & Phát âm</span>
+                  }
+                </div>
+
+                <!-- NỘI DUNG CÂU HỎI THEO TỪNG DẠNG -->
+                <div class="prompt-box">
+                  @if (q.questionType === 'context') {
+                    <h2 class="context-prompt">{{ q.prompt }}</h2>
+                    @if (q.exampleVi) {
+                      <p class="context-vi">"{{ q.exampleVi }}"</p>
+                    }
+                  } @else if (q.questionType === 'listening') {
+                    <div class="listening-action-box">
+                      <button class="speaker-large-btn" (click)="state.speak(q.word || '')" title="Bấm để nghe phát âm">
+                        <span class="speaker-icon">🔊</span>
+                        <span class="speaker-label">Nghe phát âm</span>
+                      </button>
+                      @if (q.phonetic) {
+                        <div class="phonetic-pill">/{{ q.phonetic }}/</div>
+                      }
+                    </div>
+                    <h3 class="listening-prompt">{{ q.prompt }}</h3>
+                  } @else {
+                    <!-- Dạng 1: Nghĩa & Từ -->
+                    <div class="word-lead-box">
+                      <h2 class="quiz-word">{{ q.word }}</h2>
+                      <div class="word-meta-row">
+                        @if (q.phonetic) {
+                          <span class="word-phonetic">/{{ q.phonetic }}/</span>
+                        }
+                        <button class="speaker-mini-btn" (click)="state.speak(q.word || '')" title="Nghe âm thanh">
+                          🔊
+                        </button>
+                      </div>
+                    </div>
+                    <p class="prompt-text">{{ q.prompt }}</p>
+                  }
+                </div>
+
+                <!-- DANH SÁCH 4 ĐÁP ÁN TRẮC NGHIỆM PHẲNG -->
+                <div class="options-grid">
+                  @for (opt of q.options; track opt; let idx = $index) {
+                    <button
+                      type="button"
+                      class="option-flat-btn"
+                      [class.selected]="selectedOptionIdx() === idx"
+                      [disabled]="feedbackState() !== 'none'"
+                      (click)="selectOption(idx)">
+                      <span class="option-idx">{{ ['A', 'B', 'C', 'D'][idx] }}</span>
+                      <span class="option-content">{{ opt }}</span>
+                    </button>
+                  }
+                </div>
+
+                <!-- NÚT HÀNH ĐỘNG DƯỚI CÙNG -->
+                <div class="check-action-bar">
+                  @if (feedbackState() === 'none') {
+                    <button
+                      class="btn btn-primary check-btn"
+                      [disabled]="selectedOptionIdx() === null"
+                      (click)="checkAnswer()">
+                      Kiểm tra đáp án
+                    </button>
+                  } @else {
+                    <button
+                      class="btn check-btn"
+                      [class.btn-success]="feedbackState() === 'correct'"
+                      [class.btn-danger]="feedbackState() === 'wrong'"
+                      (click)="continueQueue()">
+                      {{ queue().length === 1 && feedbackState() === 'correct' ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
+                    </button>
+                  }
+                </div>
+              </div>
+            </main>
+          }
+        }
+      } @else {
+        <!-- ======================================================== -->
+        <!-- CHẾ ĐỘ 2: MÀN HÌNH TỔNG KẾT & NHẬN THƯỞNG DELTA REWARD   -->
+        <!-- ======================================================== -->
+        <main class="results-screen">
+          <div class="vintage-card results-card">
+            <!-- VÒNG NGUYỆT QUẾ VÀ HUY HIỆU SAO -->
+            <div class="laurel-wreath">🌿</div>
+            
+            <div class="stars-display-row">
+              <span class="star-item" [class.active-star]="(result()?.stars || 1) >= 1">⭐</span>
+              <span class="star-item star-mid" [class.active-star]="(result()?.stars || 1) >= 2">⭐</span>
+              <span class="star-item" [class.active-star]="(result()?.stars || 1) >= 3">⭐</span>
+            </div>
+
+            <h1 class="result-title">
+              @if ((result()?.stars || 1) === 3) {
+                Xuất sắc! Đạt hạng 3 Sao
+              } @else if ((result()?.stars || 1) === 2) {
+                Khá tốt! Đạt hạng 2 Sao
+              } @else {
+                Hoàn thành! Đạt hạng 1 Sao
+              }
+            </h1>
+
+            <p class="result-subtitle">
+              {{ result()?.message || 'Bạn đã hoàn tất sửa sai toàn bộ câu hỏi của chủ đề này!' }}
+            </p>
+
+            <!-- KỶ LỤC MỚI BADGE -->
+            @if (result()?.isNewRecord) {
+              <div class="new-record-pill">
+                🏆 KỶ LỤC MỚI VỀ SAO
+              </div>
+            }
+
+            <!-- BẢNG ĐIỂM CHI TIẾT -->
+            <div class="stats-summary-card">
+              <div class="summary-col">
+                <span class="col-value">{{ result()?.firstTryCorrectCount || 0 }}/{{ totalInitial() }}</span>
+                <span class="col-label">Đúng lần đầu</span>
+              </div>
+              <div class="summary-divider"></div>
+              <div class="summary-col">
+                <span class="col-value">{{ dewDropsRemaining() }} 💧</span>
+                <span class="col-label">Giọt sương còn</span>
+              </div>
+              <div class="summary-divider"></div>
+              <div class="summary-col">
+                <span class="col-value">{{ result()?.scorePercent || 100 }}%</span>
+                <span class="col-label">Độ chuẩn xác</span>
+              </div>
+            </div>
+
+            <!-- PHẦN THƯỞNG NÔNG TRẠI (DELTA REWARD) -->
+            <div class="reward-section">
+              <div class="reward-heading">Phần thưởng Nông trại nhận được</div>
+
+              <div class="rewards-grid">
+                @if ((result()?.rewardSeeds || 0) > 0) {
+                  <div class="reward-item-box">
+                    <div class="reward-svg" [innerHTML]="assets.seedBag | safeHtml"></div>
+                    <span class="reward-title">Hạt {{ result()?.cropName || requiredCropName() }}</span>
+                    <span class="reward-qty">+{{ result()?.rewardSeeds }}</span>
+                  </div>
+                }
+
+                @if ((result()?.rewardWater || 0) > 0) {
+                  <div class="reward-item-box">
+                    <div class="reward-svg" [innerHTML]="assets.wateringCan | safeHtml"></div>
+                    <span class="reward-title">Nước tưới</span>
+                    <span class="reward-qty">+{{ result()?.rewardWater }}</span>
+                  </div>
+                }
+
+                @if ((result()?.rewardFertilizer || 0) > 0) {
+                  <div class="reward-item-box">
+                    <div class="reward-svg" [innerHTML]="assets.fertilizerSack | safeHtml"></div>
+                    <span class="reward-title">Phân bón</span>
+                    <span class="reward-qty">+{{ result()?.rewardFertilizer }}</span>
+                  </div>
+                }
+
+                @if ((result()?.rewardCoins || 0) > 0) {
+                  <div class="reward-item-box">
+                    <span class="reward-emoji">🪙</span>
+                    <span class="reward-title">Xu vàng</span>
+                    <span class="reward-qty">+{{ result()?.rewardCoins }}</span>
+                  </div>
+                }
+
+                <div class="reward-item-box">
+                  <span class="reward-emoji">✨</span>
+                  <span class="reward-title">Điểm XP</span>
+                  <span class="reward-qty">+{{ result()?.rewardXp || 10 }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CÁC NÚT ĐIỀU HƯỚNG TIẾP THEO -->
+            <div class="actions-stack">
+              <a routerLink="/farm" class="btn btn-primary go-farm-btn">
+                🌱 Về Nông trại gieo hạt & tưới cây
+              </a>
+              <button class="btn btn-secondary retake-btn" (click)="retakeQuiz()">
+                🔄 Luyện tập lại bài này
+              </button>
+              <a routerLink="/lessons" class="btn btn-outline back-lessons-btn">
+                📚 Danh sách các chủ đề khác
+              </a>
+            </div>
+          </div>
+        </main>
+      }
+    </div>
+  `,
+  styles: [`
+    .quiz-screen {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 8px 16px 40px;
+      position: relative;
+    }
+
+    /* ================= HEADER ================= */
+    .quiz-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 14.5px;
+      flex-shrink: 0;
+      max-width: 140px;
+    }
+
+    .chevron {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .header-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* THANH TIẾN ĐỘ ĐƠN ĐIỆU */
+    .progress-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-bar-rail {
+      flex: 1;
+      height: 9px;
+      background: #EAE2D2;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #DDD3C3;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: #4E6B4E;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+
+    /* 5 GIỌT SƯƠNG */
+    .dew-drops-row {
+      display: flex;
+      gap: 3px;
+      padding: 4px 8px;
+      background: #FAF6EF;
+      border: 1px solid #E2D7C7;
+      border-radius: 999px;
+      align-items: center;
+    }
+
+    .dew-drop {
+      font-size: 13px;
+      transition: all 0.25s ease;
+    }
+
+    .dew-drop.dew-lost {
+      opacity: 0.25;
+      filter: grayscale(100%);
+    }
+
+    /* ================= MAIN QUESTION ================= */
+    .question-container {
+      margin-bottom: 24px;
+    }
+
+    .question-card {
+      padding: 24px 22px;
+      border-radius: 18px;
+      text-align: center;
+      border: 1.5px solid #DDD3C3;
+      background: #FAF6EF;
+      box-shadow: 0 4px 12px rgba(44, 53, 64, 0.04);
+    }
+
+    .question-type-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #EAEFE6;
+      border: 1px solid #C4D7BE;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #385E38;
+      margin-bottom: 16px;
+    }
+
+    .prompt-box {
+      margin-bottom: 22px;
+    }
+
+    .word-lead-box {
+      margin-bottom: 8px;
+    }
+
+    .quiz-word {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 0 4px;
+      letter-spacing: -0.5px;
+    }
+
+    .word-meta-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .word-phonetic {
+      font-size: 15px;
+      color: var(--ink-muted);
+      font-family: monospace;
+    }
+
+    .speaker-mini-btn {
+      background: #F0EAE1;
+      border: 1px solid #D8CFBF;
+      border-radius: 999px;
+      padding: 2px 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.15s;
+    }
+
+    .speaker-mini-btn:hover {
+      background: #E5DCCE;
+    }
+
+    .prompt-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-top: 8px;
+    }
+
+    /* Dạng ngữ cảnh */
+    .context-prompt {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--navy);
+      white-space: pre-line;
+      margin: 0 0 8px;
+    }
+
+    .context-vi {
+      font-size: 14px;
+      color: var(--ink-muted);
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* Dạng nghe */
+    .listening-action-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .speaker-large-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #4E6B4E;
+      color: #FFF;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .speaker-large-btn:hover {
+      background: #3F573F;
+      transform: scale(1.02);
+    }
+
+    .speaker-icon {
+      font-size: 18px;
+    }
+
+    .phonetic-pill {
+      font-family: monospace;
+      font-size: 15px;
+      color: var(--ink-muted);
+    }
+
+    .listening-prompt {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      margin: 0;
+    }
+
+    /* ================= OPTIONS GRID ================= */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .option-flat-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 14px 16px;
+      background: #FAF6EF;
+      border: 1.5px solid #DDD3C3;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      color: var(--navy);
+      transition: all 0.15s ease;
+    }
+
+    .option-flat-btn:hover:not(:disabled) {
+      border-color: #4E6B4E;
+      background: #F4F7F2;
+    }
+
+    .option-flat-btn.selected {
+      border-color: #4E6B4E;
+      background: #EAEFE6;
+      font-weight: 700;
+      box-shadow: 0 0 0 1px #4E6B4E;
+    }
+
+    .option-flat-btn:disabled {
+      cursor: default;
+    }
+
+    .option-idx {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: #EAE2D2;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    .option-flat-btn.selected .option-idx {
+      background: #4E6B4E;
+      color: #FFF;
+    }
+
+    .option-content {
+      flex: 1;
+      line-height: 1.4;
+    }
+
+    /* NÚT KIỂM TRA */
+    .check-action-bar {
+      margin-top: 8px;
+    }
+
+    .check-btn {
+      width: 100%;
+      padding: 13px;
+      font-size: 15.5px;
+      font-weight: 700;
+      border-radius: 12px;
+    }
+
+    /* ================= THÔNG BÁO BANNER PHÍA TRÊN NỘI DUNG ================= */
+    .feedback-banner {
+      width: 100%;
+      margin-bottom: 14px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      box-shadow: 0 3px 12px rgba(44, 53, 64, 0.05);
+      animation: slideDown 0.25s ease-out;
+      box-sizing: border-box;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .sheet-correct {
+      background: #EAF4E8;
+      border: 1.5px solid #81C784;
+    }
+
+    .sheet-wrong {
+      background: #FDECEB;
+      border: 1.5px solid #E57373;
+    }
+
+    .sheet-content {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .sheet-info {
+      flex: 1;
+    }
+
+    .sheet-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .correct-header {
+      color: #2E6830;
+    }
+
+    .wrong-header {
+      color: #C0392B;
+    }
+
+    .status-icon {
+      font-size: 19px;
+    }
+
+    .correct-answer-reveal {
+      font-size: 14px;
+      margin-bottom: 3px;
+      color: #3C443D;
+    }
+
+    .reveal-label {
+      font-weight: 600;
+      margin-right: 6px;
+    }
+
+    .reveal-text {
+      font-weight: 800;
+      color: #2E6830;
+    }
+
+    .sheet-sub {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin: 0;
+    }
+
+    .sheet-action-btn {
+      padding: 10px 20px;
+      font-size: 14.5px;
+      font-weight: 700;
+      border-radius: 10px;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      flex-shrink: 0;
+    }
+
+    .btn-success {
+      background: #4E6B4E;
+      color: #FFF;
+    }
+
+    .btn-success:hover {
+      background: #3F573F;
+    }
+
+    .btn-danger {
+      background: #C06C58;
+      color: #FFF;
+    }
+
+    .btn-danger:hover {
+      background: #A95643;
+    }
+
+    /* ================= RESULTS SCREEN ================= */
+    .results-screen {
+      padding-top: 10px;
+    }
+
+    .results-card {
+      padding: 32px 24px;
+      border-radius: 20px;
+      text-align: center;
+      border: 1.5px solid #DDD3C3;
+      background: #FAF6EF;
+    }
+
+    .laurel-wreath {
+      font-size: 38px;
+      margin-bottom: 6px;
+    }
+
+    .stars-display-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .star-item {
+      font-size: 32px;
+      opacity: 0.25;
+      filter: grayscale(100%);
+      transition: all 0.3s ease;
+    }
+
+    .star-item.active-star {
+      opacity: 1;
+      filter: none;
+      transform: scale(1.1);
+    }
+
+    .star-mid {
+      margin-bottom: 6px;
+    }
+
+    .result-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 0 6px;
+    }
+
+    .result-subtitle {
+      font-size: 14.5px;
+      color: var(--ink-muted);
+      margin: 0 0 16px;
+      line-height: 1.4;
+    }
+
+    .new-record-pill {
+      display: inline-block;
+      padding: 5px 14px;
+      background: #FDF3E3;
+      border: 1px solid #F0C987;
+      color: #8C5B14;
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .stats-summary-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background: #F4EFE6;
+      border: 1px solid #E2D7C7;
+      border-radius: 14px;
+      padding: 14px 10px;
+      margin-bottom: 24px;
+    }
+
+    .summary-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .col-value {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .col-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--ink-muted);
+    }
+
+    .summary-divider {
+      width: 1px;
+      height: 28px;
+      background: #D8CFBF;
+    }
+
+    /* PHẦN THƯỞNG NÔNG TRẠI DELTA */
+    .reward-section {
+      margin-bottom: 26px;
+    }
+
+    .reward-heading {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .rewards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 10px;
+    }
+
+    .reward-item-box {
+      background: #FAF6EF;
+      border: 1px solid #DDD3C3;
+      border-radius: 12px;
+      padding: 12px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .reward-svg {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .reward-emoji {
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    .reward-title {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--navy);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 85px;
+    }
+
+    .reward-qty {
+      font-weight: 800;
+      font-size: 13px;
+      color: #4E6B4E;
+    }
+
+    /* ACTIONS STACK */
+    .actions-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .go-farm-btn {
+      padding: 13px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 12px;
+    }
+
+    .retake-btn, .back-lessons-btn {
+      padding: 12px;
+      font-size: 14.5px;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+
+    .state-card {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .pulse-icon, .empty-icon {
+      font-size: 34px;
+      display: block;
+      margin-bottom: 10px;
+    }
+  `]
+})
+export class QuizComponent implements OnInit {
+  state = inject(GameStateService);
+  assets = FARM_ASSETS;
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private farmApi = inject(FarmApiService);
+
+  // Trạng thái bài kiểm tra
+  lessonId = signal<number>(1);
+  lessonTitle = signal<string>('Kiểm tra từ vựng');
+  sessionId = signal<string | null>(null);
+  bestStarsClaimed = signal<number>(0);
+  requiredCropName = signal<string>('Cà rốt');
+
+  isLoading = signal<boolean>(true);
+  isSubmitting = signal<boolean>(false);
+  isFinished = signal<boolean>(false);
+
+  // HÀNG ĐỢI LẶP CÂU SAI & TIẾN ĐỘ
+  queue = signal<QuizQuestionDto[]>([]);
+  totalInitial = signal<number>(10);
+  masteredIds = signal<Set<number>>(new Set());
+
+  // Lưu kết quả của riêng LẦN GẶP ĐẦU TIÊN: questionId -> isCorrect
+  firstTryResults = new Map<number, boolean>();
+  totalTriesCount = signal<number>(0);
+
+  // Lựa chọn & Phản hồi đáy
+  selectedOptionIdx = signal<number | null>(null);
+  feedbackState = signal<'none' | 'correct' | 'wrong'>('none');
+  feedbackDetail = signal<{ prompt: string; correctText: string; explanation?: string } | null>(null);
+
+  // Kết quả cuối cùng
+  result = signal<QuizSubmitResultDto | null>(null);
+
+  // CÂU HỎI ĐẦU HÀNG ĐỢI HIỆN TẠI
+  currentQuestion = computed(() => this.queue()[0] || null);
+
+  // TIẾN ĐỘ ĐƠN ĐIỆU (MONOTONIC): Chỉ tăng khi 1 câu gốc được trả lời đúng
+  progressPercent = computed(() => {
+    const total = this.totalInitial() || 10;
+    return Math.min(100, Math.round((this.masteredIds().size / total) * 100));
+  });
+
+  // TÍNH TOÁN 5 GIỌT SƯƠNG:
+  // Giọt sương chỉ bị mất khi làm SAI ở LẦN ĐẦU TIÊN
+  firstTryWrongCount = computed(() => {
+    let wrongs = 0;
+    this.firstTryResults.forEach(isCorrect => {
+      if (!isCorrect) wrongs++;
+    });
+    return wrongs;
+  });
+
+  dewDropsRemaining = computed(() => {
+    return Math.max(0, 5 - this.firstTryWrongCount());
+  });
+
+  dewDropsState = computed(() => {
+    const remaining = this.dewDropsRemaining();
+    return [remaining >= 1, remaining >= 2, remaining >= 3, remaining >= 4, remaining >= 5];
+  });
+
+  dewDropsTooltip = computed(() => {
+    const d = this.dewDropsRemaining();
+    if (d === 5) return '5 Giọt sương: Hạng 3 Sao ⭐⭐⭐ (Hoàn hảo)';
+    if (d >= 3) return `${d} Giọt sương: Hạng 2 Sao ⭐⭐ (Khá tốt)`;
+    return `${d} Giọt sương: Hạng 1 Sao ⭐ (Cần nỗ lực sửa sai)`;
+  });
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const lid = params['lessonId'] ? Number(params['lessonId']) : 1;
+      this.lessonId.set(lid);
+      this.loadQuizSession(lid);
+    });
+  }
+
+  loadQuizSession(lessonId: number) {
+    this.isLoading.set(true);
+    this.isFinished.set(false);
+    this.queue.set([]);
+    this.firstTryResults.clear();
+    this.masteredIds.set(new Set());
+    this.totalTriesCount.set(0);
+    this.selectedOptionIdx.set(null);
+    this.feedbackState.set('none');
+
+    this.farmApi.getQuizSession(lessonId).subscribe({
+      next: (session: QuizSessionDto) => {
+        this.sessionId.set(session.sessionId);
+        this.lessonTitle.set(session.lessonTitle);
+        this.requiredCropName.set(session.requiredCropName || 'Nông sản');
+        this.bestStarsClaimed.set(session.bestStarsClaimed || 0);
+
+        const list = session.questions || [];
+        this.queue.set([...list]);
+        this.totalInitial.set(list.length > 0 ? list.length : 10);
+        this.isLoading.set(false);
+      },
+      error: () => {
+        // Fallback gọi getQuizQuestions nếu quiz-session chưa khởi tạo xong
+        this.farmApi.getQuizQuestions(lessonId).subscribe({
+          next: (questions) => {
+            this.queue.set([...questions]);
+            this.totalInitial.set(questions.length > 0 ? questions.length : 10);
+            this.isLoading.set(false);
+          },
+          error: () => {
+            this.isLoading.set(false);
+          }
+        });
+      }
+    });
+  }
+
+  selectOption(idx: number) {
+    if (this.feedbackState() !== 'none') return;
+    this.selectedOptionIdx.set(idx);
+  }
+
+  checkAnswer() {
+    const q = this.currentQuestion();
+    const selected = this.selectedOptionIdx();
+    if (!q || selected === null) return;
+
+    this.totalTriesCount.update(c => c + 1);
+    const correctIdx = q.correctOptionIndex ?? 0;
+    const isCorrect = selected === correctIdx;
+    const correctText = q.options[correctIdx] || '';
+
+    // GHI NHẬN KẾT QUẢ CHO LẦN ĐẦU TIÊN GẶP CÂU NÀY
+    if (!this.firstTryResults.has(q.id)) {
+      this.firstTryResults.set(q.id, isCorrect);
+    }
+
+    if (isCorrect) {
+      this.feedbackState.set('correct');
+      this.feedbackDetail.set({
+        prompt: q.prompt,
+        correctText: correctText,
+        explanation: q.exampleEn ? `Ví dụ: "${q.exampleEn}"` : undefined
+      });
+      // Phát âm từ nếu có
+      if (q.word) {
+        this.state.speak(q.word);
+      }
+    } else {
+      this.feedbackState.set('wrong');
+      this.feedbackDetail.set({
+        prompt: q.prompt,
+        correctText: correctText,
+        explanation: q.exampleVi ? `Dịch: "${q.exampleVi}"` : undefined
+      });
+    }
+  }
+
+  continueQueue() {
+    const q = this.currentQuestion();
+    if (!q) return;
+
+    const isCorrect = this.feedbackState() === 'correct';
+    const currentQueue = [...this.queue()];
+
+    if (isCorrect) {
+      // Đã trả lời đúng: thêm vào tập đã thuộc (masteredIds), loại khỏi hàng đợi
+      this.masteredIds.update(set => {
+        const next = new Set(set);
+        next.add(q.id);
+        return next;
+      });
+      currentQueue.shift(); // Bỏ câu đầu hàng đợi
+    } else {
+      // Trả lời sai: bỏ khỏi đầu hàng đợi và ĐẨY XUỐNG CUỐI HÀNG ĐỢI
+      const wrongItem = currentQueue.shift();
+      if (wrongItem) {
+        currentQueue.push(wrongItem);
+      }
+    }
+
+    this.queue.set(currentQueue);
+    this.selectedOptionIdx.set(null);
+    this.feedbackState.set('none');
+    this.feedbackDetail.set(null);
+
+    // NẾU HÀNG ĐỢI ĐÃ TRỐNG (ĐÃ GIẢI QUYẾT HẾT CÁC CÂU) -> NỘP BÀI THI
+    if (currentQueue.length === 0) {
+      this.submitFinalQuiz();
+    }
+  }
+
+  submitFinalQuiz() {
+    this.isSubmitting.set(true);
+
+    const firstTryMap: Record<number, boolean> = {};
+    this.firstTryResults.forEach((val, key) => {
+      firstTryMap[key] = val;
+    });
+
+    const payload = {
+      lessonId: this.lessonId(),
+      sessionId: this.sessionId() || undefined,
+      firstTryResults: firstTryMap,
+      totalTries: this.totalTriesCount()
+    };
+
+    this.farmApi.submitQuizSession(payload).subscribe({
+      next: (res) => {
+        this.result.set(res);
+        this.isSubmitting.set(false);
+        this.isFinished.set(true);
+        // Cập nhật lại số Xu, XP và túi đồ trên Header Nông trại
+        this.state.refreshProfile();
+      },
+      error: () => {
+        // Fallback mô phỏng nếu API có lỗi tạm thời
+        const firstTryCorrect = Array.from(this.firstTryResults.values()).filter(v => v).length;
+        const fallbackStars = firstTryCorrect >= 10 ? 3 : (firstTryCorrect >= 8 ? 2 : 1);
+
+        this.result.set({
+          lessonId: this.lessonId(),
+          stars: fallbackStars,
+          bestStarsClaimed: Math.max(this.bestStarsClaimed(), fallbackStars),
+          isNewRecord: fallbackStars > this.bestStarsClaimed(),
+          totalQuestions: this.totalInitial(),
+          firstTryCorrectCount: firstTryCorrect,
+          correctAnswers: firstTryCorrect,
+          scorePercent: Math.round((firstTryCorrect / this.totalInitial()) * 100),
+          isPassed: true,
+          rewardGranted: true,
+          rewardSeeds: 1,
+          rewardWater: 2,
+          rewardFertilizer: fallbackStars === 3 ? 1 : 0,
+          rewardCoins: fallbackStars === 3 ? 50 : (fallbackStars === 2 ? 35 : 20),
+          rewardXp: fallbackStars === 3 ? 100 : (fallbackStars === 2 ? 70 : 40),
+          cropName: this.requiredCropName(),
+          message: 'Bạn đã hoàn tất xuất sắc bài kiểm tra trắc nghiệm!'
+        });
+        this.isSubmitting.set(false);
+        this.isFinished.set(true);
+        this.state.refreshProfile();
+      }
+    });
+  }
+
+  retakeQuiz() {
+    this.loadQuizSession(this.lessonId());
+  }
+}
