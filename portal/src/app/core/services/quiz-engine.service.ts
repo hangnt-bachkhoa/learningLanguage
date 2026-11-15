@@ -37,21 +37,109 @@ export interface GeneratedQuestion {
   isRetry?: boolean;
 }
 
-export interface TierReward {
-  stars: number;
-  seeds: number;
-  water: number;
-  fertilizer: number;
-  coins: number;
-  xp: number;
+export interface UserRewardState {
+  pityFertilizerMisses: number; // default 0, bảo hiểm tại 20
+  pitySeedMisses: number;       // default 0, bảo hiểm tại 26
+  dailyBonusRollsUsed: number;  // default 0, giới hạn tối đa 10 lượt/ngày
+  lastBonusRollDate: string;    // YYYY-MM-DD cho reset hàng ngày
 }
 
-export const TIER_REWARDS: Record<number, TierReward> = {
-  3: { stars: 3, seeds: 2, water: 2, fertilizer: 1, coins: 50, xp: 100 },
-  2: { stars: 2, seeds: 1, water: 2, fertilizer: 0, coins: 35, xp: 70 },
-  1: { stars: 1, seeds: 1, water: 1, fertilizer: 0, coins: 20, xp: 40 },
-  0: { stars: 0, seeds: 0, water: 0, fertilizer: 0, coins: 0, xp: 0 }
-};
+export interface BalancedQuizRewardResult {
+  newStars: number;
+  updatedBestStars: number;
+  xpGained: number;
+  coinsGained: number;
+  fertilizerGained: number;
+  seedGainedId: string | null;
+  isEligibleForBonus: boolean;
+  isMaxStarsAlready: boolean;
+  updatedRewardState: UserRewardState;
+}
+
+export function calculateBalancedQuizReward(
+  firstTryCorrect: number,
+  totalQuestions: number,
+  bestStarsClaimed: number,
+  unlockedSeedIds: string[],
+  rewardState: UserRewardState,
+  todayStr: string
+): BalancedQuizRewardResult {
+  // Reset giới hạn quay thưởng theo ngày
+  let dailyRolls = rewardState.lastBonusRollDate === todayStr ? rewardState.dailyBonusRollsUsed : 0;
+  let pityFert = rewardState.pityFertilizerMisses || 0;
+  let pitySeed = rewardState.pitySeedMisses || 0;
+
+  const ratio = totalQuestions > 0 ? firstTryCorrect / totalQuestions : 0;
+  const newStars = ratio === 1 ? 3 : ratio >= 0.8 ? 2 : 1;
+
+  const tierMap: Record<number, { xp: number; coins: number }> = {
+    0: { xp: 0, coins: 0 },
+    1: { xp: 40, coins: 20 },
+    2: { xp: 70, coins: 35 },
+    3: { xp: 100, coins: 50 }
+  };
+
+  let xpGained = 0;
+  let coinsGained = 0;
+  let updatedBestStars = bestStarsClaimed;
+  const isMaxStarsAlready = newStars <= bestStarsClaimed;
+
+  // Rule 2: Deterministic Base Rewards (3-Star Delta System)
+  if (newStars > bestStarsClaimed) {
+    xpGained = tierMap[newStars].xp - (tierMap[bestStarsClaimed]?.xp || 0);
+    coinsGained = tierMap[newStars].coins - (tierMap[bestStarsClaimed]?.coins || 0);
+    updatedBestStars = newStars;
+  }
+
+  let fertilizerGained = 0;
+  let seedGainedId: string | null = null;
+  const isEligibleForBonus = newStars >= 2 && dailyRolls < 10;
+
+  // Rule 3: Probabilistic Farm Drops (5% Phân bón & 1% mỗi loại Hạt giống có sẵn)
+  if (isEligibleForBonus) {
+    dailyRolls += 1;
+
+    // 5% Fertilizer (3% ở 2-Star) + Bảo hiểm tại 20 lần trượt
+    const fertProb = newStars === 3 ? 0.05 : 0.03;
+    if (pityFert >= 19 || Math.random() < fertProb) {
+      fertilizerGained = 1;
+      pityFert = 0;
+    } else {
+      pityFert += 1;
+    }
+
+    // 1% mỗi loại hạt giống đang mở + Session Cap = 1 + Bảo hiểm tại 26 lần trượt
+    if (unlockedSeedIds.length > 0) {
+      const hits = unlockedSeedIds.filter(() => Math.random() < 0.01);
+      if (hits.length > 0) {
+        seedGainedId = hits[Math.floor(Math.random() * hits.length)];
+        pitySeed = 0;
+      } else if (pitySeed >= 25) {
+        seedGainedId = unlockedSeedIds[Math.floor(Math.random() * unlockedSeedIds.length)];
+        pitySeed = 0;
+      } else {
+        pitySeed += 1;
+      }
+    }
+  }
+
+  return {
+    newStars,
+    updatedBestStars,
+    xpGained,
+    coinsGained,
+    fertilizerGained,
+    seedGainedId,
+    isEligibleForBonus,
+    isMaxStarsAlready,
+    updatedRewardState: {
+      pityFertilizerMisses: pityFert,
+      pitySeedMisses: pitySeed,
+      dailyBonusRollsUsed: dailyRolls,
+      lastBonusRollDate: todayStr
+    }
+  };
+}
 
 @Injectable({
   providedIn: 'root'
@@ -108,7 +196,8 @@ export class QuizEngineService {
     topicWords: VocabularyDto[],
     userStats: Record<number, UserWordStat> = {}
   ): GeneratedQuestion[] {
-    const selectedVocabs = this.sampleQuizWords(topicWords, userStats);
+    let words = topicWords && topicWords.length > 0 ? topicWords : (DEFAULT_VOCABULARIES[lessonId] || DEFAULT_VOCABULARIES[1] || []);
+    const selectedVocabs = this.sampleQuizWords(words, userStats);
     const typeCycle: QuestionFormat[] = ['EN_TO_VI', 'CONTEXT_CLOZE', 'LISTENING', 'VI_TO_EN'];
 
     // Lấy pool từ vựng của tất cả bài học để làm Tier 3 distractors
@@ -116,7 +205,7 @@ export class QuizEngineService {
 
     return selectedVocabs.map((vocab, index) => {
       const targetFormat = typeCycle[index % typeCycle.length];
-      return this.buildQuestion(vocab, targetFormat, lessonId, index + 1, topicWords, allLessonVocabs);
+      return this.buildQuestion(vocab, targetFormat, lessonId, index + 1, words, allLessonVocabs);
     });
   }
 

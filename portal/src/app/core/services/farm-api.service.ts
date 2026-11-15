@@ -81,6 +81,13 @@ export interface QuizSubmitResultDto {
   rewardXp: number;
   cropName?: string | null;
   message?: string;
+  // Rebalanced Farm Drop fields
+  bonusSeedId?: string | null;
+  bonusSeedName?: string | null;
+  isMaxStarsAlready?: boolean;
+  dailyBonusRollsUsed?: number;
+  pityFertilizerMisses?: number;
+  pitySeedMisses?: number;
 }
 
 export interface QuizSessionDto {

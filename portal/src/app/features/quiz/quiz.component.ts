@@ -248,48 +248,70 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
               </div>
             </div>
 
-            <!-- PHẦN THƯỞNG NÔNG TRẠI (DELTA REWARD) -->
+            <!-- 1. TIỀN TỆ & KINH NGHIỆM (QUIZ-ONLY XP & COINS THEO 3-STAR DELTA) -->
             <div class="reward-section">
-              <div class="reward-heading">Phần thưởng Nông trại nhận được</div>
-
-              <div class="rewards-grid">
-                @if ((result()?.rewardSeeds || 0) > 0) {
-                  <div class="reward-item-box">
-                    <div class="reward-svg" [innerHTML]="assets.seedBag | safeHtml"></div>
-                    <span class="reward-title">Hạt {{ result()?.cropName || requiredCropName() }}</span>
-                    <span class="reward-qty">+{{ result()?.rewardSeeds }}</span>
-                  </div>
-                }
-
-                @if ((result()?.rewardWater || 0) > 0) {
-                  <div class="reward-item-box">
-                    <div class="reward-svg" [innerHTML]="assets.wateringCan | safeHtml"></div>
-                    <span class="reward-title">Nước tưới</span>
-                    <span class="reward-qty">+{{ result()?.rewardWater }}</span>
-                  </div>
-                }
-
-                @if ((result()?.rewardFertilizer || 0) > 0) {
-                  <div class="reward-item-box">
-                    <div class="reward-svg" [innerHTML]="assets.fertilizerSack | safeHtml"></div>
-                    <span class="reward-title">Phân bón</span>
-                    <span class="reward-qty">+{{ result()?.rewardFertilizer }}</span>
-                  </div>
-                }
-
-                @if ((result()?.rewardCoins || 0) > 0) {
-                  <div class="reward-item-box">
-                    <span class="reward-emoji">🪙</span>
-                    <span class="reward-title">Xu vàng</span>
-                    <span class="reward-qty">+{{ result()?.rewardCoins }}</span>
-                  </div>
-                }
-
-                <div class="reward-item-box">
-                  <span class="reward-emoji">✨</span>
-                  <span class="reward-title">Điểm XP</span>
-                  <span class="reward-qty">+{{ result()?.rewardXp || 10 }}</span>
+              <div class="reward-heading">Tiền tệ & Kinh nghiệm (Quiz Delta)</div>
+              @if ((result()?.rewardXp || 0) > 0 || (result()?.rewardCoins || 0) > 0) {
+                <div class="rewards-grid">
+                  @if ((result()?.rewardCoins || 0) > 0) {
+                    <div class="reward-item-box">
+                      <span class="reward-emoji">🪙</span>
+                      <span class="reward-title">Xu vàng</span>
+                      <span class="reward-qty">+{{ result()?.rewardCoins }}</span>
+                    </div>
+                  }
+                  @if ((result()?.rewardXp || 0) > 0) {
+                    <div class="reward-item-box">
+                      <span class="reward-emoji">✨</span>
+                      <span class="reward-title">Điểm XP</span>
+                      <span class="reward-qty">+{{ result()?.rewardXp }}</span>
+                    </div>
+                  }
                 </div>
+              } @else {
+                <div class="max-reward-notice">
+                  <span class="notice-icon">🎖️</span>
+                  <span>Đã nhận tối đa (Kỷ lục cũ: {{ result()?.bestStarsClaimed }}★) · Không lặp lại Xu & XP khi ôn tập</span>
+                </div>
+              }
+            </div>
+
+            <!-- 2. RƠI PHẦN THƯỞNG NÔNG TRẠI (HYBRID DROP: 5% PHÂN BÓN & 1% HẠT GIỐNG) -->
+            <div class="reward-section drop-section">
+              <div class="reward-heading">Phần thưởng Nông trại may mắn</div>
+              @if ((result()?.rewardFertilizer || 0) > 0 || result()?.bonusSeedName) {
+                <div class="lucky-drop-banner">
+                  <span class="lucky-badge">🌿 RƠI PHẦN THƯỞNG MAY MẮN!</span>
+                </div>
+                <div class="rewards-grid">
+                  @if (result()?.bonusSeedName; as seedName) {
+                    <div class="reward-item-box drop-highlight">
+                      <div class="reward-svg" [innerHTML]="assets.seedBag | safeHtml"></div>
+                      <span class="reward-title">Hạt {{ seedName }}</span>
+                      <span class="reward-qty">+1</span>
+                    </div>
+                  }
+                  @if ((result()?.rewardFertilizer || 0) > 0) {
+                    <div class="reward-item-box drop-highlight">
+                      <div class="reward-svg" [innerHTML]="assets.fertilizerSack | safeHtml"></div>
+                      <span class="reward-title">Phân bón vi sinh</span>
+                      <span class="reward-qty">+{{ result()?.rewardFertilizer }}</span>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <p class="drop-empty-hint">
+                  Chưa kích hoạt rơi vật phẩm may mắn trong lượt thi này.
+                </p>
+              }
+
+              <!-- THÔNG SỐ PITY COUNTER & DAILY ROLL CAP CHỐNG XUI & CHỐNG CÀY -->
+              <div class="drop-pity-footer">
+                <span>🎲 Lượt may mắn hôm nay: <strong>{{ result()?.dailyBonusRollsUsed ?? state.userRewardState().dailyBonusRollsUsed }}/10</strong></span>
+                <span>·</span>
+                <span>Bảo hiểm Hạt: <strong>{{ result()?.pitySeedMisses ?? state.userRewardState().pitySeedMisses }}/26</strong></span>
+                <span>·</span>
+                <span>Bảo hiểm Phân bón: <strong>{{ result()?.pityFertilizerMisses ?? state.userRewardState().pityFertilizerMisses }}/20</strong></span>
               </div>
             </div>
 
@@ -901,6 +923,68 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
       color: #4E6B4E;
     }
 
+    .max-reward-notice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #F4EFE6;
+      border: 1px solid #D9C8B5;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--navy);
+      font-weight: 500;
+    }
+
+    .max-reward-notice .notice-icon {
+      font-size: 18px;
+    }
+
+    .drop-section {
+      border-top: 1px dashed #D9C8B5;
+      padding-top: 18px;
+    }
+
+    .lucky-drop-banner {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .lucky-badge {
+      background: #78815D;
+      color: #FFF;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.4px;
+    }
+
+    .drop-highlight {
+      background: #EAF3E7;
+      border-color: #A3C79B;
+    }
+
+    .drop-empty-hint {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin: 4px 0 10px;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .drop-pity-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: #7D7565;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
     /* ACTIONS STACK */
     .actions-stack {
       display: flex;
@@ -1128,7 +1212,10 @@ export class QuizComponent implements OnInit {
 
   private loadDefaultQuestions(lessonId: number) {
     // Thuật toán 1 & 2: Smart Pool Sampling + Multi-Format Generator + 3-Tier Distractors
-    const vocabs = this.state.vocabulariesByLesson()[lessonId] || DEFAULT_VOCABULARIES[lessonId] || DEFAULT_VOCABULARIES[1] || [];
+    const rawList = this.state.vocabulariesByLesson()[lessonId];
+    const vocabs = (rawList && rawList.length > 0)
+      ? rawList
+      : (DEFAULT_VOCABULARIES[lessonId]?.length ? DEFAULT_VOCABULARIES[lessonId] : (DEFAULT_VOCABULARIES[1] || []));
     const generated = this.quizEngine.generateSessionQuestions(lessonId, vocabs, this.state.userWordStats());
 
     const questions: QuizQuestionDto[] = generated.map(g => ({

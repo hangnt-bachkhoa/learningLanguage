@@ -4,7 +4,7 @@ import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryIte
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
 import { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
-import { UserWordStat, UserLessonProgress, TIER_REWARDS } from './quiz-engine.service';
+import { UserWordStat, UserLessonProgress, UserRewardState, calculateBalancedQuizReward, BalancedQuizRewardResult } from './quiz-engine.service';
 
 export { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
 
@@ -26,6 +26,7 @@ export class GameStateService {
   private readonly VOCAB_STORAGE_KEY = 'english_farm_vocabularies';
   private readonly WORD_STATS_KEY = 'english_farm_word_stats';
   private readonly LESSON_PROGRESS_KEY = 'english_farm_lesson_progress';
+  private readonly REWARD_STATE_KEY = 'english_farm_reward_state';
   private api = inject(FarmApiService);
 
   // Trạng thái kết nối Backend
@@ -166,6 +167,18 @@ export class GameStateService {
   // Tiến độ sao bài học (UserLessonProgress: bestStarsClaimed 0..3, bestScorePercent)
   userLessonProgress = signal<Record<number, UserLessonProgress>>({});
 
+  // Trạng thái quay thưởng may mắn & bảo hiểm (UserRewardState: Pity counter & Daily cap)
+  userRewardState = signal<UserRewardState>({
+    pityFertilizerMisses: 0,
+    pitySeedMisses: 0,
+    dailyBonusRollsUsed: 0,
+    lastBonusRollDate: ''
+  });
+
+  getUnlockedSeedIds(): string[] {
+    return CROP_CATALOG.filter(c => this.isCropUnlocked(c.id)).map(c => c.id);
+  }
+
   private isHydrated = false;
 
   constructor() {
@@ -228,6 +241,7 @@ export class GameStateService {
         localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(this.vocabulariesByLesson()));
         localStorage.setItem(this.WORD_STATS_KEY, JSON.stringify(this.userWordStats()));
         localStorage.setItem(this.LESSON_PROGRESS_KEY, JSON.stringify(this.userLessonProgress()));
+        localStorage.setItem(this.REWARD_STATE_KEY, JSON.stringify(this.userRewardState()));
       }
     } catch (e) {
       console.warn('Không thể lưu localStorage:', e);
@@ -288,6 +302,22 @@ export class GameStateService {
               const p = parsed[l.id];
               return p ? { ...l, bestStarsClaimed: p.bestStarsClaimed } : l;
             }));
+          }
+        } catch {}
+      }
+
+      // Nạp UserRewardState (Pity Counter & Daily Rolls)
+      const rawReward = localStorage.getItem(this.REWARD_STATE_KEY);
+      if (rawReward) {
+        try {
+          const parsed = JSON.parse(rawReward);
+          if (parsed && typeof parsed === 'object') {
+            this.userRewardState.set({
+              pityFertilizerMisses: parsed.pityFertilizerMisses || 0,
+              pitySeedMisses: parsed.pitySeedMisses || 0,
+              dailyBonusRollsUsed: parsed.dailyBonusRollsUsed || 0,
+              lastBonusRollDate: parsed.lastBonusRollDate || ''
+            });
           }
         } catch {}
       }
@@ -646,110 +676,89 @@ export class GameStateService {
   }
 
   /**
-   * Thuật toán 4: Chấm điểm bài Quiz (First-try 3-Star Rating & Delta Reward Economy)
-   * Chống cày thưởng lặp lại (Anti-Exploit Idempotency):
-   * Chỉ thưởng phần chênh lệch (Delta) khi người học đạt kỷ lục sao cao hơn.
-   * Cập nhật UserWordStats để phục vụ Smart Pool Sampling cho các phiên sau.
+   * REBALANCED QUIZ & HYBRID REWARD ENGINE:
+   * Rule 1: Strict Quiz-Only XP & Coins
+   * Rule 2: Deterministic Base Rewards (3-Star Delta System)
+   * Rule 3: Probabilistic Farm Drops (5% Phân bón & 1% mỗi loại Hạt giống có sẵn kèm Pity Counter & Daily Roll Cap)
    */
   recordQuizCompletion(lessonId: number, firstTryResults: Record<number, boolean>): QuizSubmitResultDto {
     const entries = Object.entries(firstTryResults);
     const totalQuestions = Math.max(10, entries.length);
     const firstTryCorrectCount = entries.filter(([_, isOk]) => isOk).length;
 
-    // Phân hạng sao theo tỷ lệ đúng lần thử đầu tiên
-    let newStars = 1;
-    if (firstTryCorrectCount >= 10) {
-      newStars = 3; // 10/10 (100%): 3 Sao
-    } else if (firstTryCorrectCount >= 8) {
-      newStars = 2; // 8-9/10 (80-90%): 2 Sao
-    } else {
-      newStars = 1; // < 8/10: 1 Sao (Người học đã sửa hết lỗi để hoàn thành)
-    }
-
     const currentProgress = this.userLessonProgress()[lessonId];
     const oldStars = currentProgress?.bestStarsClaimed || 0;
-    const isNewRecord = newStars > oldStars;
+    const unlockedSeeds = this.getUnlockedSeedIds();
+    const todayStr = new Date().toISOString().slice(0, 10);
 
-    let deltaSeeds = 0;
-    let deltaWater = 0;
-    let deltaFertilizer = 0;
-    let deltaCoins = 0;
-    let deltaXp = 0;
+    const rewardRes = calculateBalancedQuizReward(
+      firstTryCorrectCount,
+      totalQuestions,
+      oldStars,
+      unlockedSeeds,
+      this.userRewardState(),
+      todayStr
+    );
+
+    // Cập nhật UserRewardState (Pity counter & Daily cap)
+    this.userRewardState.set(rewardRes.updatedRewardState);
+
+    const isNewRecord = rewardRes.newStars > oldStars;
     let message = '';
-
     if (isNewRecord) {
-      const oldR = TIER_REWARDS[oldStars] || TIER_REWARDS[0];
-      const newR = TIER_REWARDS[newStars];
+      message = `Xuất sắc! Bạn đạt kỷ lục mới ${rewardRes.newStars}★ và nhận thưởng chênh lệch Nông trại!`;
 
-      deltaSeeds = newR.seeds - oldR.seeds;
-      deltaWater = newR.water - oldR.water;
-      deltaFertilizer = newR.fertilizer - oldR.fertilizer;
-      deltaCoins = newR.coins - oldR.coins;
-      deltaXp = newR.xp - oldR.xp;
-
-      message = `Xuất sắc! Bạn đạt kỷ lục mới ${newStars}★ và nhận thưởng chênh lệch Nông trại!`;
-
-      // Cập nhật UserLessonProgress
       this.userLessonProgress.update(map => ({
         ...map,
         [lessonId]: {
           userId: 1,
           lessonId,
           bestScorePercent: Math.round((firstTryCorrectCount / totalQuestions) * 100),
-          bestStarsClaimed: newStars,
+          bestStarsClaimed: rewardRes.newStars,
           firstPassedAt: currentProgress?.firstPassedAt || new Date().toISOString()
         }
       }));
 
-      // Cập nhật BestStarsClaimed vào Lesson tương ứng
       this.lessons.update(list => list.map(l => {
         if (l.id === lessonId) {
-          return { ...l, bestStarsClaimed: newStars, isUnlocked: true };
+          return { ...l, bestStarsClaimed: rewardRes.newStars, isUnlocked: true };
         }
         return l;
       }));
     } else {
-      // Replaying a lesson with equal or fewer stars: KHÔNG nhân đôi phần thưởng
-      message = `Bạn đã hoàn thành phiên ôn tập ${newStars}★! Giữ vững thành tích cũ ${oldStars}★.`;
+      message = `Bạn đã hoàn thành phiên ôn tập ${rewardRes.newStars}★! Giữ vững thành tích cũ ${oldStars}★.`;
     }
 
-    // Tra cứu mã cây trồng
-    const lesson = this.lessons().find(l => l.id === lessonId);
-    const cropCode = (lesson?.requiredCropName || 'carrot').toLowerCase();
-    const seedKey = cropCode.includes('ngô') || cropCode.includes('corn') ? 'corn'
-      : cropCode.includes('chua') || cropCode.includes('tomato') ? 'tomato'
-      : cropCode.includes('hướng dương') ? 'sunflower'
-      : cropCode.includes('hồng') ? 'rose'
-      : cropCode.includes('tulip') ? 'tulip'
-      : cropCode.includes('xoài') ? 'mango'
-      : cropCode.includes('kiwi') ? 'kiwi'
-      : cropCode.includes('chanh') ? 'lemon'
-      : cropCode.includes('táo') ? 'apple'
-      : cropCode.includes('cherry') ? 'cherry'
-      : 'carrot';
+    // Rule 1 & 2: Cập nhật XP & Coins (Strict Quiz-Only XP & Coins qua Delta)
+    if (rewardRes.xpGained > 0) this.xp.update(x => x + rewardRes.xpGained);
+    if (rewardRes.coinsGained > 0) this.coins.update(c => c + rewardRes.coinsGained);
 
-    // Cập nhật tiền tệ và kinh nghiệm (Quiz-Only XP & Coins)
-    if (deltaCoins > 0) this.coins.update(c => c + deltaCoins);
-    if (deltaXp > 0) this.xp.update(x => x + deltaXp);
+    // Rule 3: Cập nhật Farm Drops (5% Phân bón & 1% Hạt giống có sẵn)
+    let bonusSeedName: string | null = null;
+    if (rewardRes.seedGainedId) {
+      const cropConfig = CROP_CATALOG.find(c => c.id === rewardRes.seedGainedId);
+      bonusSeedName = cropConfig ? cropConfig.nameVi : rewardRes.seedGainedId;
 
-    // Cập nhật vật phẩm Nông trại
-    if (deltaSeeds > 0 || deltaWater > 0 || deltaFertilizer > 0) {
-      this.inventory.update(inv => {
-        const next = { ...inv };
-        if (deltaSeeds > 0) {
-          next.seeds = { ...next.seeds, [seedKey]: (next.seeds[seedKey] || 0) + deltaSeeds };
+      this.inventory.update(inv => ({
+        ...inv,
+        seeds: {
+          ...inv.seeds,
+          [rewardRes.seedGainedId!]: (inv.seeds[rewardRes.seedGainedId!] || 0) + 1
         }
-        if (deltaWater > 0 || deltaFertilizer > 0) {
-          next.care = {
-            water: (next.care.water || 0) + deltaWater,
-            fertilizer: (next.care.fertilizer || 0) + deltaFertilizer
-          };
-        }
-        return next;
-      });
+      }));
     }
 
-    // Cập nhật UserWordStats cho toàn bộ các từ trong phiên
+    if (rewardRes.fertilizerGained > 0) {
+      this.inventory.update(inv => ({
+        ...inv,
+        care: {
+          ...inv.care,
+          fertilizer: (inv.care.fertilizer || 0) + rewardRes.fertilizerGained
+        }
+      }));
+    }
+
+    // Cập nhật UserWordStats cho toàn bộ từ trong phiên
     const nowIso = new Date().toISOString();
     this.userWordStats.update(stats => {
       const nextStats = { ...stats };
@@ -774,24 +783,31 @@ export class GameStateService {
 
     this.saveToStorage();
 
+    const lesson = this.lessons().find(l => l.id === lessonId);
     return {
       lessonId,
-      stars: newStars,
-      bestStarsClaimed: Math.max(oldStars, newStars),
+      stars: rewardRes.newStars,
+      bestStarsClaimed: Math.max(oldStars, rewardRes.newStars),
       isNewRecord,
       totalQuestions,
       firstTryCorrectCount,
       correctAnswers: firstTryCorrectCount,
       scorePercent: Math.round((firstTryCorrectCount / totalQuestions) * 100),
       isPassed: true,
-      rewardGranted: isNewRecord,
-      rewardSeeds: deltaSeeds,
-      rewardWater: deltaWater,
-      rewardFertilizer: deltaFertilizer,
-      rewardCoins: deltaCoins,
-      rewardXp: deltaXp,
+      rewardGranted: rewardRes.xpGained > 0 || rewardRes.coinsGained > 0 || rewardRes.fertilizerGained > 0 || !!rewardRes.seedGainedId,
+      rewardSeeds: rewardRes.seedGainedId ? 1 : 0,
+      rewardWater: 0,
+      rewardFertilizer: rewardRes.fertilizerGained,
+      rewardCoins: rewardRes.coinsGained,
+      rewardXp: rewardRes.xpGained,
       cropName: lesson?.requiredCropName || 'Cà rốt',
-      message
+      message,
+      bonusSeedId: rewardRes.seedGainedId,
+      bonusSeedName,
+      isMaxStarsAlready: rewardRes.isMaxStarsAlready,
+      dailyBonusRollsUsed: rewardRes.updatedRewardState.dailyBonusRollsUsed,
+      pityFertilizerMisses: rewardRes.updatedRewardState.pityFertilizerMisses,
+      pitySeedMisses: rewardRes.updatedRewardState.pitySeedMisses
     };
   }
 
