@@ -3,22 +3,10 @@ import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessag
 import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryItemDto, QuizSubmitResultDto } from './farm-api.service';
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
+import { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
 import { UserWordStat, UserLessonProgress, TIER_REWARDS } from './quiz-engine.service';
 
-export const DEFAULT_LESSONS: LessonDto[] = [
-  { id: 1, title: 'Fruits & Vegetables', languageCode: 'en', levelTag: 'Pre-A1', orderIndex: 1, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null, bestStarsClaimed: 0 },
-  { id: 3, title: 'Văn phòng (Office)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 2, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null, bestStarsClaimed: 0 },
-  { id: 4, title: 'Nhân sự (Human Resources)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 3, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null, bestStarsClaimed: 0 },
-  { id: 5, title: 'Kinh doanh (Business)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 4, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null, bestStarsClaimed: 0 },
-  { id: 6, title: 'Tài chính (Finance)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 5, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null, bestStarsClaimed: 0 },
-  { id: 7, title: 'Ngân hàng (Banking)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 6, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null, bestStarsClaimed: 0 },
-  { id: 8, title: 'Marketing & Quảng cáo', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 7, isUnlocked: false, requiredCropId: 1, requiredCropQty: 2, requiredCropName: 'Cà rốt', bestStarsClaimed: 0 },
-  { id: 10, title: 'Nhà hàng (Restaurant)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 8, isUnlocked: false, requiredCropId: 1, requiredCropQty: 2, requiredCropName: 'Cà rốt', bestStarsClaimed: 0 },
-  { id: 12, title: 'Du lịch (Travel)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 9, isUnlocked: false, requiredCropId: 1, requiredCropQty: 2, requiredCropName: 'Cà rốt', bestStarsClaimed: 0 },
-  { id: 15, title: 'Công nghệ (Technology)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 10, isUnlocked: false, requiredCropId: 1, requiredCropQty: 2, requiredCropName: 'Cà rốt', bestStarsClaimed: 0 },
-  { id: 22, title: 'Môi trường (Environment)', languageCode: 'en', levelTag: 'TOEIC 650', orderIndex: 11, isUnlocked: false, requiredCropId: 2, requiredCropQty: 3, requiredCropName: 'Bắp ngô', bestStarsClaimed: 0 },
-  { id: 34, title: 'Nghệ thuật (Arts)', languageCode: 'en', levelTag: 'TOEIC 650', orderIndex: 12, isUnlocked: false, requiredCropId: 3, requiredCropQty: 3, requiredCropName: 'Cà chua', bestStarsClaimed: 0 }
-];
+export { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
 
 export interface CropLockInfo {
   isUnlocked: boolean;
@@ -257,7 +245,22 @@ export class GameStateService {
           if (typeof data.level === 'number') this.level.set(data.level);
           if (Array.isArray(data.plots) && data.plots.length > 0) this.plots.set(data.plots);
           if (data.inventory && typeof data.inventory === 'object') this.inventory.set(data.inventory);
-          if (Array.isArray(data.lessons) && data.lessons.length > 0) this.lessons.set(data.lessons);
+          if (Array.isArray(data.lessons) && data.lessons.length >= DEFAULT_LESSONS.length) {
+            this.lessons.set(data.lessons);
+          } else {
+            // Nâng cấp đầy đủ 52 bài học, bảo lưu trạng thái sao và mở khóa của người chơi
+            const savedList: LessonDto[] = Array.isArray(data.lessons) ? data.lessons : [];
+            const savedMap = new Map<number, LessonDto>(savedList.map(l => [l.id, l]));
+            const merged = DEFAULT_LESSONS.map(l => {
+              const saved = savedMap.get(l.id);
+              return saved ? {
+                ...l,
+                isUnlocked: saved.isUnlocked || l.isUnlocked,
+                bestStarsClaimed: saved.bestStarsClaimed || l.bestStarsClaimed
+              } : l;
+            });
+            this.lessons.set(merged);
+          }
           if (Array.isArray(data.books) && data.books.length > 0) this.books.set(data.books);
           if (typeof data.activeLessonId === 'number') this.activeLessonId.set(data.activeLessonId);
           if (Array.isArray(data.learnedWords)) this.learnedWords.set(data.learnedWords);
@@ -289,17 +292,25 @@ export class GameStateService {
         } catch {}
       }
 
-      // Nạp toàn bộ dữ liệu từ vựng từ localStorage
+      // Nạp toàn bộ 52 bộ từ vựng từ localStorage (tự động hòa hợp nếu trước đó lưu thiếu)
       const rawVocabs = localStorage.getItem(this.VOCAB_STORAGE_KEY);
       if (rawVocabs) {
         try {
           const parsed = JSON.parse(rawVocabs);
           if (parsed && typeof parsed === 'object') {
-            this.vocabulariesByLesson.set(parsed);
+            const savedKeys = Object.keys(parsed);
+            const defaultKeys = Object.keys(DEFAULT_VOCABULARIES);
+            if (savedKeys.length < defaultKeys.length) {
+              const fullVocabs = { ...DEFAULT_VOCABULARIES, ...parsed };
+              this.vocabulariesByLesson.set(fullVocabs);
+              localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(fullVocabs));
+            } else {
+              this.vocabulariesByLesson.set(parsed);
+            }
           }
         } catch {}
       } else {
-        // Tự động lưu khởi tạo vào localStorage để dùng hoàn toàn offline
+        // Tự động lưu khởi tạo 52 bộ từ vựng vào localStorage để dùng hoàn toàn offline
         try {
           localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(DEFAULT_VOCABULARIES));
         } catch {}
