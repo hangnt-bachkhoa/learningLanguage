@@ -1,1 +1,0 @@
-import{R as e,ra as i,wb as n}from"./chunk-HPA4NU56.js";var a=class r{constructor(){this.sanitizer=e(n)}transform(t){return t?this.sanitizer.bypassSecurityTrustHtml(t):""}static{this.\u0275fac=function(m){return new(m||r)}}static{this.\u0275pipe=i({name:"safeHtml",type:r,pure:!0})}};export{a};
