@@ -1,4 +1,5 @@
 import { QuizQuestionDto, QuizSessionDto } from '../services/farm-api.service';
+import { DEFAULT_VOCABULARIES } from './default-vocabularies.constant';
 
 export const MOCK_QUIZ_DATA: Record<number, { title: string; cropName: string; questions: QuizQuestionDto[] }> = {
   1: {
@@ -426,6 +427,85 @@ export function getDefaultQuizSession(lessonId: number, lessonTitle?: string): Q
       bestStarsClaimed: 0,
       totalQuestions: data.questions.length,
       questions: data.questions
+    };
+  }
+
+  // Tự động sinh câu hỏi thực tế từ 1.300+ từ vựng của bài học nếu có trong bộ DEFAULT_VOCABULARIES
+  const lessonVocabs = DEFAULT_VOCABULARIES[lessonId] || DEFAULT_VOCABULARIES[1] || [];
+  if (lessonVocabs.length >= 4) {
+    const selectedWords = lessonVocabs.slice(0, Math.min(10, lessonVocabs.length));
+    const allMeanings = lessonVocabs.map(v => v.meaningVi);
+    const allWords = lessonVocabs.map(v => v.word);
+
+    const questions: QuizQuestionDto[] = selectedWords.map((v, idx) => {
+      const qType: 'meaning' | 'context' | 'listening' = idx % 3 === 0 ? 'meaning' : (idx % 3 === 1 ? 'context' : 'listening');
+      const qId = lessonId * 100 + (idx + 1);
+
+      if (qType === 'meaning') {
+        const distractors = allMeanings.filter(m => m !== v.meaningVi);
+        const shuffledDistractors = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
+        const options = [...shuffledDistractors, v.meaningVi].sort(() => 0.5 - Math.random());
+        const correctOptionIndex = options.indexOf(v.meaningVi);
+        return {
+          id: qId,
+          lessonId,
+          prompt: `Từ "${v.word}" có nghĩa tiếng Việt là gì?`,
+          word: v.word,
+          phonetic: v.phonetic,
+          questionType: 'meaning',
+          exampleEn: v.exampleEn,
+          exampleVi: v.exampleVi,
+          options,
+          correctOptionIndex
+        };
+      } else if (qType === 'context') {
+        const distractors = allWords.filter(w => w !== v.word);
+        const shuffledDistractors = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
+        const options = [...shuffledDistractors, v.word].sort(() => 0.5 - Math.random());
+        const correctOptionIndex = options.indexOf(v.word);
+        return {
+          id: qId,
+          lessonId,
+          prompt: `Điền từ thích hợp vào ngữ cảnh: "${v.meaningVi}"`,
+          word: v.word,
+          phonetic: v.phonetic,
+          questionType: 'context',
+          exampleEn: v.exampleEn,
+          exampleVi: v.exampleVi,
+          options,
+          correctOptionIndex
+        };
+      } else {
+        const distractors = allMeanings.filter(m => m !== v.meaningVi);
+        const shuffledDistractors = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
+        const options = [...shuffledDistractors, v.meaningVi].sort(() => 0.5 - Math.random());
+        const correctOptionIndex = options.indexOf(v.meaningVi);
+        return {
+          id: qId,
+          lessonId,
+          prompt: `Nghe phát âm và chọn nghĩa đúng của từ:`,
+          word: v.word,
+          phonetic: v.phonetic,
+          questionType: 'listening',
+          exampleEn: v.exampleEn,
+          exampleVi: v.exampleVi,
+          options,
+          correctOptionIndex
+        };
+      }
+    });
+
+    const cropNames = ['Cà rốt', 'Bắp ngô', 'Cà chua', 'Hướng dương', 'Hoa hồng', 'Hoa tulip', 'Xoài', 'Kiwi', 'Chanh vàng', 'Táo đỏ', 'Cherry'];
+    const requiredCropName = cropNames[(lessonId - 1) % cropNames.length];
+
+    return {
+      sessionId: `offline_quiz_${lessonId}_${Date.now()}`,
+      lessonId,
+      lessonTitle: lessonTitle || `Chủ đề ${lessonId} (TOEIC Vocab)`,
+      requiredCropName,
+      bestStarsClaimed: 0,
+      totalQuestions: questions.length,
+      questions
     };
   }
 
