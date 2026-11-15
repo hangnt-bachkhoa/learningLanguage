@@ -925,6 +925,72 @@ import { FarmApiService, QuizQuestionDto, QuizSubmitResultDto, QuizSessionDto } 
       display: block;
       margin-bottom: 10px;
     }
+
+    /* ================= RESPONSIVE MOBILE (< 600px) ================= */
+    @media (max-width: 600px) {
+      .quiz-screen {
+        padding: 4px 6px 24px;
+      }
+      .quiz-header {
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .back-link {
+        max-width: 90px;
+        font-size: 12.5px;
+      }
+      .header-title {
+        display: none;
+      }
+      .dew-drops-row {
+        padding: 3px 5px;
+        gap: 1.5px;
+      }
+      .dew-drop {
+        font-size: 11px;
+      }
+      .question-card {
+        padding: 16px 12px;
+        border-radius: 14px;
+      }
+      .quiz-word {
+        font-size: 22px;
+      }
+      .context-prompt {
+        font-size: 15px;
+      }
+      .speaker-large-btn {
+        padding: 9px 18px;
+        font-size: 13.5px;
+      }
+      .option-flat-btn {
+        padding: 11px 10px;
+        font-size: 13.5px;
+        gap: 8px;
+        border-radius: 10px;
+      }
+      .sheet-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .sheet-action-btn {
+        width: 100%;
+        text-align: center;
+        padding: 9px 12px;
+      }
+      .results-card {
+        padding: 20px 14px;
+        border-radius: 16px;
+      }
+      .result-title {
+        font-size: 19px;
+      }
+      .rewards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+    }
   `]
 })
 export class QuizComponent implements OnInit {

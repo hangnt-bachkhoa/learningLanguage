@@ -484,6 +484,51 @@ import { LessonDto } from '../../core/services/farm-api.service';
       display: block;
       margin-bottom: 8px;
     }
+
+    /* ================= RESPONSIVE MOBILE (< 600px) ================= */
+    @media (max-width: 600px) {
+      .lessons-screen {
+        padding-bottom: 24px;
+      }
+      .lessons-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .header-stats {
+        align-self: flex-start;
+      }
+      .page-title {
+        font-size: 20px;
+      }
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .search-box {
+        min-width: 100%;
+        width: 100%;
+      }
+      .level-pills {
+        overflow-x: auto;
+        padding-bottom: 4px;
+        flex-wrap: nowrap;
+      }
+      .pill-btn {
+        flex-shrink: 0;
+        padding: 5px 12px;
+        font-size: 12px;
+      }
+      .lessons-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .lesson-card {
+        padding: 14px;
+      }
+    }
   `]
 })
 export class LessonsComponent {

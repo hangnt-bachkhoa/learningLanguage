@@ -52,6 +52,9 @@ import { CartModalComponent } from './shared/components/cart-modal/cart-modal.co
       .main-content {
         margin-left: 0;
       }
+      .content-body {
+        padding: 14px 14px 84px; /* Chừa không gian cho Bottom Navigation Bar */
+      }
     }
     .content-body {
       flex: 1;

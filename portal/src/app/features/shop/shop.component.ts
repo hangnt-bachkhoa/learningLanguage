@@ -76,6 +76,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
     .category-tabs {
       display: flex;
       gap: 6px;
+      flex-wrap: wrap;
     }
     .cat-tab {
       padding: 6px 12px;
@@ -195,6 +196,22 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
     }
     .btn-locked:hover {
       background: #D8CEBE;
+    }
+
+    /* ================= RESPONSIVE MOBILE (< 600px) ================= */
+    @media (max-width: 600px) {
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .product-card {
+        padding: 16px 12px;
+      }
     }
   `]
 })

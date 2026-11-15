@@ -132,6 +132,59 @@ import { GameStateService } from '../../../core/services/game-state.service';
       font-weight: 800;
       color: var(--gold);
     }
+
+    /* ================= RESPONSIVE MOBILE & TABLET (< 768px) ================= */
+    @media (max-width: 768px) {
+      .left-nav-bar {
+        width: 100%;
+        height: 60px;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 4px 6px;
+        border-right: none;
+        border-top: 1.5px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 -4px 18px rgba(20, 30, 40, 0.35);
+        z-index: 99;
+      }
+      .nav-brand, .nav-bottom-avatar {
+        display: none !important;
+      }
+      .nav-items-stack {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        gap: 2px;
+        padding: 0;
+        height: 100%;
+      }
+      .nav-tab-btn {
+        flex: 1;
+        height: 100%;
+        padding: 4px 1px;
+        gap: 2px;
+        border-radius: 8px;
+        justify-content: center;
+      }
+      .nav-icon {
+        font-size: 19px;
+        line-height: 1;
+      }
+      .nav-text {
+        font-size: 9.5px;
+        letter-spacing: -0.2px;
+        transform: scale(0.95);
+      }
+      .nav-dot {
+        top: 2px;
+        right: calc(50% - 13px);
+        width: 6px;
+        height: 6px;
+      }
+    }
   `]
 })
 export class SidebarComponent {

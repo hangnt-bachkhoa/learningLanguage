@@ -364,6 +364,70 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       color: var(--rose);
       white-space: nowrap;
     }
+
+    /* ================= RESPONSIVE MOBILE (< 480px) ================= */
+    @media (max-width: 480px) {
+      .vocab-screen {
+        padding-bottom: 20px;
+      }
+      .vocab-nav-bar {
+        gap: 6px;
+        margin-bottom: 10px;
+      }
+      .back-link {
+        font-size: 13px;
+      }
+      .current-lesson-pill {
+        padding: 2px 8px;
+        max-width: 140px;
+      }
+      .lesson-name {
+        font-size: 11px;
+      }
+      .pager-capsule {
+        padding: 2px 6px;
+        gap: 4px;
+      }
+      .pager-text {
+        font-size: 11px;
+      }
+      .flashcard-container {
+        padding: 16px 14px;
+        border-radius: 14px;
+        margin-bottom: 14px;
+      }
+      .word-text {
+        font-size: 26px;
+      }
+      .ipa-string {
+        font-size: 14px;
+      }
+      .botanical-art-box {
+        width: 36px;
+        height: 36px;
+      }
+      .table-row {
+        grid-template-columns: 60px 1fr;
+        gap: 8px;
+        font-size: 13px;
+      }
+      .bookmark-btn, .learned-btn {
+        padding: 10px;
+        font-size: 13.5px;
+      }
+      .quiz-cta-link {
+        padding: 10px 12px;
+      }
+      .cta-icon {
+        font-size: 20px;
+      }
+      .cta-text strong {
+        font-size: 12.5px;
+      }
+      .cta-text small {
+        font-size: 11px;
+      }
+    }
   `]
 })
 export class VocabComponent implements OnInit {

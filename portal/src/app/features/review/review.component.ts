@@ -419,8 +419,14 @@ interface ReviewCard {
       font-weight: 700;
       color: var(--navy);
     }
+    .ebbinghaus-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
     .ebbinghaus-table {
       width: 100%;
+      min-width: 280px;
       border-collapse: collapse;
       font-size: 12.5px;
       text-align: center;
@@ -803,6 +809,43 @@ interface ReviewCard {
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================= RESPONSIVE MOBILE (< 600px) ================= */
+    @media (max-width: 600px) {
+      .review-screen {
+        padding-bottom: 24px;
+      }
+      .due-today-banner {
+        padding: 14px 12px;
+      }
+      .banner-title {
+        font-size: 16px;
+      }
+      .banner-subtitle {
+        font-size: 12px;
+      }
+      .reward-tag {
+        font-size: 10.5px;
+        padding: 2.5px 6px;
+      }
+      .start-review-btn {
+        padding: 11px;
+        font-size: 13.5px;
+      }
+      .table-card {
+        padding: 14px 10px;
+      }
+      .ebbinghaus-table th, .ebbinghaus-table td {
+        padding: 5px 2px;
+        font-size: 11px;
+      }
+      .results-container {
+        padding: 20px 12px;
+      }
+      .result-title {
+        font-size: 20px;
+      }
     }
   `]
 })

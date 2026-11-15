@@ -793,6 +793,139 @@ import { FarmPlot } from '../../core/models/game.models';
       background: var(--olive-soft);
       color: #4C5435;
     }
+
+    /* ================= RESPONSIVE MOBILE (< 480px) ================= */
+    @media (max-width: 480px) {
+      .farm-screen {
+        padding-left: 2px;
+        padding-right: 2px;
+        max-width: 100%;
+      }
+      .screen-header {
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .serif-title {
+        font-size: 20px;
+      }
+      .farm-tabs {
+        max-width: 100%;
+      }
+      .storage-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        border-radius: 12px;
+        padding: 6px 8px;
+        gap: 4px;
+      }
+      .storage-btn {
+        padding: 3px 7px;
+        font-size: 10px;
+      }
+      .farm-container {
+        padding: 8px;
+        border-radius: 14px;
+        margin-bottom: 12px;
+      }
+      .farm-grid-3x3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        width: 100%;
+        max-width: 320px;
+      }
+      .soil-slot {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 10px;
+      }
+      .plant-layer {
+        width: 80%;
+        height: 80%;
+      }
+      .crop-badge-tag {
+        top: 3px;
+        left: 3px;
+        padding: 1px 4px;
+        gap: 2px;
+      }
+      .tag-icon {
+        font-size: 9.5px;
+      }
+      .tag-name {
+        font-size: 8px;
+      }
+      .growth-bar-wrap {
+        bottom: 3px;
+        left: 4px;
+        right: 4px;
+        height: 4.5px;
+      }
+      .harvest-pill {
+        bottom: 3px;
+        font-size: 8px;
+        padding: 1px 5px;
+      }
+      .empty-plus {
+        font-size: 16px;
+      }
+      .empty-label {
+        font-size: 8px;
+      }
+      .action-dock {
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .action-card {
+        padding: 6px 2px 5px;
+        border-radius: 10px;
+      }
+      .action-icon {
+        height: 32px;
+        margin-bottom: 2px;
+      }
+      .action-label {
+        font-size: 11px;
+      }
+      .action-count {
+        font-size: 9px;
+      }
+      .seed-picker-strip {
+        padding: 10px 10px;
+        border-radius: 12px;
+      }
+      .seed-options-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+      .seed-card-btn {
+        padding: 5px 6px;
+        gap: 5px;
+      }
+      .seed-icon {
+        font-size: 15px;
+      }
+      .seed-name {
+        font-size: 10.5px;
+      }
+      .crop-status-card {
+        padding: 10px 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .crop-catalog-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px;
+        gap: 10px;
+      }
+      .catalog-icon {
+        width: 48px;
+        height: 48px;
+      }
+    }
   `]
 })
 export class FarmComponent {

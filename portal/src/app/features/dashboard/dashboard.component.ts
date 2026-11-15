@@ -278,6 +278,53 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       color: var(--ink-muted);
       font-weight: 500;
     }
+
+    /* ================= RESPONSIVE MOBILE (< 480px) ================= */
+    @media (max-width: 480px) {
+      .home-header {
+        margin-bottom: 12px;
+      }
+      .brand-heading {
+        font-size: 22px;
+      }
+      .windmill-box {
+        width: 42px;
+        height: 42px;
+      }
+      .books-showcase {
+        height: 215px;
+        margin-bottom: 16px;
+      }
+      .leather-book {
+        width: 122px;
+        height: 175px;
+      }
+      .book-olive {
+        left: 8px;
+        top: 10px;
+      }
+      .book-navy {
+        right: 8px;
+        top: 25px;
+      }
+      .book-rose {
+        left: calc(50% - 61px);
+        top: 32px;
+      }
+      .book-title-main {
+        font-size: 13px;
+      }
+      .book-sub {
+        font-size: 9.5px;
+      }
+      .book-emblem {
+        font-size: 18px;
+        margin-top: 8px;
+      }
+      .tasks-card {
+        padding: 14px 14px;
+      }
+    }
   `]
 })
 export class DashboardComponent {

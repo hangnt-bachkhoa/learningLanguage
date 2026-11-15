@@ -33,6 +33,7 @@
 
 html, body {
   height: 100%;
+  overflow-x: hidden;
   background-color: var(--bg-paper);
   background-image:
     radial-gradient(rgba(194, 173, 149, 0.22) 1px, transparent 1px),
@@ -233,4 +234,16 @@ input, textarea {
 @keyframes modalPop {
   from { transform: scale(0.95) translateY(8px); opacity: 0; }
   to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .modal-box {
+    max-width: calc(100vw - 24px);
+    margin: 0 auto;
+    border-radius: var(--radius-md);
+  }
+  .vintage-card {
+    padding: 14px;
+    border-radius: var(--radius-sm);
+  }
 }
