@@ -29,6 +29,7 @@ public static class EnglishFarmCollectionExtensions
         services.AddScoped<ILearningService, LearningService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IGrammarService, GrammarService>();
+        services.AddScoped<IGrammarQuizGenerator, GrammarQuizGenerator>();
 
         return services;
     }

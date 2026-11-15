@@ -4,10 +4,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GrammarService, GrammarQuizSubmitResult } from '../../core/services/grammar.service';
 import { GrammarTopic, GrammarQuestion } from '../../core/constants/default-grammar-topics.constant';
 import { GameStateService } from '../../core/services/game-state.service';
+import { GrammarQuizGeneratorService, GrammarQuizQuestionDto, CandidateVocabWord } from '../../core/services/grammar-quiz-generator.service';
 
 interface QueueItem {
   uid: number; // Unique identifier for tracking first try
   originalIdx: number;
+  sourceType: 'DYNAMIC_VOCAB' | 'STATIC_GRAMMAR';
   question: GrammarQuestion;
 }
 
@@ -100,7 +102,7 @@ interface QueueItem {
             <main class="question-container">
               <div class="vintage-card question-card">
                 <div class="question-type-badge">
-                  <span>📝 Ngữ pháp Part 5</span>
+                  <span>{{ qItem.sourceType === 'DYNAMIC_VOCAB' ? '🌱 Ngữ pháp thực chiến TOEIC' : '📜 Ngữ pháp trọng điểm' }}</span>
                 </div>
 
                 <!-- CÂU HỎI TRẮC NGHIỆM -->
@@ -760,6 +762,7 @@ export class GrammarQuizComponent implements OnInit {
   private route = inject(ActivatedRoute);
   grammarService = inject(GrammarService);
   state = inject(GameStateService);
+  quizGenerator = inject(GrammarQuizGeneratorService);
 
   topic = signal<GrammarTopic | null>(null);
 
@@ -800,10 +803,12 @@ export class GrammarQuizComponent implements OnInit {
   });
 
   starsRemaining = computed(() => {
-    const wrongs = this.firstTryWrongCount();
-    if (wrongs === 0) return 3;
-    if (wrongs === 1 && this.totalInitial() >= 4) return 2;
-    if (wrongs <= 2 && this.totalInitial() >= 6) return 2;
+    const total = this.totalInitial() || 10;
+    const wrong = this.firstTryWrongCount();
+    const correct = Math.max(0, total - wrong);
+    const accuracy = correct / total;
+    if (accuracy >= 1.0) return 3;
+    if (accuracy >= 0.8) return 2;
     return 1;
   });
 
@@ -831,11 +836,42 @@ export class GrammarQuizComponent implements OnInit {
   }
 
   initQuiz(topic: GrammarTopic): void {
-    const questions = topic.questions || [];
-    const initialQueue: QueueItem[] = questions.map((q, idx) => ({
+    // Thu thập kho từ vựng từ các chủ đề đã mở khóa
+    const unlockedLessons = this.state.lessons().filter(l => l.isUnlocked).map(l => l.id);
+    const vocabMap = this.state.vocabulariesByLesson();
+    const unlockedPool: CandidateVocabWord[] = [];
+
+    for (const lid of unlockedLessons) {
+      if (vocabMap[lid] && vocabMap[lid].length > 0) {
+        unlockedPool.push(...vocabMap[lid]);
+      }
+    }
+
+    // Nếu kho từ rỗng (chưa mở khóa nhiều bài), fallback lấy từ các bài mặc định 1..4
+    if (unlockedPool.length === 0) {
+      for (let i = 1; i <= 4; i++) {
+        if (vocabMap[i]) unlockedPool.push(...vocabMap[i]);
+      }
+    }
+
+    // Sinh 10 câu hỏi Hybrid (7 câu động dựa trên từ vựng mở khóa + 3 câu tĩnh từ đề thi)
+    const hybridSession = this.quizGenerator.buildGrammarTestSession(
+      topic.code,
+      unlockedPool,
+      topic.questions,
+      10
+    );
+
+    const initialQueue: QueueItem[] = hybridSession.map((q, idx) => ({
       uid: idx + 1,
       originalIdx: idx,
-      question: q
+      sourceType: q.sourceType,
+      question: {
+        prompt: q.prompt,
+        options: q.options,
+        correctIndex: q.correctIndex,
+        explanationVi: q.explanationVi
+      }
     }));
 
     this.queue.set(initialQueue);

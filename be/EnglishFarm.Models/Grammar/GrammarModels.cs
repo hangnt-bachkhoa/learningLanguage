@@ -9,6 +9,7 @@ public class GrammarExampleModel
 public class GrammarQuestionResponseModel
 {
     public int Id { get; set; }
+    public string SourceType { get; set; } = "STATIC_GRAMMAR"; // DYNAMIC_VOCAB | STATIC_GRAMMAR
     public string Prompt { get; set; } = string.Empty;
     public List<string> Options { get; set; } = new();
     public int CorrectIndex { get; set; }

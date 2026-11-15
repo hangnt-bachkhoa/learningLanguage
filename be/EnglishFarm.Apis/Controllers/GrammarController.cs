@@ -10,10 +10,14 @@ namespace EnglishFarm.Apis.Controllers;
 public class GrammarController : ApiControllerBase
 {
     private readonly IGrammarService _grammarService;
+    private readonly IGrammarQuizGenerator _grammarQuizGenerator;
 
-    public GrammarController(IGrammarService grammarService)
+    public GrammarController(
+        IGrammarService grammarService,
+        IGrammarQuizGenerator grammarQuizGenerator)
     {
         _grammarService = grammarService;
+        _grammarQuizGenerator = grammarQuizGenerator;
     }
 
     [HttpGet("topics")]
@@ -21,6 +25,13 @@ public class GrammarController : ApiControllerBase
     {
         int userId = 1; // Default single user in local mode
         return await ExecuteFunction(() => _grammarService.GetTopicsAsync(userId));
+    }
+
+    [HttpGet("topics/{code}/quiz-session")]
+    public async Task<IActionResult> GetQuizSessionAsync(string code, [FromQuery] int sessionSize = 10)
+    {
+        int userId = 1;
+        return await ExecuteFunction(() => _grammarQuizGenerator.BuildGrammarTestSessionAsync(code, userId, sessionSize));
     }
 
     [HttpPost("topics/{code}/study")]
