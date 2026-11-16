@@ -424,6 +424,7 @@ interface LevelGroup {
       gap: 8px;
       padding-top: 10px;
       border-top: 1px dashed var(--border, #D9C8B5);
+      flex-wrap: wrap;
     }
 
     .topic-meta-left {
@@ -492,6 +493,13 @@ interface LevelGroup {
     @media (max-width: 767px) {
       .grammar-catalog-page {
         padding: 4px 2px 64px;
+      }
+      .topic-card {
+        padding: 14px 12px;
+      }
+      .action-btn {
+        padding: 5px 9px;
+        font-size: 12px;
       }
       .hero-banner {
         padding: 16px;

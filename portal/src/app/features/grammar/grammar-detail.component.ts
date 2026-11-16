@@ -128,13 +128,13 @@ import { GameStateService } from '../../core/services/game-state.service';
               class="btn btn-secondary action-btn-study"
               [disabled]="topic()?.isStudied"
               (click)="markAsStudied()">
-              {{ topic()?.isStudied ? '✓ Đã hoàn tất lý thuyết' : 'Đánh dấu Đã học (0 XP)' }}
+              {{ topic()?.isStudied ? '✓ Đã hoàn tất' : 'Đã học (0 XP)' }}
             </button>
 
             <a
               [routerLink]="['/grammar', topic()?.code, 'quiz']"
               class="btn btn-primary action-btn-quiz">
-              Làm bài kiểm tra ({{ topic()?.questions?.length }} câu) →
+              Làm Quiz ({{ topic()?.questions?.length }} câu) →
             </a>
           </footer>
         </article>
@@ -445,12 +445,21 @@ import { GameStateService } from '../../core/services/game-state.service';
       margin-top: 24px;
       padding-top: 18px;
       border-top: 1px solid var(--border, #D9C8B5);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .action-btn-study, .action-btn-quiz {
+      flex: 1;
+      min-width: 0;
       font-weight: 600;
       text-decoration: none;
+      text-align: center;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
     }
 
     .empty-detail-card {
@@ -475,7 +484,9 @@ import { GameStateService } from '../../core/services/game-state.service';
       }
 
       .detail-card {
-        padding: 16px;
+        padding: 14px 10px;
+        box-sizing: border-box;
+        overflow-x: hidden;
       }
 
       .topic-title-en {
@@ -498,15 +509,20 @@ import { GameStateService } from '../../core/services/game-state.service';
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid var(--border-strong, #C2AD95);
         border-radius: 12px;
-        padding: 10px 12px;
+        padding: 8px 8px;
         box-shadow: 0 6px 20px rgba(38, 56, 71, 0.12);
         z-index: 20;
         margin-top: 16px;
+        gap: 6px;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .action-btn-study, .action-btn-quiz {
-        font-size: 13px;
-        padding: 8px 10px;
+        font-size: 12px;
+        padding: 8px 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   `]
