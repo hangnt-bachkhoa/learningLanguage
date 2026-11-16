@@ -49,56 +49,77 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
         <div class="vintage-card farm-container">
           <div class="farm-grid-3x3">
             @for (plot of state.plots(); track plot.id; let idx = $index) {
+              @let isSelected = selectedPlotIndex() === idx;
+              @let status = (plot.status || '').toLowerCase();
+              @let cd = getPlotCountdown(plot);
+              @let baseSvg = getPlotBaseAsset(plot);
+
               <div
-                class="soil-slot"
-                [class.slot-empty]="plot.status === 'empty'"
-                [class.slot-seeded]="plot.status === 'seeded'"
-                [class.slot-growing]="plot.status === 'growing'"
-                [class.locked]="plot.status === 'locked'"
-                [class.ready]="plot.status === 'ready'"
+                class="soil-slot plot-tile"
+                [class.selected]="isSelected"
+                [class.slot-empty]="status === 'empty'"
+                [class.slot-seeded]="status === 'seeded'"
+                [class.slot-growing]="status === 'growing'"
+                [class.locked]="status === 'locked'"
+                [class.ready]="status === 'ready'"
                 (click)="handlePlotClick(idx)">
                 
-                <!-- 1. Nền đất xốp nâu có luống -->
-                <div class="soil-bg" [innerHTML]="soilBackground | safeHtml"></div>
+                <!-- 1. Nền đất SVG 16x16 Pixel Art (plot_empty, plot_wet, plot_seeded, plot_locked) -->
+                <img
+                  [src]="baseSvg"
+                  class="plot-base-tile pixel-sprite"
+                  alt="Plot Tile"
+                  width="96"
+                  height="96"
+                />
 
-                <!-- 2. Cây / Mầm / Khóa nổi trên mặt đất -->
-                <div class="plant-layer" [innerHTML]="getPlantSprite(plot) | safeHtml"></div>
+                <!-- 2. Overlay Layer: Sprout, Moisture badge, hoặc Mature Crop -->
+                @if (status === 'growing') {
+                  <div class="sprout-overlay pixel-sprite" [innerHTML]="(plot.growthProgress >= 50 ? assets.growingPlant : assets.sprout) | safeHtml"></div>
+                } @else if (status === 'seeded' && plot.isWatered) {
+                  <span class="moisture-badge" title="Đã tưới nước">💧</span>
+                } @else if (status === 'ready' && plot.crop) {
+                  <div class="mature-overlay">
+                    <img
+                      [src]="'assets/farm-assets/crops/' + plot.crop + '.png'"
+                      class="pixel-sprite crop-ready-sprite"
+                      [alt]="getCropName(plot.crop)"
+                      width="48"
+                      height="48"
+                    />
+                  </div>
+                  <span class="ready-sparkle">✨</span>
+                }
 
                 <!-- 3. Nhãn phân biệt tên & icon cây trồng rõ ràng cho từng loại -->
-                @if (plot.crop && (plot.status === 'seeded' || plot.status === 'growing' || plot.status === 'ready')) {
-                  <div class="crop-badge-tag" [class.ready-badge]="plot.status === 'ready'">
+                @if (plot.crop && (status === 'seeded' || status === 'growing' || status === 'ready')) {
+                  <div class="crop-badge-tag" [class.ready-badge]="status === 'ready'">
                     <span class="tag-icon">
-                      <img [src]="'assets/farm-assets/crops/' + plot.crop + '.png'" class="plot-tag-thumb pixel-art" [alt]="getCropName(plot.crop)" />
+                      <img [src]="'assets/farm-assets/crops/' + plot.crop + '.png'" class="plot-tag-thumb pixel-sprite" [alt]="getCropName(plot.crop)" />
                     </span>
                     <span class="tag-name">{{ getCropName(plot.crop) }}</span>
                   </div>
                 }
 
-                <!-- 4. Đồng hồ đếm ngược mm:ss và Thanh tiến độ thời gian thực (Rule 4) -->
-                @if (plot.crop && (plot.status === 'seeded' || plot.status === 'growing')) {
-                  @let cd = getPlotCountdown(plot);
-                  <div class="crop-countdown-badge" title="Thời gian còn lại: {{ cd.label }}">
-                    <span class="countdown-clock-icon">⏱️</span>
-                    <span class="countdown-text">{{ cd.label }}</span>
-                  </div>
+                <!-- 4. Thanh tiến độ sinh trưởng mỏng -->
+                @if (plot.crop && (status === 'seeded' || status === 'growing')) {
                   <div class="growth-bar-wrap" title="Tiến độ lớn: {{ cd.progress }}%">
                     <div class="growth-bar-fill" [style.width.%]="cd.progress"></div>
                   </div>
                 }
 
-                <!-- 5. Gợi ý ô đất trống sẵn sàng gieo -->
-                @if (plot.status === 'empty') {
-                  <div class="empty-plot-hint">
-                    <span class="empty-plus">+</span>
-                    <span class="empty-label">Trống</span>
-                  </div>
-                }
-
-                <!-- 6. Hiệu ứng lấp lánh khi nông sản chín -->
-                @if (plot.status === 'ready') {
-                  <span class="ready-sparkle">✨</span>
-                  <div class="harvest-pill">Thu hoạch</div>
-                }
+                <!-- 5. Bottom Status Pill (Khóa: 50 Xu, Trống: Trống, Đang lớn: mm:ss, Chín: Thu hoạch!) -->
+                <div class="bottom-status-pill" [class.status-locked]="status === 'locked'" [class.status-ready]="status === 'ready'" [class.status-empty]="status === 'empty'">
+                  @if (status === 'locked') {
+                    <span>{{ getPlotLockedPillText(idx) }}</span>
+                  } @else if (status === 'empty') {
+                    <span>Trống</span>
+                  } @else if (status === 'ready') {
+                    <span>Thu hoạch!</span>
+                  } @else {
+                    <span>{{ cd.label }}</span>
+                  }
+                </div>
               </div>
             }
           </div>
@@ -385,75 +406,134 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
     .storage-reset:hover {
       background: #FCE6E8;
     }
+    /* Pixel Sprite Rendering */
+    .pixel-sprite {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+    }
+
     /* Khung đất nông trại Top-Down 3x3 */
     .farm-container {
-      background: #FFFDF8;
-      border: 1px solid var(--border-strong);
+      background: #E8DFC8;
+      border: 2px solid #D9C8B5;
       border-radius: 18px;
-      padding: 20px;
+      padding: 16px;
       box-shadow: 0 8px 24px rgba(38, 56, 71, 0.08);
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 16px;
+      margin: 0 auto 16px;
+      max-width: 420px;
+      width: 100%;
+      box-sizing: border-box;
     }
     .farm-grid-3x3 {
       display: grid;
-      grid-template-columns: repeat(3, 108px);
-      grid-template-rows: repeat(3, 108px);
-      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      box-sizing: border-box;
     }
-    .soil-slot {
-      width: 108px;
-      height: 108px;
+    .soil-slot, .plot-tile {
+      width: 100%;
+      aspect-ratio: 1 / 1;
       border-radius: 12px;
       position: relative;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(74, 50, 29, 0.25);
-      transition: transform 0.12s, box-shadow 0.12s;
       overflow: hidden;
+      box-sizing: border-box;
+      background: transparent;
+      box-shadow: 0 3px 8px rgba(74, 50, 29, 0.2);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
-    .soil-slot:hover {
+    .soil-slot:hover, .plot-tile:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(74, 50, 29, 0.35);
+      box-shadow: 0 5px 12px rgba(74, 50, 29, 0.3);
     }
-    .soil-slot.locked {
-      cursor: not-allowed;
-      filter: saturate(0.6) brightness(0.92);
+    .soil-slot.selected, .plot-tile.selected {
+      box-shadow: 0 0 0 2.5px #E8D7A8, 0 0 0 4.5px #263847 !important;
+      z-index: 6;
+      transform: translateY(-2px);
     }
-    .soil-slot.ready {
+    .soil-slot.locked, .plot-tile.locked {
+      cursor: pointer;
+    }
+    .soil-slot.ready, .plot-tile.ready {
       animation: gentleReadyGlow 1.8s infinite alternate ease-in-out;
     }
     @keyframes gentleReadyGlow {
-      from { box-shadow: 0 4px 10px rgba(74, 50, 29, 0.25); }
-      to { box-shadow: 0 0 16px rgba(228, 180, 60, 0.85); }
+      from { box-shadow: 0 3px 8px rgba(74, 50, 29, 0.2); }
+      to { box-shadow: 0 0 14px rgba(228, 180, 60, 0.85); }
     }
-    .soil-bg {
+    .plot-base-tile {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
+      object-fit: fill;
+      border-radius: 10px;
       z-index: 1;
     }
-    .plant-layer {
-      position: relative;
-      z-index: 2;
-      width: 76px;
-      height: 76px;
+    .sprout-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 58%;
+      height: 58%;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 2;
       pointer-events: none;
+    }
+    .sprout-overlay svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .moisture-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      z-index: 2;
+      pointer-events: none;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+    }
+    .mature-overlay {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 58%;
+      height: 58%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .crop-ready-sprite {
+      width: 100%;
+      height: 100%;
+      max-width: 48px;
+      max-height: 48px;
+      object-fit: contain;
     }
     .ready-sparkle {
       position: absolute;
-      top: 6px;
-      right: 6px;
-      font-size: 14px;
-      z-index: 3;
+      top: 4px;
+      right: 4px;
+      font-size: 13px;
+      z-index: 4;
       animation: spinSparkle 2s infinite linear;
     }
     @keyframes spinSparkle {
@@ -555,79 +635,54 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
     /* Nhãn phân biệt cây trồng */
     .crop-badge-tag {
       position: absolute;
-      top: 5px;
-      left: 5px;
+      top: 4px;
+      left: 4px;
       z-index: 4;
       background: rgba(255, 253, 248, 0.94);
-      border: 1px solid var(--border-strong);
+      border: 1px solid var(--border-strong, #8C6F56);
       border-radius: 999px;
-      padding: 1.5px 5.5px;
+      padding: 1px 5px;
       display: flex;
       align-items: center;
       gap: 3px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.12);
       pointer-events: none;
+      max-width: 85%;
     }
     .crop-badge-tag.ready-badge {
       background: #FFF5D6;
       border-color: #E5A912;
     }
     .tag-icon {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
     .plot-tag-thumb {
-      width: 13px;
-      height: 13px;
+      width: 12px;
+      height: 12px;
       object-fit: contain;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-      display: block;
     }
     .tag-name {
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 700;
-      color: var(--navy);
+      color: var(--navy, #263847);
       letter-spacing: -0.2px;
-    }
-    /* Huy hiệu đếm ngược thời gian thực mm:ss */
-    .crop-countdown-badge {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: rgba(248, 244, 235, 0.94);
-      border: 1px solid var(--border-strong);
-      border-radius: 999px;
-      padding: 1px 6px;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      z-index: 5;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-      pointer-events: none;
-    }
-    .countdown-clock-icon {
-      font-size: 9.5px;
-      line-height: 1;
-    }
-    .countdown-text {
-      font-size: 9.5px;
-      font-weight: 800;
-      color: var(--navy);
-      font-family: monospace;
-      letter-spacing: -0.3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* Thanh tiến độ sinh trưởng */
+    /* Thanh tiến độ sinh trưởng mỏng */
     .growth-bar-wrap {
       position: absolute;
-      bottom: 6px;
-      left: 10px;
-      right: 10px;
-      height: 6px;
+      bottom: 23px;
+      left: 8px;
+      right: 8px;
+      height: 4px;
       background: rgba(45, 28, 14, 0.55);
       border-radius: 999px;
       overflow: hidden;
@@ -640,53 +695,52 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
       border-radius: 999px;
       transition: width 0.35s ease;
     }
-    /* Hint ô đất trống */
-    .empty-plot-hint {
-      position: absolute;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.45;
-      color: #7A6248;
-      pointer-events: none;
-      transition: opacity 0.15s, transform 0.15s;
-    }
-    .soil-slot:hover .empty-plot-hint {
-      opacity: 0.9;
-      transform: scale(1.08);
-      color: var(--olive);
-    }
-    .empty-plus {
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1;
-    }
-    .empty-label {
-      font-size: 9.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    /* Pill Thu hoạch */
-    .harvest-pill {
+
+    /* Bottom Status Pill */
+    .bottom-status-pill {
       position: absolute;
       bottom: 5px;
-      z-index: 4;
-      background: #DE3B2B;
-      color: #FFF;
-      font-size: 9.5px;
-      font-weight: 800;
-      padding: 1.5px 7px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(248, 244, 235, 0.94);
+      border: 1px solid var(--border-strong, #8C6F56);
       border-radius: 999px;
-      box-shadow: 0 2px 5px rgba(222, 59, 43, 0.4);
-      animation: pulseHarvest 1.4s infinite alternate ease-in-out;
+      padding: 1.5px 7px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--navy, #263847);
+      white-space: nowrap;
       pointer-events: none;
+      z-index: 5;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      font-family: monospace;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
+    }
+    .bottom-status-pill.status-ready {
+      background: #78815D;
+      color: #FFFDF9;
+      border-color: #555E3E;
+      font-family: var(--font-sans, inherit);
+      font-weight: 800;
+      animation: pulseHarvest 1.4s infinite alternate ease-in-out;
+    }
+    .bottom-status-pill.status-empty {
+      background: rgba(255, 253, 249, 0.9);
+      color: #8C7862;
+      border-color: #CBB9A3;
+      font-family: var(--font-sans, inherit);
+    }
+    .bottom-status-pill.status-locked {
+      background: #5C5346;
+      color: #E8D7A8;
+      border-color: #3B2D24;
+      font-family: var(--font-sans, inherit);
+      font-weight: 800;
     }
     @keyframes pulseHarvest {
-      from { transform: scale(0.96); }
-      to { transform: scale(1.06); }
+      from { transform: translateX(-50%) scale(0.96); }
+      to { transform: translateX(-50%) scale(1.05); }
     }
     /* Thanh chọn hạt giống */
     .seed-picker-strip {
@@ -961,58 +1015,43 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
         padding: 8px;
         border-radius: 14px;
         margin-bottom: 12px;
+        max-width: 390px;
+        width: 100%;
       }
       .farm-grid-3x3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-template-rows: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
         gap: 6px;
         width: 100%;
-        max-width: 320px;
+        max-width: 390px;
       }
-      .soil-slot {
+      .soil-slot, .plot-tile {
         width: 100%;
-        height: auto;
         aspect-ratio: 1 / 1;
         border-radius: 10px;
       }
-      .plant-layer {
-        width: 80%;
-        height: 80%;
+      .sprout-overlay, .mature-overlay {
+        width: 58%;
+        height: 58%;
       }
       .crop-badge-tag {
-        top: 3px;
-        left: 3px;
-        padding: 1px 4px;
-        gap: 2px;
-      }
-      .crop-countdown-badge {
         top: 2px;
-        right: 2px;
-        padding: 0.5px 4px;
-        gap: 1.5px;
-      }
-      .countdown-clock-icon {
-        font-size: 8px;
-      }
-      .countdown-text {
-        font-size: 7.5px;
-      }
-      .tag-icon {
-        font-size: 9.5px;
+        left: 2px;
+        padding: 0.5px 3.5px;
       }
       .tag-name {
         font-size: 8px;
       }
       .growth-bar-wrap {
-        bottom: 3px;
-        left: 4px;
-        right: 4px;
-        height: 4.5px;
+        bottom: 17px;
+        left: 5px;
+        right: 5px;
+        height: 3px;
       }
-      .harvest-pill {
-        bottom: 3px;
-        font-size: 8px;
+      .bottom-status-pill {
+        font-size: 8.5px;
         padding: 1px 5px;
+        bottom: 3px;
       }
       .empty-plus {
         font-size: 16px;
@@ -1174,6 +1213,32 @@ export class FarmComponent implements OnInit {
 
   activeTab = signal<'garden' | 'catalog'>('garden');
   selectedLockedPlotIndex = signal<number | null>(null);
+  selectedPlotIndex = signal<number | null>(null);
+
+  getPlotBaseAsset(plot: FarmPlot): string {
+    const status = (plot.status || '').toLowerCase();
+    if (status === 'locked') {
+      return 'assets/sprites/plots/plot_locked.svg';
+    }
+    if (status === 'empty') {
+      return 'assets/sprites/plots/plot_empty.svg';
+    }
+    if (status === 'seeded') {
+      return plot.isWatered ? 'assets/sprites/plots/plot_wet.svg' : 'assets/sprites/plots/plot_seeded.svg';
+    }
+    if (status === 'growing') {
+      return plot.isWatered ? 'assets/sprites/plots/plot_wet.svg' : 'assets/sprites/plots/plot_empty.svg';
+    }
+    if (status === 'ready') {
+      return plot.isWatered ? 'assets/sprites/plots/plot_wet.svg' : 'assets/sprites/plots/plot_empty.svg';
+    }
+    return 'assets/sprites/plots/plot_empty.svg';
+  }
+
+  getPlotLockedPillText(plotIndex: number): string {
+    const req = getPlotUnlockRequirement(plotIndex);
+    return req?.coinPrice ? `${req.coinPrice} Xu` : 'Khóa';
+  }
 
   ngOnInit() {
     // Khởi tạo và đồng bộ trạng thái sinh trưởng ban đầu
@@ -1343,6 +1408,7 @@ export class FarmComponent implements OnInit {
   }
 
   handlePlotClick(index: number) {
+    this.selectedPlotIndex.set(index);
     const plot = this.state.plots()[index];
     if (!plot) return;
     const status = (plot.status || '').toLowerCase();
