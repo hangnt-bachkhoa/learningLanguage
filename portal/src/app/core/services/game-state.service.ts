@@ -375,24 +375,68 @@ export class GameStateService {
             this.recalculatePlotStates();
           }
           if (data.inventory && typeof data.inventory === 'object') {
-            const rawSeeds = data.inventory.seeds || {};
-            const rawHarvested = data.inventory.harvested || {};
-            if (rawSeeds.sunflower && !rawSeeds.pumpkin) rawSeeds.pumpkin = rawSeeds.sunflower;
-            if (rawSeeds.tulip && !rawSeeds.wheat) rawSeeds.wheat = rawSeeds.tulip;
-            if (rawSeeds.rose && !rawSeeds.blueberry) rawSeeds.blueberry = rawSeeds.rose;
-            if (rawSeeds.kiwi && !rawSeeds.watermelon) rawSeeds.watermelon = rawSeeds.kiwi;
+            const rawSeeds: Record<string, number> = { ...(data.inventory.seeds || {}) };
+            const rawHarvested: Record<string, number> = { ...(data.inventory.harvested || {}) };
 
-            if (rawHarvested.sunflower && !rawHarvested.pumpkin) rawHarvested.pumpkin = rawHarvested.sunflower;
-            if (rawHarvested.tulip && !rawHarvested.wheat) rawHarvested.wheat = rawHarvested.tulip;
-            if (rawHarvested.rose && !rawHarvested.blueberry) rawHarvested.blueberry = rawHarvested.rose;
-            if (rawHarvested.kiwi && !rawHarvested.watermelon) rawHarvested.watermelon = rawHarvested.kiwi;
+            // Migration chính xác theo chuẩn nông sản mới:
+            // 1. Hoa hướng dương (không có asset) => Bí ngô (pumpkin)
+            if (rawSeeds['sunflower']) {
+              rawSeeds['pumpkin'] = (rawSeeds['pumpkin'] || 0) + rawSeeds['sunflower'];
+              delete rawSeeds['sunflower'];
+            }
+            if (rawHarvested['sunflower']) {
+              rawHarvested['pumpkin'] = (rawHarvested['pumpkin'] || 0) + rawHarvested['sunflower'];
+              delete rawHarvested['sunflower'];
+            }
 
-            this.inventory.update(current => ({
-              seeds: { ...current.seeds, ...rawSeeds },
-              harvested: { ...current.harvested, ...rawHarvested },
-              care: { ...current.care, ...(data.inventory.care || {}) },
-              decor: { ...current.decor, ...(data.inventory.decor || {}) }
-            }));
+            // 2. Hoa hồng => Blueberry (Việt quất)
+            if (rawSeeds['rose']) {
+              rawSeeds['blueberry'] = (rawSeeds['blueberry'] || 0) + rawSeeds['rose'];
+              delete rawSeeds['rose'];
+            }
+            if (rawHarvested['rose']) {
+              rawHarvested['blueberry'] = (rawHarvested['blueberry'] || 0) + rawHarvested['rose'];
+              delete rawHarvested['rose'];
+            }
+
+            // 3. Hoa tulip => Lúa mì (wheat)
+            if (rawSeeds['tulip']) {
+              rawSeeds['wheat'] = (rawSeeds['wheat'] || 0) + rawSeeds['tulip'];
+              delete rawSeeds['tulip'];
+            }
+            if (rawHarvested['tulip']) {
+              rawHarvested['wheat'] = (rawHarvested['wheat'] || 0) + rawHarvested['tulip'];
+              delete rawHarvested['tulip'];
+            }
+
+            // 4. Kiwi => Dưa hấu (watermelon)
+            if (rawSeeds['kiwi']) {
+              rawSeeds['watermelon'] = (rawSeeds['watermelon'] || 0) + rawSeeds['kiwi'];
+              delete rawSeeds['kiwi'];
+            }
+            if (rawHarvested['kiwi']) {
+              rawHarvested['watermelon'] = (rawHarvested['watermelon'] || 0) + rawHarvested['kiwi'];
+              delete rawHarvested['kiwi'];
+            }
+
+            this.inventory.update(current => {
+              const updatedSeeds = { ...current.seeds, ...rawSeeds };
+              const updatedHarvested = { ...current.harvested, ...rawHarvested };
+              delete (updatedSeeds as any).sunflower;
+              delete (updatedSeeds as any).rose;
+              delete (updatedSeeds as any).tulip;
+              delete (updatedSeeds as any).kiwi;
+              delete (updatedHarvested as any).sunflower;
+              delete (updatedHarvested as any).rose;
+              delete (updatedHarvested as any).tulip;
+              delete (updatedHarvested as any).kiwi;
+              return {
+                seeds: updatedSeeds,
+                harvested: updatedHarvested,
+                care: { ...current.care, ...(data.inventory.care || {}) },
+                decor: { ...current.decor, ...(data.inventory.decor || {}) }
+              };
+            });
           }
           // Đồng bộ danh sách bài học: Loại bỏ các bài mock cũ và giữ đúng 51 bài học chuẩn từ Database
           const savedList: LessonDto[] = Array.isArray(data.lessons) ? data.lessons : [];
@@ -547,12 +591,14 @@ export class GameStateService {
       seeds: {
         carrot: 5, potato: 3, corn: 3, tomato: 0, strawberry: 0,
         pumpkin: 0, wheat: 0, blueberry: 0, watermelon: 0,
-        sunflower: 0, rose: 0, tulip: 0, mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
+        cucumber: 0, radish: 0, orange: 0, peach: 0, banana: 0, grapes: 0,
+        mango: 0, lemon: 0, apple: 0, cherry: 0
       },
       harvested: {
         carrot: 0, potato: 0, corn: 0, tomato: 0, strawberry: 0,
         pumpkin: 0, wheat: 0, blueberry: 0, watermelon: 0,
-        sunflower: 0, rose: 0, tulip: 0, mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
+        cucumber: 0, radish: 0, orange: 0, peach: 0, banana: 0, grapes: 0,
+        mango: 0, lemon: 0, apple: 0, cherry: 0
       },
       care: { water: 15, fertilizer: 3 },
       decor: { lamp: 0 }
@@ -872,14 +918,14 @@ export class GameStateService {
           seeds: {
             carrot: 0, potato: 0, corn: 0, tomato: 0, strawberry: 0,
             pumpkin: 0, wheat: 0, blueberry: 0, watermelon: 0,
-            sunflower: 0, rose: 0, tulip: 0,
-            mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
+            cucumber: 0, radish: 0, orange: 0, peach: 0, banana: 0, grapes: 0,
+            mango: 0, lemon: 0, apple: 0, cherry: 0
           },
           harvested: {
             carrot: 0, potato: 0, corn: 0, tomato: 0, strawberry: 0,
             pumpkin: 0, wheat: 0, blueberry: 0, watermelon: 0,
-            sunflower: 0, rose: 0, tulip: 0,
-            mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
+            cucumber: 0, radish: 0, orange: 0, peach: 0, banana: 0, grapes: 0,
+            mango: 0, lemon: 0, apple: 0, cherry: 0
           },
           care: { water: 0, fertilizer: 0 },
           decor: {}
@@ -887,11 +933,17 @@ export class GameStateService {
 
         for (const item of items) {
           const type = (item.itemType || '').toLowerCase();
-          const code = (item.itemCode || '').toLowerCase();
+          const rawCode = (item.itemCode || '').toLowerCase();
+          const code = rawCode === 'sunflower' ? 'pumpkin'
+            : rawCode === 'rose' ? 'blueberry'
+            : rawCode === 'tulip' ? 'wheat'
+            : rawCode === 'kiwi' ? 'watermelon'
+            : rawCode;
+
           if (type === 'seed' || type === '1') {
-            newInv.seeds[code] = item.quantity;
+            newInv.seeds[code] = (newInv.seeds[code] || 0) + item.quantity;
           } else if (type === 'harvested' || type === 'harvestedcrop' || type === '4') {
-            newInv.harvested[code] = item.quantity;
+            newInv.harvested[code] = (newInv.harvested[code] || 0) + item.quantity;
           } else if (type === 'care' || type === 'water' || type === 'fertilizer' || type === '2' || type === '3') {
             if (code === 'water') newInv.care.water = item.quantity;
             if (code === 'fertilizer') newInv.care.fertilizer = item.quantity;

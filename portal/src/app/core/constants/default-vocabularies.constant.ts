@@ -80,15 +80,15 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
     },
     {
       "id": 107,
-      "word": "Sunflower",
-      "phonetic": "/ˈsʌnˌflaʊ.ər/",
-      "ipaUs": "/ˈsʌnˌflaʊ.ɚ/",
-      "ipaUk": "/ˈsʌnˌflaʊ.ər/",
+      "word": "Pumpkin",
+      "phonetic": "/ˈpʌmp.kɪn/",
+      "ipaUs": "/ˈpʌmp.kɪn/",
+      "ipaUk": "/ˈpʌmp.kɪn/",
       "wordType": "noun",
-      "meaningVi": "Hoa hướng dương",
-      "exampleEn": "Tall sunflowers always turn their bright faces toward the sun.",
-      "exampleVi": "Những cây hoa hướng dương cao luôn hướng về phía mặt trời.",
-      "spriteKey": "sunflower"
+      "meaningVi": "Quả bí ngô",
+      "exampleEn": "Orange pumpkins ripen in the field during late autumn.",
+      "exampleVi": "Những quả bí ngô màu cam chín rộ trên đồng vào cuối mùa thu.",
+      "spriteKey": "pumpkin"
     },
     {
       "id": 108,

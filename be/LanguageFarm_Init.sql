@@ -278,7 +278,7 @@ BEGIN
     ('tomato', N'Cà chua', 30, 10, 50, 45),
     ('strawberry', N'Dâu tây', 40, 12, 60, 55),
     ('apple', N'Táo đỏ', 50, 15, 80, 70),
-    ('sunflower', N'Hoa hướng dương', 50, 15, 80, 70);
+    ('pumpkin', N'Bí ngô', 18, 15, 30, 25);
 END
 GO
 

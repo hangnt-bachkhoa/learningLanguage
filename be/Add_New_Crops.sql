@@ -1,6 +1,6 @@
 -- =========================================================================
--- BỔ SUNG 8 LOẠI CÂY TRỒNG MỚI VÀO CƠ SỞ DỮ LIỆU & BỎ HÀNG RÀO
--- Hoa hướng dương, Hoa hồng, Hoa tulip, Xoài, Kiwi, Chanh, Táo, Cherry
+-- BỔ SUNG CÁC LOẠI CÂY TRỒNG MỚI VÀO CƠ SỞ DỮ LIỆU
+-- Bí ngô, Việt quất, Lúa mì, Dưa hấu, Xoài, Chanh, Táo, Cherry
 -- =========================================================================
 
 USE [LanguageFarmDb];
@@ -23,14 +23,14 @@ DECLARE @NewCrops TABLE (
 
 INSERT INTO @NewCrops ([Code], [NameVi], [GrowthMinutes], [HarvestCoins], [HarvestXp], [SeedPriceCoins])
 VALUES 
-    (N'sunflower', N'Hoa hướng dương', 4, 25, 30, 18),
-    (N'rose',      N'Hoa hồng',         5, 35, 40, 24),
-    (N'tulip',     N'Hoa tulip',        4, 30, 35, 20),
-    (N'mango',     N'Xoài',             7, 50, 55, 35),
-    (N'kiwi',      N'Kiwi',             6, 45, 50, 32),
-    (N'lemon',     N'Chanh',            5, 35, 40, 22),
-    (N'apple',     N'Táo',              8, 60, 65, 40),
-    (N'cherry',    N'Cherry',           10, 80, 85, 50);
+    (N'pumpkin',    N'Bí ngô',           15, 25, 30, 18),
+    (N'blueberry',  N'Việt quất',        15, 35, 40, 24),
+    (N'wheat',      N'Lúa mì',           12, 30, 35, 20),
+    (N'watermelon', N'Dưa hấu',          18, 45, 50, 32),
+    (N'mango',      N'Xoài',             18, 50, 55, 35),
+    (N'lemon',      N'Chanh',            15, 35, 40, 22),
+    (N'apple',      N'Táo',              15, 60, 65, 40),
+    (N'cherry',     N'Cherry',           20, 80, 85, 50);
 
 MERGE INTO [dbo].[CropCatalogs] AS Target
 USING @NewCrops AS Source
@@ -58,14 +58,14 @@ DECLARE @SeedProducts TABLE (
 
 INSERT INTO @SeedProducts ([Category], [NameVi], [ItemCode], [PriceCoins], [Description])
 VALUES
-    (N'seeds', N'Túi hạt giống Hoa hướng dương', N'sunflower', 18, N'Hoa hướng dương vàng óng rực rỡ, mang lại nhiều điểm XP.'),
-    (N'seeds', N'Túi hạt giống Hoa hồng',         N'rose',      24, N'Hoa hồng đỏ thắm kiêu sa, giúp khu vườn thêm sắc màu.'),
-    (N'seeds', N'Túi hạt giống Hoa tulip',        N'tulip',     20, N'Hoa tulip rực rỡ phong cách Hà Lan vintage.'),
-    (N'seeds', N'Túi hạt giống Xoài',             N'mango',     35, N'Cây xoài cát ngọt lịm, cho năng suất và giá bán cao.'),
-    (N'seeds', N'Túi hạt giống Kiwi',             N'kiwi',      32, N'Kiwi xanh thanh mát, giàu vitamin C.'),
-    (N'seeds', N'Túi hạt giống Chanh',            N'lemon',     22, N'Chanh vàng tươi mọng nước, dễ chăm sóc.'),
-    (N'seeds', N'Túi hạt giống Táo',              N'apple',     40, N'Cây táo đỏ ngọt giòn, giá trị kinh tế cao.'),
-    (N'seeds', N'Túi hạt giống Cherry',           N'cherry',    50, N'Cherry đỏ mọng cao cấp, phần thưởng kinh nghiệm khủng.');
+    (N'seeds', N'Túi hạt giống Bí ngô',          N'pumpkin',    18, N'Trái bí ngô tròn vàng cam đậm đà, thu hoạch bội thu.'),
+    (N'seeds', N'Túi hạt giống Việt quất',       N'blueberry',  24, N'Những chùm việt quất tím thẫm mọng nước, giàu chất chống oxy hóa.'),
+    (N'seeds', N'Túi hạt giống Lúa mì',          N'wheat',      20, N'Những bông lúa mì vàng óng trĩu hạt, biểu tượng no ấm.'),
+    (N'seeds', N'Túi hạt giống Dưa hấu',         N'watermelon', 32, N'Trái dưa hấu vỏ xanh ruột đỏ mọng ngọt, giải nhiệt hè.'),
+    (N'seeds', N'Túi hạt giống Xoài',            N'mango',      35, N'Cây xoài cát ngọt lịm, cho năng suất và giá bán cao.'),
+    (N'seeds', N'Túi hạt giống Chanh',           N'lemon',      22, N'Chanh vàng tươi mọng nước, dễ chăm sóc.'),
+    (N'seeds', N'Túi hạt giống Táo',             N'apple',      40, N'Cây táo đỏ ngọt giòn, giá trị kinh tế cao.'),
+    (N'seeds', N'Túi hạt giống Cherry',          N'cherry',     50, N'Cherry đỏ mọng cao cấp, phần thưởng kinh nghiệm khủng.');
 
 MERGE INTO [dbo].[ShopProducts] AS Target
 USING @SeedProducts AS Source
@@ -87,7 +87,7 @@ DECLARE @UserSeeds TABLE (
 );
 
 INSERT INTO @UserSeeds ([ItemCode])
-VALUES (N'sunflower'), (N'rose'), (N'tulip'), (N'mango'), (N'kiwi'), (N'lemon'), (N'apple'), (N'cherry');
+VALUES (N'pumpkin'), (N'blueberry'), (N'wheat'), (N'watermelon'), (N'mango'), (N'lemon'), (N'apple'), (N'cherry');
 
 MERGE INTO [dbo].[UserInventories] AS Target
 USING @UserSeeds AS Source

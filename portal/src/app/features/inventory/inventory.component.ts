@@ -22,7 +22,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         <h3 class="card-title" style="margin-bottom:14px;">🧺 Nông Sản Thu Hoạch</h3>
         <div class="items-grid">
           @for (k of objectKeys(state.inventory().harvested); track k) {
-            @if ((state.inventory().harvested[k] || 0) > 0 || isKnownCrop(k)) {
+            @if (isKnownCrop(k)) {
               <div class="inv-slot">
                 <div class="slot-sprite" [innerHTML]="getCropSprite(k) | safeHtml"></div>
                 <div class="slot-name">{{ getCropName(k) }}</div>
@@ -38,7 +38,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         <h3 class="card-title" style="margin-bottom:14px;">🌱 Hạt Giống</h3>
         <div class="items-grid">
           @for (k of objectKeys(state.inventory().seeds); track k) {
-            @if ((state.inventory().seeds[k] || 0) > 0 || isKnownCrop(k)) {
+            @if (isKnownCrop(k)) {
               <div class="inv-slot">
                 <div class="slot-sprite" [innerHTML]="getSeedSprite(k) | safeHtml"></div>
                 <div class="slot-name">Hạt {{ getCropName(k) }}</div>
