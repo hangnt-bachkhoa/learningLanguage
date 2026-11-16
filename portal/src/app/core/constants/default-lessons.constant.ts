@@ -93,7 +93,7 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "orderIndex": 8,
     "isUnlocked": false,
     "requiredLevel": 2,
-    "requiredCropId": 1,
+    "requiredCropId": "carrot",
     "requiredCropQty": 2,
     "requiredCropName": "Cà rốt",
     "requiredCrops": [
@@ -113,14 +113,14 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "orderIndex": 9,
     "isUnlocked": false,
     "requiredLevel": 2,
-    "requiredCropId": 1,
+    "requiredCropId": "cucumber",
     "requiredCropQty": 2,
-    "requiredCropName": "Cà rốt",
+    "requiredCropName": "Dưa chuột",
     "requiredCrops": [
       {
-        "cropId": "carrot",
+        "cropId": "cucumber",
         "qty": 2,
-        "cropNameVi": "Cà rốt"
+        "cropNameVi": "Dưa chuột"
       }
     ],
     "bestStarsClaimed": 0
@@ -133,14 +133,14 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "orderIndex": 10,
     "isUnlocked": false,
     "requiredLevel": 2,
-    "requiredCropId": 1,
+    "requiredCropId": "radish",
     "requiredCropQty": 2,
-    "requiredCropName": "Cà rốt",
+    "requiredCropName": "Củ cải đỏ",
     "requiredCrops": [
       {
-        "cropId": "carrot",
+        "cropId": "radish",
         "qty": 2,
-        "cropNameVi": "Cà rốt"
+        "cropNameVi": "Củ cải đỏ"
       }
     ],
     "bestStarsClaimed": 0
@@ -152,15 +152,15 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "levelTag": "TOEIC 450",
     "orderIndex": 11,
     "isUnlocked": false,
-    "requiredLevel": 2,
-    "requiredCropId": 1,
+    "requiredLevel": 3,
+    "requiredCropId": "potato",
     "requiredCropQty": 2,
-    "requiredCropName": "Cà rốt",
+    "requiredCropName": "Khoai tây",
     "requiredCrops": [
       {
-        "cropId": "carrot",
+        "cropId": "potato",
         "qty": 2,
-        "cropNameVi": "Cà rốt"
+        "cropNameVi": "Khoai tây"
       }
     ],
     "bestStarsClaimed": 0
@@ -172,15 +172,15 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "levelTag": "TOEIC 450",
     "orderIndex": 12,
     "isUnlocked": false,
-    "requiredLevel": 2,
-    "requiredCropId": 1,
+    "requiredLevel": 3,
+    "requiredCropId": "corn",
     "requiredCropQty": 2,
-    "requiredCropName": "Cà rốt",
+    "requiredCropName": "Bắp ngô",
     "requiredCrops": [
       {
-        "cropId": "carrot",
+        "cropId": "corn",
         "qty": 2,
-        "cropNameVi": "Cà rốt"
+        "cropNameVi": "Bắp ngô"
       }
     ],
     "bestStarsClaimed": 0
@@ -193,13 +193,13 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "orderIndex": 13,
     "isUnlocked": false,
     "requiredLevel": 3,
-    "requiredCropId": 1,
-    "requiredCropQty": 2,
+    "requiredCropId": "carrot",
+    "requiredCropQty": 3,
     "requiredCropName": "Cà rốt",
     "requiredCrops": [
       {
         "cropId": "carrot",
-        "qty": 2,
+        "qty": 3,
         "cropNameVi": "Cà rốt"
       }
     ],
@@ -213,14 +213,14 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "orderIndex": 14,
     "isUnlocked": false,
     "requiredLevel": 3,
-    "requiredCropId": 1,
-    "requiredCropQty": 2,
-    "requiredCropName": "Cà rốt",
+    "requiredCropId": "potato",
+    "requiredCropQty": 3,
+    "requiredCropName": "Khoai tây",
     "requiredCrops": [
       {
-        "cropId": "carrot",
-        "qty": 2,
-        "cropNameVi": "Cà rốt"
+        "cropId": "potato",
+        "qty": 3,
+        "cropNameVi": "Khoai tây"
       }
     ],
     "bestStarsClaimed": 0
@@ -229,18 +229,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 15,
     "title": "Công nghệ (Technology)",
     "languageCode": "en",
-    "levelTag": "TOEIC 450",
+    "levelTag": "TOEIC 600",
     "orderIndex": 15,
     "isUnlocked": false,
-    "requiredLevel": 3,
-    "requiredCropId": 1,
+    "requiredLevel": 4,
+    "requiredCropId": "tomato",
     "requiredCropQty": 2,
-    "requiredCropName": "Cà rốt",
+    "requiredCropName": "Cà chua",
     "requiredCrops": [
       {
-        "cropId": "carrot",
+        "cropId": "tomato",
         "qty": 2,
-        "cropNameVi": "Cà rốt"
+        "cropNameVi": "Cà chua"
       }
     ],
     "bestStarsClaimed": 0
@@ -249,18 +249,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 16,
     "title": "Y tế (Healthcare)",
     "languageCode": "en",
-    "levelTag": "TOEIC 450",
+    "levelTag": "TOEIC 600",
     "orderIndex": 16,
     "isUnlocked": false,
-    "requiredLevel": 3,
-    "requiredCropId": 1,
+    "requiredLevel": 4,
+    "requiredCropId": "strawberry",
     "requiredCropQty": 2,
-    "requiredCropName": "Cà rốt",
+    "requiredCropName": "Dâu tây",
     "requiredCrops": [
       {
-        "cropId": "carrot",
+        "cropId": "strawberry",
         "qty": 2,
-        "cropNameVi": "Cà rốt"
+        "cropNameVi": "Dâu tây"
       }
     ],
     "bestStarsClaimed": 0
@@ -269,18 +269,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 17,
     "title": "Giáo dục (Education)",
     "languageCode": "en",
-    "levelTag": "TOEIC 450",
+    "levelTag": "TOEIC 600",
     "orderIndex": 17,
     "isUnlocked": false,
-    "requiredLevel": 3,
-    "requiredCropId": 1,
+    "requiredLevel": 4,
+    "requiredCropId": "orange",
     "requiredCropQty": 2,
-    "requiredCropName": "Cà rốt",
+    "requiredCropName": "Cam sành",
     "requiredCrops": [
       {
-        "cropId": "carrot",
+        "cropId": "orange",
         "qty": 2,
-        "cropNameVi": "Cà rốt"
+        "cropNameVi": "Cam sành"
       }
     ],
     "bestStarsClaimed": 0
@@ -289,18 +289,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 18,
     "title": "Logistics (Logistics)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 18,
     "isUnlocked": false,
-    "requiredLevel": 4,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 5,
+    "requiredCropId": "pumpkin",
+    "requiredCropQty": 2,
+    "requiredCropName": "Bí ngô",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "pumpkin",
+        "qty": 2,
+        "cropNameVi": "Bí ngô"
       }
     ],
     "bestStarsClaimed": 0
@@ -309,18 +309,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 19,
     "title": "Giao nhận hàng hóa (Shipping)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 19,
     "isUnlocked": false,
-    "requiredLevel": 4,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 5,
+    "requiredCropId": "wheat",
+    "requiredCropQty": 2,
+    "requiredCropName": "Lúa mì",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "wheat",
+        "qty": 2,
+        "cropNameVi": "Lúa mì"
       }
     ],
     "bestStarsClaimed": 0
@@ -329,18 +329,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 20,
     "title": "Xây dựng (Construction)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 20,
     "isUnlocked": false,
-    "requiredLevel": 4,
-    "requiredCropId": 2,
+    "requiredLevel": 5,
+    "requiredCropId": "tomato",
     "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredCropName": "Cà chua",
     "requiredCrops": [
       {
-        "cropId": "potato",
+        "cropId": "tomato",
         "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropNameVi": "Cà chua"
       }
     ],
     "bestStarsClaimed": 0
@@ -349,18 +349,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 21,
     "title": "Bất động sản (Real Estate)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 21,
     "isUnlocked": false,
-    "requiredLevel": 4,
-    "requiredCropId": 2,
+    "requiredLevel": 5,
+    "requiredCropId": "strawberry",
     "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredCropName": "Dâu tây",
     "requiredCrops": [
       {
-        "cropId": "potato",
+        "cropId": "strawberry",
         "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropNameVi": "Dâu tây"
       }
     ],
     "bestStarsClaimed": 0
@@ -369,18 +369,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 22,
     "title": "Môi trường (Environment)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 22,
     "isUnlocked": false,
-    "requiredLevel": 4,
-    "requiredCropId": 2,
+    "requiredLevel": 6,
+    "requiredCropId": "orange",
     "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredCropName": "Cam sành",
     "requiredCrops": [
       {
-        "cropId": "potato",
+        "cropId": "orange",
         "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropNameVi": "Cam sành"
       }
     ],
     "bestStarsClaimed": 0
@@ -389,18 +389,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 23,
     "title": "Thời tiết (Weather)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 23,
     "isUnlocked": false,
-    "requiredLevel": 5,
-    "requiredCropId": 2,
+    "requiredLevel": 6,
+    "requiredCropId": "pumpkin",
     "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredCropName": "Bí ngô",
     "requiredCrops": [
       {
-        "cropId": "potato",
+        "cropId": "pumpkin",
         "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropNameVi": "Bí ngô"
       }
     ],
     "bestStarsClaimed": 0
@@ -409,18 +409,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 24,
     "title": "Pháp luật (Law)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 24,
     "isUnlocked": false,
-    "requiredLevel": 5,
-    "requiredCropId": 2,
+    "requiredLevel": 6,
+    "requiredCropId": "wheat",
     "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredCropName": "Lúa mì",
     "requiredCrops": [
       {
-        "cropId": "potato",
+        "cropId": "wheat",
         "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropNameVi": "Lúa mì"
       }
     ],
     "bestStarsClaimed": 0
@@ -429,18 +429,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 25,
     "title": "Bảo hiểm (Insurance)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 25,
     "isUnlocked": false,
-    "requiredLevel": 5,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 6,
+    "requiredCropId": "tomato",
+    "requiredCropQty": 2,
+    "requiredCropName": "Cà chua",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "tomato",
+        "qty": 2,
+        "cropNameVi": "Cà chua"
+      },
+      {
+        "cropId": "strawberry",
+        "qty": 2,
+        "cropNameVi": "Dâu tây"
       }
     ],
     "bestStarsClaimed": 0
@@ -449,18 +454,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 26,
     "title": "Sản xuất (Manufacturing)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 600",
     "orderIndex": 26,
     "isUnlocked": false,
-    "requiredLevel": 5,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 6,
+    "requiredCropId": "pumpkin",
+    "requiredCropQty": 2,
+    "requiredCropName": "Bí ngô",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "pumpkin",
+        "qty": 2,
+        "cropNameVi": "Bí ngô"
+      },
+      {
+        "cropId": "wheat",
+        "qty": 2,
+        "cropNameVi": "Lúa mì"
       }
     ],
     "bestStarsClaimed": 0
@@ -469,18 +479,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 27,
     "title": "Chuỗi cung ứng (Supply Chain)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 27,
     "isUnlocked": false,
-    "requiredLevel": 5,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 7,
+    "requiredCropId": "lemon",
+    "requiredCropQty": 2,
+    "requiredCropName": "Chanh",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "lemon",
+        "qty": 2,
+        "cropNameVi": "Chanh"
       }
     ],
     "bestStarsClaimed": 0
@@ -489,18 +499,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 28,
     "title": "Giao tiếp (Communication)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 28,
     "isUnlocked": false,
-    "requiredLevel": 6,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 7,
+    "requiredCropId": "blueberry",
+    "requiredCropQty": 2,
+    "requiredCropName": "Việt quất",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "blueberry",
+        "qty": 2,
+        "cropNameVi": "Việt quất"
       }
     ],
     "bestStarsClaimed": 0
@@ -509,18 +519,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 29,
     "title": "Hội nghị (Meetings)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 29,
     "isUnlocked": false,
-    "requiredLevel": 6,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 7,
+    "requiredCropId": "peach",
+    "requiredCropQty": 2,
+    "requiredCropName": "Đào tiên",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "peach",
+        "qty": 2,
+        "cropNameVi": "Đào tiên"
       }
     ],
     "bestStarsClaimed": 0
@@ -529,18 +539,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 30,
     "title": "Quản lý dự án (Project Management)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 30,
     "isUnlocked": false,
-    "requiredLevel": 6,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 8,
+    "requiredCropId": "banana",
+    "requiredCropQty": 2,
+    "requiredCropName": "Chuối chín",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "banana",
+        "qty": 2,
+        "cropNameVi": "Chuối chín"
       }
     ],
     "bestStarsClaimed": 0
@@ -549,18 +559,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 31,
     "title": "Hành chính văn phòng (Administrative Tasks)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 31,
     "isUnlocked": false,
-    "requiredLevel": 6,
-    "requiredCropId": 2,
-    "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredLevel": 8,
+    "requiredCropId": "watermelon",
+    "requiredCropQty": 2,
+    "requiredCropName": "Dưa hấu",
     "requiredCrops": [
       {
-        "cropId": "potato",
-        "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropId": "watermelon",
+        "qty": 2,
+        "cropNameVi": "Dưa hấu"
       }
     ],
     "bestStarsClaimed": 0
@@ -569,18 +579,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 32,
     "title": "Thể thao (Sports)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 32,
     "isUnlocked": false,
-    "requiredLevel": 6,
-    "requiredCropId": 2,
+    "requiredLevel": 8,
+    "requiredCropId": "lemon",
     "requiredCropQty": 3,
-    "requiredCropName": "Khoai tây",
+    "requiredCropName": "Chanh",
     "requiredCrops": [
       {
-        "cropId": "potato",
+        "cropId": "lemon",
         "qty": 3,
-        "cropNameVi": "Khoai tây"
+        "cropNameVi": "Chanh"
       }
     ],
     "bestStarsClaimed": 0
@@ -589,18 +599,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 33,
     "title": "Giải trí (Entertainment)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 33,
     "isUnlocked": false,
-    "requiredLevel": 7,
-    "requiredCropId": 3,
+    "requiredLevel": 8,
+    "requiredCropId": "blueberry",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Việt quất",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "blueberry",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Việt quất"
       }
     ],
     "bestStarsClaimed": 0
@@ -609,18 +619,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 34,
     "title": "Nghệ thuật (Arts)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 34,
     "isUnlocked": false,
-    "requiredLevel": 7,
-    "requiredCropId": 3,
+    "requiredLevel": 8,
+    "requiredCropId": "peach",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Đào tiên",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "peach",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Đào tiên"
       }
     ],
     "bestStarsClaimed": 0
@@ -629,18 +639,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 35,
     "title": "Thời trang (Fashion)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 35,
     "isUnlocked": false,
-    "requiredLevel": 7,
-    "requiredCropId": 3,
+    "requiredLevel": 9,
+    "requiredCropId": "banana",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Chuối chín",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "banana",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Chuối chín"
       }
     ],
     "bestStarsClaimed": 0
@@ -649,18 +659,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 36,
     "title": "Sự kiện (Events)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 36,
     "isUnlocked": false,
-    "requiredLevel": 7,
-    "requiredCropId": 3,
+    "requiredLevel": 9,
+    "requiredCropId": "watermelon",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Dưa hấu",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "watermelon",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Dưa hấu"
       }
     ],
     "bestStarsClaimed": 0
@@ -669,18 +679,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 37,
     "title": "Phương tiện truyền thông (Media)",
     "languageCode": "en",
-    "levelTag": "TOEIC 650",
+    "levelTag": "TOEIC 800",
     "orderIndex": 37,
     "isUnlocked": false,
-    "requiredLevel": 7,
-    "requiredCropId": 3,
-    "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredLevel": 9,
+    "requiredCropId": "lemon",
+    "requiredCropQty": 2,
+    "requiredCropName": "Chanh",
     "requiredCrops": [
       {
-        "cropId": "corn",
-        "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropId": "lemon",
+        "qty": 2,
+        "cropNameVi": "Chanh"
+      },
+      {
+        "cropId": "blueberry",
+        "qty": 2,
+        "cropNameVi": "Việt quất"
       }
     ],
     "bestStarsClaimed": 0
@@ -692,15 +707,20 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "levelTag": "TOEIC 800",
     "orderIndex": 38,
     "isUnlocked": false,
-    "requiredLevel": 8,
-    "requiredCropId": 3,
-    "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredLevel": 9,
+    "requiredCropId": "peach",
+    "requiredCropQty": 2,
+    "requiredCropName": "Đào tiên",
     "requiredCrops": [
       {
-        "cropId": "corn",
-        "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropId": "peach",
+        "qty": 2,
+        "cropNameVi": "Đào tiên"
+      },
+      {
+        "cropId": "banana",
+        "qty": 2,
+        "cropNameVi": "Chuối chín"
       }
     ],
     "bestStarsClaimed": 0
@@ -712,15 +732,20 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "levelTag": "TOEIC 800",
     "orderIndex": 39,
     "isUnlocked": false,
-    "requiredLevel": 8,
-    "requiredCropId": 3,
-    "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredLevel": 9,
+    "requiredCropId": "watermelon",
+    "requiredCropQty": 2,
+    "requiredCropName": "Dưa hấu",
     "requiredCrops": [
       {
-        "cropId": "corn",
-        "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropId": "watermelon",
+        "qty": 2,
+        "cropNameVi": "Dưa hấu"
+      },
+      {
+        "cropId": "blueberry",
+        "qty": 2,
+        "cropNameVi": "Việt quất"
       }
     ],
     "bestStarsClaimed": 0
@@ -729,18 +754,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 40,
     "title": "Thực phẩm và đồ uống (Food & Beverage)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 40,
     "isUnlocked": false,
-    "requiredLevel": 8,
-    "requiredCropId": 3,
-    "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredLevel": 10,
+    "requiredCropId": "grapes",
+    "requiredCropQty": 2,
+    "requiredCropName": "Nho tím",
     "requiredCrops": [
       {
-        "cropId": "corn",
-        "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropId": "grapes",
+        "qty": 2,
+        "cropNameVi": "Nho tím"
       }
     ],
     "bestStarsClaimed": 0
@@ -749,18 +774,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 41,
     "title": "Vận tải (Transportation Systems)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 41,
     "isUnlocked": false,
-    "requiredLevel": 8,
-    "requiredCropId": 3,
-    "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredLevel": 10,
+    "requiredCropId": "apple",
+    "requiredCropQty": 2,
+    "requiredCropName": "Táo",
     "requiredCrops": [
       {
-        "cropId": "corn",
-        "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropId": "apple",
+        "qty": 2,
+        "cropNameVi": "Táo"
       }
     ],
     "bestStarsClaimed": 0
@@ -769,18 +794,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 42,
     "title": "An toàn lao động (Workplace Safety)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 42,
     "isUnlocked": false,
-    "requiredLevel": 8,
-    "requiredCropId": 3,
-    "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredLevel": 10,
+    "requiredCropId": "cherry",
+    "requiredCropQty": 2,
+    "requiredCropName": "Cherry",
     "requiredCrops": [
       {
-        "cropId": "corn",
-        "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropId": "cherry",
+        "qty": 2,
+        "cropNameVi": "Cherry"
       }
     ],
     "bestStarsClaimed": 0
@@ -789,18 +814,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 43,
     "title": "Tài nguyên thiên nhiên (Natural Resources)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 43,
     "isUnlocked": false,
-    "requiredLevel": 9,
-    "requiredCropId": 3,
+    "requiredLevel": 10,
+    "requiredCropId": "grapes",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Nho tím",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "grapes",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Nho tím"
       }
     ],
     "bestStarsClaimed": 0
@@ -809,18 +834,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 44,
     "title": "Sản phẩm và dịch vụ (Products & Services)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 44,
     "isUnlocked": false,
-    "requiredLevel": 9,
-    "requiredCropId": 3,
+    "requiredLevel": 11,
+    "requiredCropId": "apple",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Táo",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "apple",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Táo"
       }
     ],
     "bestStarsClaimed": 0
@@ -829,18 +854,18 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 45,
     "title": "Quan hệ đối tác (Partnerships)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 45,
     "isUnlocked": false,
-    "requiredLevel": 9,
-    "requiredCropId": 3,
+    "requiredLevel": 11,
+    "requiredCropId": "cherry",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Cherry",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "cherry",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Cherry"
       }
     ],
     "bestStarsClaimed": 0
@@ -849,18 +874,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 46,
     "title": "Quản lý thời gian (Time Management)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 46,
     "isUnlocked": false,
-    "requiredLevel": 9,
-    "requiredCropId": 3,
-    "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredLevel": 11,
+    "requiredCropId": "grapes",
+    "requiredCropQty": 2,
+    "requiredCropName": "Nho tím",
     "requiredCrops": [
       {
-        "cropId": "corn",
-        "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropId": "grapes",
+        "qty": 2,
+        "cropNameVi": "Nho tím"
+      },
+      {
+        "cropId": "apple",
+        "qty": 2,
+        "cropNameVi": "Táo"
       }
     ],
     "bestStarsClaimed": 0
@@ -869,18 +899,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 47,
     "title": "Bảo trì thiết bị (Equipment Maintenance)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 47,
     "isUnlocked": false,
-    "requiredLevel": 9,
-    "requiredCropId": 3,
-    "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredLevel": 11,
+    "requiredCropId": "apple",
+    "requiredCropQty": 2,
+    "requiredCropName": "Táo",
     "requiredCrops": [
       {
-        "cropId": "corn",
-        "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropId": "apple",
+        "qty": 2,
+        "cropNameVi": "Táo"
+      },
+      {
+        "cropId": "cherry",
+        "qty": 2,
+        "cropNameVi": "Cherry"
       }
     ],
     "bestStarsClaimed": 0
@@ -889,18 +924,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 48,
     "title": "Xuất nhập khẩu (Import & Export)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 48,
     "isUnlocked": false,
-    "requiredLevel": 10,
-    "requiredCropId": 3,
+    "requiredLevel": 12,
+    "requiredCropId": "grapes",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Nho tím",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "grapes",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Nho tím"
+      },
+      {
+        "cropId": "cherry",
+        "qty": 2,
+        "cropNameVi": "Cherry"
       }
     ],
     "bestStarsClaimed": 0
@@ -909,18 +949,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 49,
     "title": "Phát triển sản phẩm (Product Development)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 49,
     "isUnlocked": false,
-    "requiredLevel": 10,
-    "requiredCropId": 3,
+    "requiredLevel": 12,
+    "requiredCropId": "apple",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Táo",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "apple",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Táo"
+      },
+      {
+        "cropId": "grapes",
+        "qty": 2,
+        "cropNameVi": "Nho tím"
       }
     ],
     "bestStarsClaimed": 0
@@ -929,18 +974,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 50,
     "title": "Khủng hoảng và quản lý rủi ro (Crisis & Risk Management)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 50,
     "isUnlocked": false,
-    "requiredLevel": 10,
-    "requiredCropId": 3,
+    "requiredLevel": 12,
+    "requiredCropId": "cherry",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Cherry",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "cherry",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Cherry"
+      },
+      {
+        "cropId": "apple",
+        "qty": 2,
+        "cropNameVi": "Táo"
       }
     ],
     "bestStarsClaimed": 0
@@ -949,18 +999,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 51,
     "title": "Đàm phán (Negotiations)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 51,
     "isUnlocked": false,
-    "requiredLevel": 10,
-    "requiredCropId": 3,
+    "requiredLevel": 12,
+    "requiredCropId": "grapes",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Nho tím",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "grapes",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Nho tím"
+      },
+      {
+        "cropId": "apple",
+        "qty": 3,
+        "cropNameVi": "Táo"
       }
     ],
     "bestStarsClaimed": 0
@@ -969,18 +1024,23 @@ export const DEFAULT_LESSONS: LessonDto[] = [
     "id": 52,
     "title": "Hoạt động từ thiện (Charity & Non-profit)",
     "languageCode": "en",
-    "levelTag": "TOEIC 800",
+    "levelTag": "TOEIC 900",
     "orderIndex": 52,
     "isUnlocked": false,
-    "requiredLevel": 10,
-    "requiredCropId": 3,
+    "requiredLevel": 12,
+    "requiredCropId": "apple",
     "requiredCropQty": 3,
-    "requiredCropName": "Bắp ngô",
+    "requiredCropName": "Táo",
     "requiredCrops": [
       {
-        "cropId": "corn",
+        "cropId": "apple",
         "qty": 3,
-        "cropNameVi": "Bắp ngô"
+        "cropNameVi": "Táo"
+      },
+      {
+        "cropId": "cherry",
+        "qty": 3,
+        "cropNameVi": "Cherry"
       }
     ],
     "bestStarsClaimed": 0

@@ -190,7 +190,7 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                       </span>
                     } @else {
                       <span class="seed-lock-tag" title="{{ lockInfo.missingReasons.join(' & ') }}">
-                        Lv.{{ lockInfo.requiredLevel }} ({{ lockInfo.requiredXp }} XP)
+                        Lv.{{ lockInfo.requiredLevel }}
                       </span>
                     }
                   </div>
@@ -224,7 +224,10 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                     <span class="lock-status-pill unlocked">✅ Đã mở khóa</span>
                   } @else {
                     <span class="lock-status-pill locked">
-                      🔒 Khóa: Cần {{ lockInfo.requiredXp }} XP & Mở bài "{{ lockInfo.requiredLessonTitle }}"
+                      🔒 Cần Lv.{{ lockInfo.requiredLevel }}
+                      @if (lockInfo.requiredLessonTitle) {
+                        & Mở bài "{{ lockInfo.requiredLessonTitle }}"
+                      }
                     </span>
                   }
                 </div>
@@ -1385,7 +1388,8 @@ export class FarmComponent implements OnInit {
 
   onSelectSeed(seedId: string, isUnlocked: boolean, lockInfo: any) {
     if (!isUnlocked) {
-      this.state.showToast(`🔒 Hạt giống này đang khóa! Cần ${lockInfo.requiredXp} XP và mở bài học "${lockInfo.requiredLessonTitle}".`);
+      const reason = lockInfo?.missingReasons?.length ? lockInfo.missingReasons.join(' & ') : `Cần Cấp độ ${lockInfo.requiredLevel}`;
+      this.state.showToast(`🔒 Hạt giống này đang khóa! ${reason}`);
       return;
     }
     this.state.selectedSeed.set(seedId);

@@ -182,7 +182,12 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
             @if (isLocked) {
               <div class="prod-lock-hint">
                 <span class="lock-req-icon">🔒</span>
-                <span class="lock-req-text">Cần {{ lockInfo?.requiredXp }} XP & Mở bài "{{ lockInfo?.requiredLessonTitle }}"</span>
+                <span class="lock-req-text">
+                  Cần Lv.{{ lockInfo?.requiredLevel }}
+                  @if (lockInfo?.requiredLessonTitle) {
+                    & Mở bài "{{ lockInfo?.requiredLessonTitle }}"
+                  }
+                </span>
               </div>
             } @else {
               <div class="prod-usage">{{ prod.usage }}</div>
@@ -534,104 +539,17 @@ export class ShopComponent {
   selectedCat = signal<string>('all');
 
   items: ShopItem[] = [
+    // --- HẠNG I: MẦM NON (Lv. 1-3) ---
     {
       id: 's_carrot',
       cat: 'seeds',
       name: 'Hạt giống Cà rốt',
       price: 15,
       sprite: 's_carrot',
-      duration: '2 lượt tưới',
-      usage: 'Gieo hạt để thu hoạch cà rốt mở khóa bài học Marketing & Khách sạn.',
-      desc: 'Giống cà rốt ngọt giòn cho người mới.',
+      duration: '5 phút',
+      usage: 'Gieo hạt để thu hoạch Cà rốt mở khóa bài học TOEIC 450.',
+      desc: 'Giống cà rốt ngọt giòn cho người mới bắt đầu canh tác.',
       cropKey: 'carrot'
-    },
-    {
-      id: 's_potato',
-      cat: 'seeds',
-      name: 'Hạt giống Khoai tây',
-      price: 15,
-      sprite: 's_potato',
-      duration: '2 lượt tưới',
-      usage: 'Thu hoạch khoai tây bùi bở để mở khóa các bài học Logistics & Xây dựng.',
-      desc: 'Củ khoai tây giàu tinh bột, cây trồng thiết yếu.',
-      cropKey: 'potato'
-    },
-    {
-      id: 's_corn',
-      cat: 'seeds',
-      name: 'Hạt giống Bắp ngô',
-      price: 18,
-      sprite: 's_corn',
-      duration: '2 lượt tưới',
-      usage: 'Thu hoạch bắp ngô vàng để mở khóa các bài học TOEIC nâng cao.',
-      desc: 'Dễ trồng, giá trị bán cao.',
-      cropKey: 'corn'
-    },
-    {
-      id: 's_tomato',
-      cat: 'seeds',
-      name: 'Hạt giống Cà chua',
-      price: 22,
-      sprite: 's_tomato',
-      duration: '3 lượt tưới',
-      usage: 'Trồng giàn cà chua đỏ mọng nước.',
-      desc: 'Nông sản chủ lực mùa vụ.',
-      cropKey: 'tomato'
-    },
-    {
-      id: 's_strawberry',
-      cat: 'seeds',
-      name: 'Hạt giống Dâu tây',
-      price: 25,
-      sprite: 's_strawberry',
-      duration: '3 lượt tưới',
-      usage: 'Trồng dâu tây chín đỏ mọng để thu hoạch nông sản giá trị cao.',
-      desc: 'Trái dâu tây thơm ngọt thanh tao mang lại giá trị cao.',
-      cropKey: 'strawberry'
-    },
-    {
-      id: 's_pumpkin',
-      cat: 'seeds',
-      name: 'Hạt giống Bí ngô',
-      price: 18,
-      sprite: 's_pumpkin',
-      duration: '3 lượt tưới',
-      usage: 'Trồng bí ngô vàng cam tròn xoe.',
-      desc: 'Trái bí ngô tròn vàng cam đậm đà, thu hoạch cho mùa vụ bội thu.',
-      cropKey: 'pumpkin'
-    },
-    {
-      id: 's_wheat',
-      cat: 'seeds',
-      name: 'Hạt giống Lúa mì',
-      price: 20,
-      sprite: 's_wheat',
-      duration: '2 lượt tưới',
-      usage: 'Gieo lúa mì trên ruộng đất màu mỡ.',
-      desc: 'Những bông lúa mì vàng óng trĩu hạt, biểu tượng của sự no ấm.',
-      cropKey: 'wheat'
-    },
-    {
-      id: 's_blueberry',
-      cat: 'seeds',
-      name: 'Hạt giống Việt quất',
-      price: 24,
-      sprite: 's_blueberry',
-      duration: '3 lượt tưới',
-      usage: 'Trồng bụi việt quất ngọt thơm.',
-      desc: 'Những chùm việt quất tím thẫm mọng nước, giàu chất chống oxy hóa.',
-      cropKey: 'blueberry'
-    },
-    {
-      id: 's_watermelon',
-      cat: 'seeds',
-      name: 'Hạt giống Dưa hấu',
-      price: 32,
-      sprite: 's_watermelon',
-      duration: '3 lượt tưới',
-      usage: 'Trồng dưa hấu giải nhiệt thanh mát.',
-      desc: 'Trái dưa hấu vỏ xanh ruột đỏ mọng ngọt, giải khát ngày hè oi ả.',
-      cropKey: 'watermelon'
     },
     {
       id: 's_cucumber',
@@ -639,9 +557,9 @@ export class ShopComponent {
       name: 'Hạt giống Dưa chuột',
       price: 12,
       sprite: 's_cucumber',
-      duration: '2 lượt tưới',
-      usage: 'Trồng dưa chuột thanh mát, mau cho trái.',
-      desc: 'Dưa chuột xanh giòn ngọt nước, dễ canh tác và thu hoạch nhanh.',
+      duration: '5 phút',
+      usage: 'Trồng dưa chuột thanh mát, mau cho trái và thu hồi vốn nhanh.',
+      desc: 'Dưa chuột xanh giòn ngọt nước, dễ canh tác và lớn nhanh.',
       cropKey: 'cucumber'
     },
     {
@@ -650,10 +568,56 @@ export class ShopComponent {
       name: 'Hạt giống Củ cải đỏ',
       price: 14,
       sprite: 's_radish',
-      duration: '2 lượt tưới',
+      duration: '6 phút',
       usage: 'Trồng củ cải đỏ tròn xoe xinh xắn.',
       desc: 'Củ cải đỏ giàu khoáng chất, màu sắc rực rỡ vui mắt.',
       cropKey: 'radish'
+    },
+    {
+      id: 's_potato',
+      cat: 'seeds',
+      name: 'Hạt giống Khoai tây',
+      price: 15,
+      sprite: 's_potato',
+      duration: '6 phút',
+      usage: 'Thu hoạch khoai tây bùi bở để mở khóa các bài học đời sống.',
+      desc: 'Củ khoai tây giàu tinh bột, cây trồng thiết yếu của nông trại.',
+      cropKey: 'potato'
+    },
+    {
+      id: 's_corn',
+      cat: 'seeds',
+      name: 'Hạt giống Bắp ngô',
+      price: 18,
+      sprite: 's_corn',
+      duration: '8 phút',
+      usage: 'Thu hoạch bắp ngô vàng để chuẩn bị bước lên TOEIC 600.',
+      desc: 'Hạt bắp vàng óng ả, sản lượng dồi dào, giá trị bán cao.',
+      cropKey: 'corn'
+    },
+
+    // --- HẠNG II: HOA TRÁI (Lv. 4-6) ---
+    {
+      id: 's_tomato',
+      cat: 'seeds',
+      name: 'Hạt giống Cà chua',
+      price: 22,
+      sprite: 's_tomato',
+      duration: '10 phút',
+      usage: 'Trồng giàn cà chua đỏ mọng nước mở khóa bài học TOEIC 600.',
+      desc: 'Nông sản chủ lực mùa vụ, quả mọng đỏ tươi.',
+      cropKey: 'tomato'
+    },
+    {
+      id: 's_strawberry',
+      cat: 'seeds',
+      name: 'Hạt giống Dâu tây',
+      price: 25,
+      sprite: 's_strawberry',
+      duration: '10 phút',
+      usage: 'Trồng dâu tây chín đỏ mọng để thu hoạch nông sản giá trị cao.',
+      desc: 'Trái dâu tây thơm ngọt thanh tao mang lại nguồn thu lớn.',
+      cropKey: 'strawberry'
     },
     {
       id: 's_orange',
@@ -661,10 +625,56 @@ export class ShopComponent {
       name: 'Hạt giống Cam sành',
       price: 26,
       sprite: 's_orange',
-      duration: '3 lượt tưới',
+      duration: '11 phút',
       usage: 'Trồng cây cam sai quả mọng vàng ươm.',
       desc: 'Cam sành vỏ mỏng mọng nước, giàu vitamin C.',
       cropKey: 'orange'
+    },
+    {
+      id: 's_pumpkin',
+      cat: 'seeds',
+      name: 'Hạt giống Bí ngô',
+      price: 18,
+      sprite: 's_pumpkin',
+      duration: '12 phút',
+      usage: 'Trồng bí ngô vàng cam tròn xoe thu hoạch nhiều nông sản.',
+      desc: 'Trái bí ngô tròn vàng cam đậm đà, biểu tượng của mùa vụ bội thu.',
+      cropKey: 'pumpkin'
+    },
+    {
+      id: 's_wheat',
+      cat: 'seeds',
+      name: 'Hạt giống Lúa mì',
+      price: 20,
+      sprite: 's_wheat',
+      duration: '12 phút',
+      usage: 'Gieo lúa mì trên ruộng đất màu mỡ cho thu hoạch lớn.',
+      desc: 'Những bông lúa mì vàng óng trĩu hạt, biểu tượng của sự no ấm.',
+      cropKey: 'wheat'
+    },
+
+    // --- HẠNG III: LÀM VƯỜN (Lv. 7-9) ---
+    {
+      id: 's_lemon',
+      cat: 'seeds',
+      name: 'Hạt giống Chanh',
+      price: 22,
+      sprite: 's_lemon',
+      duration: '14 phút',
+      usage: 'Trồng cây chanh vàng mọng nước cho hương thơm thanh mát.',
+      desc: 'Chanh vàng thanh mát, mọng nước giàu dưỡng chất.',
+      cropKey: 'lemon'
+    },
+    {
+      id: 's_blueberry',
+      cat: 'seeds',
+      name: 'Hạt giống Việt quất',
+      price: 24,
+      sprite: 's_blueberry',
+      duration: '14 phút',
+      usage: 'Trồng bụi việt quất ngọt thơm mở khóa chuyên đề TOEIC 800.',
+      desc: 'Những chùm việt quất tím thẫm mọng nước, giàu chất chống oxy hóa.',
+      cropKey: 'blueberry'
     },
     {
       id: 's_peach',
@@ -672,9 +682,9 @@ export class ShopComponent {
       name: 'Hạt giống Đào tiên',
       price: 28,
       sprite: 's_peach',
-      duration: '3 lượt tưới',
-      usage: 'Gieo hạt đào tiên hồng thắm.',
-      desc: 'Trái đào hồng nhung thơm ngọt dịu dàng.',
+      duration: '15 phút',
+      usage: 'Gieo hạt đào tiên hồng thắm, nông sản cao cấp vùng ôn đới.',
+      desc: 'Trái đào hồng nhung thơm ngọt dịu dàng, hương vị thanh tao.',
       cropKey: 'peach'
     },
     {
@@ -683,42 +693,44 @@ export class ShopComponent {
       name: 'Hạt giống Chuối chín',
       price: 30,
       sprite: 's_banana',
-      duration: '3 lượt tưới',
-      usage: 'Trồng cây chuối cho buồng quả vàng.',
-      desc: 'Nải chuối vàng ươm giàu kali và năng lượng học tập.',
+      duration: '15 phút',
+      usage: 'Trồng chuối vàng ươm cho năng suất dồi dào.',
+      desc: 'Nải chuối vàng ươm giàu năng lượng cho các buổi học tập chuyên sâu.',
       cropKey: 'banana'
     },
+    {
+      id: 's_watermelon',
+      cat: 'seeds',
+      name: 'Hạt giống Dưa hấu',
+      price: 32,
+      sprite: 's_watermelon',
+      duration: '16 phút',
+      usage: 'Trồng dưa hấu giải nhiệt thanh mát, bán được giá cao tại Chợ.',
+      desc: 'Trái dưa hấu vỏ xanh ruột đỏ mọng ngọt, giải khát ngày hè oi ả.',
+      cropKey: 'watermelon'
+    },
+
+    // --- HẠNG IV: THƯỢNG HẠNG (Lv. 10+) ---
     {
       id: 's_grapes',
       cat: 'seeds',
       name: 'Hạt giống Nho tím',
       price: 38,
       sprite: 's_grapes',
-      duration: '4 lượt tưới',
-      usage: 'Trồng giàn nho tím trĩu quả đồng quê.',
+      duration: '18 phút',
+      usage: 'Trồng giàn nho tím trĩu quả đồng quê mở bài TOEIC 900.',
       desc: 'Chùm nho tím đậm đà vị ngọt tự nhiên, giá trị kinh tế rất cao.',
       cropKey: 'grapes'
     },
     {
-      id: 's_lemon',
-      cat: 'seeds',
-      name: 'Hạt giống Chanh',
-      price: 22,
-      sprite: 's_lemon',
-      duration: '2 lượt tưới',
-      usage: 'Trồng cây chanh vàng mọng nước.',
-      desc: 'Chanh vàng thanh mát, mau cho trái.',
-      cropKey: 'lemon'
-    },
-    {
       id: 's_apple',
       cat: 'seeds',
-      name: 'Hạt giống Táo',
+      name: 'Hạt giống Táo đỏ',
       price: 40,
       sprite: 's_apple',
-      duration: '4 lượt tưới',
-      usage: 'Trồng cây táo đỏ trĩu cành.',
-      desc: 'Táo đỏ giòn ngọt, thưởng nhiều XP.',
+      duration: '18 phút',
+      usage: 'Trồng cây táo đỏ trĩu cành, nông sản thượng hạng hàng đầu.',
+      desc: 'Táo đỏ giòn ngọt, mang lại nguồn Xu khổng lồ khi bán.',
       cropKey: 'apple'
     },
     {
@@ -727,11 +739,13 @@ export class ShopComponent {
       name: 'Hạt giống Cherry',
       price: 50,
       sprite: 's_cherry',
-      duration: '4 lượt tưới',
-      usage: 'Trồng cherry đỏ mọng thượng hạng.',
-      desc: 'Loại quả quý mang lại giá trị cao nhất.',
+      duration: '20 phút',
+      usage: 'Trồng cherry đỏ mọng thượng phẩm đỉnh cao của nông trại.',
+      desc: 'Loại quả hoàng gia mang lại giá trị bán cao nhất toàn nông trại.',
       cropKey: 'cherry'
     },
+
+    // --- VẬT PHẨM CHĂM SÓC & DECOR ---
     {
       id: 'c_water',
       cat: 'care',
@@ -814,11 +828,11 @@ export class ShopComponent {
 
   getCropSellPrice(cropId: string): number {
     const crop = CROP_CATALOG.find(c => c.id === cropId);
-    if (crop) return Math.round(crop.price * 0.7);
+    if (crop) return crop.sellPrice || Math.round(crop.price * 1.6);
     const legacyPrices: Record<string, number> = {
-      sunflower: 14, tulip: 16, rose: 18, kiwi: 22
+      sunflower: 32, tulip: 35, rose: 42, kiwi: 56
     };
-    return legacyPrices[cropId] || 8;
+    return legacyPrices[cropId] || 20;
   }
 
   eligibleForFertilizer() {

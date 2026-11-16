@@ -609,28 +609,28 @@ export class GameStateService {
   }
 
   // =========================================================================
-  // PHÂN CẤP HẠT GIỐNG & ĐIỀU KIỆN MỞ KHÓA
+  // PHÂN CẤP HẠT GIỐNG & ĐIỀU KIỆN MỞ KHÓA (4-TIER PROGRESSION - LEVEL & BÀI HỌC)
   // =========================================================================
 
   isCropUnlocked(cropId: string): boolean {
     const crop = CROP_CATALOG.find(c => c.id === cropId);
     if (!crop) return true;
     // Cà rốt khởi đầu luôn mở sẵn
-    if (crop.id === 'carrot' || crop.requiredXp === 0) return true;
+    if (crop.id === 'carrot') return true;
 
-    // 1. Kiểm tra điểm kinh nghiệm
-    const hasXp = this.xp() >= crop.requiredXp;
+    // 1. Kiểm tra Level tối thiểu (tuyệt đối không kiểm tra currentXp)
+    const minLevel = crop.minLevel ?? crop.requiredLevel ?? 1;
+    if (this.level() < minLevel) return false;
 
-    // 2. Kiểm tra chủ đề bài học tương ứng đã mở khóa
-    let isTopicUnlocked = true;
+    // 2. Kiểm tra chủ đề bài học tiên quyết đã mở khóa
     if (crop.requiredLessonId) {
       const lesson = this.lessons().find(l => l.id === crop.requiredLessonId);
-      if (lesson) {
-        isTopicUnlocked = lesson.isUnlocked;
+      if (lesson && !lesson.isUnlocked) {
+        return false;
       }
     }
 
-    return hasXp && isTopicUnlocked;
+    return true;
   }
 
   getCropLockInfo(cropId: string): CropLockInfo {
@@ -647,17 +647,18 @@ export class GameStateService {
       };
     }
 
+    const minLevel = crop.minLevel ?? crop.requiredLevel ?? 1;
     const isUnlocked = this.isCropUnlocked(cropId);
     const missingReasons: string[] = [];
 
-    if (this.xp() < crop.requiredXp) {
-      missingReasons.push(`Cần ${crop.requiredXp} XP (còn thiếu ${crop.requiredXp - this.xp()} XP)`);
+    if (this.level() < minLevel) {
+      missingReasons.push(`Cần Cấp độ ${minLevel} (hiện tại: Lv.${this.level()})`);
     }
 
     if (crop.requiredLessonId) {
       const lesson = this.lessons().find(l => l.id === crop.requiredLessonId);
       if (!lesson || !lesson.isUnlocked) {
-        missingReasons.push(`Mở khóa chủ đề "${crop.requiredLessonTitle || 'Tương ứng'}"`);
+        missingReasons.push(`Mở khóa bài học "${crop.requiredLessonTitle || ('Bài #' + crop.requiredLessonId)}"`);
       }
     }
 
@@ -665,8 +666,8 @@ export class GameStateService {
       isUnlocked,
       tier: crop.tier,
       tierName: crop.tierNameVi,
-      requiredXp: crop.requiredXp,
-      requiredLevel: crop.requiredLevel,
+      requiredXp: 0,
+      requiredLevel: minLevel,
       requiredLessonTitle: crop.requiredLessonTitle,
       missingReasons
     };
@@ -825,7 +826,7 @@ export class GameStateService {
     }
     const crop = CROP_CATALOG.find(c => c.id === cropId);
     const name = crop?.nameVi || cropId;
-    const unitPrice = Math.max(5, Math.floor((crop?.price || 15) * 0.7));
+    const unitPrice = crop?.sellPrice || Math.max(5, Math.round((crop?.price || 15) * 1.6));
     const totalEarned = unitPrice * qty;
 
     this.inventory.update(inv => ({

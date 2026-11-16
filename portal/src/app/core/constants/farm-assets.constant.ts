@@ -138,14 +138,12 @@ export const FARM_ASSETS = {
 
   // 3. BỐN NÚT CÔNG CỤ CANH TÁC
   seedBag: `
-    <svg viewBox="0 0 32 32" width="46" height="46" class="pixel-art" xmlns="http://www.w3.org/2000/svg">
-      <rect x="4" y="4" width="24" height="26" rx="2" fill="#3B2D24"/>
-      <rect x="5" y="5" width="22" height="24" rx="1.5" fill="#C49A71"/>
-      <rect x="7" y="9" width="18" height="18" rx="1" fill="#FFFDF8" stroke="#A8815B" stroke-width="0.8"/>
-      <rect x="5" y="5" width="22" height="3" fill="#B5885C"/>
-      <line x1="6" y1="6.5" x2="26" y2="6.5" stroke="#8C6339" stroke-width="0.8" stroke-dasharray="1.5 1.5"/>
-      <image href="assets/farm-assets/crops/carrot.png" x="8" y="10" width="16" height="16" preserveAspectRatio="xMidYMid meet" image-rendering="pixelated"/>
-    </svg>
+    <div class="kraft-seed-packet pixel-art" style="position: relative; width: 46px; height: 46px; background: #C49A71; border: 2px solid #3B2D24; border-radius: 4px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.12);">
+      <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: #B5885C; border-bottom: 1px dashed #8C6339;"></div>
+      <div style="width: 28px; height: 28px; background: #FFFDF8; border: 1px solid #A8815B; border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
+        <img src="assets/farm-assets/crops/carrot.png" class="pixel-art" width="22" height="22" style="display: block; image-rendering: pixelated; object-fit: contain;" alt="Hạt giống" />
+      </div>
+    </div>
   `,
 
   wateringCan: `<img src="assets/farm-assets/tools/watering_can.png" class="pixel-art tool-pixel-img" alt="Bình tưới nước" width="46" height="46" style="image-rendering: pixelated; object-fit: contain; display: block;" />`,
