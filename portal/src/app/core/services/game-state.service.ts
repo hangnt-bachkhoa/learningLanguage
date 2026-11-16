@@ -367,22 +367,18 @@ export class GameStateService {
               decor: { ...current.decor, ...(data.inventory.decor || {}) }
             }));
           }
-          if (Array.isArray(data.lessons) && data.lessons.length >= DEFAULT_LESSONS.length) {
-            this.lessons.set(data.lessons);
-          } else {
-            // Nâng cấp đầy đủ 52 bài học, bảo lưu trạng thái sao và mở khóa của người chơi
-            const savedList: LessonDto[] = Array.isArray(data.lessons) ? data.lessons : [];
-            const savedMap = new Map<number, LessonDto>(savedList.map(l => [l.id, l]));
-            const merged = DEFAULT_LESSONS.map(l => {
-              const saved = savedMap.get(l.id);
-              return saved ? {
-                ...l,
-                isUnlocked: saved.isUnlocked || l.isUnlocked,
-                bestStarsClaimed: saved.bestStarsClaimed || l.bestStarsClaimed
-              } : l;
-            });
-            this.lessons.set(merged);
-          }
+          // Đồng bộ danh sách bài học: Loại bỏ các bài mock cũ và giữ đúng 51 bài học chuẩn từ Database
+          const savedList: LessonDto[] = Array.isArray(data.lessons) ? data.lessons : [];
+          const savedMap = new Map<number, LessonDto>(savedList.map(l => [l.id, l]));
+          const merged = DEFAULT_LESSONS.map(l => {
+            const saved = savedMap.get(l.id);
+            return saved ? {
+              ...l,
+              isUnlocked: saved.isUnlocked || l.isUnlocked,
+              bestStarsClaimed: saved.bestStarsClaimed || l.bestStarsClaimed
+            } : l;
+          });
+          this.lessons.set(merged);
           if (Array.isArray(data.books) && data.books.length > 0) this.books.set(data.books);
           if (typeof data.activeLessonId === 'number') this.activeLessonId.set(data.activeLessonId);
           if (Array.isArray(data.learnedWords)) this.learnedWords.set(data.learnedWords);
@@ -430,28 +426,27 @@ export class GameStateService {
         } catch {}
       }
 
-      // Nạp toàn bộ 52 bộ từ vựng từ localStorage (tự động hòa hợp nếu trước đó lưu thiếu)
-      const rawVocabs = localStorage.getItem(this.VOCAB_STORAGE_KEY);
-      if (rawVocabs) {
-        try {
-          const parsed = JSON.parse(rawVocabs);
-          if (parsed && typeof parsed === 'object') {
-            const savedKeys = Object.keys(parsed);
-            const defaultKeys = Object.keys(DEFAULT_VOCABULARIES);
-            if (savedKeys.length < defaultKeys.length) {
-              const fullVocabs = { ...DEFAULT_VOCABULARIES, ...parsed };
-              this.vocabulariesByLesson.set(fullVocabs);
-              localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(fullVocabs));
-            } else {
-              this.vocabulariesByLesson.set(parsed);
-            }
-          }
-        } catch {}
-      } else {
-        // Tự động lưu khởi tạo 52 bộ từ vựng vào localStorage để dùng hoàn toàn offline
+      // Nạp từ vựng từ localStorage: Tự động nâng cấp sang 51 bộ từ vựng chuẩn Database
+      const VOCAB_VERSION_KEY = 'english_farm_vocab_version';
+      const CURRENT_VOCAB_VERSION = 'v2_real_db_toeic_51';
+      const savedVersion = localStorage.getItem(VOCAB_VERSION_KEY);
+
+      if (savedVersion !== CURRENT_VOCAB_VERSION) {
+        this.vocabulariesByLesson.set(DEFAULT_VOCABULARIES);
         try {
           localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(DEFAULT_VOCABULARIES));
+          localStorage.setItem(VOCAB_VERSION_KEY, CURRENT_VOCAB_VERSION);
         } catch {}
+      } else {
+        const rawVocabs = localStorage.getItem(this.VOCAB_STORAGE_KEY);
+        if (rawVocabs) {
+          try {
+            const parsed = JSON.parse(rawVocabs);
+            if (parsed && typeof parsed === 'object') {
+              this.vocabulariesByLesson.set(parsed);
+            }
+          } catch {}
+        }
       }
     } catch (e) {
       console.warn('Lỗi đọc localStorage:', e);
@@ -955,7 +950,7 @@ export class GameStateService {
           this.books.set(mappedBooks);
           this.activeLessonId.set(lessonList[0].id);
           this.loadVocabulariesForLesson(lessonList[0].id);
-          this.showToast('🌾 Đã đồng bộ 52 bài học từ Database Backend!');
+          this.showToast('🌾 Đã đồng bộ 51 bài học từ Database Backend!');
         }
         this.isLoading.set(false);
       },

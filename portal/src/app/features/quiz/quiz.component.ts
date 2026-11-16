@@ -148,7 +148,7 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
                       <h2 class="quiz-word">{{ q.word }}</h2>
                       <div class="word-meta-row">
                         @if (q.phonetic) {
-                          <span class="word-phonetic">/{{ q.phonetic }}/</span>
+                          <span class="word-phonetic">{{ cleanPhonetic(q.phonetic) }}</span>
                         }
                         <button class="speaker-mini-btn" (click)="state.speak(q.word || '')" title="Nghe âm thanh">
                           🔊
@@ -1328,6 +1328,12 @@ export class QuizComponent implements OnInit {
                            .replace(/["“”:?]/g, '')
                            .trim();
     return cleaned || q.prompt;
+  }
+
+  cleanPhonetic(p?: string | null): string {
+    if (!p) return '';
+    const trimmed = p.replace(/^\/+|\/+$/g, '').trim();
+    return trimmed ? `/${trimmed}/` : '';
   }
 
   selectOption(idx: number) {

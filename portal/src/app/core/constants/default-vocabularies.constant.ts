@@ -1,13 +1,195 @@
 import { VocabularyDto } from '../services/farm-api.service';
 
 /**
- * Danh mục toàn bộ 1,300+ từ vựng 50 chủ đề TOEIC & Nông sản
+ * Danh mục toàn bộ 1,320+ từ vựng 50 chủ đề TOEIC & Nông sản (LanguageFarm Database)
  * Tự động nạp vào localStorage (english_farm_vocabularies) để học Offline trên Web
  */
 export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
   "1": [
     {
-      "id": 1,
+      "id": 101,
+      "word": "Carrot",
+      "phonetic": "/ˈkær.ət/",
+      "ipaUs": "/ˈkær.ət/",
+      "ipaUk": "/ˈkær.ət/",
+      "wordType": "noun",
+      "meaningVi": "Củ cà rốt",
+      "exampleEn": "Rabbits love eating fresh carrots from the garden.",
+      "exampleVi": "Thỏ rất thích ăn cà rốt tươi trong vườn.",
+      "spriteKey": "carrot"
+    },
+    {
+      "id": 102,
+      "word": "Corn",
+      "phonetic": "/kɔːrn/",
+      "ipaUs": "/kɔːrn/",
+      "ipaUk": "/kɔːn/",
+      "wordType": "noun",
+      "meaningVi": "Bắp ngô",
+      "exampleEn": "We grill sweet corn in the summer barbecue.",
+      "exampleVi": "Chúng tôi nướng ngô ngọt trong tiệc nướng mùa hè.",
+      "spriteKey": "corn"
+    },
+    {
+      "id": 103,
+      "word": "Potato",
+      "phonetic": "/pəˈteɪ.təʊ/",
+      "ipaUs": "/pəˈteɪ.toʊ/",
+      "ipaUk": "/pəˈteɪ.təʊ/",
+      "wordType": "noun",
+      "meaningVi": "Củ khoai tây",
+      "exampleEn": "She baked a large potato with butter for dinner.",
+      "exampleVi": "Cô ấy nướng một củ khoai tây lớn với bơ cho bữa tối.",
+      "spriteKey": "potato"
+    },
+    {
+      "id": 104,
+      "word": "Tomato",
+      "phonetic": "/təˈmɑː.təʊ/",
+      "ipaUs": "/təˈmeɪ.toʊ/",
+      "ipaUk": "/təˈmɑː.təʊ/",
+      "wordType": "noun",
+      "meaningVi": "Quả cà chua",
+      "exampleEn": "Red tomatoes are rich in vitamins and minerals.",
+      "exampleVi": "Cà chua đỏ rất giàu vitamin và khoáng chất.",
+      "spriteKey": "tomato"
+    },
+    {
+      "id": 105,
+      "word": "Strawberry",
+      "phonetic": "/ˈstrɔː.bər.i/",
+      "ipaUs": "/ˈstrɔːˌber.i/",
+      "ipaUk": "/ˈstrɔː.bər.i/",
+      "wordType": "noun",
+      "meaningVi": "Quả dâu tây",
+      "exampleEn": "Sweet strawberries grow abundantly in cool mountain valleys.",
+      "exampleVi": "Dâu tây ngọt phát triển rất nhiều ở các thung lũng miền núi mát mẻ.",
+      "spriteKey": "strawberry"
+    },
+    {
+      "id": 106,
+      "word": "Apple",
+      "phonetic": "/ˈæp.əl/",
+      "ipaUs": "/ˈæp.əl/",
+      "ipaUk": "/ˈæp.əl/",
+      "wordType": "noun",
+      "meaningVi": "Quả táo",
+      "exampleEn": "An apple a day keeps the doctor away.",
+      "exampleVi": "Mỗi ngày một quả táo giúp bạn luôn khỏe mạnh.",
+      "spriteKey": "apple"
+    },
+    {
+      "id": 107,
+      "word": "Sunflower",
+      "phonetic": "/ˈsʌnˌflaʊ.ər/",
+      "ipaUs": "/ˈsʌnˌflaʊ.ɚ/",
+      "ipaUk": "/ˈsʌnˌflaʊ.ər/",
+      "wordType": "noun",
+      "meaningVi": "Hoa hướng dương",
+      "exampleEn": "Tall sunflowers always turn their bright faces toward the sun.",
+      "exampleVi": "Những cây hoa hướng dương cao luôn hướng về phía mặt trời.",
+      "spriteKey": "sunflower"
+    },
+    {
+      "id": 108,
+      "word": "Harvest",
+      "phonetic": "/ˈhɑː.vɪst/",
+      "ipaUs": "/ˈhɑːr.vɪst/",
+      "ipaUk": "/ˈhɑː.vɪst/",
+      "wordType": "verb",
+      "meaningVi": "Thu hoạch",
+      "exampleEn": "Farmers harvest ripe crops before the autumn rains arrive.",
+      "exampleVi": "Nông dân thu hoạch nông sản chín trước khi những cơn mưa thu đến.",
+      "spriteKey": "harvest"
+    },
+    {
+      "id": 109,
+      "word": "Water",
+      "phonetic": "/ˈwɔː.tər/",
+      "ipaUs": "/ˈwɑː.t̬ɚ/",
+      "ipaUk": "/ˈwɔː.tər/",
+      "wordType": "verb",
+      "meaningVi": "Tưới nước",
+      "exampleEn": "You should water the young seedlings every morning.",
+      "exampleVi": "Bạn nên tưới nước cho cây con vào mỗi buổi sáng.",
+      "spriteKey": "water"
+    },
+    {
+      "id": 110,
+      "word": "Fertilizer",
+      "phonetic": "/ˈfɜː.tɪ.laɪ.zər/",
+      "ipaUs": "/ˈfɝː.t̬əl.aɪ.zɚ/",
+      "ipaUk": "/ˈfɜː.tɪ.laɪ.zər/",
+      "wordType": "noun",
+      "meaningVi": "Phân bón",
+      "exampleEn": "Organic fertilizer provides natural nutrients for healthy soil.",
+      "exampleVi": "Phân bón hữu cơ cung cấp dưỡng chất tự nhiên cho đất màu mỡ.",
+      "spriteKey": "fertilizer"
+    },
+    {
+      "id": 111,
+      "word": "Seed",
+      "phonetic": "/siːd/",
+      "ipaUs": "/siːd/",
+      "ipaUk": "/siːd/",
+      "wordType": "noun",
+      "meaningVi": "Hạt giống",
+      "exampleEn": "She planted vegetable seeds carefully in straight neat rows.",
+      "exampleVi": "Cô ấy gieo hạt giống rau cẩn thận thành những hàng thẳng tắp.",
+      "spriteKey": "seed"
+    },
+    {
+      "id": 112,
+      "word": "Garden",
+      "phonetic": "/ˈɡɑː.dən/",
+      "ipaUs": "/ˈɡɑːr.dən/",
+      "ipaUk": "/ˈɡɑː.dən/",
+      "wordType": "noun",
+      "meaningVi": "Khu vườn",
+      "exampleEn": "The farm garden is full of blooming flowers and green herbs.",
+      "exampleVi": "Khu vườn trang trại đầy ắp hoa nở và thảo mộc xanh tốt.",
+      "spriteKey": null
+    },
+    {
+      "id": 113,
+      "word": "Farmer",
+      "phonetic": "/ˈfɑː.mər/",
+      "ipaUs": "/ˈfɑːr.mɚ/",
+      "ipaUk": "/ˈfɑː.mər/",
+      "wordType": "noun",
+      "meaningVi": "Nông dân",
+      "exampleEn": "The hardworking farmer cares for the farm animals every dawn.",
+      "exampleVi": "Người nông dân chăm chỉ chăm sóc đàn vật nuôi vào mỗi bình minh.",
+      "spriteKey": null
+    },
+    {
+      "id": 114,
+      "word": "Plant",
+      "phonetic": "/plɑːnt/",
+      "ipaUs": "/plænt/",
+      "ipaUk": "/plɑːnt/",
+      "wordType": "verb",
+      "meaningVi": "Trồng cây",
+      "exampleEn": "Spring is the ideal season to plant new crops in fertile soil.",
+      "exampleVi": "Mùa xuân là mùa lý tưởng để gieo trồng cây mới trên đất màu mỡ.",
+      "spriteKey": null
+    },
+    {
+      "id": 115,
+      "word": "Soil",
+      "phonetic": "/sɔɪl/",
+      "ipaUs": "/sɔɪl/",
+      "ipaUk": "/sɔɪl/",
+      "wordType": "noun",
+      "meaningVi": "Đất trồng",
+      "exampleEn": "Healthy fertile soil helps all kinds of vegetables flourish.",
+      "exampleVi": "Đất trồng màu mỡ và khỏe mạnh giúp mọi loại rau củ phát triển tươi tốt.",
+      "spriteKey": null
+    }
+  ],
+  "3": [
+    {
+      "id": 301,
       "word": "Appointment",
       "phonetic": "/əˈpɔɪntmənt/",
       "ipaUs": "/əˈpɔɪntmənt/",
@@ -19,7 +201,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 2,
+      "id": 302,
       "word": "Briefcase",
       "phonetic": "/ˈbriːf.keɪs/",
       "ipaUs": "/ˈbriːf.keɪs/",
@@ -31,7 +213,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 3,
+      "id": 303,
       "word": "Conference",
       "phonetic": "/ˈkɒn.fər.əns/",
       "ipaUs": "/ˈkɒn.fər.əns/",
@@ -43,7 +225,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 4,
+      "id": 304,
       "word": "Desk",
       "phonetic": "/desk/",
       "ipaUs": "/desk/",
@@ -55,7 +237,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 5,
+      "id": 305,
       "word": "Employee",
       "phonetic": "/ɪmˈplɔɪ.iː/",
       "ipaUs": "/ɪmˈplɔɪ.iː/",
@@ -67,7 +249,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 6,
+      "id": 306,
       "word": "Employer",
       "phonetic": "/ɪmˈplɔɪ.ər/",
       "ipaUs": "/ɪmˈplɔɪ.ər/",
@@ -79,7 +261,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 7,
+      "id": 307,
       "word": "File",
       "phonetic": "/faɪl/",
       "ipaUs": "/faɪl/",
@@ -91,7 +273,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 8,
+      "id": 308,
       "word": "Fax",
       "phonetic": "/fæks/",
       "ipaUs": "/fæks/",
@@ -103,7 +285,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 9,
+      "id": 309,
       "word": "Keyboard",
       "phonetic": "/ˈkiː.bɔːd/",
       "ipaUs": "/ˈkiː.bɔːd/",
@@ -115,7 +297,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 10,
+      "id": 310,
       "word": "Meeting",
       "phonetic": "/ˈmiː.tɪŋ/",
       "ipaUs": "/ˈmiː.tɪŋ/",
@@ -127,7 +309,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 11,
+      "id": 311,
       "word": "Office",
       "phonetic": "/ˈɒf.ɪs/",
       "ipaUs": "/ˈɒf.ɪs/",
@@ -139,7 +321,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 12,
+      "id": 312,
       "word": "Paperclip",
       "phonetic": "/ˈpeɪ.pə.klɪp/",
       "ipaUs": "/ˈpeɪ.pə.klɪp/",
@@ -151,7 +333,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 13,
+      "id": 313,
       "word": "Printer",
       "phonetic": "/ˈprɪn.tər/",
       "ipaUs": "/ˈprɪn.tər/",
@@ -163,7 +345,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 14,
+      "id": 314,
       "word": "Schedule",
       "phonetic": "/ˈʃedʒ.uːl/",
       "ipaUs": "/ˈʃedʒ.uːl/",
@@ -175,7 +357,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 15,
+      "id": 315,
       "word": "Supervisor",
       "phonetic": "/ˈsuː.pə.vaɪ.zər/",
       "ipaUs": "/ˈsuː.pə.vaɪ.zər/",
@@ -187,7 +369,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 16,
+      "id": 316,
       "word": "Task",
       "phonetic": "/tæsk/",
       "ipaUs": "/tæsk/",
@@ -199,7 +381,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 17,
+      "id": 317,
       "word": "Telephone",
       "phonetic": "/ˈtel.ɪ.fəʊn/",
       "ipaUs": "/ˈtel.ɪ.fəʊn/",
@@ -211,7 +393,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 18,
+      "id": 318,
       "word": "Workspace",
       "phonetic": "/ˈwɜːk.speɪs/",
       "ipaUs": "/ˈwɜːk.speɪs/",
@@ -223,7 +405,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 19,
+      "id": 319,
       "word": "Document",
       "phonetic": "/ˈdɒk.jə.mənt/",
       "ipaUs": "/ˈdɒk.jə.mənt/",
@@ -235,7 +417,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 20,
+      "id": 320,
       "word": "Projector",
       "phonetic": "/prəˈdʒek.tər/",
       "ipaUs": "/prəˈdʒek.tər/",
@@ -247,7 +429,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 21,
+      "id": 321,
       "word": "Deadline",
       "phonetic": "/ˈded.laɪn/",
       "ipaUs": "/ˈded.laɪn/",
@@ -259,7 +441,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 22,
+      "id": 322,
       "word": "Receptionist",
       "phonetic": "/rɪˈsep.ʃən.ɪst/",
       "ipaUs": "/rɪˈsep.ʃən.ɪst/",
@@ -271,7 +453,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 23,
+      "id": 323,
       "word": "Stationery",
       "phonetic": "/ˈsteɪ.ʃən.ər.i/",
       "ipaUs": "/ˈsteɪ.ʃən.ər.i/",
@@ -283,7 +465,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 24,
+      "id": 324,
       "word": "Memo",
       "phonetic": "/ˈmem.əʊ/",
       "ipaUs": "/ˈmem.əʊ/",
@@ -295,311 +477,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "3": [
+  "4": [
     {
-      "id": 49,
-      "word": "Agreement",
-      "phonetic": "/əˈɡriː.mənt/",
-      "ipaUs": "/əˈɡriː.mənt/",
-      "ipaUk": "/əˈɡriː.mənt/",
-      "wordType": "noun",
-      "meaningVi": "Thỏa thuận",
-      "exampleEn": "Both parties signed the agreement yesterday.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 50,
-      "word": "Budget",
-      "phonetic": "/ˈbʌdʒ.ɪt/",
-      "ipaUs": "/ˈbʌdʒ.ɪt/",
-      "ipaUk": "/ˈbʌdʒ.ɪt/",
-      "wordType": "noun",
-      "meaningVi": "Ngân sách",
-      "exampleEn": "The marketing department exceeded its budget this quarter.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 51,
-      "word": "Client",
-      "phonetic": "/ˈklaɪ.ənt/",
-      "ipaUs": "/ˈklaɪ.ənt/",
-      "ipaUk": "/ˈklaɪ.ənt/",
-      "wordType": "noun",
-      "meaningVi": "Khách hàng",
-      "exampleEn": "The company provides excellent service to its clients.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 52,
-      "word": "Competitor",
-      "phonetic": "/kəmˈpet.ɪ.tər/",
-      "ipaUs": "/kəmˈpet.ɪ.tər/",
-      "ipaUk": "/kəmˈpet.ɪ.tər/",
-      "wordType": "noun",
-      "meaningVi": "Đối thủ cạnh tranh",
-      "exampleEn": "Our biggest competitor just launched a new product.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 53,
-      "word": "Contract",
-      "phonetic": "/ˈkɒn.trækt/",
-      "ipaUs": "/ˈkɒn.trækt/",
-      "ipaUk": "/ˈkɒn.trækt/",
-      "wordType": "noun",
-      "meaningVi": "Hợp đồng",
-      "exampleEn": "The contract is valid for two years.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 54,
-      "word": "Cooperation",
-      "phonetic": "/kəʊˌɒp.ərˈeɪ.ʃən/",
-      "ipaUs": "/kəʊˌɒp.ərˈeɪ.ʃən/",
-      "ipaUk": "/kəʊˌɒp.ərˈeɪ.ʃən/",
-      "wordType": "noun",
-      "meaningVi": "Sự hợp tác",
-      "exampleEn": "The project requires close cooperation between the two teams.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 55,
-      "word": "Deal",
-      "phonetic": "/diːl/",
-      "ipaUs": "/diːl/",
-      "ipaUk": "/diːl/",
-      "wordType": "adjective",
-      "meaningVi": "Thỏa thuận, giao dịch",
-      "exampleEn": "They closed a big deal with a Japanese company.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 56,
-      "word": "Delivery",
-      "phonetic": "/dɪˈlɪv.ər.i/",
-      "ipaUs": "/dɪˈlɪv.ər.i/",
-      "ipaUk": "/dɪˈlɪv.ər.i/",
-      "wordType": "noun",
-      "meaningVi": "Giao hàng",
-      "exampleEn": "The delivery is expected to arrive tomorrow.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 57,
-      "word": "Demand",
-      "phonetic": "/dɪˈmɑːnd/",
-      "ipaUs": "/dɪˈmɑːnd/",
-      "ipaUk": "/dɪˈmɑːnd/",
-      "wordType": "noun",
-      "meaningVi": "Nhu cầu",
-      "exampleEn": "There is a high demand for electric vehicles in the market.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 58,
-      "word": "Entrepreneur",
-      "phonetic": "/ˌɒn.trə.prəˈnɜːr/",
-      "ipaUs": "/ˌɒn.trə.prəˈnɜːr/",
-      "ipaUk": "/ˌɒn.trə.prəˈnɜːr/",
-      "wordType": "noun",
-      "meaningVi": "Doanh nhân",
-      "exampleEn": "Many entrepreneurs start small businesses before expanding.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 59,
-      "word": "Invoice",
-      "phonetic": "/ˈɪn.vɔɪs/",
-      "ipaUs": "/ˈɪn.vɔɪs/",
-      "ipaUk": "/ˈɪn.vɔɪs/",
-      "wordType": "noun",
-      "meaningVi": "Hóa đơn",
-      "exampleEn": "Please send us the invoice for the last order.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 60,
-      "word": "Investment",
-      "phonetic": "/ɪnˈvest.mənt/",
-      "ipaUs": "/ɪnˈvest.mənt/",
-      "ipaUk": "/ɪnˈvest.mənt/",
-      "wordType": "noun",
-      "meaningVi": "Đầu tư",
-      "exampleEn": "They made a significant investment in real estate.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 61,
-      "word": "Market",
-      "phonetic": "/ˈmɑː.kɪt/",
-      "ipaUs": "/ˈmɑː.kɪt/",
-      "ipaUk": "/ˈmɑː.kɪt/",
-      "wordType": "noun",
-      "meaningVi": "Thị trường",
-      "exampleEn": "The company is targeting the European market for its products.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 62,
-      "word": "Partnership",
-      "phonetic": "/ˈpɑːt.nə.ʃɪp/",
-      "ipaUs": "/ˈpɑːt.nə.ʃɪp/",
-      "ipaUk": "/ˈpɑːt.nə.ʃɪp/",
-      "wordType": "noun",
-      "meaningVi": "Quan hệ đối tác",
-      "exampleEn": "They established a partnership with a local distributor.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 63,
-      "word": "Profit",
-      "phonetic": "/ˈprɒf.ɪt/",
-      "ipaUs": "/ˈprɒf.ɪt/",
-      "ipaUk": "/ˈprɒf.ɪt/",
-      "wordType": "noun",
-      "meaningVi": "Lợi nhuận",
-      "exampleEn": "The company reported a 20% increase in profit this year.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 64,
-      "word": "Proposal",
-      "phonetic": "/prəˈpəʊ.zəl/",
-      "ipaUs": "/prəˈpəʊ.zəl/",
-      "ipaUk": "/prəˈpəʊ.zəl/",
-      "wordType": "adjective",
-      "meaningVi": "Đề xuất",
-      "exampleEn": "The board is reviewing a new proposal for expansion.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 65,
-      "word": "Revenue",
-      "phonetic": "/ˈrev.ən.juː/",
-      "ipaUs": "/ˈrev.ən.juː/",
-      "ipaUk": "/ˈrev.ən.juː/",
-      "wordType": "noun",
-      "meaningVi": "Doanh thu",
-      "exampleEn": "The company’s annual revenue exceeded $10 million.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 66,
-      "word": "Strategy",
-      "phonetic": "/ˈstræt.ə.dʒi/",
-      "ipaUs": "/ˈstræt.ə.dʒi/",
-      "ipaUk": "/ˈstræt.ə.dʒi/",
-      "wordType": "noun",
-      "meaningVi": "Chiến lược",
-      "exampleEn": "We need a new marketing strategy to attract more customers.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 67,
-      "word": "Supplier",
-      "phonetic": "/səˈplaɪ.ər/",
-      "ipaUs": "/səˈplaɪ.ər/",
-      "ipaUk": "/səˈplaɪ.ər/",
-      "wordType": "noun",
-      "meaningVi": "Nhà cung cấp",
-      "exampleEn": "The company switched to a more reliable supplier.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 68,
-      "word": "Target",
-      "phonetic": "/ˈtɑː.ɡɪt/",
-      "ipaUs": "/ˈtɑː.ɡɪt/",
-      "ipaUk": "/ˈtɑː.ɡɪt/",
-      "wordType": "noun",
-      "meaningVi": "Mục tiêu",
-      "exampleEn": "Our sales target for this month is $50,000.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 69,
-      "word": "Transaction",
-      "phonetic": "/trænˈzæk.ʃən/",
-      "ipaUs": "/trænˈzæk.ʃən/",
-      "ipaUk": "/trænˈzæk.ʃən/",
-      "wordType": "noun",
-      "meaningVi": "Giao dịch",
-      "exampleEn": "The transaction was successfully processed.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 70,
-      "word": "Venture",
-      "phonetic": "/ˈven.tʃər/",
-      "ipaUs": "/ˈven.tʃər/",
-      "ipaUk": "/ˈven.tʃər/",
-      "wordType": "noun",
-      "meaningVi": "Dự án kinh doanh mạo hiểm",
-      "exampleEn": "They started a new venture in renewable energy.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 71,
-      "word": "Wholesale",
-      "phonetic": "/ˈhəʊl.seɪl/",
-      "ipaUs": "/ˈhəʊl.seɪl/",
-      "ipaUk": "/ˈhəʊl.seɪl/",
-      "wordType": "noun",
-      "meaningVi": "Bán buôn",
-      "exampleEn": "The company focuses on wholesale distribution of its products.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 72,
-      "word": "Logistics",
-      "phonetic": "/ləˈdʒɪs.tɪks/",
-      "ipaUs": "/ləˈdʒɪs.tɪks/",
-      "ipaUk": "/ləˈdʒɪs.tɪks/",
-      "wordType": "noun",
-      "meaningVi": "Hậu cần, vận chuyển",
-      "exampleEn": "Logistics is a key factor in ensuring timely delivery.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 73,
-      "word": "Advertisement",
-      "phonetic": "/ˌæd.vɜːˈtaɪz.mənt/",
-      "ipaUs": "/ˌæd.vɜːˈtaɪz.mənt/",
-      "ipaUk": "/ˌæd.vɜːˈtaɪz.mənt/",
-      "wordType": "noun",
-      "meaningVi": "Quảng cáo",
-      "exampleEn": "The company spent millions on a TV advertisement campaign.",
-      "exampleVi": null,
-      "spriteKey": null
-    }
-  ],
-  "2": [
-    {
-      "id": 25,
+      "id": 401,
       "word": "Applicant",
       "phonetic": "/ˈæp.lɪ.kənt/",
       "ipaUs": "/ˈæp.lɪ.kənt/",
@@ -611,7 +491,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 26,
+      "id": 402,
       "word": "Recruitment",
       "phonetic": "/rɪˈkruːt.mənt/",
       "ipaUs": "/rɪˈkruːt.mənt/",
@@ -623,7 +503,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 27,
+      "id": 403,
       "word": "Resume",
       "phonetic": "/ˈrez.juː.meɪ/",
       "ipaUs": "/ˈrez.juː.meɪ/",
@@ -635,7 +515,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 28,
+      "id": 404,
       "word": "Interview",
       "phonetic": "/ˈɪn.tə.vjuː/",
       "ipaUs": "/ˈɪn.tə.vjuː/",
@@ -647,7 +527,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 29,
+      "id": 405,
       "word": "Reference",
       "phonetic": "/ˈref.ər.əns/",
       "ipaUs": "/ˈref.ər.əns/",
@@ -659,7 +539,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 30,
+      "id": 406,
       "word": "Contract",
       "phonetic": "/ˈkɒn.trækt/",
       "ipaUs": "/ˈkɒn.trækt/",
@@ -671,7 +551,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 31,
+      "id": 407,
       "word": "Orientation",
       "phonetic": "/ˌɔːr.i.enˈteɪ.ʃən/",
       "ipaUs": "/ˌɔːr.i.enˈteɪ.ʃən/",
@@ -683,7 +563,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 32,
+      "id": 408,
       "word": "Promotion",
       "phonetic": "/prəˈməʊ.ʃən/",
       "ipaUs": "/prəˈməʊ.ʃən/",
@@ -695,7 +575,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 33,
+      "id": 409,
       "word": "Salary",
       "phonetic": "/ˈsæl.ər.i/",
       "ipaUs": "/ˈsæl.ər.i/",
@@ -707,7 +587,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 34,
+      "id": 410,
       "word": "Bonus",
       "phonetic": "/ˈbəʊ.nəs/",
       "ipaUs": "/ˈbəʊ.nəs/",
@@ -719,7 +599,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 35,
+      "id": 411,
       "word": "Training",
       "phonetic": "/ˈtreɪ.nɪŋ/",
       "ipaUs": "/ˈtreɪ.nɪŋ/",
@@ -731,7 +611,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 36,
+      "id": 412,
       "word": "Probation",
       "phonetic": "/prəˈbeɪ.ʃən/",
       "ipaUs": "/prəˈbeɪ.ʃən/",
@@ -743,7 +623,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 37,
+      "id": 413,
       "word": "Performance",
       "phonetic": "/pəˈfɔː.məns/",
       "ipaUs": "/pəˈfɔː.məns/",
@@ -755,7 +635,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 38,
+      "id": 414,
       "word": "Employee",
       "phonetic": "/ɪmˈplɔɪ.iː/",
       "ipaUs": "/ɪmˈplɔɪ.iː/",
@@ -767,7 +647,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 39,
+      "id": 415,
       "word": "Employer",
       "phonetic": "/ɪmˈplɔɪ.ər/",
       "ipaUs": "/ɪmˈplɔɪ.ər/",
@@ -779,7 +659,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 40,
+      "id": 416,
       "word": "Benefits",
       "phonetic": "/ˈben.ɪ.fɪts/",
       "ipaUs": "/ˈben.ɪ.fɪts/",
@@ -791,7 +671,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 41,
+      "id": 417,
       "word": "Termination",
       "phonetic": "/ˌtɜː.mɪˈneɪ.ʃən/",
       "ipaUs": "/ˌtɜː.mɪˈneɪ.ʃən/",
@@ -803,7 +683,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 42,
+      "id": 418,
       "word": "Workforce",
       "phonetic": "/ˈwɜːk.fɔːs/",
       "ipaUs": "/ˈwɜːk.fɔːs/",
@@ -815,7 +695,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 43,
+      "id": 419,
       "word": "Leave",
       "phonetic": "/liːv/",
       "ipaUs": "/liːv/",
@@ -827,7 +707,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 44,
+      "id": 420,
       "word": "Vacancy",
       "phonetic": "/ˈveɪ.kən.si/",
       "ipaUs": "/ˈveɪ.kən.si/",
@@ -839,7 +719,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 45,
+      "id": 421,
       "word": "Overtime",
       "phonetic": "/ˈəʊ.və.taɪm/",
       "ipaUs": "/ˈəʊ.və.taɪm/",
@@ -851,7 +731,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 46,
+      "id": 422,
       "word": "Retirement",
       "phonetic": "/rɪˈtaɪə.mənt/",
       "ipaUs": "/rɪˈtaɪə.mənt/",
@@ -863,7 +743,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 47,
+      "id": 423,
       "word": "Dispute",
       "phonetic": "/dɪˈspjuːt/",
       "ipaUs": "/dɪˈspjuːt/",
@@ -875,7 +755,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 48,
+      "id": 424,
       "word": "Diversity",
       "phonetic": "/daɪˈvɜː.sɪ.ti/",
       "ipaUs": "/daɪˈvɜː.sɪ.ti/",
@@ -887,9 +767,311 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "4": [
+  "5": [
     {
-      "id": 74,
+      "id": 501,
+      "word": "Agreement",
+      "phonetic": "/əˈɡriː.mənt/",
+      "ipaUs": "/əˈɡriː.mənt/",
+      "ipaUk": "/əˈɡriː.mənt/",
+      "wordType": "noun",
+      "meaningVi": "Thỏa thuận",
+      "exampleEn": "Both parties signed the agreement yesterday.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 502,
+      "word": "Budget",
+      "phonetic": "/ˈbʌdʒ.ɪt/",
+      "ipaUs": "/ˈbʌdʒ.ɪt/",
+      "ipaUk": "/ˈbʌdʒ.ɪt/",
+      "wordType": "noun",
+      "meaningVi": "Ngân sách",
+      "exampleEn": "The marketing department exceeded its budget this quarter.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 503,
+      "word": "Client",
+      "phonetic": "/ˈklaɪ.ənt/",
+      "ipaUs": "/ˈklaɪ.ənt/",
+      "ipaUk": "/ˈklaɪ.ənt/",
+      "wordType": "noun",
+      "meaningVi": "Khách hàng",
+      "exampleEn": "The company provides excellent service to its clients.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 504,
+      "word": "Competitor",
+      "phonetic": "/kəmˈpet.ɪ.tər/",
+      "ipaUs": "/kəmˈpet.ɪ.tər/",
+      "ipaUk": "/kəmˈpet.ɪ.tər/",
+      "wordType": "noun",
+      "meaningVi": "Đối thủ cạnh tranh",
+      "exampleEn": "Our biggest competitor just launched a new product.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 505,
+      "word": "Contract",
+      "phonetic": "/ˈkɒn.trækt/",
+      "ipaUs": "/ˈkɒn.trækt/",
+      "ipaUk": "/ˈkɒn.trækt/",
+      "wordType": "noun",
+      "meaningVi": "Hợp đồng",
+      "exampleEn": "The contract is valid for two years.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 506,
+      "word": "Cooperation",
+      "phonetic": "/kəʊˌɒp.ərˈeɪ.ʃən/",
+      "ipaUs": "/kəʊˌɒp.ərˈeɪ.ʃən/",
+      "ipaUk": "/kəʊˌɒp.ərˈeɪ.ʃən/",
+      "wordType": "noun",
+      "meaningVi": "Sự hợp tác",
+      "exampleEn": "The project requires close cooperation between the two teams.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 507,
+      "word": "Deal",
+      "phonetic": "/diːl/",
+      "ipaUs": "/diːl/",
+      "ipaUk": "/diːl/",
+      "wordType": "adjective",
+      "meaningVi": "Thỏa thuận, giao dịch",
+      "exampleEn": "They closed a big deal with a Japanese company.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 508,
+      "word": "Delivery",
+      "phonetic": "/dɪˈlɪv.ər.i/",
+      "ipaUs": "/dɪˈlɪv.ər.i/",
+      "ipaUk": "/dɪˈlɪv.ər.i/",
+      "wordType": "noun",
+      "meaningVi": "Giao hàng",
+      "exampleEn": "The delivery is expected to arrive tomorrow.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 509,
+      "word": "Demand",
+      "phonetic": "/dɪˈmɑːnd/",
+      "ipaUs": "/dɪˈmɑːnd/",
+      "ipaUk": "/dɪˈmɑːnd/",
+      "wordType": "noun",
+      "meaningVi": "Nhu cầu",
+      "exampleEn": "There is a high demand for electric vehicles in the market.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 510,
+      "word": "Entrepreneur",
+      "phonetic": "/ˌɒn.trə.prəˈnɜːr/",
+      "ipaUs": "/ˌɒn.trə.prəˈnɜːr/",
+      "ipaUk": "/ˌɒn.trə.prəˈnɜːr/",
+      "wordType": "noun",
+      "meaningVi": "Doanh nhân",
+      "exampleEn": "Many entrepreneurs start small businesses before expanding.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 511,
+      "word": "Invoice",
+      "phonetic": "/ˈɪn.vɔɪs/",
+      "ipaUs": "/ˈɪn.vɔɪs/",
+      "ipaUk": "/ˈɪn.vɔɪs/",
+      "wordType": "noun",
+      "meaningVi": "Hóa đơn",
+      "exampleEn": "Please send us the invoice for the last order.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 512,
+      "word": "Investment",
+      "phonetic": "/ɪnˈvest.mənt/",
+      "ipaUs": "/ɪnˈvest.mənt/",
+      "ipaUk": "/ɪnˈvest.mənt/",
+      "wordType": "noun",
+      "meaningVi": "Đầu tư",
+      "exampleEn": "They made a significant investment in real estate.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 513,
+      "word": "Market",
+      "phonetic": "/ˈmɑː.kɪt/",
+      "ipaUs": "/ˈmɑː.kɪt/",
+      "ipaUk": "/ˈmɑː.kɪt/",
+      "wordType": "noun",
+      "meaningVi": "Thị trường",
+      "exampleEn": "The company is targeting the European market for its products.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 514,
+      "word": "Partnership",
+      "phonetic": "/ˈpɑːt.nə.ʃɪp/",
+      "ipaUs": "/ˈpɑːt.nə.ʃɪp/",
+      "ipaUk": "/ˈpɑːt.nə.ʃɪp/",
+      "wordType": "noun",
+      "meaningVi": "Quan hệ đối tác",
+      "exampleEn": "They established a partnership with a local distributor.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 515,
+      "word": "Profit",
+      "phonetic": "/ˈprɒf.ɪt/",
+      "ipaUs": "/ˈprɒf.ɪt/",
+      "ipaUk": "/ˈprɒf.ɪt/",
+      "wordType": "noun",
+      "meaningVi": "Lợi nhuận",
+      "exampleEn": "The company reported a 20% increase in profit this year.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 516,
+      "word": "Proposal",
+      "phonetic": "/prəˈpəʊ.zəl/",
+      "ipaUs": "/prəˈpəʊ.zəl/",
+      "ipaUk": "/prəˈpəʊ.zəl/",
+      "wordType": "adjective",
+      "meaningVi": "Đề xuất",
+      "exampleEn": "The board is reviewing a new proposal for expansion.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 517,
+      "word": "Revenue",
+      "phonetic": "/ˈrev.ən.juː/",
+      "ipaUs": "/ˈrev.ən.juː/",
+      "ipaUk": "/ˈrev.ən.juː/",
+      "wordType": "noun",
+      "meaningVi": "Doanh thu",
+      "exampleEn": "The company’s annual revenue exceeded $10 million.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 518,
+      "word": "Strategy",
+      "phonetic": "/ˈstræt.ə.dʒi/",
+      "ipaUs": "/ˈstræt.ə.dʒi/",
+      "ipaUk": "/ˈstræt.ə.dʒi/",
+      "wordType": "noun",
+      "meaningVi": "Chiến lược",
+      "exampleEn": "We need a new marketing strategy to attract more customers.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 519,
+      "word": "Supplier",
+      "phonetic": "/səˈplaɪ.ər/",
+      "ipaUs": "/səˈplaɪ.ər/",
+      "ipaUk": "/səˈplaɪ.ər/",
+      "wordType": "noun",
+      "meaningVi": "Nhà cung cấp",
+      "exampleEn": "The company switched to a more reliable supplier.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 520,
+      "word": "Target",
+      "phonetic": "/ˈtɑː.ɡɪt/",
+      "ipaUs": "/ˈtɑː.ɡɪt/",
+      "ipaUk": "/ˈtɑː.ɡɪt/",
+      "wordType": "noun",
+      "meaningVi": "Mục tiêu",
+      "exampleEn": "Our sales target for this month is $50,000.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 521,
+      "word": "Transaction",
+      "phonetic": "/trænˈzæk.ʃən/",
+      "ipaUs": "/trænˈzæk.ʃən/",
+      "ipaUk": "/trænˈzæk.ʃən/",
+      "wordType": "noun",
+      "meaningVi": "Giao dịch",
+      "exampleEn": "The transaction was successfully processed.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 522,
+      "word": "Venture",
+      "phonetic": "/ˈven.tʃər/",
+      "ipaUs": "/ˈven.tʃər/",
+      "ipaUk": "/ˈven.tʃər/",
+      "wordType": "noun",
+      "meaningVi": "Dự án kinh doanh mạo hiểm",
+      "exampleEn": "They started a new venture in renewable energy.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 523,
+      "word": "Wholesale",
+      "phonetic": "/ˈhəʊl.seɪl/",
+      "ipaUs": "/ˈhəʊl.seɪl/",
+      "ipaUk": "/ˈhəʊl.seɪl/",
+      "wordType": "noun",
+      "meaningVi": "Bán buôn",
+      "exampleEn": "The company focuses on wholesale distribution of its products.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 524,
+      "word": "Logistics",
+      "phonetic": "/ləˈdʒɪs.tɪks/",
+      "ipaUs": "/ləˈdʒɪs.tɪks/",
+      "ipaUk": "/ləˈdʒɪs.tɪks/",
+      "wordType": "noun",
+      "meaningVi": "Hậu cần, vận chuyển",
+      "exampleEn": "Logistics is a key factor in ensuring timely delivery.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 525,
+      "word": "Advertisement",
+      "phonetic": "/ˌæd.vɜːˈtaɪz.mənt/",
+      "ipaUs": "/ˌæd.vɜːˈtaɪz.mənt/",
+      "ipaUk": "/ˌæd.vɜːˈtaɪz.mənt/",
+      "wordType": "noun",
+      "meaningVi": "Quảng cáo",
+      "exampleEn": "The company spent millions on a TV advertisement campaign.",
+      "exampleVi": null,
+      "spriteKey": null
+    }
+  ],
+  "6": [
+    {
+      "id": 601,
       "word": "Account",
       "phonetic": "/əˈkaʊnt/",
       "ipaUs": "/əˈkaʊnt/",
@@ -901,7 +1083,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 75,
+      "id": 602,
       "word": "Audit",
       "phonetic": "/ˈɔː.dɪt/",
       "ipaUs": "/ˈɔː.dɪt/",
@@ -913,7 +1095,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 76,
+      "id": 603,
       "word": "Balance",
       "phonetic": "/ˈbæl.əns/",
       "ipaUs": "/ˈbæl.əns/",
@@ -925,7 +1107,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 77,
+      "id": 604,
       "word": "Bankrupt",
       "phonetic": "/ˈbæŋ.krʌpt/",
       "ipaUs": "/ˈbæŋ.krʌpt/",
@@ -937,7 +1119,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 78,
+      "id": 605,
       "word": "Budget",
       "phonetic": "/ˈbʌdʒ.ɪt/",
       "ipaUs": "/ˈbʌdʒ.ɪt/",
@@ -949,7 +1131,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 79,
+      "id": 606,
       "word": "Capital",
       "phonetic": "/ˈkæp.ɪ.təl/",
       "ipaUs": "/ˈkæp.ɪ.təl/",
@@ -961,7 +1143,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 80,
+      "id": 607,
       "word": "Credit",
       "phonetic": "/ˈkred.ɪt/",
       "ipaUs": "/ˈkred.ɪt/",
@@ -973,7 +1155,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 81,
+      "id": 608,
       "word": "Currency",
       "phonetic": "/ˈkʌr.ən.si/",
       "ipaUs": "/ˈkʌr.ən.si/",
@@ -985,7 +1167,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 82,
+      "id": 609,
       "word": "Debt",
       "phonetic": "/det/",
       "ipaUs": "/det/",
@@ -997,7 +1179,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 83,
+      "id": 610,
       "word": "Deposit",
       "phonetic": "/dɪˈpɒz.ɪt/",
       "ipaUs": "/dɪˈpɒz.ɪt/",
@@ -1009,7 +1191,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 84,
+      "id": 611,
       "word": "Dividend",
       "phonetic": "/ˈdɪv.ɪ.dend/",
       "ipaUs": "/ˈdɪv.ɪ.dend/",
@@ -1021,7 +1203,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 85,
+      "id": 612,
       "word": "Expense",
       "phonetic": "/ɪkˈspens/",
       "ipaUs": "/ɪkˈspens/",
@@ -1033,7 +1215,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 86,
+      "id": 613,
       "word": "Fund",
       "phonetic": "/fʌnd/",
       "ipaUs": "/fʌnd/",
@@ -1045,7 +1227,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 87,
+      "id": 614,
       "word": "Inflation",
       "phonetic": "/ɪnˈfleɪ.ʃən/",
       "ipaUs": "/ɪnˈfleɪ.ʃən/",
@@ -1057,7 +1239,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 88,
+      "id": 615,
       "word": "Interest",
       "phonetic": "/ˈɪn.trɪst/",
       "ipaUs": "/ˈɪn.trɪst/",
@@ -1069,7 +1251,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 89,
+      "id": 616,
       "word": "Investment",
       "phonetic": "/ɪnˈvest.mənt/",
       "ipaUs": "/ɪnˈvest.mənt/",
@@ -1081,7 +1263,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 90,
+      "id": 617,
       "word": "Loan",
       "phonetic": "/ləʊn/",
       "ipaUs": "/ləʊn/",
@@ -1093,7 +1275,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 91,
+      "id": 618,
       "word": "Mortgage",
       "phonetic": "/ˈmɔː.ɡɪdʒ/",
       "ipaUs": "/ˈmɔː.ɡɪdʒ/",
@@ -1105,7 +1287,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 92,
+      "id": 619,
       "word": "Overdraft",
       "phonetic": "/ˈəʊ.və.drɑːft/",
       "ipaUs": "/ˈəʊ.və.drɑːft/",
@@ -1117,7 +1299,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 93,
+      "id": 620,
       "word": "Profit",
       "phonetic": "/ˈprɒf.ɪt/",
       "ipaUs": "/ˈprɒf.ɪt/",
@@ -1129,7 +1311,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 94,
+      "id": 621,
       "word": "Revenue",
       "phonetic": "/ˈrev.ən.juː/",
       "ipaUs": "/ˈrev.ən.juː/",
@@ -1141,7 +1323,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 95,
+      "id": 622,
       "word": "Stock",
       "phonetic": "/stɒk/",
       "ipaUs": "/stɒk/",
@@ -1153,7 +1335,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 96,
+      "id": 623,
       "word": "Tax",
       "phonetic": "/tæks/",
       "ipaUs": "/tæks/",
@@ -1165,7 +1347,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 97,
+      "id": 624,
       "word": "Transaction",
       "phonetic": "/trænˈzæk.ʃən/",
       "ipaUs": "/trænˈzæk.ʃən/",
@@ -1177,7 +1359,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 98,
+      "id": 625,
       "word": "Valuation",
       "phonetic": "/ˌvæl.juˈeɪ.ʃən/",
       "ipaUs": "/ˌvæl.juˈeɪ.ʃən/",
@@ -1189,7 +1371,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 99,
+      "id": 626,
       "word": "Withdraw",
       "phonetic": "/wɪðˈdrɔː/",
       "ipaUs": "/wɪðˈdrɔː/",
@@ -1201,9 +1383,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "5": [
+  "7": [
     {
-      "id": 100,
+      "id": 701,
       "word": "Account",
       "phonetic": "/əˈkaʊnt/",
       "ipaUs": "/əˈkaʊnt/",
@@ -1215,7 +1397,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 101,
+      "id": 702,
       "word": "ATM",
       "phonetic": "/ˌeɪ.tiːˈem/",
       "ipaUs": "/ˌeɪ.tiːˈem/",
@@ -1227,7 +1409,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 102,
+      "id": 703,
       "word": "Banknote",
       "phonetic": "/ˈbæŋk.nəʊt/",
       "ipaUs": "/ˈbæŋk.nəʊt/",
@@ -1239,7 +1421,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 103,
+      "id": 704,
       "word": "Branch",
       "phonetic": "/brɑːntʃ/",
       "ipaUs": "/brɑːntʃ/",
@@ -1251,7 +1433,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 104,
+      "id": 705,
       "word": "Cash",
       "phonetic": "/kæʃ/",
       "ipaUs": "/kæʃ/",
@@ -1263,7 +1445,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 105,
+      "id": 706,
       "word": "Cheque",
       "phonetic": "/tʃek/",
       "ipaUs": "/tʃek/",
@@ -1275,7 +1457,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 106,
+      "id": 707,
       "word": "Deposit",
       "phonetic": "/dɪˈpɒz.ɪt/",
       "ipaUs": "/dɪˈpɒz.ɪt/",
@@ -1287,7 +1469,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 107,
+      "id": 708,
       "word": "Interest rate",
       "phonetic": "/ˈɪn.trəst ˌreɪt/",
       "ipaUs": "/ˈɪn.trəst ˌreɪt/",
@@ -1299,7 +1481,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 108,
+      "id": 709,
       "word": "Loan",
       "phonetic": "/ləʊn/",
       "ipaUs": "/ləʊn/",
@@ -1311,7 +1493,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 109,
+      "id": 710,
       "word": "Mortgage",
       "phonetic": "/ˈmɔː.ɡɪdʒ/",
       "ipaUs": "/ˈmɔː.ɡɪdʒ/",
@@ -1323,7 +1505,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 110,
+      "id": 711,
       "word": "Overdraft",
       "phonetic": "/ˈəʊ.və.drɑːft/",
       "ipaUs": "/ˈəʊ.və.drɑːft/",
@@ -1335,7 +1517,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 111,
+      "id": 712,
       "word": "Savings account",
       "phonetic": "/ˈseɪ.vɪŋz əˌkaʊnt/",
       "ipaUs": "/ˈseɪ.vɪŋz əˌkaʊnt/",
@@ -1347,7 +1529,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 112,
+      "id": 713,
       "word": "Checking account",
       "phonetic": "/ˈtʃek.ɪŋ əˌkaʊnt/",
       "ipaUs": "/ˈtʃek.ɪŋ əˌkaʊnt/",
@@ -1359,7 +1541,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 113,
+      "id": 714,
       "word": "Statement",
       "phonetic": "/ˈsteɪt.mənt/",
       "ipaUs": "/ˈsteɪt.mənt/",
@@ -1371,7 +1553,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 114,
+      "id": 715,
       "word": "Teller",
       "phonetic": "/ˈtel.ər/",
       "ipaUs": "/ˈtel.ər/",
@@ -1383,7 +1565,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 115,
+      "id": 716,
       "word": "Transaction",
       "phonetic": "/trænˈzæk.ʃən/",
       "ipaUs": "/trænˈzæk.ʃən/",
@@ -1395,7 +1577,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 116,
+      "id": 717,
       "word": "Withdrawal",
       "phonetic": "/wɪðˈdrɔː.əl/",
       "ipaUs": "/wɪðˈdrɔː.əl/",
@@ -1407,7 +1589,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 117,
+      "id": 718,
       "word": "Currency",
       "phonetic": "/ˈkʌr.ən.si/",
       "ipaUs": "/ˈkʌr.ən.si/",
@@ -1419,7 +1601,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 118,
+      "id": 719,
       "word": "Credit card",
       "phonetic": "/ˈkred.ɪt ˌkɑːd/",
       "ipaUs": "/ˈkred.ɪt ˌkɑːd/",
@@ -1431,7 +1613,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 119,
+      "id": 720,
       "word": "Debit card",
       "phonetic": "/ˈdeb.ɪt ˌkɑːd/",
       "ipaUs": "/ˈdeb.ɪt ˌkɑːd/",
@@ -1443,7 +1625,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 120,
+      "id": 721,
       "word": "Exchange rate",
       "phonetic": "/ɪksˈtʃeɪndʒ ˌreɪt/",
       "ipaUs": "/ɪksˈtʃeɪndʒ ˌreɪt/",
@@ -1455,7 +1637,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 121,
+      "id": 722,
       "word": "Fee",
       "phonetic": "/fiː/",
       "ipaUs": "/fiː/",
@@ -1467,7 +1649,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 122,
+      "id": 723,
       "word": "Loan officer",
       "phonetic": "/ləʊn ˈɒf.ɪ.sər/",
       "ipaUs": "/ləʊn ˈɒf.ɪ.sər/",
@@ -1479,7 +1661,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 123,
+      "id": 724,
       "word": "Online banking",
       "phonetic": "/ˌɒn.laɪn ˈbæŋ.kɪŋ/",
       "ipaUs": "/ˌɒn.laɪn ˈbæŋ.kɪŋ/",
@@ -1491,9 +1673,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "6": [
+  "8": [
     {
-      "id": 124,
+      "id": 801,
       "word": "Advertisement",
       "phonetic": "/ˌæd.vəˈtaɪz.mənt/",
       "ipaUs": "/ˌæd.vəˈtaɪz.mənt/",
@@ -1505,7 +1687,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 125,
+      "id": 802,
       "word": "Brand",
       "phonetic": "/brænd/",
       "ipaUs": "/brænd/",
@@ -1517,7 +1699,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 126,
+      "id": 803,
       "word": "Campaign",
       "phonetic": "/kæmˈpeɪn/",
       "ipaUs": "/kæmˈpeɪn/",
@@ -1529,7 +1711,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 127,
+      "id": 804,
       "word": "Consumer",
       "phonetic": "/kənˈsjuː.mər/",
       "ipaUs": "/kənˈsjuː.mər/",
@@ -1541,7 +1723,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 128,
+      "id": 805,
       "word": "Market",
       "phonetic": "/ˈmɑː.kɪt/",
       "ipaUs": "/ˈmɑː.kɪt/",
@@ -1553,7 +1735,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 129,
+      "id": 806,
       "word": "Target audience",
       "phonetic": "/ˈtɑː.ɡɪt ˈɔː.di.əns/",
       "ipaUs": "/ˈtɑː.ɡɪt ˈɔː.di.əns/",
@@ -1565,7 +1747,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 130,
+      "id": 807,
       "word": "Promotion",
       "phonetic": "/prəˈməʊ.ʃən/",
       "ipaUs": "/prəˈməʊ.ʃən/",
@@ -1577,7 +1759,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 131,
+      "id": 808,
       "word": "Slogan",
       "phonetic": "/ˈsləʊ.ɡən/",
       "ipaUs": "/ˈsləʊ.ɡən/",
@@ -1589,7 +1771,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 132,
+      "id": 809,
       "word": "Commercial",
       "phonetic": "/kəˈmɜː.ʃəl/",
       "ipaUs": "/kəˈmɜː.ʃəl/",
@@ -1601,7 +1783,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 133,
+      "id": 810,
       "word": "Competitor",
       "phonetic": "/kəmˈpet.ɪ.tər/",
       "ipaUs": "/kəmˈpet.ɪ.tər/",
@@ -1613,7 +1795,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 134,
+      "id": 811,
       "word": "Content",
       "phonetic": "/ˈkɒn.tent/",
       "ipaUs": "/ˈkɒn.tent/",
@@ -1625,7 +1807,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 135,
+      "id": 812,
       "word": "Strategy",
       "phonetic": "/ˈstræt.ə.dʒi/",
       "ipaUs": "/ˈstræt.ə.dʒi/",
@@ -1637,7 +1819,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 136,
+      "id": 813,
       "word": "Public relations",
       "phonetic": "/ˌpʌb.lɪk rɪˈleɪ.ʃənz/",
       "ipaUs": "/ˌpʌb.lɪk rɪˈleɪ.ʃənz/",
@@ -1649,7 +1831,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 137,
+      "id": 814,
       "word": "Logo",
       "phonetic": "/ˈləʊ.ɡəʊ/",
       "ipaUs": "/ˈləʊ.ɡəʊ/",
@@ -1661,7 +1843,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 138,
+      "id": 815,
       "word": "Digital marketing",
       "phonetic": "/ˈdɪdʒ.ɪ.təl ˈmɑː.kɪ.tɪŋ/",
       "ipaUs": "/ˈdɪdʒ.ɪ.təl ˈmɑː.kɪ.tɪŋ/",
@@ -1673,7 +1855,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 139,
+      "id": 816,
       "word": "Social media",
       "phonetic": "/ˌsəʊ.ʃəl ˈmiː.di.ə/",
       "ipaUs": "/ˌsəʊ.ʃəl ˈmiː.di.ə/",
@@ -1685,7 +1867,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 140,
+      "id": 817,
       "word": "Endorsement",
       "phonetic": "/ɪnˈdɔːs.mənt/",
       "ipaUs": "/ɪnˈdɔːs.mənt/",
@@ -1697,7 +1879,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 141,
+      "id": 818,
       "word": "Banner",
       "phonetic": "/ˈbæn.ər/",
       "ipaUs": "/ˈbæn.ər/",
@@ -1709,7 +1891,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 142,
+      "id": 819,
       "word": "Survey",
       "phonetic": "/ˈsɜː.veɪ/",
       "ipaUs": "/ˈsɜː.veɪ/",
@@ -1721,7 +1903,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 143,
+      "id": 820,
       "word": "Market research",
       "phonetic": "/ˈmɑː.kɪt rɪˈsɜːtʃ/",
       "ipaUs": "/ˈmɑː.kɪt rɪˈsɜːtʃ/",
@@ -1733,7 +1915,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 144,
+      "id": 821,
       "word": "Branding",
       "phonetic": "/ˈbræn.dɪŋ/",
       "ipaUs": "/ˈbræn.dɪŋ/",
@@ -1745,7 +1927,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 145,
+      "id": 822,
       "word": "Keyword",
       "phonetic": "/ˈkiː.wɜːd/",
       "ipaUs": "/ˈkiː.wɜːd/",
@@ -1757,7 +1939,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 146,
+      "id": 823,
       "word": "Conversion rate",
       "phonetic": "/kənˈvɜː.ʃən reɪt/",
       "ipaUs": "/kənˈvɜː.ʃən reɪt/",
@@ -1769,7 +1951,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 147,
+      "id": 824,
       "word": "Viral",
       "phonetic": "/ˈvaɪə.rəl/",
       "ipaUs": "/ˈvaɪə.rəl/",
@@ -1781,9 +1963,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "7": [
+  "9": [
     {
-      "id": 148,
+      "id": 901,
       "word": "Accommodation",
       "phonetic": "/əˌkɒm.əˈdeɪ.ʃən/",
       "ipaUs": "/əˌkɒm.əˈdeɪ.ʃən/",
@@ -1795,7 +1977,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 149,
+      "id": 902,
       "word": "Reservation",
       "phonetic": "/ˌrez.əˈveɪ.ʃən/",
       "ipaUs": "/ˌrez.əˈveɪ.ʃən/",
@@ -1807,7 +1989,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 150,
+      "id": 903,
       "word": "Check-in",
       "phonetic": "/ˈtʃek.ɪn/",
       "ipaUs": "/ˈtʃek.ɪn/",
@@ -1819,7 +2001,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 151,
+      "id": 904,
       "word": "Check-out",
       "phonetic": "/ˈtʃek.aʊt/",
       "ipaUs": "/ˈtʃek.aʊt/",
@@ -1831,7 +2013,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 152,
+      "id": 905,
       "word": "Concierge",
       "phonetic": "/ˌkɒn.siˈeəʒ/",
       "ipaUs": "/ˌkɒn.siˈeəʒ/",
@@ -1843,7 +2025,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 153,
+      "id": 906,
       "word": "Reception",
       "phonetic": "/rɪˈsep.ʃən/",
       "ipaUs": "/rɪˈsep.ʃən/",
@@ -1855,7 +2037,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 154,
+      "id": 907,
       "word": "Room service",
       "phonetic": "/ˈruːm ˌsɜː.vɪs/",
       "ipaUs": "/ˈruːm ˌsɜː.vɪs/",
@@ -1867,7 +2049,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 155,
+      "id": 908,
       "word": "Suite",
       "phonetic": "/swiːt/",
       "ipaUs": "/swiːt/",
@@ -1879,7 +2061,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 156,
+      "id": 909,
       "word": "Housekeeping",
       "phonetic": "/ˈhaʊsˌkiː.pɪŋ/",
       "ipaUs": "/ˈhaʊsˌkiː.pɪŋ/",
@@ -1891,7 +2073,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 157,
+      "id": 910,
       "word": "Amenities",
       "phonetic": "/əˈmen.ə.tiz/",
       "ipaUs": "/əˈmen.ə.tiz/",
@@ -1903,7 +2085,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 158,
+      "id": 911,
       "word": "Bellboy",
       "phonetic": "/ˈbel.bɔɪ/",
       "ipaUs": "/ˈbel.bɔɪ/",
@@ -1915,7 +2097,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 159,
+      "id": 912,
       "word": "Guest",
       "phonetic": "/ɡest/",
       "ipaUs": "/ɡest/",
@@ -1927,7 +2109,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 160,
+      "id": 913,
       "word": "Lobby",
       "phonetic": "/ˈlɒb.i/",
       "ipaUs": "/ˈlɒb.i/",
@@ -1939,7 +2121,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 161,
+      "id": 914,
       "word": "Key card",
       "phonetic": "/ˈkiː ˌkɑːd/",
       "ipaUs": "/ˈkiː ˌkɑːd/",
@@ -1951,7 +2133,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 162,
+      "id": 915,
       "word": "Double room",
       "phonetic": "/ˈdʌb.l ˌruːm/",
       "ipaUs": "/ˈdʌb.l ˌruːm/",
@@ -1963,7 +2145,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 163,
+      "id": 916,
       "word": "Single room",
       "phonetic": "/ˈsɪŋ.ɡl ˌruːm/",
       "ipaUs": "/ˈsɪŋ.ɡl ˌruːm/",
@@ -1975,7 +2157,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 164,
+      "id": 917,
       "word": "Twin room",
       "phonetic": "/ˈtwɪn ˌruːm/",
       "ipaUs": "/ˈtwɪn ˌruːm/",
@@ -1987,7 +2169,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 165,
+      "id": 918,
       "word": "Breakfast buffet",
       "phonetic": "/ˈbrek.fəst ˈbʊf.eɪ/",
       "ipaUs": "/ˈbrek.fəst ˈbʊf.eɪ/",
@@ -1999,7 +2181,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 166,
+      "id": 919,
       "word": "Cancellation",
       "phonetic": "/ˌkæn.səlˈeɪ.ʃən/",
       "ipaUs": "/ˌkæn.səlˈeɪ.ʃən/",
@@ -2011,7 +2193,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 167,
+      "id": 920,
       "word": "Deposit",
       "phonetic": "/dɪˈpɒz.ɪt/",
       "ipaUs": "/dɪˈpɒz.ɪt/",
@@ -2023,7 +2205,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 168,
+      "id": 921,
       "word": "Late check-out",
       "phonetic": "/leɪt ˈtʃek.aʊt/",
       "ipaUs": "/leɪt ˈtʃek.aʊt/",
@@ -2035,7 +2217,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 169,
+      "id": 922,
       "word": "Complimentary",
       "phonetic": "/ˌkɒm.plɪˈmen.tər.i/",
       "ipaUs": "/ˌkɒm.plɪˈmen.tər.i/",
@@ -2047,7 +2229,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 170,
+      "id": 923,
       "word": "Valet parking",
       "phonetic": "/ˌvæl.eɪ ˈpɑː.kɪŋ/",
       "ipaUs": "/ˌvæl.eɪ ˈpɑː.kɪŋ/",
@@ -2059,7 +2241,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 171,
+      "id": 924,
       "word": "Overbooking",
       "phonetic": "/ˌəʊ.vəˈbʊk.ɪŋ/",
       "ipaUs": "/ˌəʊ.vəˈbʊk.ɪŋ/",
@@ -2071,9 +2253,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "8": [
+  "10": [
     {
-      "id": 172,
+      "id": 1001,
       "word": "Menu",
       "phonetic": "/ˈmen.juː/",
       "ipaUs": "/ˈmen.juː/",
@@ -2085,7 +2267,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 173,
+      "id": 1002,
       "word": "Reservation",
       "phonetic": "/ˌrez.əˈveɪ.ʃən/",
       "ipaUs": "/ˌrez.əˈveɪ.ʃən/",
@@ -2097,7 +2279,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 174,
+      "id": 1003,
       "word": "Waiter",
       "phonetic": "/ˈweɪ.tər/",
       "ipaUs": "/ˈweɪ.tər/",
@@ -2109,7 +2291,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 175,
+      "id": 1004,
       "word": "Waitress",
       "phonetic": "/ˈweɪ.trəs/",
       "ipaUs": "/ˈweɪ.trəs/",
@@ -2121,7 +2303,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 176,
+      "id": 1005,
       "word": "Bill",
       "phonetic": "/bɪl/",
       "ipaUs": "/bɪl/",
@@ -2133,7 +2315,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 177,
+      "id": 1006,
       "word": "Tip",
       "phonetic": "/tɪp/",
       "ipaUs": "/tɪp/",
@@ -2145,7 +2327,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 178,
+      "id": 1007,
       "word": "Tablecloth",
       "phonetic": "/ˈteɪ.bəl.klɒθ/",
       "ipaUs": "/ˈteɪ.bəl.klɒθ/",
@@ -2157,7 +2339,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 179,
+      "id": 1008,
       "word": "Utensils",
       "phonetic": "/juːˈten.sɪlz/",
       "ipaUs": "/juːˈten.sɪlz/",
@@ -2169,7 +2351,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 180,
+      "id": 1009,
       "word": "Napkin",
       "phonetic": "/ˈnæp.kɪn/",
       "ipaUs": "/ˈnæp.kɪn/",
@@ -2181,7 +2363,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 181,
+      "id": 1010,
       "word": "Beverage",
       "phonetic": "/ˈbev.ər.ɪdʒ/",
       "ipaUs": "/ˈbev.ər.ɪdʒ/",
@@ -2193,7 +2375,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 182,
+      "id": 1011,
       "word": "Appetizer",
       "phonetic": "/ˈæp.ə.taɪ.zər/",
       "ipaUs": "/ˈæp.ə.taɪ.zər/",
@@ -2205,7 +2387,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 183,
+      "id": 1012,
       "word": "Main course",
       "phonetic": "/ˌmeɪn ˈkɔːs/",
       "ipaUs": "/ˌmeɪn ˈkɔːs/",
@@ -2217,7 +2399,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 184,
+      "id": 1013,
       "word": "Dessert",
       "phonetic": "/dɪˈzɜːt/",
       "ipaUs": "/dɪˈzɜːt/",
@@ -2229,7 +2411,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 185,
+      "id": 1014,
       "word": "Chef",
       "phonetic": "/ʃef/",
       "ipaUs": "/ʃef/",
@@ -2241,7 +2423,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 186,
+      "id": 1015,
       "word": "Cuisine",
       "phonetic": "/kwɪˈziːn/",
       "ipaUs": "/kwɪˈziːn/",
@@ -2253,7 +2435,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 187,
+      "id": 1016,
       "word": "Buffet",
       "phonetic": "/ˈbʊf.eɪ/",
       "ipaUs": "/ˈbʊf.eɪ/",
@@ -2265,7 +2447,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 188,
+      "id": 1017,
       "word": "Takeaway",
       "phonetic": "/ˈteɪk.ə.weɪ/",
       "ipaUs": "/ˈteɪk.ə.weɪ/",
@@ -2277,7 +2459,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 189,
+      "id": 1018,
       "word": "Allergy",
       "phonetic": "/ˈæl.ə.dʒi/",
       "ipaUs": "/ˈæl.ə.dʒi/",
@@ -2289,7 +2471,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 190,
+      "id": 1019,
       "word": "Vegan",
       "phonetic": "/ˈviː.ɡən/",
       "ipaUs": "/ˈviː.ɡən/",
@@ -2301,7 +2483,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 191,
+      "id": 1020,
       "word": "Gluten-free",
       "phonetic": "/ˌɡluː.tənˈfriː/",
       "ipaUs": "/ˌɡluː.tənˈfriː/",
@@ -2313,7 +2495,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 192,
+      "id": 1021,
       "word": "Special",
       "phonetic": "/ˈspeʃ.əl/",
       "ipaUs": "/ˈspeʃ.əl/",
@@ -2325,7 +2507,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 193,
+      "id": 1022,
       "word": "Reservation list",
       "phonetic": "/ˌrez.əˈveɪ.ʃən lɪst/",
       "ipaUs": "/ˌrez.əˈveɪ.ʃən lɪst/",
@@ -2337,7 +2519,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 194,
+      "id": 1023,
       "word": "Hostess",
       "phonetic": "/ˈhəʊ.stes/",
       "ipaUs": "/ˈhəʊ.stes/",
@@ -2349,7 +2531,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 195,
+      "id": 1024,
       "word": "Ambiance",
       "phonetic": "/ˈæm.bi.əns/",
       "ipaUs": "/ˈæm.bi.əns/",
@@ -2361,7 +2543,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 196,
+      "id": 1025,
       "word": "Service charge",
       "phonetic": "/ˈsɜː.vɪs ˌtʃɑːdʒ/",
       "ipaUs": "/ˈsɜː.vɪs ˌtʃɑːdʒ/",
@@ -2373,9 +2555,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "9": [
+  "11": [
     {
-      "id": 197,
+      "id": 1101,
       "word": "Transportation",
       "phonetic": "/ˌtræn.spɔːˈteɪ.ʃən/",
       "ipaUs": "/ˌtræn.spɔːˈteɪ.ʃən/",
@@ -2387,7 +2569,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 198,
+      "id": 1102,
       "word": "Vehicle",
       "phonetic": "/ˈviː.ɪ.kəl/",
       "ipaUs": "/ˈviː.ɪ.kəl/",
@@ -2399,7 +2581,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 199,
+      "id": 1103,
       "word": "Traffic",
       "phonetic": "/ˈtræf.ɪk/",
       "ipaUs": "/ˈtræf.ɪk/",
@@ -2411,7 +2593,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 200,
+      "id": 1104,
       "word": "Traffic jam",
       "phonetic": "/ˈtræf.ɪk ˌdʒæm/",
       "ipaUs": "/ˈtræf.ɪk ˌdʒæm/",
@@ -2423,7 +2605,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 201,
+      "id": 1105,
       "word": "Highway",
       "phonetic": "/ˈhaɪ.weɪ/",
       "ipaUs": "/ˈhaɪ.weɪ/",
@@ -2435,7 +2617,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 202,
+      "id": 1106,
       "word": "Road",
       "phonetic": "/rəʊd/",
       "ipaUs": "/rəʊd/",
@@ -2447,7 +2629,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 203,
+      "id": 1107,
       "word": "Intersection",
       "phonetic": "/ˌɪn.təˈsek.ʃən/",
       "ipaUs": "/ˌɪn.təˈsek.ʃən/",
@@ -2459,7 +2641,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 204,
+      "id": 1108,
       "word": "Roundabout",
       "phonetic": "/ˈraʊnd.ə.baʊt/",
       "ipaUs": "/ˈraʊnd.ə.baʊt/",
@@ -2471,7 +2653,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 205,
+      "id": 1109,
       "word": "Pedestrian",
       "phonetic": "/pəˈdes.tri.ən/",
       "ipaUs": "/pəˈdes.tri.ən/",
@@ -2483,7 +2665,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 206,
+      "id": 1110,
       "word": "Crosswalk",
       "phonetic": "/ˈkrɒs.wɔːk/",
       "ipaUs": "/ˈkrɒs.wɔːk/",
@@ -2495,7 +2677,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 207,
+      "id": 1111,
       "word": "Speed limit",
       "phonetic": "/ˈspiːd ˌlɪm.ɪt/",
       "ipaUs": "/ˈspiːd ˌlɪm.ɪt/",
@@ -2507,7 +2689,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 208,
+      "id": 1112,
       "word": "Public transport",
       "phonetic": "/ˌpʌb.lɪk ˈtræn.spɔːt/",
       "ipaUs": "/ˌpʌb.lɪk ˈtræn.spɔːt/",
@@ -2519,7 +2701,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 209,
+      "id": 1113,
       "word": "Train station",
       "phonetic": "/ˈtreɪn ˌsteɪ.ʃən/",
       "ipaUs": "/ˈtreɪn ˌsteɪ.ʃən/",
@@ -2531,7 +2713,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 210,
+      "id": 1114,
       "word": "Ticket",
       "phonetic": "/ˈtɪk.ɪt/",
       "ipaUs": "/ˈtɪk.ɪt/",
@@ -2543,7 +2725,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 211,
+      "id": 1115,
       "word": "Timetable",
       "phonetic": "/ˈtaɪmˌteɪ.bəl/",
       "ipaUs": "/ˈtaɪmˌteɪ.bəl/",
@@ -2555,7 +2737,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 212,
+      "id": 1116,
       "word": "Boarding pass",
       "phonetic": "/ˈbɔː.dɪŋ ˌpɑːs/",
       "ipaUs": "/ˈbɔː.dɪŋ ˌpɑːs/",
@@ -2567,7 +2749,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 213,
+      "id": 1117,
       "word": "Flight",
       "phonetic": "/flaɪt/",
       "ipaUs": "/flaɪt/",
@@ -2579,7 +2761,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 214,
+      "id": 1118,
       "word": "Taxi",
       "phonetic": "/ˈtæk.si/",
       "ipaUs": "/ˈtæk.si/",
@@ -2591,7 +2773,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 215,
+      "id": 1119,
       "word": "Subway",
       "phonetic": "/ˈsʌb.weɪ/",
       "ipaUs": "/ˈsʌb.weɪ/",
@@ -2603,7 +2785,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 216,
+      "id": 1120,
       "word": "Ferry",
       "phonetic": "/ˈfer.i/",
       "ipaUs": "/ˈfer.i/",
@@ -2615,7 +2797,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 217,
+      "id": 1121,
       "word": "Cargo",
       "phonetic": "/ˈkɑː.ɡəʊ/",
       "ipaUs": "/ˈkɑː.ɡəʊ/",
@@ -2627,7 +2809,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 218,
+      "id": 1122,
       "word": "Logistics",
       "phonetic": "/ləˈdʒɪs.tɪks/",
       "ipaUs": "/ləˈdʒɪs.tɪks/",
@@ -2639,7 +2821,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 219,
+      "id": 1123,
       "word": "Toll booth",
       "phonetic": "/ˈtəʊl ˌbuːθ/",
       "ipaUs": "/ˈtəʊl ˌbuːθ/",
@@ -2651,7 +2833,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 220,
+      "id": 1124,
       "word": "Departure",
       "phonetic": "/dɪˈpɑː.tʃər/",
       "ipaUs": "/dɪˈpɑː.tʃər/",
@@ -2663,7 +2845,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 221,
+      "id": 1125,
       "word": "Arrival",
       "phonetic": "/əˈraɪ.vəl/",
       "ipaUs": "/əˈraɪ.vəl/",
@@ -2675,9 +2857,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "10": [
+  "12": [
     {
-      "id": 222,
+      "id": 1201,
       "word": "Destination",
       "phonetic": "/ˌdes.tɪˈneɪ.ʃən/",
       "ipaUs": "/ˌdes.tɪˈneɪ.ʃən/",
@@ -2689,7 +2871,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 223,
+      "id": 1202,
       "word": "Itinerary",
       "phonetic": "/aɪˈtɪn.ər.ər.i/",
       "ipaUs": "/aɪˈtɪn.ər.ər.i/",
@@ -2701,7 +2883,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 224,
+      "id": 1203,
       "word": "Passport",
       "phonetic": "/ˈpɑːs.pɔːt/",
       "ipaUs": "/ˈpɑːs.pɔːt/",
@@ -2713,7 +2895,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 225,
+      "id": 1204,
       "word": "Visa",
       "phonetic": "/ˈviː.zə/",
       "ipaUs": "/ˈviː.zə/",
@@ -2725,7 +2907,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 226,
+      "id": 1205,
       "word": "Boarding pass",
       "phonetic": "/ˈbɔː.dɪŋ ˌpɑːs/",
       "ipaUs": "/ˈbɔː.dɪŋ ˌpɑːs/",
@@ -2737,7 +2919,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 227,
+      "id": 1206,
       "word": "Luggage",
       "phonetic": "/ˈlʌɡ.ɪdʒ/",
       "ipaUs": "/ˈlʌɡ.ɪdʒ/",
@@ -2749,7 +2931,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 228,
+      "id": 1207,
       "word": "Suitcase",
       "phonetic": "/ˈsuːt.keɪs/",
       "ipaUs": "/ˈsuːt.keɪs/",
@@ -2761,7 +2943,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 229,
+      "id": 1208,
       "word": "Accommodation",
       "phonetic": "/əˌkɒm.əˈdeɪ.ʃən/",
       "ipaUs": "/əˌkɒm.əˈdeɪ.ʃən/",
@@ -2773,7 +2955,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 230,
+      "id": 1209,
       "word": "Flight",
       "phonetic": "/flaɪt/",
       "ipaUs": "/flaɪt/",
@@ -2785,7 +2967,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 231,
+      "id": 1210,
       "word": "Travel agency",
       "phonetic": "/ˈtræv.əl ˌeɪ.dʒən.si/",
       "ipaUs": "/ˈtræv.əl ˌeɪ.dʒən.si/",
@@ -2797,7 +2979,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 232,
+      "id": 1211,
       "word": "Tourist",
       "phonetic": "/ˈtʊə.rɪst/",
       "ipaUs": "/ˈtʊə.rɪst/",
@@ -2809,7 +2991,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 233,
+      "id": 1212,
       "word": "Tour guide",
       "phonetic": "/ˈtʊə ˌɡaɪd/",
       "ipaUs": "/ˈtʊə ˌɡaɪd/",
@@ -2821,7 +3003,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 234,
+      "id": 1213,
       "word": "Souvenir",
       "phonetic": "/ˌsuː.vənˈɪər/",
       "ipaUs": "/ˌsuː.vənˈɪər/",
@@ -2833,7 +3015,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 235,
+      "id": 1214,
       "word": "Sightseeing",
       "phonetic": "/ˈsaɪtˌsiː.ɪŋ/",
       "ipaUs": "/ˈsaɪtˌsiː.ɪŋ/",
@@ -2845,7 +3027,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 236,
+      "id": 1215,
       "word": "Departure",
       "phonetic": "/dɪˈpɑː.tʃər/",
       "ipaUs": "/dɪˈpɑː.tʃər/",
@@ -2857,7 +3039,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 237,
+      "id": 1216,
       "word": "Arrival",
       "phonetic": "/əˈraɪ.vəl/",
       "ipaUs": "/əˈraɪ.vəl/",
@@ -2869,7 +3051,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 238,
+      "id": 1217,
       "word": "Excursion",
       "phonetic": "/ɪkˈskɜː.ʃən/",
       "ipaUs": "/ɪkˈskɜː.ʃən/",
@@ -2881,7 +3063,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 239,
+      "id": 1218,
       "word": "Resort",
       "phonetic": "/rɪˈzɔːt/",
       "ipaUs": "/rɪˈzɔːt/",
@@ -2893,7 +3075,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 240,
+      "id": 1219,
       "word": "Backpack",
       "phonetic": "/ˈbæk.pæk/",
       "ipaUs": "/ˈbæk.pæk/",
@@ -2905,7 +3087,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 241,
+      "id": 1220,
       "word": "Customs",
       "phonetic": "/ˈkʌs.təmz/",
       "ipaUs": "/ˈkʌs.təmz/",
@@ -2917,7 +3099,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 242,
+      "id": 1221,
       "word": "Check-in",
       "phonetic": "/ˈtʃek.ɪn/",
       "ipaUs": "/ˈtʃek.ɪn/",
@@ -2929,7 +3111,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 243,
+      "id": 1222,
       "word": "Check-out",
       "phonetic": "/ˈtʃek.aʊt/",
       "ipaUs": "/ˈtʃek.aʊt/",
@@ -2941,7 +3123,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 244,
+      "id": 1223,
       "word": "Cruise",
       "phonetic": "/kruːz/",
       "ipaUs": "/kruːz/",
@@ -2953,7 +3135,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 245,
+      "id": 1224,
       "word": "Ticket",
       "phonetic": "/ˈtɪk.ɪt/",
       "ipaUs": "/ˈtɪk.ɪt/",
@@ -2965,7 +3147,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 246,
+      "id": 1225,
       "word": "Vacation",
       "phonetic": "/veɪˈkeɪ.ʃən/",
       "ipaUs": "/veɪˈkeɪ.ʃən/",
@@ -2977,9 +3159,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "11": [
+  "13": [
     {
-      "id": 247,
+      "id": 1301,
       "word": "Shopping mall",
       "phonetic": "/ˈʃɒp.ɪŋ ˌmɔːl/",
       "ipaUs": "/ˈʃɒp.ɪŋ ˌmɔːl/",
@@ -2991,7 +3173,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 248,
+      "id": 1302,
       "word": "Store",
       "phonetic": "/stɔːr/",
       "ipaUs": "/stɔːr/",
@@ -3003,7 +3185,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 249,
+      "id": 1303,
       "word": "Customer",
       "phonetic": "/ˈkʌs.tə.mər/",
       "ipaUs": "/ˈkʌs.tə.mər/",
@@ -3015,7 +3197,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 250,
+      "id": 1304,
       "word": "Price",
       "phonetic": "/praɪs/",
       "ipaUs": "/praɪs/",
@@ -3027,7 +3209,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 251,
+      "id": 1305,
       "word": "Discount",
       "phonetic": "/ˈdɪs.kaʊnt/",
       "ipaUs": "/ˈdɪs.kaʊnt/",
@@ -3039,7 +3221,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 252,
+      "id": 1306,
       "word": "Sale",
       "phonetic": "/seɪl/",
       "ipaUs": "/seɪl/",
@@ -3051,7 +3233,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 253,
+      "id": 1307,
       "word": "Cashier",
       "phonetic": "/kæˈʃɪər/",
       "ipaUs": "/kæˈʃɪər/",
@@ -3063,7 +3245,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 254,
+      "id": 1308,
       "word": "Receipt",
       "phonetic": "/rɪˈsiːt/",
       "ipaUs": "/rɪˈsiːt/",
@@ -3075,7 +3257,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 255,
+      "id": 1309,
       "word": "Refund",
       "phonetic": "/ˈriː.fʌnd/",
       "ipaUs": "/ˈriː.fʌnd/",
@@ -3087,7 +3269,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 256,
+      "id": 1310,
       "word": "Exchange",
       "phonetic": "/ɪksˈtʃeɪndʒ/",
       "ipaUs": "/ɪksˈtʃeɪndʒ/",
@@ -3099,7 +3281,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 257,
+      "id": 1311,
       "word": "Cart",
       "phonetic": "/kɑːrt/",
       "ipaUs": "/kɑːrt/",
@@ -3111,7 +3293,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 258,
+      "id": 1312,
       "word": "Bargain",
       "phonetic": "/ˈbɑː.ɡɪn/",
       "ipaUs": "/ˈbɑː.ɡɪn/",
@@ -3123,7 +3305,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 259,
+      "id": 1313,
       "word": "Product",
       "phonetic": "/ˈprɒd.ʌkt/",
       "ipaUs": "/ˈprɒd.ʌkt/",
@@ -3135,7 +3317,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 260,
+      "id": 1314,
       "word": "Brand",
       "phonetic": "/brænd/",
       "ipaUs": "/brænd/",
@@ -3147,7 +3329,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 261,
+      "id": 1315,
       "word": "Quality",
       "phonetic": "/ˈkwɒl.ɪ.ti/",
       "ipaUs": "/ˈkwɒl.ɪ.ti/",
@@ -3159,7 +3341,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 262,
+      "id": 1316,
       "word": "Shelf",
       "phonetic": "/ʃelf/",
       "ipaUs": "/ʃelf/",
@@ -3171,7 +3353,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 263,
+      "id": 1317,
       "word": "Shopping list",
       "phonetic": "/ˈʃɒp.ɪŋ ˌlɪst/",
       "ipaUs": "/ˈʃɒp.ɪŋ ˌlɪst/",
@@ -3183,7 +3365,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 264,
+      "id": 1318,
       "word": "Fitting room",
       "phonetic": "/ˈfɪt.ɪŋ ˌruːm/",
       "ipaUs": "/ˈfɪt.ɪŋ ˌruːm/",
@@ -3195,7 +3377,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 265,
+      "id": 1319,
       "word": "Payment",
       "phonetic": "/ˈpeɪ.mənt/",
       "ipaUs": "/ˈpeɪ.mənt/",
@@ -3207,7 +3389,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 266,
+      "id": 1320,
       "word": "Credit card",
       "phonetic": "/ˈkred.ɪt ˌkɑːd/",
       "ipaUs": "/ˈkred.ɪt ˌkɑːd/",
@@ -3219,7 +3401,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 267,
+      "id": 1321,
       "word": "Debit card",
       "phonetic": "/ˈdeb.ɪt ˌkɑːd/",
       "ipaUs": "/ˈdeb.ɪt ˌkɑːd/",
@@ -3231,7 +3413,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 268,
+      "id": 1322,
       "word": "E-commerce",
       "phonetic": "/ˌiːˈkɒm.ɜːs/",
       "ipaUs": "/ˌiːˈkɒm.ɜːs/",
@@ -3243,7 +3425,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 269,
+      "id": 1323,
       "word": "Delivery",
       "phonetic": "/dɪˈlɪv.ər.i/",
       "ipaUs": "/dɪˈlɪv.ər.i/",
@@ -3255,7 +3437,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 270,
+      "id": 1324,
       "word": "Warranty",
       "phonetic": "/ˈwɒr.ən.ti/",
       "ipaUs": "/ˈwɒr.ən.ti/",
@@ -3267,7 +3449,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 271,
+      "id": 1325,
       "word": "Promotion",
       "phonetic": "/prəˈməʊ.ʃən/",
       "ipaUs": "/prəˈməʊ.ʃən/",
@@ -3279,9 +3461,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "12": [
+  "14": [
     {
-      "id": 272,
+      "id": 1401,
       "word": "Customer",
       "phonetic": "/ˈkʌs.tə.mər/",
       "ipaUs": "/ˈkʌs.tə.mər/",
@@ -3293,7 +3475,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 273,
+      "id": 1402,
       "word": "Service",
       "phonetic": "/ˈsɜː.vɪs/",
       "ipaUs": "/ˈsɜː.vɪs/",
@@ -3305,7 +3487,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 274,
+      "id": 1403,
       "word": "Feedback",
       "phonetic": "/ˈfiːd.bæk/",
       "ipaUs": "/ˈfiːd.bæk/",
@@ -3317,7 +3499,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 275,
+      "id": 1404,
       "word": "Inquiry",
       "phonetic": "/ɪnˈkwaɪə.ri/",
       "ipaUs": "/ɪnˈkwaɪə.ri/",
@@ -3329,7 +3511,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 276,
+      "id": 1405,
       "word": "Complaint",
       "phonetic": "/kəmˈpleɪnt/",
       "ipaUs": "/kəmˈpleɪnt/",
@@ -3341,7 +3523,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 277,
+      "id": 1406,
       "word": "Support",
       "phonetic": "/səˈpɔːt/",
       "ipaUs": "/səˈpɔːt/",
@@ -3353,7 +3535,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 278,
+      "id": 1407,
       "word": "Representative",
       "phonetic": "/ˌrep.rɪˈzen.tə.tɪv/",
       "ipaUs": "/ˌrep.rɪˈzen.tə.tɪv/",
@@ -3365,7 +3547,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 279,
+      "id": 1408,
       "word": "Resolution",
       "phonetic": "/ˌrez.əˈluː.ʃən/",
       "ipaUs": "/ˌrez.əˈluː.ʃən/",
@@ -3377,7 +3559,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 280,
+      "id": 1409,
       "word": "Hotline",
       "phonetic": "/ˈhɒt.laɪn/",
       "ipaUs": "/ˈhɒt.laɪn/",
@@ -3389,7 +3571,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 281,
+      "id": 1410,
       "word": "Satisfaction",
       "phonetic": "/ˌsæt.ɪsˈfæk.ʃən/",
       "ipaUs": "/ˌsæt.ɪsˈfæk.ʃən/",
@@ -3401,7 +3583,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 282,
+      "id": 1411,
       "word": "Return policy",
       "phonetic": "/rɪˈtɜːn ˌpɒl.ɪ.si/",
       "ipaUs": "/rɪˈtɜːn ˌpɒl.ɪ.si/",
@@ -3413,7 +3595,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 283,
+      "id": 1412,
       "word": "Refund",
       "phonetic": "/ˈriː.fʌnd/",
       "ipaUs": "/ˈriː.fʌnd/",
@@ -3425,7 +3607,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 284,
+      "id": 1413,
       "word": "Exchange",
       "phonetic": "/ɪksˈtʃeɪndʒ/",
       "ipaUs": "/ɪksˈtʃeɪndʒ/",
@@ -3437,7 +3619,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 285,
+      "id": 1414,
       "word": "Response time",
       "phonetic": "/rɪˈspɒns ˌtaɪm/",
       "ipaUs": "/rɪˈspɒns ˌtaɪm/",
@@ -3449,7 +3631,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 286,
+      "id": 1415,
       "word": "Loyalty program",
       "phonetic": "/ˈlɔɪ.əl.ti ˌprəʊ.ɡræm/",
       "ipaUs": "/ˈlɔɪ.əl.ti ˌprəʊ.ɡræm/",
@@ -3461,7 +3643,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 287,
+      "id": 1416,
       "word": "Follow-up",
       "phonetic": "/ˈfɒl.oʊ.ʌp/",
       "ipaUs": "/ˈfɒl.oʊ.ʌp/",
@@ -3473,7 +3655,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 288,
+      "id": 1417,
       "word": "Guarantee",
       "phonetic": "/ˌɡær.ənˈtiː/",
       "ipaUs": "/ˌɡær.ənˈtiː/",
@@ -3485,7 +3667,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 289,
+      "id": 1418,
       "word": "Courtesy",
       "phonetic": "/ˈkɜː.tə.si/",
       "ipaUs": "/ˈkɜː.tə.si/",
@@ -3497,7 +3679,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 290,
+      "id": 1419,
       "word": "Queue",
       "phonetic": "/kjuː/",
       "ipaUs": "/kjuː/",
@@ -3509,7 +3691,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 291,
+      "id": 1420,
       "word": "Assistance",
       "phonetic": "/əˈsɪs.təns/",
       "ipaUs": "/əˈsɪs.təns/",
@@ -3521,7 +3703,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 292,
+      "id": 1421,
       "word": "Resolve",
       "phonetic": "/rɪˈzɒlv/",
       "ipaUs": "/rɪˈzɒlv/",
@@ -3533,7 +3715,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 293,
+      "id": 1422,
       "word": "Escalation",
       "phonetic": "/ˌes.kəˈleɪ.ʃən/",
       "ipaUs": "/ˌes.kəˈleɪ.ʃən/",
@@ -3545,7 +3727,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 294,
+      "id": 1423,
       "word": "Chatbot",
       "phonetic": "/ˈtʃæt.bɒt/",
       "ipaUs": "/ˈtʃæt.bɒt/",
@@ -3557,7 +3739,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 295,
+      "id": 1424,
       "word": "Complaint ticket",
       "phonetic": "/kəmˈpleɪnt ˌtɪk.ɪt/",
       "ipaUs": "/kəmˈpleɪnt ˌtɪk.ɪt/",
@@ -3569,9 +3751,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "13": [
+  "15": [
     {
-      "id": 296,
+      "id": 1501,
       "word": "Technology",
       "phonetic": "/tekˈnɒl.ə.dʒi/",
       "ipaUs": "/tekˈnɒl.ə.dʒi/",
@@ -3583,7 +3765,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 297,
+      "id": 1502,
       "word": "Innovation",
       "phonetic": "/ˌɪn.əˈveɪ.ʃən/",
       "ipaUs": "/ˌɪn.əˈveɪ.ʃən/",
@@ -3595,7 +3777,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 298,
+      "id": 1503,
       "word": "Software",
       "phonetic": "/ˈsɒft.weər/",
       "ipaUs": "/ˈsɒft.weər/",
@@ -3607,7 +3789,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 299,
+      "id": 1504,
       "word": "Hardware",
       "phonetic": "/ˈhɑːd.weər/",
       "ipaUs": "/ˈhɑːd.weər/",
@@ -3619,7 +3801,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 300,
+      "id": 1505,
       "word": "Device",
       "phonetic": "/dɪˈvaɪs/",
       "ipaUs": "/dɪˈvaɪs/",
@@ -3631,7 +3813,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 301,
+      "id": 1506,
       "word": "Database",
       "phonetic": "/ˈdeɪ.tə.beɪs/",
       "ipaUs": "/ˈdeɪ.tə.beɪs/",
@@ -3643,7 +3825,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 302,
+      "id": 1507,
       "word": "Network",
       "phonetic": "/ˈnet.wɜːk/",
       "ipaUs": "/ˈnet.wɜːk/",
@@ -3655,7 +3837,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 303,
+      "id": 1508,
       "word": "Cloud computing",
       "phonetic": "/klaʊd kəmˈpjuː.tɪŋ/",
       "ipaUs": "/klaʊd kəmˈpjuː.tɪŋ/",
@@ -3667,7 +3849,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 304,
+      "id": 1509,
       "word": "Algorithm",
       "phonetic": "/ˈæl.ɡə.rɪ.ðəm/",
       "ipaUs": "/ˈæl.ɡə.rɪ.ðəm/",
@@ -3679,7 +3861,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 305,
+      "id": 1510,
       "word": "Cybersecurity",
       "phonetic": "/ˌsaɪ.bə.sɪˈkjʊə.rə.ti/",
       "ipaUs": "/ˌsaɪ.bə.sɪˈkjʊə.rə.ti/",
@@ -3691,7 +3873,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 306,
+      "id": 1511,
       "word": "Firewall",
       "phonetic": "/ˈfaɪə.wɔːl/",
       "ipaUs": "/ˈfaɪə.wɔːl/",
@@ -3703,7 +3885,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 307,
+      "id": 1512,
       "word": "Bandwidth",
       "phonetic": "/ˈbænd.wɪdθ/",
       "ipaUs": "/ˈbænd.wɪdθ/",
@@ -3715,7 +3897,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 308,
+      "id": 1513,
       "word": "Operating system",
       "phonetic": "/ˈɒp.ər.eɪ.tɪŋ ˌsɪs.təm/",
       "ipaUs": "/ˈɒp.ər.eɪ.tɪŋ ˌsɪs.təm/",
@@ -3727,7 +3909,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 309,
+      "id": 1514,
       "word": "Password",
       "phonetic": "/ˈpɑːs.wɜːd/",
       "ipaUs": "/ˈpɑːs.wɜːd/",
@@ -3739,7 +3921,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 310,
+      "id": 1515,
       "word": "Encryption",
       "phonetic": "/ɪnˈkrɪp.ʃən/",
       "ipaUs": "/ɪnˈkrɪp.ʃən/",
@@ -3751,7 +3933,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 311,
+      "id": 1516,
       "word": "Bluetooth",
       "phonetic": "/ˈbluː.tuːθ/",
       "ipaUs": "/ˈbluː.tuːθ/",
@@ -3763,7 +3945,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 312,
+      "id": 1517,
       "word": "Processor",
       "phonetic": "/ˈprəʊ.ses.ər/",
       "ipaUs": "/ˈprəʊ.ses.ər/",
@@ -3775,7 +3957,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 313,
+      "id": 1518,
       "word": "Keyboard",
       "phonetic": "/ˈkiː.bɔːd/",
       "ipaUs": "/ˈkiː.bɔːd/",
@@ -3787,7 +3969,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 314,
+      "id": 1519,
       "word": "Monitor",
       "phonetic": "/ˈmɒn.ɪ.tər/",
       "ipaUs": "/ˈmɒn.ɪ.tər/",
@@ -3799,7 +3981,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 315,
+      "id": 1520,
       "word": "Smart device",
       "phonetic": "/smɑːt dɪˈvaɪs/",
       "ipaUs": "/smɑːt dɪˈvaɪs/",
@@ -3811,7 +3993,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 316,
+      "id": 1521,
       "word": "QR code",
       "phonetic": "/ˌkjuːˈɑːr ˌkəʊd/",
       "ipaUs": "/ˌkjuːˈɑːr ˌkəʊd/",
@@ -3823,9 +4005,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "14": [
+  "16": [
     {
-      "id": 317,
+      "id": 1601,
       "word": "Healthcare",
       "phonetic": "/ˈhelθ.keər/",
       "ipaUs": "/ˈhelθ.keər/",
@@ -3837,7 +4019,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 318,
+      "id": 1602,
       "word": "Doctor",
       "phonetic": "/ˈdɒk.tər/",
       "ipaUs": "/ˈdɒk.tər/",
@@ -3849,7 +4031,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 319,
+      "id": 1603,
       "word": "Nurse",
       "phonetic": "/nɜːs/",
       "ipaUs": "/nɜːs/",
@@ -3861,7 +4043,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 320,
+      "id": 1604,
       "word": "Patient",
       "phonetic": "/ˈpeɪ.ʃənt/",
       "ipaUs": "/ˈpeɪ.ʃənt/",
@@ -3873,7 +4055,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 321,
+      "id": 1605,
       "word": "Prescription",
       "phonetic": "/prɪˈskrɪp.ʃən/",
       "ipaUs": "/prɪˈskrɪp.ʃən/",
@@ -3885,7 +4067,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 322,
+      "id": 1606,
       "word": "Medication",
       "phonetic": "/ˌmed.ɪˈkeɪ.ʃən/",
       "ipaUs": "/ˌmed.ɪˈkeɪ.ʃən/",
@@ -3897,7 +4079,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 323,
+      "id": 1607,
       "word": "Treatment",
       "phonetic": "/ˈtriːt.mənt/",
       "ipaUs": "/ˈtriːt.mənt/",
@@ -3909,7 +4091,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 324,
+      "id": 1608,
       "word": "Diagnosis",
       "phonetic": "/ˌdaɪ.əɡˈnəʊ.sɪs/",
       "ipaUs": "/ˌdaɪ.əɡˈnəʊ.sɪs/",
@@ -3921,7 +4103,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 325,
+      "id": 1609,
       "word": "Surgery",
       "phonetic": "/ˈsɜː.dʒər.i/",
       "ipaUs": "/ˈsɜː.dʒər.i/",
@@ -3933,7 +4115,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 326,
+      "id": 1610,
       "word": "Emergency",
       "phonetic": "/ɪˈmɜː.dʒən.si/",
       "ipaUs": "/ɪˈmɜː.dʒən.si/",
@@ -3945,7 +4127,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 327,
+      "id": 1611,
       "word": "Hospital",
       "phonetic": "/ˈhɒs.pɪ.təl/",
       "ipaUs": "/ˈhɒs.pɪ.təl/",
@@ -3957,7 +4139,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 328,
+      "id": 1612,
       "word": "Clinic",
       "phonetic": "/ˈklɪn.ɪk/",
       "ipaUs": "/ˈklɪn.ɪk/",
@@ -3969,7 +4151,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 329,
+      "id": 1613,
       "word": "Health insurance",
       "phonetic": "/ˈhelθ ɪnˌʃɔː.rəns/",
       "ipaUs": "/ˈhelθ ɪnˌʃɔː.rəns/",
@@ -3981,7 +4163,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 330,
+      "id": 1614,
       "word": "Vaccine",
       "phonetic": "/ˈvæk.siːn/",
       "ipaUs": "/ˈvæk.siːn/",
@@ -3993,7 +4175,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 331,
+      "id": 1615,
       "word": "Check-up",
       "phonetic": "/ˈtʃek.ʌp/",
       "ipaUs": "/ˈtʃek.ʌp/",
@@ -4005,7 +4187,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 332,
+      "id": 1616,
       "word": "Symptoms",
       "phonetic": "/ˈsɪmp.təmz/",
       "ipaUs": "/ˈsɪmp.təmz/",
@@ -4017,7 +4199,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 333,
+      "id": 1617,
       "word": "Blood pressure",
       "phonetic": "/ˈblʌd ˌpreʃ.ər/",
       "ipaUs": "/ˈblʌd ˌpreʃ.ər/",
@@ -4029,7 +4211,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 334,
+      "id": 1618,
       "word": "Pharmacy",
       "phonetic": "/ˈfɑː.mə.si/",
       "ipaUs": "/ˈfɑː.mə.si/",
@@ -4041,7 +4223,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 335,
+      "id": 1619,
       "word": "Specialist",
       "phonetic": "/ˈspeʃ.ə.lɪst/",
       "ipaUs": "/ˈspeʃ.ə.lɪst/",
@@ -4053,7 +4235,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 336,
+      "id": 1620,
       "word": "Rehabilitation",
       "phonetic": "/ˌriː.həˌbɪl.ɪˈteɪ.ʃən/",
       "ipaUs": "/ˌriː.həˌbɪl.ɪˈteɪ.ʃən/",
@@ -4065,7 +4247,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 337,
+      "id": 1621,
       "word": "Appointment",
       "phonetic": "/əˈpɔɪnt.mənt/",
       "ipaUs": "/əˈpɔɪnt.mənt/",
@@ -4077,7 +4259,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 338,
+      "id": 1622,
       "word": "Chronic",
       "phonetic": "/ˈkrɒn.ɪk/",
       "ipaUs": "/ˈkrɒn.ɪk/",
@@ -4089,7 +4271,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 339,
+      "id": 1623,
       "word": "Acute",
       "phonetic": "/əˈkjuːt/",
       "ipaUs": "/əˈkjuːt/",
@@ -4101,7 +4283,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 340,
+      "id": 1624,
       "word": "Mental health",
       "phonetic": "/ˈmen.təl ˌhelθ/",
       "ipaUs": "/ˈmen.təl ˌhelθ/",
@@ -4113,9 +4295,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "15": [
+  "17": [
     {
-      "id": 341,
+      "id": 1701,
       "word": "Education",
       "phonetic": "/ˌedʒ.ʊˈkeɪ.ʃən/",
       "ipaUs": "/ˌedʒ.ʊˈkeɪ.ʃən/",
@@ -4127,7 +4309,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 342,
+      "id": 1702,
       "word": "Student",
       "phonetic": "/ˈstjuː.dənt/",
       "ipaUs": "/ˈstjuː.dənt/",
@@ -4139,7 +4321,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 343,
+      "id": 1703,
       "word": "Teacher",
       "phonetic": "/ˈtiː.tʃər/",
       "ipaUs": "/ˈtiː.tʃər/",
@@ -4151,7 +4333,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 344,
+      "id": 1704,
       "word": "Classroom",
       "phonetic": "/ˈklɑːs.rʊm/",
       "ipaUs": "/ˈklɑːs.rʊm/",
@@ -4163,7 +4345,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 345,
+      "id": 1705,
       "word": "Curriculum",
       "phonetic": "/kəˈrɪk.jə.ləm/",
       "ipaUs": "/kəˈrɪk.jə.ləm/",
@@ -4175,7 +4357,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 346,
+      "id": 1706,
       "word": "Assignment",
       "phonetic": "/əˈsaɪn.mənt/",
       "ipaUs": "/əˈsaɪn.mənt/",
@@ -4187,7 +4369,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 347,
+      "id": 1707,
       "word": "Lecture",
       "phonetic": "/ˈlek.tʃər/",
       "ipaUs": "/ˈlek.tʃər/",
@@ -4199,7 +4381,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 348,
+      "id": 1708,
       "word": "Exam",
       "phonetic": "/ɪɡˈzæm/",
       "ipaUs": "/ɪɡˈzæm/",
@@ -4211,7 +4393,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 349,
+      "id": 1709,
       "word": "Degree",
       "phonetic": "/dɪˈɡriː/",
       "ipaUs": "/dɪˈɡriː/",
@@ -4223,7 +4405,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 350,
+      "id": 1710,
       "word": "Diploma",
       "phonetic": "/dɪˈpləʊ.mə/",
       "ipaUs": "/dɪˈpləʊ.mə/",
@@ -4235,7 +4417,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 351,
+      "id": 1711,
       "word": "Scholarship",
       "phonetic": "/ˈskɒl.ə.ʃɪp/",
       "ipaUs": "/ˈskɒl.ə.ʃɪp/",
@@ -4247,7 +4429,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 352,
+      "id": 1712,
       "word": "Tuition fee",
       "phonetic": "/tjuːˈɪʃ.ən fiː/",
       "ipaUs": "/tjuːˈɪʃ.ən fiː/",
@@ -4259,7 +4441,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 353,
+      "id": 1713,
       "word": "Subject",
       "phonetic": "/ˈsʌb.dʒɪkt/",
       "ipaUs": "/ˈsʌb.dʒɪkt/",
@@ -4271,7 +4453,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 354,
+      "id": 1714,
       "word": "Syllabus",
       "phonetic": "/ˈsɪl.ə.bəs/",
       "ipaUs": "/ˈsɪl.ə.bəs/",
@@ -4283,7 +4465,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 355,
+      "id": 1715,
       "word": "Degree program",
       "phonetic": "/dɪˈɡriː ˌprəʊ.ɡræm/",
       "ipaUs": "/dɪˈɡriː ˌprəʊ.ɡræm/",
@@ -4295,7 +4477,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 356,
+      "id": 1716,
       "word": "Homework",
       "phonetic": "/ˈhəʊm.wɜːk/",
       "ipaUs": "/ˈhəʊm.wɜːk/",
@@ -4307,7 +4489,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 357,
+      "id": 1717,
       "word": "Quiz",
       "phonetic": "/kwɪz/",
       "ipaUs": "/kwɪz/",
@@ -4319,7 +4501,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 358,
+      "id": 1718,
       "word": "School uniform",
       "phonetic": "/ˈskuːl ˌjuː.nɪ.fɔːm/",
       "ipaUs": "/ˈskuːl ˌjuː.nɪ.fɔːm/",
@@ -4331,7 +4513,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 359,
+      "id": 1719,
       "word": "Principal",
       "phonetic": "/ˈprɪn.sə.pəl/",
       "ipaUs": "/ˈprɪn.sə.pəl/",
@@ -4343,7 +4525,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 360,
+      "id": 1720,
       "word": "University",
       "phonetic": "/ˌjuː.nɪˈvɜː.sə.ti/",
       "ipaUs": "/ˌjuː.nɪˈvɜː.sə.ti/",
@@ -4355,7 +4537,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 361,
+      "id": 1721,
       "word": "Elementary school",
       "phonetic": "/ˌel.ɪˈmen.tər.i ˌskuːl/",
       "ipaUs": "/ˌel.ɪˈmen.tər.i ˌskuːl/",
@@ -4367,7 +4549,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 362,
+      "id": 1722,
       "word": "High school",
       "phonetic": "/ˈhaɪ ˌskuːl/",
       "ipaUs": "/ˈhaɪ ˌskuːl/",
@@ -4379,7 +4561,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 363,
+      "id": 1723,
       "word": "Vocational school",
       "phonetic": "/vəʊˈkeɪ.ʃən.əl ˌskuːl/",
       "ipaUs": "/vəʊˈkeɪ.ʃən.əl ˌskuːl/",
@@ -4391,7 +4573,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 364,
+      "id": 1724,
       "word": "Attendance",
       "phonetic": "/əˈten.dəns/",
       "ipaUs": "/əˈten.dəns/",
@@ -4403,7 +4585,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 365,
+      "id": 1725,
       "word": "Academic",
       "phonetic": "/ˌæk.əˈdem.ɪk/",
       "ipaUs": "/ˌæk.əˈdem.ɪk/",
@@ -4415,7 +4597,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 366,
+      "id": 1726,
       "word": "Literacy",
       "phonetic": "/ˈlɪt.ər.ə.si/",
       "ipaUs": "/ˈlɪt.ər.ə.si/",
@@ -4427,9 +4609,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "16": [
+  "18": [
     {
-      "id": 367,
+      "id": 1801,
       "word": "Logistics",
       "phonetic": "/ləˈdʒɪs.tɪks/",
       "ipaUs": "/ləˈdʒɪs.tɪks/",
@@ -4441,7 +4623,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 368,
+      "id": 1802,
       "word": "Supply chain",
       "phonetic": "/səˈplaɪ ˌtʃeɪn/",
       "ipaUs": "/səˈplaɪ ˌtʃeɪn/",
@@ -4453,7 +4635,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 369,
+      "id": 1803,
       "word": "Inventory",
       "phonetic": "/ˈɪn.vən.tər.i/",
       "ipaUs": "/ˈɪn.vən.tər.i/",
@@ -4465,7 +4647,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 370,
+      "id": 1804,
       "word": "Warehouse",
       "phonetic": "/ˈweə.haʊs/",
       "ipaUs": "/ˈweə.haʊs/",
@@ -4477,7 +4659,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 371,
+      "id": 1805,
       "word": "Freight",
       "phonetic": "/freɪt/",
       "ipaUs": "/freɪt/",
@@ -4489,7 +4671,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 372,
+      "id": 1806,
       "word": "Shipment",
       "phonetic": "/ˈʃɪp.mənt/",
       "ipaUs": "/ˈʃɪp.mənt/",
@@ -4501,7 +4683,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 373,
+      "id": 1807,
       "word": "Cargo",
       "phonetic": "/ˈkɑː.ɡəʊ/",
       "ipaUs": "/ˈkɑː.ɡəʊ/",
@@ -4513,7 +4695,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 374,
+      "id": 1808,
       "word": "Delivery",
       "phonetic": "/dɪˈlɪv.ər.i/",
       "ipaUs": "/dɪˈlɪv.ər.i/",
@@ -4525,7 +4707,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 375,
+      "id": 1809,
       "word": "Carrier",
       "phonetic": "/ˈkær.i.ər/",
       "ipaUs": "/ˈkær.i.ər/",
@@ -4537,7 +4719,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 376,
+      "id": 1810,
       "word": "Distribution",
       "phonetic": "/ˌdɪs.trɪˈbjuː.ʃən/",
       "ipaUs": "/ˌdɪs.trɪˈbjuː.ʃən/",
@@ -4549,7 +4731,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 377,
+      "id": 1811,
       "word": "Freight forwarder",
       "phonetic": "/freɪt ˈfɔː.wə.dər/",
       "ipaUs": "/freɪt ˈfɔː.wə.dər/",
@@ -4561,7 +4743,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 378,
+      "id": 1812,
       "word": "Packing list",
       "phonetic": "/ˈpæk.ɪŋ ˌlɪst/",
       "ipaUs": "/ˈpæk.ɪŋ ˌlɪst/",
@@ -4573,7 +4755,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 379,
+      "id": 1813,
       "word": "Customs clearance",
       "phonetic": "/ˈkʌs.təmz ˈklɪə.rəns/",
       "ipaUs": "/ˈkʌs.təmz ˈklɪə.rəns/",
@@ -4585,7 +4767,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 380,
+      "id": 1814,
       "word": "Tracking number",
       "phonetic": "/ˈtræk.ɪŋ ˌnʌm.bər/",
       "ipaUs": "/ˈtræk.ɪŋ ˌnʌm.bər/",
@@ -4597,7 +4779,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 381,
+      "id": 1815,
       "word": "Lead time",
       "phonetic": "/ˈliːd ˌtaɪm/",
       "ipaUs": "/ˈliːd ˌtaɪm/",
@@ -4609,7 +4791,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 382,
+      "id": 1816,
       "word": "Bill of lading",
       "phonetic": "/ˌbɪl əv ˈleɪ.dɪŋ/",
       "ipaUs": "/ˌbɪl əv ˈleɪ.dɪŋ/",
@@ -4621,7 +4803,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 383,
+      "id": 1817,
       "word": "Loading dock",
       "phonetic": "/ˈləʊ.dɪŋ ˌdɒk/",
       "ipaUs": "/ˈləʊ.dɪŋ ˌdɒk/",
@@ -4633,7 +4815,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 384,
+      "id": 1818,
       "word": "Dispatch",
       "phonetic": "/dɪˈspætʃ/",
       "ipaUs": "/dɪˈspætʃ/",
@@ -4645,7 +4827,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 385,
+      "id": 1819,
       "word": "Consolidation",
       "phonetic": "/kənˌsɒl.ɪˈdeɪ.ʃən/",
       "ipaUs": "/kənˌsɒl.ɪˈdeɪ.ʃən/",
@@ -4657,7 +4839,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 386,
+      "id": 1820,
       "word": "Dock",
       "phonetic": "/dɒk/",
       "ipaUs": "/dɒk/",
@@ -4669,7 +4851,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 387,
+      "id": 1821,
       "word": "Import",
       "phonetic": "/ˈɪm.pɔːt/",
       "ipaUs": "/ˈɪm.pɔːt/",
@@ -4681,7 +4863,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 388,
+      "id": 1822,
       "word": "Export",
       "phonetic": "/ˈek.spɔːt/",
       "ipaUs": "/ˈek.spɔːt/",
@@ -4693,7 +4875,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 389,
+      "id": 1823,
       "word": "Order fulfillment",
       "phonetic": "/ˈɔː.dər fʊlˈfɪl.mənt/",
       "ipaUs": "/ˈɔː.dər fʊlˈfɪl.mənt/",
@@ -4705,7 +4887,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 390,
+      "id": 1824,
       "word": "Return logistics",
       "phonetic": "/rɪˈtɜːn ləˈdʒɪs.tɪks/",
       "ipaUs": "/rɪˈtɜːn ləˈdʒɪs.tɪks/",
@@ -4717,7 +4899,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 391,
+      "id": 1825,
       "word": "Supply chain management",
       "phonetic": "/səˈplaɪ tʃeɪn ˈmæn.ɪdʒ.mənt/",
       "ipaUs": "/səˈplaɪ tʃeɪn ˈmæn.ɪdʒ.mənt/",
@@ -4729,9 +4911,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "17": [
+  "19": [
     {
-      "id": 392,
+      "id": 1901,
       "word": "Shipping",
       "phonetic": "/ˈʃɪp.ɪŋ/",
       "ipaUs": "/ˈʃɪp.ɪŋ/",
@@ -4743,7 +4925,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 393,
+      "id": 1902,
       "word": "Shipment",
       "phonetic": "/ˈʃɪp.mənt/",
       "ipaUs": "/ˈʃɪp.mənt/",
@@ -4755,7 +4937,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 394,
+      "id": 1903,
       "word": "Freight",
       "phonetic": "/freɪt/",
       "ipaUs": "/freɪt/",
@@ -4767,7 +4949,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 395,
+      "id": 1904,
       "word": "Cargo",
       "phonetic": "/ˈkɑː.ɡəʊ/",
       "ipaUs": "/ˈkɑː.ɡəʊ/",
@@ -4779,7 +4961,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 396,
+      "id": 1905,
       "word": "Consignment",
       "phonetic": "/kənˈsaɪn.mənt/",
       "ipaUs": "/kənˈsaɪn.mənt/",
@@ -4791,7 +4973,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 397,
+      "id": 1906,
       "word": "Bill of lading",
       "phonetic": "/ˌbɪl əv ˈleɪ.dɪŋ/",
       "ipaUs": "/ˌbɪl əv ˈleɪ.dɪŋ/",
@@ -4803,7 +4985,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 398,
+      "id": 1907,
       "word": "Packing list",
       "phonetic": "/ˈpæk.ɪŋ ˌlɪst/",
       "ipaUs": "/ˈpæk.ɪŋ ˌlɪst/",
@@ -4815,7 +4997,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 399,
+      "id": 1908,
       "word": "Delivery note",
       "phonetic": "/dɪˈlɪv.ər.i ˌnəʊt/",
       "ipaUs": "/dɪˈlɪv.ər.i ˌnəʊt/",
@@ -4827,7 +5009,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 400,
+      "id": 1909,
       "word": "Tracking number",
       "phonetic": "/ˈtræk.ɪŋ ˌnʌm.bər/",
       "ipaUs": "/ˈtræk.ɪŋ ˌnʌm.bər/",
@@ -4839,7 +5021,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 401,
+      "id": 1910,
       "word": "Customs clearance",
       "phonetic": "/ˈkʌs.təmz ˈklɪə.rəns/",
       "ipaUs": "/ˈkʌs.təmz ˈklɪə.rəns/",
@@ -4851,7 +5033,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 402,
+      "id": 1911,
       "word": "Container",
       "phonetic": "/kənˈteɪ.nər/",
       "ipaUs": "/kənˈteɪ.nər/",
@@ -4863,7 +5045,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 403,
+      "id": 1912,
       "word": "Dispatch",
       "phonetic": "/dɪˈspætʃ/",
       "ipaUs": "/dɪˈspætʃ/",
@@ -4875,7 +5057,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 404,
+      "id": 1913,
       "word": "Delivery",
       "phonetic": "/dɪˈlɪv.ər.i/",
       "ipaUs": "/dɪˈlɪv.ər.i/",
@@ -4887,7 +5069,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 405,
+      "id": 1914,
       "word": "Carrier",
       "phonetic": "/ˈkær.i.ər/",
       "ipaUs": "/ˈkær.i.ər/",
@@ -4899,7 +5081,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 406,
+      "id": 1915,
       "word": "Loading dock",
       "phonetic": "/ˈləʊ.dɪŋ ˌdɒk/",
       "ipaUs": "/ˈləʊ.dɪŋ ˌdɒk/",
@@ -4911,7 +5093,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 407,
+      "id": 1916,
       "word": "Unloading",
       "phonetic": "/ˌʌnˈləʊ.dɪŋ/",
       "ipaUs": "/ˌʌnˈləʊ.dɪŋ/",
@@ -4923,7 +5105,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 408,
+      "id": 1917,
       "word": "Port",
       "phonetic": "/pɔːt/",
       "ipaUs": "/pɔːt/",
@@ -4935,7 +5117,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 409,
+      "id": 1918,
       "word": "Air freight",
       "phonetic": "/eər freɪt/",
       "ipaUs": "/eər freɪt/",
@@ -4947,7 +5129,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 410,
+      "id": 1919,
       "word": "Sea freight",
       "phonetic": "/siː freɪt/",
       "ipaUs": "/siː freɪt/",
@@ -4959,7 +5141,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 411,
+      "id": 1920,
       "word": "Inland freight",
       "phonetic": "/ˈɪn.lænd freɪt/",
       "ipaUs": "/ˈɪn.lænd freɪt/",
@@ -4971,7 +5153,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 412,
+      "id": 1921,
       "word": "Lead time",
       "phonetic": "/ˈliːd ˌtaɪm/",
       "ipaUs": "/ˈliːd ˌtaɪm/",
@@ -4983,7 +5165,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 413,
+      "id": 1922,
       "word": "Warehouse",
       "phonetic": "/ˈweə.haʊs/",
       "ipaUs": "/ˈweə.haʊs/",
@@ -4995,7 +5177,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 414,
+      "id": 1923,
       "word": "Insurance",
       "phonetic": "/ɪnˈʃɔː.rəns/",
       "ipaUs": "/ɪnˈʃɔː.rəns/",
@@ -5007,7 +5189,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 415,
+      "id": 1924,
       "word": "Overweight charge",
       "phonetic": "/ˈəʊ.və.weɪt ˌtʃɑːdʒ/",
       "ipaUs": "/ˈəʊ.və.weɪt ˌtʃɑːdʒ/",
@@ -5019,7 +5201,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 416,
+      "id": 1925,
       "word": "Export declaration",
       "phonetic": "/ˈek.spɔːt ˌdek.ləˈreɪ.ʃən/",
       "ipaUs": "/ˈek.spɔːt ˌdek.ləˈreɪ.ʃən/",
@@ -5031,9 +5213,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "18": [
+  "20": [
     {
-      "id": 417,
+      "id": 2001,
       "word": "Construction",
       "phonetic": "/kənˈstrʌk.ʃən/",
       "ipaUs": "/kənˈstrʌk.ʃən/",
@@ -5045,7 +5227,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 418,
+      "id": 2002,
       "word": "Contractor",
       "phonetic": "/ˈkɒn.træk.tər/",
       "ipaUs": "/ˈkɒn.træk.tər/",
@@ -5057,7 +5239,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 419,
+      "id": 2003,
       "word": "Blueprint",
       "phonetic": "/ˈbluː.prɪnt/",
       "ipaUs": "/ˈbluː.prɪnt/",
@@ -5069,7 +5251,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 420,
+      "id": 2004,
       "word": "Foundation",
       "phonetic": "/faʊnˈdeɪ.ʃən/",
       "ipaUs": "/faʊnˈdeɪ.ʃən/",
@@ -5081,7 +5263,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 421,
+      "id": 2005,
       "word": "Scaffolding",
       "phonetic": "/ˈskæf.əl.dɪŋ/",
       "ipaUs": "/ˈskæf.əl.dɪŋ/",
@@ -5093,7 +5275,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 422,
+      "id": 2006,
       "word": "Excavation",
       "phonetic": "/ˌek.skəˈveɪ.ʃən/",
       "ipaUs": "/ˌek.skəˈveɪ.ʃən/",
@@ -5105,7 +5287,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 423,
+      "id": 2007,
       "word": "Cement",
       "phonetic": "/sɪˈment/",
       "ipaUs": "/sɪˈment/",
@@ -5117,7 +5299,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 424,
+      "id": 2008,
       "word": "Concrete",
       "phonetic": "/ˈkɒŋ.kriːt/",
       "ipaUs": "/ˈkɒŋ.kriːt/",
@@ -5129,7 +5311,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 425,
+      "id": 2009,
       "word": "Brick",
       "phonetic": "/brɪk/",
       "ipaUs": "/brɪk/",
@@ -5141,7 +5323,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 426,
+      "id": 2010,
       "word": "Steel",
       "phonetic": "/stiːl/",
       "ipaUs": "/stiːl/",
@@ -5153,7 +5335,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 427,
+      "id": 2011,
       "word": "Crane",
       "phonetic": "/kreɪn/",
       "ipaUs": "/kreɪn/",
@@ -5165,7 +5347,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 428,
+      "id": 2012,
       "word": "Hammer",
       "phonetic": "/ˈhæm.ər/",
       "ipaUs": "/ˈhæm.ər/",
@@ -5177,7 +5359,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 429,
+      "id": 2013,
       "word": "Drill",
       "phonetic": "/drɪl/",
       "ipaUs": "/drɪl/",
@@ -5189,7 +5371,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 430,
+      "id": 2014,
       "word": "Safety helmet",
       "phonetic": "/ˈseɪf.ti ˌhel.mɪt/",
       "ipaUs": "/ˈseɪf.ti ˌhel.mɪt/",
@@ -5201,7 +5383,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 431,
+      "id": 2015,
       "word": "Site manager",
       "phonetic": "/saɪt ˈmæn.ɪ.dʒər/",
       "ipaUs": "/saɪt ˈmæn.ɪ.dʒər/",
@@ -5213,7 +5395,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 432,
+      "id": 2016,
       "word": "Plaster",
       "phonetic": "/ˈplɑː.stər/",
       "ipaUs": "/ˈplɑː.stər/",
@@ -5225,7 +5407,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 433,
+      "id": 2017,
       "word": "Architect",
       "phonetic": "/ˈɑː.kɪ.tekt/",
       "ipaUs": "/ˈɑː.kɪ.tekt/",
@@ -5237,7 +5419,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 434,
+      "id": 2018,
       "word": "Engineer",
       "phonetic": "/ˌen.dʒɪˈnɪər/",
       "ipaUs": "/ˌen.dʒɪˈnɪər/",
@@ -5249,7 +5431,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 435,
+      "id": 2019,
       "word": "Carpenter",
       "phonetic": "/ˈkɑː.pɪn.tər/",
       "ipaUs": "/ˈkɑː.pɪn.tər/",
@@ -5261,7 +5443,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 436,
+      "id": 2020,
       "word": "Electrician",
       "phonetic": "/ɪˌlekˈtrɪʃ.ən/",
       "ipaUs": "/ɪˌlekˈtrɪʃ.ən/",
@@ -5273,7 +5455,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 437,
+      "id": 2021,
       "word": "Surveyor",
       "phonetic": "/səˈveɪ.ər/",
       "ipaUs": "/səˈveɪ.ər/",
@@ -5285,7 +5467,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 438,
+      "id": 2022,
       "word": "Equipment",
       "phonetic": "/ɪˈkwɪp.mənt/",
       "ipaUs": "/ɪˈkwɪp.mənt/",
@@ -5297,7 +5479,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 439,
+      "id": 2023,
       "word": "Permit",
       "phonetic": "/ˈpɜː.mɪt/",
       "ipaUs": "/ˈpɜː.mɪt/",
@@ -5309,7 +5491,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 440,
+      "id": 2024,
       "word": "Inspection",
       "phonetic": "/ɪnˈspek.ʃən/",
       "ipaUs": "/ɪnˈspek.ʃən/",
@@ -5321,7 +5503,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 441,
+      "id": 2025,
       "word": "Load-bearing",
       "phonetic": "/ˈləʊd ˌbeə.rɪŋ/",
       "ipaUs": "/ˈləʊd ˌbeə.rɪŋ/",
@@ -5333,7 +5515,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 442,
+      "id": 2026,
       "word": "Waterproofing",
       "phonetic": "/ˈwɔː.təˌpruː.fɪŋ/",
       "ipaUs": "/ˈwɔː.təˌpruː.fɪŋ/",
@@ -5345,7 +5527,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 443,
+      "id": 2027,
       "word": "Flooring",
       "phonetic": "/ˈflɔː.rɪŋ/",
       "ipaUs": "/ˈflɔː.rɪŋ/",
@@ -5357,9 +5539,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "19": [
+  "21": [
     {
-      "id": 444,
+      "id": 2101,
       "word": "Real estate",
       "phonetic": "/ˈrɪəl ɪˌsteɪt/",
       "ipaUs": "/ˈrɪəl ɪˌsteɪt/",
@@ -5371,7 +5553,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 445,
+      "id": 2102,
       "word": "Property",
       "phonetic": "/ˈprɒp.ə.ti/",
       "ipaUs": "/ˈprɒp.ə.ti/",
@@ -5383,7 +5565,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 446,
+      "id": 2103,
       "word": "Landlord",
       "phonetic": "/ˈlænd.lɔːd/",
       "ipaUs": "/ˈlænd.lɔːd/",
@@ -5395,7 +5577,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 447,
+      "id": 2104,
       "word": "Tenant",
       "phonetic": "/ˈten.ənt/",
       "ipaUs": "/ˈten.ənt/",
@@ -5407,7 +5589,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 448,
+      "id": 2105,
       "word": "Lease",
       "phonetic": "/liːs/",
       "ipaUs": "/liːs/",
@@ -5419,7 +5601,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 449,
+      "id": 2106,
       "word": "Rent",
       "phonetic": "/rent/",
       "ipaUs": "/rent/",
@@ -5431,7 +5613,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 450,
+      "id": 2107,
       "word": "Mortgage",
       "phonetic": "/ˈmɔː.ɡɪdʒ/",
       "ipaUs": "/ˈmɔː.ɡɪdʒ/",
@@ -5443,7 +5625,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 451,
+      "id": 2108,
       "word": "Appraisal",
       "phonetic": "/əˈpreɪ.zəl/",
       "ipaUs": "/əˈpreɪ.zəl/",
@@ -5455,7 +5637,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 452,
+      "id": 2109,
       "word": "Realtor",
       "phonetic": "/ˈrɪə.ltər/",
       "ipaUs": "/ˈrɪə.ltər/",
@@ -5467,7 +5649,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 453,
+      "id": 2110,
       "word": "Listing",
       "phonetic": "/ˈlɪst.ɪŋ/",
       "ipaUs": "/ˈlɪst.ɪŋ/",
@@ -5479,7 +5661,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 454,
+      "id": 2111,
       "word": "Closing",
       "phonetic": "/ˈkləʊ.zɪŋ/",
       "ipaUs": "/ˈkləʊ.zɪŋ/",
@@ -5491,7 +5673,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 455,
+      "id": 2112,
       "word": "Down payment",
       "phonetic": "/ˌdaʊn ˈpeɪ.mənt/",
       "ipaUs": "/ˌdaʊn ˈpeɪ.mənt/",
@@ -5503,7 +5685,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 456,
+      "id": 2113,
       "word": "Foreclosure",
       "phonetic": "/fɔːˈkləʊ.ʒər/",
       "ipaUs": "/fɔːˈkləʊ.ʒər/",
@@ -5515,7 +5697,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 457,
+      "id": 2114,
       "word": "Commission",
       "phonetic": "/kəˈmɪʃ.ən/",
       "ipaUs": "/kəˈmɪʃ.ən/",
@@ -5527,7 +5709,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 458,
+      "id": 2115,
       "word": "Deed",
       "phonetic": "/diːd/",
       "ipaUs": "/diːd/",
@@ -5539,7 +5721,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 459,
+      "id": 2116,
       "word": "Equity",
       "phonetic": "/ˈek.wɪ.ti/",
       "ipaUs": "/ˈek.wɪ.ti/",
@@ -5551,7 +5733,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 460,
+      "id": 2117,
       "word": "Surveyor",
       "phonetic": "/səˈveɪ.ər/",
       "ipaUs": "/səˈveɪ.ər/",
@@ -5563,7 +5745,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 461,
+      "id": 2118,
       "word": "Inspection",
       "phonetic": "/ɪnˈspek.ʃən/",
       "ipaUs": "/ɪnˈspek.ʃən/",
@@ -5575,7 +5757,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 462,
+      "id": 2119,
       "word": "Utilities",
       "phonetic": "/juːˈtɪl.ə.tiz/",
       "ipaUs": "/juːˈtɪl.ə.tiz/",
@@ -5587,7 +5769,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 463,
+      "id": 2120,
       "word": "Deposit",
       "phonetic": "/dɪˈpɒz.ɪt/",
       "ipaUs": "/dɪˈpɒz.ɪt/",
@@ -5599,7 +5781,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 464,
+      "id": 2121,
       "word": "Sublet",
       "phonetic": "/ˈsʌb.let/",
       "ipaUs": "/ˈsʌb.let/",
@@ -5611,7 +5793,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 465,
+      "id": 2122,
       "word": "Zoning",
       "phonetic": "/ˈzəʊ.nɪŋ/",
       "ipaUs": "/ˈzəʊ.nɪŋ/",
@@ -5623,7 +5805,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 466,
+      "id": 2123,
       "word": "Open house",
       "phonetic": "/ˌəʊ.pən ˈhaʊs/",
       "ipaUs": "/ˌəʊ.pən ˈhaʊs/",
@@ -5635,7 +5817,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 467,
+      "id": 2124,
       "word": "Renovation",
       "phonetic": "/ˌren.əˈveɪ.ʃən/",
       "ipaUs": "/ˌren.əˈveɪ.ʃən/",
@@ -5647,7 +5829,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 468,
+      "id": 2125,
       "word": "Title",
       "phonetic": "/ˈtaɪ.təl/",
       "ipaUs": "/ˈtaɪ.təl/",
@@ -5659,7 +5841,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 469,
+      "id": 2126,
       "word": "Commercial property",
       "phonetic": "/kəˈmɜː.ʃəl ˈprɒp.ə.ti/",
       "ipaUs": "/kəˈmɜː.ʃəl ˈprɒp.ə.ti/",
@@ -5671,7 +5853,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 470,
+      "id": 2127,
       "word": "Residential property",
       "phonetic": "/ˌrez.ɪˈden.ʃəl ˈprɒp.ə.ti/",
       "ipaUs": "/ˌrez.ɪˈden.ʃəl ˈprɒp.ə.ti/",
@@ -5683,9 +5865,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "20": [
+  "22": [
     {
-      "id": 471,
+      "id": 2201,
       "word": "Environment",
       "phonetic": "/ɪnˈvaɪ.rən.mənt/",
       "ipaUs": "/ɪnˈvaɪ.rən.mənt/",
@@ -5697,7 +5879,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 472,
+      "id": 2202,
       "word": "Pollution",
       "phonetic": "/pəˈluː.ʃən/",
       "ipaUs": "/pəˈluː.ʃən/",
@@ -5709,7 +5891,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 473,
+      "id": 2203,
       "word": "Climate change",
       "phonetic": "/ˈklaɪ.mət ˌtʃeɪndʒ/",
       "ipaUs": "/ˈklaɪ.mət ˌtʃeɪndʒ/",
@@ -5721,7 +5903,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 474,
+      "id": 2204,
       "word": "Global warming",
       "phonetic": "/ˌɡləʊ.bəl ˈwɔː.mɪŋ/",
       "ipaUs": "/ˌɡləʊ.bəl ˈwɔː.mɪŋ/",
@@ -5733,7 +5915,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 475,
+      "id": 2205,
       "word": "Greenhouse effect",
       "phonetic": "/ˈɡriːn.haʊs ɪˌfekt/",
       "ipaUs": "/ˈɡriːn.haʊs ɪˌfekt/",
@@ -5745,7 +5927,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 476,
+      "id": 2206,
       "word": "Deforestation",
       "phonetic": "/ˌdiːˌfɒr.ɪˈsteɪ.ʃən/",
       "ipaUs": "/ˌdiːˌfɒr.ɪˈsteɪ.ʃən/",
@@ -5757,7 +5939,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 477,
+      "id": 2207,
       "word": "Renewable energy",
       "phonetic": "/rɪˈnjuː.ə.bəl ˈen.ə.dʒi/",
       "ipaUs": "/rɪˈnjuː.ə.bəl ˈen.ə.dʒi/",
@@ -5769,7 +5951,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 478,
+      "id": 2208,
       "word": "Fossil fuels",
       "phonetic": "/ˈfɒs.əl ˌfjuː.əlz/",
       "ipaUs": "/ˈfɒs.əl ˌfjuː.əlz/",
@@ -5781,7 +5963,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 479,
+      "id": 2209,
       "word": "Ecosystem",
       "phonetic": "/ˈiː.kəʊˌsɪs.təm/",
       "ipaUs": "/ˈiː.kəʊˌsɪs.təm/",
@@ -5793,7 +5975,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 480,
+      "id": 2210,
       "word": "Conservation",
       "phonetic": "/ˌkɒn.səˈveɪ.ʃən/",
       "ipaUs": "/ˌkɒn.səˈveɪ.ʃən/",
@@ -5805,7 +5987,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 481,
+      "id": 2211,
       "word": "Biodiversity",
       "phonetic": "/ˌbaɪ.əʊ.daɪˈvɜː.sɪ.ti/",
       "ipaUs": "/ˌbaɪ.əʊ.daɪˈvɜː.sɪ.ti/",
@@ -5817,7 +5999,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 482,
+      "id": 2212,
       "word": "Waste management",
       "phonetic": "/weɪst ˈmæn.ɪdʒ.mənt/",
       "ipaUs": "/weɪst ˈmæn.ɪdʒ.mənt/",
@@ -5829,7 +6011,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 483,
+      "id": 2213,
       "word": "Recycling",
       "phonetic": "/ˌriːˈsaɪ.klɪŋ/",
       "ipaUs": "/ˌriːˈsaɪ.klɪŋ/",
@@ -5841,7 +6023,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 484,
+      "id": 2214,
       "word": "Sustainable",
       "phonetic": "/səˈsteɪ.nə.bəl/",
       "ipaUs": "/səˈsteɪ.nə.bəl/",
@@ -5853,7 +6035,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 485,
+      "id": 2215,
       "word": "Habitat",
       "phonetic": "/ˈhæb.ɪ.tæt/",
       "ipaUs": "/ˈhæb.ɪ.tæt/",
@@ -5865,7 +6047,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 486,
+      "id": 2216,
       "word": "Emissions",
       "phonetic": "/ɪˈmɪʃ.ənz/",
       "ipaUs": "/ɪˈmɪʃ.ənz/",
@@ -5877,7 +6059,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 487,
+      "id": 2217,
       "word": "Carbon footprint",
       "phonetic": "/ˈkɑː.bən ˈfʊt.prɪnt/",
       "ipaUs": "/ˈkɑː.bən ˈfʊt.prɪnt/",
@@ -5889,7 +6071,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 488,
+      "id": 2218,
       "word": "Natural resources",
       "phonetic": "/ˈnætʃ.ər.əl rɪˈzɔː.sɪz/",
       "ipaUs": "/ˈnætʃ.ər.əl rɪˈzɔː.sɪz/",
@@ -5901,7 +6083,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 489,
+      "id": 2219,
       "word": "Landfill",
       "phonetic": "/ˈlænd.fɪl/",
       "ipaUs": "/ˈlænd.fɪl/",
@@ -5913,7 +6095,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 490,
+      "id": 2220,
       "word": "Renewable resources",
       "phonetic": "/rɪˈnjuː.ə.bəl rɪˈzɔː.sɪz/",
       "ipaUs": "/rɪˈnjuː.ə.bəl rɪˈzɔː.sɪz/",
@@ -5925,7 +6107,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 491,
+      "id": 2221,
       "word": "Ozone layer",
       "phonetic": "/ˈəʊ.zəʊn ˌleɪ.ər/",
       "ipaUs": "/ˈəʊ.zəʊn ˌleɪ.ər/",
@@ -5937,7 +6119,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 492,
+      "id": 2222,
       "word": "Environmentalist",
       "phonetic": "/ɪnˌvaɪ.rənˈmen.təl.ɪst/",
       "ipaUs": "/ɪnˌvaɪ.rənˈmen.təl.ɪst/",
@@ -5949,7 +6131,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 493,
+      "id": 2223,
       "word": "Water scarcity",
       "phonetic": "/ˈwɔː.tər ˈskeə.sɪ.ti/",
       "ipaUs": "/ˈwɔː.tər ˈskeə.sɪ.ti/",
@@ -5961,7 +6143,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 494,
+      "id": 2224,
       "word": "Afforestation",
       "phonetic": "/ˌæf.ɒr.ɪˈsteɪ.ʃən/",
       "ipaUs": "/ˌæf.ɒr.ɪˈsteɪ.ʃən/",
@@ -5973,7 +6155,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 495,
+      "id": 2225,
       "word": "Compost",
       "phonetic": "/ˈkɒm.pɒst/",
       "ipaUs": "/ˈkɒm.pɒst/",
@@ -5985,9 +6167,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "21": [
+  "23": [
     {
-      "id": 496,
+      "id": 2301,
       "word": "Weather",
       "phonetic": "/ˈweð.ər/",
       "ipaUs": "/ˈweð.ər/",
@@ -5999,7 +6181,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 497,
+      "id": 2302,
       "word": "Temperature",
       "phonetic": "/ˈtem.prə.tʃər/",
       "ipaUs": "/ˈtem.prə.tʃər/",
@@ -6011,7 +6193,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 498,
+      "id": 2303,
       "word": "Forecast",
       "phonetic": "/ˈfɔː.kɑːst/",
       "ipaUs": "/ˈfɔː.kɑːst/",
@@ -6023,7 +6205,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 499,
+      "id": 2304,
       "word": "Climate",
       "phonetic": "/ˈklaɪ.mət/",
       "ipaUs": "/ˈklaɪ.mət/",
@@ -6035,7 +6217,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 500,
+      "id": 2305,
       "word": "Humidity",
       "phonetic": "/hjuːˈmɪd.ɪ.ti/",
       "ipaUs": "/hjuːˈmɪd.ɪ.ti/",
@@ -6047,7 +6229,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 501,
+      "id": 2306,
       "word": "Rainfall",
       "phonetic": "/ˈreɪn.fɔːl/",
       "ipaUs": "/ˈreɪn.fɔːl/",
@@ -6059,7 +6241,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 502,
+      "id": 2307,
       "word": "Sunny",
       "phonetic": "/ˈsʌn.i/",
       "ipaUs": "/ˈsʌn.i/",
@@ -6071,7 +6253,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 503,
+      "id": 2308,
       "word": "Cloudy",
       "phonetic": "/ˈklaʊ.di/",
       "ipaUs": "/ˈklaʊ.di/",
@@ -6083,7 +6265,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 504,
+      "id": 2309,
       "word": "Storm",
       "phonetic": "/stɔːm/",
       "ipaUs": "/stɔːm/",
@@ -6095,7 +6277,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 505,
+      "id": 2310,
       "word": "Thunderstorm",
       "phonetic": "/ˈθʌn.də.stɔːm/",
       "ipaUs": "/ˈθʌn.də.stɔːm/",
@@ -6107,7 +6289,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 506,
+      "id": 2311,
       "word": "Snow",
       "phonetic": "/snəʊ/",
       "ipaUs": "/snəʊ/",
@@ -6119,7 +6301,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 507,
+      "id": 2312,
       "word": "Windy",
       "phonetic": "/ˈwɪn.di/",
       "ipaUs": "/ˈwɪn.di/",
@@ -6131,7 +6313,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 508,
+      "id": 2313,
       "word": "Foggy",
       "phonetic": "/ˈfɒɡ.i/",
       "ipaUs": "/ˈfɒɡ.i/",
@@ -6143,7 +6325,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 509,
+      "id": 2314,
       "word": "Hail",
       "phonetic": "/heɪl/",
       "ipaUs": "/heɪl/",
@@ -6155,7 +6337,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 510,
+      "id": 2315,
       "word": "Drizzle",
       "phonetic": "/ˈdrɪz.əl/",
       "ipaUs": "/ˈdrɪz.əl/",
@@ -6167,7 +6349,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 511,
+      "id": 2316,
       "word": "Heatwave",
       "phonetic": "/ˈhiːt.weɪv/",
       "ipaUs": "/ˈhiːt.weɪv/",
@@ -6179,7 +6361,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 512,
+      "id": 2317,
       "word": "Cold front",
       "phonetic": "/ˈkəʊld ˌfrʌnt/",
       "ipaUs": "/ˈkəʊld ˌfrʌnt/",
@@ -6191,7 +6373,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 513,
+      "id": 2318,
       "word": "Hurricane",
       "phonetic": "/ˈhʌr.ɪ.kən/",
       "ipaUs": "/ˈhʌr.ɪ.kən/",
@@ -6203,7 +6385,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 514,
+      "id": 2319,
       "word": "Tornado",
       "phonetic": "/tɔːˈneɪ.dəʊ/",
       "ipaUs": "/tɔːˈneɪ.dəʊ/",
@@ -6215,7 +6397,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 515,
+      "id": 2320,
       "word": "Blizzard",
       "phonetic": "/ˈblɪz.əd/",
       "ipaUs": "/ˈblɪz.əd/",
@@ -6227,7 +6409,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 516,
+      "id": 2321,
       "word": "Drought",
       "phonetic": "/draʊt/",
       "ipaUs": "/draʊt/",
@@ -6239,7 +6421,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 517,
+      "id": 2322,
       "word": "Frost",
       "phonetic": "/frɒst/",
       "ipaUs": "/frɒst/",
@@ -6251,7 +6433,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 518,
+      "id": 2323,
       "word": "Gale",
       "phonetic": "/ɡeɪl/",
       "ipaUs": "/ɡeɪl/",
@@ -6263,7 +6445,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 519,
+      "id": 2324,
       "word": "Lightning",
       "phonetic": "/ˈlaɪt.nɪŋ/",
       "ipaUs": "/ˈlaɪt.nɪŋ/",
@@ -6275,7 +6457,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 520,
+      "id": 2325,
       "word": "Ice storm",
       "phonetic": "/ˈaɪs ˌstɔːm/",
       "ipaUs": "/ˈaɪs ˌstɔːm/",
@@ -6287,7 +6469,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 521,
+      "id": 2326,
       "word": "Overcast",
       "phonetic": "/ˈəʊ.və.kɑːst/",
       "ipaUs": "/ˈəʊ.və.kɑːst/",
@@ -6299,7 +6481,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 522,
+      "id": 2327,
       "word": "UV index",
       "phonetic": "/ˌjuːˈviː ˈɪn.deks/",
       "ipaUs": "/ˌjuːˈviː ˈɪn.deks/",
@@ -6311,7 +6493,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 523,
+      "id": 2328,
       "word": "Breeze",
       "phonetic": "/briːz/",
       "ipaUs": "/briːz/",
@@ -6323,9 +6505,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "22": [
+  "24": [
     {
-      "id": 524,
+      "id": 2401,
       "word": "Law",
       "phonetic": "/lɔː/",
       "ipaUs": "/lɔː/",
@@ -6337,7 +6519,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 525,
+      "id": 2402,
       "word": "Regulation",
       "phonetic": "/ˌreɡ.jəˈleɪ.ʃən/",
       "ipaUs": "/ˌreɡ.jəˈleɪ.ʃən/",
@@ -6349,7 +6531,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 526,
+      "id": 2403,
       "word": "Legislation",
       "phonetic": "/ˌledʒ.ɪˈsleɪ.ʃən/",
       "ipaUs": "/ˌledʒ.ɪˈsleɪ.ʃən/",
@@ -6361,7 +6543,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 527,
+      "id": 2404,
       "word": "Attorney",
       "phonetic": "/əˈtɜː.ni/",
       "ipaUs": "/əˈtɜː.ni/",
@@ -6373,7 +6555,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 528,
+      "id": 2405,
       "word": "Lawyer",
       "phonetic": "/ˈlɔɪ.ər/",
       "ipaUs": "/ˈlɔɪ.ər/",
@@ -6385,7 +6567,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 529,
+      "id": 2406,
       "word": "Contract",
       "phonetic": "/ˈkɒn.trækt/",
       "ipaUs": "/ˈkɒn.trækt/",
@@ -6397,7 +6579,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 530,
+      "id": 2407,
       "word": "Agreement",
       "phonetic": "/əˈɡriː.mənt/",
       "ipaUs": "/əˈɡriː.mənt/",
@@ -6409,7 +6591,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 531,
+      "id": 2408,
       "word": "Clause",
       "phonetic": "/klɔːz/",
       "ipaUs": "/klɔːz/",
@@ -6421,7 +6603,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 532,
+      "id": 2409,
       "word": "Fine",
       "phonetic": "/faɪn/",
       "ipaUs": "/faɪn/",
@@ -6433,7 +6615,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 533,
+      "id": 2410,
       "word": "Penalty",
       "phonetic": "/ˈpen.əl.ti/",
       "ipaUs": "/ˈpen.əl.ti/",
@@ -6445,7 +6627,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 534,
+      "id": 2411,
       "word": "Prosecution",
       "phonetic": "/ˌprɒs.ɪˈkjuː.ʃən/",
       "ipaUs": "/ˌprɒs.ɪˈkjuː.ʃən/",
@@ -6457,7 +6639,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 535,
+      "id": 2412,
       "word": "Defendant",
       "phonetic": "/dɪˈfen.dənt/",
       "ipaUs": "/dɪˈfen.dənt/",
@@ -6469,7 +6651,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 536,
+      "id": 2413,
       "word": "Plaintiff",
       "phonetic": "/ˈpleɪn.tɪf/",
       "ipaUs": "/ˈpleɪn.tɪf/",
@@ -6481,7 +6663,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 537,
+      "id": 2414,
       "word": "Evidence",
       "phonetic": "/ˈev.ɪ.dəns/",
       "ipaUs": "/ˈev.ɪ.dəns/",
@@ -6493,7 +6675,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 538,
+      "id": 2415,
       "word": "Witness",
       "phonetic": "/ˈwɪt.nəs/",
       "ipaUs": "/ˈwɪt.nəs/",
@@ -6505,7 +6687,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 539,
+      "id": 2416,
       "word": "Verdict",
       "phonetic": "/ˈvɜː.dɪkt/",
       "ipaUs": "/ˈvɜː.dɪkt/",
@@ -6517,7 +6699,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 540,
+      "id": 2417,
       "word": "Judge",
       "phonetic": "/dʒʌdʒ/",
       "ipaUs": "/dʒʌdʒ/",
@@ -6529,7 +6711,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 541,
+      "id": 2418,
       "word": "Trial",
       "phonetic": "/ˈtraɪ.əl/",
       "ipaUs": "/ˈtraɪ.əl/",
@@ -6541,7 +6723,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 542,
+      "id": 2419,
       "word": "Jury",
       "phonetic": "/ˈdʒʊə.ri/",
       "ipaUs": "/ˈdʒʊə.ri/",
@@ -6553,7 +6735,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 543,
+      "id": 2420,
       "word": "Lawsuit",
       "phonetic": "/ˈlɔː.suːt/",
       "ipaUs": "/ˈlɔː.suːt/",
@@ -6565,7 +6747,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 544,
+      "id": 2421,
       "word": "Liability",
       "phonetic": "/ˌlaɪ.əˈbɪl.ɪ.ti/",
       "ipaUs": "/ˌlaɪ.əˈbɪl.ɪ.ti/",
@@ -6577,7 +6759,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 545,
+      "id": 2422,
       "word": "Copyright",
       "phonetic": "/ˈkɒp.i.raɪt/",
       "ipaUs": "/ˈkɒp.i.raɪt/",
@@ -6589,7 +6771,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 546,
+      "id": 2423,
       "word": "Trademark",
       "phonetic": "/ˈtreɪd.mɑːk/",
       "ipaUs": "/ˈtreɪd.mɑːk/",
@@ -6601,7 +6783,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 547,
+      "id": 2424,
       "word": "Patent",
       "phonetic": "/ˈpeɪ.tənt/",
       "ipaUs": "/ˈpeɪ.tənt/",
@@ -6613,7 +6795,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 548,
+      "id": 2425,
       "word": "Compliance",
       "phonetic": "/kəmˈplaɪ.əns/",
       "ipaUs": "/kəmˈplaɪ.əns/",
@@ -6625,7 +6807,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 549,
+      "id": 2426,
       "word": "Breach",
       "phonetic": "/briːtʃ/",
       "ipaUs": "/briːtʃ/",
@@ -6637,7 +6819,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 550,
+      "id": 2427,
       "word": "Appeal",
       "phonetic": "/əˈpiːl/",
       "ipaUs": "/əˈpiːl/",
@@ -6649,7 +6831,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 551,
+      "id": 2428,
       "word": "Arbitration",
       "phonetic": "/ˌɑː.bɪˈtreɪ.ʃən/",
       "ipaUs": "/ˌɑː.bɪˈtreɪ.ʃən/",
@@ -6661,7 +6843,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 552,
+      "id": 2429,
       "word": "Crime",
       "phonetic": "/kraɪm/",
       "ipaUs": "/kraɪm/",
@@ -6673,9 +6855,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "23": [
+  "25": [
     {
-      "id": 553,
+      "id": 2501,
       "word": "Insurance",
       "phonetic": "/ɪnˈʃʊə.rəns/",
       "ipaUs": "/ɪnˈʃʊə.rəns/",
@@ -6687,7 +6869,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 554,
+      "id": 2502,
       "word": "Policy",
       "phonetic": "/ˈpɒl.ə.si/",
       "ipaUs": "/ˈpɒl.ə.si/",
@@ -6699,7 +6881,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 555,
+      "id": 2503,
       "word": "Premium",
       "phonetic": "/ˈpriː.mi.əm/",
       "ipaUs": "/ˈpriː.mi.əm/",
@@ -6711,7 +6893,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 556,
+      "id": 2504,
       "word": "Claim",
       "phonetic": "/kleɪm/",
       "ipaUs": "/kleɪm/",
@@ -6723,7 +6905,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 557,
+      "id": 2505,
       "word": "Coverage",
       "phonetic": "/ˈkʌv.ər.ɪdʒ/",
       "ipaUs": "/ˈkʌv.ər.ɪdʒ/",
@@ -6735,7 +6917,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 558,
+      "id": 2506,
       "word": "Deductible",
       "phonetic": "/dɪˈdʌk.tɪ.bəl/",
       "ipaUs": "/dɪˈdʌk.tɪ.bəl/",
@@ -6747,7 +6929,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 559,
+      "id": 2507,
       "word": "Liability",
       "phonetic": "/ˌlaɪ.əˈbɪl.ɪ.ti/",
       "ipaUs": "/ˌlaɪ.əˈbɪl.ɪ.ti/",
@@ -6759,7 +6941,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 560,
+      "id": 2508,
       "word": "Beneficiary",
       "phonetic": "/ˌben.ɪˈfɪʃ.ər.i/",
       "ipaUs": "/ˌben.ɪˈfɪʃ.ər.i/",
@@ -6771,7 +6953,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 561,
+      "id": 2509,
       "word": "Underwriter",
       "phonetic": "/ˈʌn.dəˌraɪ.tər/",
       "ipaUs": "/ˈʌn.dəˌraɪ.tər/",
@@ -6783,7 +6965,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 562,
+      "id": 2510,
       "word": "Renewal",
       "phonetic": "/rɪˈnjuː.əl/",
       "ipaUs": "/rɪˈnjuː.əl/",
@@ -6795,7 +6977,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 563,
+      "id": 2511,
       "word": "Term",
       "phonetic": "/tɜːm/",
       "ipaUs": "/tɜːm/",
@@ -6807,7 +6989,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 564,
+      "id": 2512,
       "word": "Exclusion",
       "phonetic": "/ɪkˈskluː.ʒən/",
       "ipaUs": "/ɪkˈskluː.ʒən/",
@@ -6819,7 +7001,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 565,
+      "id": 2513,
       "word": "Broker",
       "phonetic": "/ˈbrəʊ.kər/",
       "ipaUs": "/ˈbrəʊ.kər/",
@@ -6831,7 +7013,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 566,
+      "id": 2514,
       "word": "Actuary",
       "phonetic": "/ˈæk.tʃu.ər.i/",
       "ipaUs": "/ˈæk.tʃu.ər.i/",
@@ -6843,7 +7025,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 567,
+      "id": 2515,
       "word": "Third-party",
       "phonetic": "/ˌθɜːdˈpɑː.ti/",
       "ipaUs": "/ˌθɜːdˈpɑː.ti/",
@@ -6855,7 +7037,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 568,
+      "id": 2516,
       "word": "Comprehensive",
       "phonetic": "/ˌkɒm.prɪˈhen.sɪv/",
       "ipaUs": "/ˌkɒm.prɪˈhen.sɪv/",
@@ -6867,7 +7049,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 569,
+      "id": 2517,
       "word": "Risk assessment",
       "phonetic": "/rɪsk əˈses.mənt/",
       "ipaUs": "/rɪsk əˈses.mənt/",
@@ -6879,7 +7061,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 570,
+      "id": 2518,
       "word": "Termination",
       "phonetic": "/ˌtɜː.mɪˈneɪ.ʃən/",
       "ipaUs": "/ˌtɜː.mɪˈneɪ.ʃən/",
@@ -6891,7 +7073,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 571,
+      "id": 2519,
       "word": "Coverage limit",
       "phonetic": "/ˈkʌv.ər.ɪdʒ ˈlɪm.ɪt/",
       "ipaUs": "/ˈkʌv.ər.ɪdʒ ˈlɪm.ɪt/",
@@ -6903,7 +7085,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 572,
+      "id": 2520,
       "word": "Claim adjuster",
       "phonetic": "/kleɪm əˈdʒʌs.tər/",
       "ipaUs": "/kleɪm əˈdʒʌs.tər/",
@@ -6915,7 +7097,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 573,
+      "id": 2521,
       "word": "Payout",
       "phonetic": "/ˈpeɪ.aʊt/",
       "ipaUs": "/ˈpeɪ.aʊt/",
@@ -6927,7 +7109,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 574,
+      "id": 2522,
       "word": "Policyholder",
       "phonetic": "/ˈpɒl.ɪ.si ˌhəʊl.dər/",
       "ipaUs": "/ˈpɒl.ɪ.si ˌhəʊl.dər/",
@@ -6939,7 +7121,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 575,
+      "id": 2523,
       "word": "Reimbursement",
       "phonetic": "/ˌriː.ɪmˈbɜːs.mənt/",
       "ipaUs": "/ˌriː.ɪmˈbɜːs.mənt/",
@@ -6951,7 +7133,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 576,
+      "id": 2524,
       "word": "Endorsement",
       "phonetic": "/ɪnˈdɔːs.mənt/",
       "ipaUs": "/ɪnˈdɔːs.mənt/",
@@ -6963,7 +7145,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 577,
+      "id": 2525,
       "word": "Fraud",
       "phonetic": "/frɔːd/",
       "ipaUs": "/frɔːd/",
@@ -6975,9 +7157,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "24": [
+  "26": [
     {
-      "id": 578,
+      "id": 2601,
       "word": "Manufacturing",
       "phonetic": "/ˌmæn.jəˈfæk.tʃər.ɪŋ/",
       "ipaUs": "/ˌmæn.jəˈfæk.tʃər.ɪŋ/",
@@ -6989,7 +7171,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 579,
+      "id": 2602,
       "word": "Factory",
       "phonetic": "/ˈfæk.tər.i/",
       "ipaUs": "/ˈfæk.tər.i/",
@@ -7001,7 +7183,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 580,
+      "id": 2603,
       "word": "Production",
       "phonetic": "/prəˈdʌk.ʃən/",
       "ipaUs": "/prəˈdʌk.ʃən/",
@@ -7013,7 +7195,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 581,
+      "id": 2604,
       "word": "Assembly line",
       "phonetic": "/əˈsem.bli ˌlaɪn/",
       "ipaUs": "/əˈsem.bli ˌlaɪn/",
@@ -7025,7 +7207,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 582,
+      "id": 2605,
       "word": "Machinery",
       "phonetic": "/məˈʃiː.nər.i/",
       "ipaUs": "/məˈʃiː.nər.i/",
@@ -7037,7 +7219,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 583,
+      "id": 2606,
       "word": "Equipment",
       "phonetic": "/ɪˈkwɪp.mənt/",
       "ipaUs": "/ɪˈkwɪp.mənt/",
@@ -7049,7 +7231,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 584,
+      "id": 2607,
       "word": "Raw materials",
       "phonetic": "/rɔː məˈtɪə.ri.əlz/",
       "ipaUs": "/rɔː məˈtɪə.ri.əlz/",
@@ -7061,7 +7243,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 585,
+      "id": 2608,
       "word": "Output",
       "phonetic": "/ˈaʊt.pʊt/",
       "ipaUs": "/ˈaʊt.pʊt/",
@@ -7073,7 +7255,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 586,
+      "id": 2609,
       "word": "Quality control",
       "phonetic": "/ˈkwɒl.ɪ.ti kənˈtrəʊl/",
       "ipaUs": "/ˈkwɒl.ɪ.ti kənˈtrəʊl/",
@@ -7085,7 +7267,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 587,
+      "id": 2610,
       "word": "Inventory",
       "phonetic": "/ˈɪn.vən.tər.i/",
       "ipaUs": "/ˈɪn.vən.tər.i/",
@@ -7097,7 +7279,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 588,
+      "id": 2611,
       "word": "Batch",
       "phonetic": "/bætʃ/",
       "ipaUs": "/bætʃ/",
@@ -7109,7 +7291,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 589,
+      "id": 2612,
       "word": "Supplier",
       "phonetic": "/səˈplaɪ.ər/",
       "ipaUs": "/səˈplaɪ.ər/",
@@ -7121,7 +7303,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 590,
+      "id": 2613,
       "word": "Logistics",
       "phonetic": "/ləˈdʒɪs.tɪks/",
       "ipaUs": "/ləˈdʒɪs.tɪks/",
@@ -7133,7 +7315,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 591,
+      "id": 2614,
       "word": "Automation",
       "phonetic": "/ˌɔː.təˈmeɪ.ʃən/",
       "ipaUs": "/ˌɔː.təˈmeɪ.ʃən/",
@@ -7145,7 +7327,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 592,
+      "id": 2615,
       "word": "Efficiency",
       "phonetic": "/ɪˈfɪʃ.ən.si/",
       "ipaUs": "/ɪˈfɪʃ.ən.si/",
@@ -7157,7 +7339,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 593,
+      "id": 2616,
       "word": "Downtime",
       "phonetic": "/ˈdaʊn.taɪm/",
       "ipaUs": "/ˈdaʊn.taɪm/",
@@ -7169,7 +7351,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 594,
+      "id": 2617,
       "word": "Assembly",
       "phonetic": "/əˈsem.bli/",
       "ipaUs": "/əˈsem.bli/",
@@ -7181,7 +7363,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 595,
+      "id": 2618,
       "word": "Packaging",
       "phonetic": "/ˈpæk.ɪ.dʒɪŋ/",
       "ipaUs": "/ˈpæk.ɪ.dʒɪŋ/",
@@ -7193,7 +7375,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 596,
+      "id": 2619,
       "word": "Customization",
       "phonetic": "/ˌkʌs.tə.maɪˈzeɪ.ʃən/",
       "ipaUs": "/ˌkʌs.tə.maɪˈzeɪ.ʃən/",
@@ -7205,7 +7387,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 597,
+      "id": 2620,
       "word": "Distribution",
       "phonetic": "/ˌdɪs.trɪˈbjuː.ʃən/",
       "ipaUs": "/ˌdɪs.trɪˈbjuː.ʃən/",
@@ -7217,7 +7399,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 598,
+      "id": 2621,
       "word": "Maintenance",
       "phonetic": "/ˈmeɪn.tən.əns/",
       "ipaUs": "/ˈmeɪn.tən.əns/",
@@ -7229,7 +7411,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 599,
+      "id": 2622,
       "word": "Defect",
       "phonetic": "/ˈdiː.fekt/",
       "ipaUs": "/ˈdiː.fekt/",
@@ -7241,7 +7423,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 600,
+      "id": 2623,
       "word": "Workforce",
       "phonetic": "/ˈwɜːk.fɔːs/",
       "ipaUs": "/ˈwɜːk.fɔːs/",
@@ -7253,7 +7435,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 601,
+      "id": 2624,
       "word": "Mass production",
       "phonetic": "/mæs prəˈdʌk.ʃən/",
       "ipaUs": "/mæs prəˈdʌk.ʃən/",
@@ -7265,7 +7447,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 602,
+      "id": 2625,
       "word": "Assembly plant",
       "phonetic": "/əˈsem.bli ˌplɑːnt/",
       "ipaUs": "/əˈsem.bli ˌplɑːnt/",
@@ -7277,7 +7459,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 603,
+      "id": 2626,
       "word": "Operational cost",
       "phonetic": "/ˌɒp.ərˈeɪ.ʃən.əl kɒst/",
       "ipaUs": "/ˌɒp.ərˈeɪ.ʃən.əl kɒst/",
@@ -7289,9 +7471,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "25": [
+  "27": [
     {
-      "id": 604,
+      "id": 2701,
       "word": "Supply chain",
       "phonetic": "/səˈplaɪ ˌtʃeɪn/",
       "ipaUs": "/səˈplaɪ ˌtʃeɪn/",
@@ -7303,7 +7485,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 605,
+      "id": 2702,
       "word": "Logistics",
       "phonetic": "/ləˈdʒɪs.tɪks/",
       "ipaUs": "/ləˈdʒɪs.tɪks/",
@@ -7315,7 +7497,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 606,
+      "id": 2703,
       "word": "Procurement",
       "phonetic": "/prəˈkjʊə.mənt/",
       "ipaUs": "/prəˈkjʊə.mənt/",
@@ -7327,7 +7509,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 607,
+      "id": 2704,
       "word": "Supplier",
       "phonetic": "/səˈplaɪ.ər/",
       "ipaUs": "/səˈplaɪ.ər/",
@@ -7339,7 +7521,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 608,
+      "id": 2705,
       "word": "Distribution",
       "phonetic": "/ˌdɪs.trɪˈbjuː.ʃən/",
       "ipaUs": "/ˌdɪs.trɪˈbjuː.ʃən/",
@@ -7351,7 +7533,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 609,
+      "id": 2706,
       "word": "Inventory",
       "phonetic": "/ˈɪn.vən.tər.i/",
       "ipaUs": "/ˈɪn.vən.tər.i/",
@@ -7363,7 +7545,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 610,
+      "id": 2707,
       "word": "Warehouse",
       "phonetic": "/ˈweə.haʊs/",
       "ipaUs": "/ˈweə.haʊs/",
@@ -7375,7 +7557,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 611,
+      "id": 2708,
       "word": "Freight",
       "phonetic": "/freɪt/",
       "ipaUs": "/freɪt/",
@@ -7387,7 +7569,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 612,
+      "id": 2709,
       "word": "Transportation",
       "phonetic": "/ˌtræn.spɔːˈteɪ.ʃən/",
       "ipaUs": "/ˌtræn.spɔːˈteɪ.ʃən/",
@@ -7399,7 +7581,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 613,
+      "id": 2710,
       "word": "Demand planning",
       "phonetic": "/dɪˈmænd ˌplæn.ɪŋ/",
       "ipaUs": "/dɪˈmænd ˌplæn.ɪŋ/",
@@ -7411,7 +7593,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 614,
+      "id": 2711,
       "word": "Lead time",
       "phonetic": "/ˈliːd ˌtaɪm/",
       "ipaUs": "/ˈliːd ˌtaɪm/",
@@ -7423,7 +7605,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 615,
+      "id": 2712,
       "word": "Batch",
       "phonetic": "/bætʃ/",
       "ipaUs": "/bætʃ/",
@@ -7435,7 +7617,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 616,
+      "id": 2713,
       "word": "Shipment",
       "phonetic": "/ˈʃɪp.mənt/",
       "ipaUs": "/ˈʃɪp.mənt/",
@@ -7447,7 +7629,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 617,
+      "id": 2714,
       "word": "Customs clearance",
       "phonetic": "/ˈkʌs.təmz ˈklɪə.rəns/",
       "ipaUs": "/ˈkʌs.təmz ˈklɪə.rəns/",
@@ -7459,7 +7641,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 618,
+      "id": 2715,
       "word": "Supply chain management",
       "phonetic": "/səˈplaɪ tʃeɪn ˈmæn.ɪdʒ.mənt/",
       "ipaUs": "/səˈplaɪ tʃeɪn ˈmæn.ɪdʒ.mənt/",
@@ -7471,7 +7653,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 619,
+      "id": 2716,
       "word": "Stockout",
       "phonetic": "/ˈstɒk.aʊt/",
       "ipaUs": "/ˈstɒk.aʊt/",
@@ -7483,7 +7665,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 620,
+      "id": 2717,
       "word": "Forecasting",
       "phonetic": "/ˈfɔː.kɑː.stɪŋ/",
       "ipaUs": "/ˈfɔː.kɑː.stɪŋ/",
@@ -7495,7 +7677,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 621,
+      "id": 2718,
       "word": "Reverse logistics",
       "phonetic": "/rɪˈvɜːs ləˈdʒɪs.tɪks/",
       "ipaUs": "/rɪˈvɜːs ləˈdʒɪs.tɪks/",
@@ -7507,7 +7689,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 622,
+      "id": 2719,
       "word": "Vendor",
       "phonetic": "/ˈven.dər/",
       "ipaUs": "/ˈven.dər/",
@@ -7519,7 +7701,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 623,
+      "id": 2720,
       "word": "Order fulfillment",
       "phonetic": "/ˈɔː.dər fʊlˈfɪl.mənt/",
       "ipaUs": "/ˈɔː.dər fʊlˈfɪl.mənt/",
@@ -7531,7 +7713,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 624,
+      "id": 2721,
       "word": "Tracking",
       "phonetic": "/ˈtræk.ɪŋ/",
       "ipaUs": "/ˈtræk.ɪŋ/",
@@ -7543,7 +7725,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 625,
+      "id": 2722,
       "word": "Cold chain",
       "phonetic": "/ˈkəʊld ˌtʃeɪn/",
       "ipaUs": "/ˈkəʊld ˌtʃeɪn/",
@@ -7555,7 +7737,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 626,
+      "id": 2723,
       "word": "Optimization",
       "phonetic": "/ˌɒp.tɪ.maɪˈzeɪ.ʃən/",
       "ipaUs": "/ˌɒp.tɪ.maɪˈzeɪ.ʃən/",
@@ -7567,9 +7749,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "26": [
+  "28": [
     {
-      "id": 627,
+      "id": 2801,
       "word": "Communication",
       "phonetic": "/kəˌmjuː.nɪˈkeɪ.ʃən/",
       "ipaUs": "/kəˌmjuː.nɪˈkeɪ.ʃən/",
@@ -7581,7 +7763,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 628,
+      "id": 2802,
       "word": "Conversation",
       "phonetic": "/ˌkɒn.vəˈseɪ.ʃən/",
       "ipaUs": "/ˌkɒn.vəˈseɪ.ʃən/",
@@ -7593,7 +7775,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 629,
+      "id": 2803,
       "word": "Feedback",
       "phonetic": "/ˈfiːd.bæk/",
       "ipaUs": "/ˈfiːd.bæk/",
@@ -7605,7 +7787,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 630,
+      "id": 2804,
       "word": "Negotiation",
       "phonetic": "/nɪˌɡəʊ.ʃiˈeɪ.ʃən/",
       "ipaUs": "/nɪˌɡəʊ.ʃiˈeɪ.ʃən/",
@@ -7617,7 +7799,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 631,
+      "id": 2805,
       "word": "Message",
       "phonetic": "/ˈmes.ɪdʒ/",
       "ipaUs": "/ˈmes.ɪdʒ/",
@@ -7629,7 +7811,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 632,
+      "id": 2806,
       "word": "Clarification",
       "phonetic": "/ˌklær.ɪ.fɪˈkeɪ.ʃən/",
       "ipaUs": "/ˌklær.ɪ.fɪˈkeɪ.ʃən/",
@@ -7641,7 +7823,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 633,
+      "id": 2807,
       "word": "Tone",
       "phonetic": "/təʊn/",
       "ipaUs": "/təʊn/",
@@ -7653,7 +7835,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 634,
+      "id": 2808,
       "word": "Verbal",
       "phonetic": "/ˈvɜː.bəl/",
       "ipaUs": "/ˈvɜː.bəl/",
@@ -7665,7 +7847,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 635,
+      "id": 2809,
       "word": "Nonverbal",
       "phonetic": "/ˌnɒnˈvɜː.bəl/",
       "ipaUs": "/ˌnɒnˈvɜː.bəl/",
@@ -7677,7 +7859,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 636,
+      "id": 2810,
       "word": "Email",
       "phonetic": "/ˈiː.meɪl/",
       "ipaUs": "/ˈiː.meɪl/",
@@ -7689,7 +7871,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 637,
+      "id": 2811,
       "word": "Phone call",
       "phonetic": "/fəʊn kɔːl/",
       "ipaUs": "/fəʊn kɔːl/",
@@ -7701,7 +7883,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 638,
+      "id": 2812,
       "word": "Meeting",
       "phonetic": "/ˈmiː.tɪŋ/",
       "ipaUs": "/ˈmiː.tɪŋ/",
@@ -7713,7 +7895,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 639,
+      "id": 2813,
       "word": "Presentation",
       "phonetic": "/ˌprez.ənˈteɪ.ʃən/",
       "ipaUs": "/ˌprez.ənˈteɪ.ʃən/",
@@ -7725,7 +7907,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 640,
+      "id": 2814,
       "word": "Inquiry",
       "phonetic": "/ɪnˈkwaɪə.ri/",
       "ipaUs": "/ɪnˈkwaɪə.ri/",
@@ -7737,7 +7919,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 641,
+      "id": 2815,
       "word": "Discussion",
       "phonetic": "/dɪˈskʌʃ.ən/",
       "ipaUs": "/dɪˈskʌʃ.ən/",
@@ -7749,7 +7931,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 642,
+      "id": 2816,
       "word": "Proposal",
       "phonetic": "/prəˈpəʊ.zəl/",
       "ipaUs": "/prəˈpəʊ.zəl/",
@@ -7761,7 +7943,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 643,
+      "id": 2817,
       "word": "Conflict",
       "phonetic": "/ˈkɒn.flɪkt/",
       "ipaUs": "/ˈkɒn.flɪkt/",
@@ -7773,7 +7955,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 644,
+      "id": 2818,
       "word": "Agreement",
       "phonetic": "/əˈɡriː.mənt/",
       "ipaUs": "/əˈɡriː.mənt/",
@@ -7785,7 +7967,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 645,
+      "id": 2819,
       "word": "Active listening",
       "phonetic": "/ˈæk.tɪv ˈlɪs.ən.ɪŋ/",
       "ipaUs": "/ˈæk.tɪv ˈlɪs.ən.ɪŋ/",
@@ -7797,7 +7979,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 646,
+      "id": 2820,
       "word": "Body language",
       "phonetic": "/ˈbɒd.i ˌlæŋ.ɡwɪdʒ/",
       "ipaUs": "/ˈbɒd.i ˌlæŋ.ɡwɪdʒ/",
@@ -7809,7 +7991,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 647,
+      "id": 2821,
       "word": "Conflict resolution",
       "phonetic": "/ˈkɒn.flɪkt ˌrez.əˈluː.ʃən/",
       "ipaUs": "/ˈkɒn.flɪkt ˌrez.əˈluː.ʃən/",
@@ -7821,7 +8003,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 648,
+      "id": 2822,
       "word": "Formal communication",
       "phonetic": "/ˈfɔː.məl ˌkɒm.jʊˈnɪk.eɪ.ʃən/",
       "ipaUs": "/ˈfɔː.məl ˌkɒm.jʊˈnɪk.eɪ.ʃən/",
@@ -7833,7 +8015,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 649,
+      "id": 2823,
       "word": "Informal communication",
       "phonetic": "/ɪnˈfɔː.məl ˌkɒm.jʊˈnɪk.eɪ.ʃən/",
       "ipaUs": "/ɪnˈfɔː.məl ˌkɒm.jʊˈnɪk.eɪ.ʃən/",
@@ -7845,7 +8027,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 650,
+      "id": 2824,
       "word": "Memo",
       "phonetic": "/ˈmem.əʊ/",
       "ipaUs": "/ˈmem.əʊ/",
@@ -7857,7 +8039,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 651,
+      "id": 2825,
       "word": "Announcement",
       "phonetic": "/əˈnaʊns.mənt/",
       "ipaUs": "/əˈnaʊns.mənt/",
@@ -7869,7 +8051,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 652,
+      "id": 2826,
       "word": "Question",
       "phonetic": "/ˈkwes.tʃən/",
       "ipaUs": "/ˈkwes.tʃən/",
@@ -7881,7 +8063,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 653,
+      "id": 2827,
       "word": "Response",
       "phonetic": "/rɪˈspɒns/",
       "ipaUs": "/rɪˈspɒns/",
@@ -7893,9 +8075,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "27": [
+  "29": [
     {
-      "id": 654,
+      "id": 2901,
       "word": "Meeting",
       "phonetic": "/ˈmiː.tɪŋ/",
       "ipaUs": "/ˈmiː.tɪŋ/",
@@ -7907,7 +8089,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 655,
+      "id": 2902,
       "word": "Agenda",
       "phonetic": "/əˈdʒen.də/",
       "ipaUs": "/əˈdʒen.də/",
@@ -7919,7 +8101,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 656,
+      "id": 2903,
       "word": "Minutes",
       "phonetic": "/ˈmɪn.ɪts/",
       "ipaUs": "/ˈmɪn.ɪts/",
@@ -7931,7 +8113,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 657,
+      "id": 2904,
       "word": "Chairperson",
       "phonetic": "/ˈtʃeə.pɜː.sən/",
       "ipaUs": "/ˈtʃeə.pɜː.sən/",
@@ -7943,7 +8125,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 658,
+      "id": 2905,
       "word": "Participant",
       "phonetic": "/pɑːˈtɪs.ɪ.pənt/",
       "ipaUs": "/pɑːˈtɪs.ɪ.pənt/",
@@ -7955,7 +8137,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 659,
+      "id": 2906,
       "word": "Presentation",
       "phonetic": "/ˌprez.ənˈteɪ.ʃən/",
       "ipaUs": "/ˌprez.ənˈteɪ.ʃən/",
@@ -7967,7 +8149,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 660,
+      "id": 2907,
       "word": "Discussion",
       "phonetic": "/dɪˈskʌʃ.ən/",
       "ipaUs": "/dɪˈskʌʃ.ən/",
@@ -7979,7 +8161,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 661,
+      "id": 2908,
       "word": "Proposal",
       "phonetic": "/prəˈpəʊ.zəl/",
       "ipaUs": "/prəˈpəʊ.zəl/",
@@ -7991,7 +8173,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 662,
+      "id": 2909,
       "word": "Brainstorming",
       "phonetic": "/ˈbreɪnˌstɔː.mɪŋ/",
       "ipaUs": "/ˈbreɪnˌstɔː.mɪŋ/",
@@ -8003,7 +8185,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 663,
+      "id": 2910,
       "word": "Consensus",
       "phonetic": "/kənˈsen.səs/",
       "ipaUs": "/kənˈsen.səs/",
@@ -8015,7 +8197,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 664,
+      "id": 2911,
       "word": "Vote",
       "phonetic": "/vəʊt/",
       "ipaUs": "/vəʊt/",
@@ -8027,7 +8209,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 665,
+      "id": 2912,
       "word": "Action item",
       "phonetic": "/ˈæk.ʃən ˌaɪ.təm/",
       "ipaUs": "/ˈæk.ʃən ˌaɪ.təm/",
@@ -8039,7 +8221,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 666,
+      "id": 2913,
       "word": "Follow-up",
       "phonetic": "/ˈfɒl.oʊ ˌʌp/",
       "ipaUs": "/ˈfɒl.oʊ ˌʌp/",
@@ -8051,7 +8233,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 667,
+      "id": 2914,
       "word": "Conference call",
       "phonetic": "/ˈkɒn.fər.əns ˌkɔːl/",
       "ipaUs": "/ˈkɒn.fər.əns ˌkɔːl/",
@@ -8063,7 +8245,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 668,
+      "id": 2915,
       "word": "Reschedule",
       "phonetic": "/ˌriːˈʃed.juːl/",
       "ipaUs": "/ˌriːˈʃed.juːl/",
@@ -8075,7 +8257,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 669,
+      "id": 2916,
       "word": "Cancel",
       "phonetic": "/ˈkæn.səl/",
       "ipaUs": "/ˈkæn.səl/",
@@ -8087,7 +8269,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 670,
+      "id": 2917,
       "word": "Quorum",
       "phonetic": "/ˈkwɔː.rəm/",
       "ipaUs": "/ˈkwɔː.rəm/",
@@ -8099,7 +8281,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 671,
+      "id": 2918,
       "word": "Venue",
       "phonetic": "/ˈven.juː/",
       "ipaUs": "/ˈven.juː/",
@@ -8111,7 +8293,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 672,
+      "id": 2919,
       "word": "Deadline",
       "phonetic": "/ˈded.laɪn/",
       "ipaUs": "/ˈded.laɪn/",
@@ -8123,7 +8305,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 673,
+      "id": 2920,
       "word": "Keynote speaker",
       "phonetic": "/ˈkiː.nəʊt ˈspiː.kər/",
       "ipaUs": "/ˈkiː.nəʊt ˈspiː.kər/",
@@ -8135,7 +8317,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 674,
+      "id": 2921,
       "word": "Timekeeper",
       "phonetic": "/ˈtaɪmˌkiː.pər/",
       "ipaUs": "/ˈtaɪmˌkiː.pər/",
@@ -8147,7 +8329,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 675,
+      "id": 2922,
       "word": "Opening remarks",
       "phonetic": "/ˈəʊ.pən.ɪŋ rɪˈmɑːks/",
       "ipaUs": "/ˈəʊ.pən.ɪŋ rɪˈmɑːks/",
@@ -8159,7 +8341,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 676,
+      "id": 2923,
       "word": "Closing remarks",
       "phonetic": "/ˈkləʊ.zɪŋ rɪˈmɑːks/",
       "ipaUs": "/ˈkləʊ.zɪŋ rɪˈmɑːks/",
@@ -8171,7 +8353,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 677,
+      "id": 2924,
       "word": "Off-topic",
       "phonetic": "/ˌɒfˈtɒp.ɪk/",
       "ipaUs": "/ˌɒfˈtɒp.ɪk/",
@@ -8183,7 +8365,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 678,
+      "id": 2925,
       "word": "Adjourn",
       "phonetic": "/əˈdʒɜːn/",
       "ipaUs": "/əˈdʒɜːn/",
@@ -8195,7 +8377,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 679,
+      "id": 2926,
       "word": "Attendance",
       "phonetic": "/əˈten.dəns/",
       "ipaUs": "/əˈten.dəns/",
@@ -8207,7 +8389,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 680,
+      "id": 2927,
       "word": "Conflict resolution",
       "phonetic": "/ˈkɒn.flɪkt ˌrez.əˈluː.ʃən/",
       "ipaUs": "/ˈkɒn.flɪkt ˌrez.əˈluː.ʃən/",
@@ -8219,9 +8401,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "28": [
+  "30": [
     {
-      "id": 681,
+      "id": 3001,
       "word": "Project management",
       "phonetic": "/ˈprɒdʒ.ekt ˌmæn.ɪdʒ.mənt/",
       "ipaUs": "/ˈprɒdʒ.ekt ˌmæn.ɪdʒ.mənt/",
@@ -8233,7 +8415,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 682,
+      "id": 3002,
       "word": "Milestone",
       "phonetic": "/ˈmaɪl.stəʊn/",
       "ipaUs": "/ˈmaɪl.stəʊn/",
@@ -8245,7 +8427,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 683,
+      "id": 3003,
       "word": "Deliverable",
       "phonetic": "/dɪˈlɪv.ər.ə.bəl/",
       "ipaUs": "/dɪˈlɪv.ər.ə.bəl/",
@@ -8257,7 +8439,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 684,
+      "id": 3004,
       "word": "Timeline",
       "phonetic": "/ˈtaɪm.laɪn/",
       "ipaUs": "/ˈtaɪm.laɪn/",
@@ -8269,7 +8451,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 685,
+      "id": 3005,
       "word": "Budget",
       "phonetic": "/ˈbʌdʒ.ɪt/",
       "ipaUs": "/ˈbʌdʒ.ɪt/",
@@ -8281,7 +8463,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 686,
+      "id": 3006,
       "word": "Scope",
       "phonetic": "/skəʊp/",
       "ipaUs": "/skəʊp/",
@@ -8293,7 +8475,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 687,
+      "id": 3007,
       "word": "Stakeholder",
       "phonetic": "/ˈsteɪkˌhəʊl.dər/",
       "ipaUs": "/ˈsteɪkˌhəʊl.dər/",
@@ -8305,7 +8487,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 688,
+      "id": 3008,
       "word": "Risk management",
       "phonetic": "/rɪsk ˈmæn.ɪdʒ.mənt/",
       "ipaUs": "/rɪsk ˈmæn.ɪdʒ.mənt/",
@@ -8317,7 +8499,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 689,
+      "id": 3009,
       "word": "Gantt chart",
       "phonetic": "/ɡænt tʃɑːt/",
       "ipaUs": "/ɡænt tʃɑːt/",
@@ -8329,7 +8511,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 690,
+      "id": 3010,
       "word": "Resource allocation",
       "phonetic": "/rɪˈzɔːs ˌæl.əˈkeɪ.ʃən/",
       "ipaUs": "/rɪˈzɔːs ˌæl.əˈkeɪ.ʃən/",
@@ -8341,7 +8523,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 691,
+      "id": 3011,
       "word": "Task delegation",
       "phonetic": "/tɑːsk ˌdel.ɪˈɡeɪ.ʃən/",
       "ipaUs": "/tɑːsk ˌdel.ɪˈɡeɪ.ʃən/",
@@ -8353,7 +8535,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 692,
+      "id": 3012,
       "word": "Dependency",
       "phonetic": "/dɪˈpen.dən.si/",
       "ipaUs": "/dɪˈpen.dən.si/",
@@ -8365,7 +8547,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 693,
+      "id": 3013,
       "word": "Contingency plan",
       "phonetic": "/kənˈtɪn.dʒən.si ˌplæn/",
       "ipaUs": "/kənˈtɪn.dʒən.si ˌplæn/",
@@ -8377,7 +8559,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 694,
+      "id": 3014,
       "word": "Agile methodology",
       "phonetic": "/ˈædʒ.aɪl ˌmeθ.əˈdɒl.ə.dʒi/",
       "ipaUs": "/ˈædʒ.aɪl ˌmeθ.əˈdɒl.ə.dʒi/",
@@ -8389,7 +8571,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 695,
+      "id": 3015,
       "word": "Waterfall model",
       "phonetic": "/ˈwɔː.tə.fɔːl ˌmɒd.əl/",
       "ipaUs": "/ˈwɔː.tə.fɔːl ˌmɒd.əl/",
@@ -8401,7 +8583,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 696,
+      "id": 3016,
       "word": "Critical path",
       "phonetic": "/ˈkrɪt.ɪ.kəl ˌpɑːθ/",
       "ipaUs": "/ˈkrɪt.ɪ.kəl ˌpɑːθ/",
@@ -8413,7 +8595,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 697,
+      "id": 3017,
       "word": "Baseline",
       "phonetic": "/ˈbeɪs.laɪn/",
       "ipaUs": "/ˈbeɪs.laɪn/",
@@ -8425,7 +8607,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 698,
+      "id": 3018,
       "word": "Collaboration",
       "phonetic": "/kəˌlæb.əˈreɪ.ʃən/",
       "ipaUs": "/kəˌlæb.əˈreɪ.ʃən/",
@@ -8437,7 +8619,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 699,
+      "id": 3019,
       "word": "Change management",
       "phonetic": "/tʃeɪndʒ ˈmæn.ɪdʒ.mənt/",
       "ipaUs": "/tʃeɪndʒ ˈmæn.ɪdʒ.mənt/",
@@ -8449,7 +8631,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 700,
+      "id": 3020,
       "word": "Monitoring",
       "phonetic": "/ˈmɒn.ɪ.tər.ɪŋ/",
       "ipaUs": "/ˈmɒn.ɪ.tər.ɪŋ/",
@@ -8461,7 +8643,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 701,
+      "id": 3021,
       "word": "Kickoff meeting",
       "phonetic": "/ˈkɪk.ɒf ˈmiː.tɪŋ/",
       "ipaUs": "/ˈkɪk.ɒf ˈmiː.tɪŋ/",
@@ -8473,7 +8655,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 702,
+      "id": 3022,
       "word": "Status report",
       "phonetic": "/ˈsteɪ.təs rɪˈpɔːt/",
       "ipaUs": "/ˈsteɪ.təs rɪˈpɔːt/",
@@ -8485,7 +8667,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 703,
+      "id": 3023,
       "word": "Closure",
       "phonetic": "/ˈkləʊ.ʒər/",
       "ipaUs": "/ˈkləʊ.ʒər/",
@@ -8497,9 +8679,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "29": [
+  "31": [
     {
-      "id": 704,
+      "id": 3101,
       "word": "Administrative tasks",
       "phonetic": "/ədˈmɪn.ɪ.strə.tɪv tæsks/",
       "ipaUs": "/ədˈmɪn.ɪ.strə.tɪv tæsks/",
@@ -8511,7 +8693,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 705,
+      "id": 3102,
       "word": "Schedule",
       "phonetic": "/ˈʃed.juːl/ or /ˈskedʒ.uːl/",
       "ipaUs": "/ˈʃed.juːl/ or /ˈskedʒ.uːl/",
@@ -8523,7 +8705,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 706,
+      "id": 3103,
       "word": "Filing",
       "phonetic": "/ˈfaɪ.lɪŋ/",
       "ipaUs": "/ˈfaɪ.lɪŋ/",
@@ -8535,7 +8717,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 707,
+      "id": 3104,
       "word": "Documentation",
       "phonetic": "/ˌdɒk.jə.menˈteɪ.ʃən/",
       "ipaUs": "/ˌdɒk.jə.menˈteɪ.ʃən/",
@@ -8547,7 +8729,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 708,
+      "id": 3105,
       "word": "Recordkeeping",
       "phonetic": "/ˈrek.ɔːdˌkiː.pɪŋ/",
       "ipaUs": "/ˈrek.ɔːdˌkiː.pɪŋ/",
@@ -8559,7 +8741,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 709,
+      "id": 3106,
       "word": "Meeting minutes",
       "phonetic": "/ˈmiː.tɪŋ ˈmɪn.ɪts/",
       "ipaUs": "/ˈmiː.tɪŋ ˈmɪn.ɪts/",
@@ -8571,7 +8753,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 710,
+      "id": 3107,
       "word": "Correspondence",
       "phonetic": "/ˌkɒr.ɪˈspɒn.dəns/",
       "ipaUs": "/ˌkɒr.ɪˈspɒn.dəns/",
@@ -8583,7 +8765,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 711,
+      "id": 3108,
       "word": "Appointment",
       "phonetic": "/əˈpɔɪnt.mənt/",
       "ipaUs": "/əˈpɔɪnt.mənt/",
@@ -8595,7 +8777,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 712,
+      "id": 3109,
       "word": "Data entry",
       "phonetic": "/ˈdeɪ.tə ˌen.tri/",
       "ipaUs": "/ˈdeɪ.tə ˌen.tri/",
@@ -8607,7 +8789,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 713,
+      "id": 3110,
       "word": "Office supplies",
       "phonetic": "/ˈɒf.ɪs səˈplaɪz/",
       "ipaUs": "/ˈɒf.ɪs səˈplaɪz/",
@@ -8619,7 +8801,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 714,
+      "id": 3111,
       "word": "Receptionist",
       "phonetic": "/rɪˈsep.ʃən.ɪst/",
       "ipaUs": "/rɪˈsep.ʃən.ɪst/",
@@ -8631,7 +8813,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 715,
+      "id": 3112,
       "word": "Organize",
       "phonetic": "/ˈɔː.ɡə.naɪz/",
       "ipaUs": "/ˈɔː.ɡə.naɪz/",
@@ -8643,7 +8825,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 716,
+      "id": 3113,
       "word": "Calendar management",
       "phonetic": "/ˈkæl.ən.dər ˌmæn.ɪdʒ.mənt/",
       "ipaUs": "/ˈkæl.ən.dər ˌmæn.ɪdʒ.mənt/",
@@ -8655,7 +8837,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 717,
+      "id": 3114,
       "word": "Mail distribution",
       "phonetic": "/meɪl ˌdɪs.trɪˈbjuː.ʃən/",
       "ipaUs": "/meɪl ˌdɪs.trɪˈbjuː.ʃən/",
@@ -8667,7 +8849,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 718,
+      "id": 3115,
       "word": "Invoice processing",
       "phonetic": "/ˈɪn.vɔɪs ˌprəʊ.ses.ɪŋ/",
       "ipaUs": "/ˈɪn.vɔɪs ˌprəʊ.ses.ɪŋ/",
@@ -8679,7 +8861,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 719,
+      "id": 3116,
       "word": "Travel arrangements",
       "phonetic": "/ˈtræv.əl əˌreɪndʒ.mənts/",
       "ipaUs": "/ˈtræv.əl əˌreɪndʒ.mənts/",
@@ -8691,7 +8873,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 720,
+      "id": 3117,
       "word": "Filing cabinet",
       "phonetic": "/ˈfaɪ.lɪŋ ˌkæb.ɪ.nət/",
       "ipaUs": "/ˈfaɪ.lɪŋ ˌkæb.ɪ.nət/",
@@ -8703,7 +8885,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 721,
+      "id": 3118,
       "word": "Office protocol",
       "phonetic": "/ˈɒf.ɪs ˈprəʊ.tə.kɒl/",
       "ipaUs": "/ˈɒf.ɪs ˈprəʊ.tə.kɒl/",
@@ -8715,7 +8897,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 722,
+      "id": 3119,
       "word": "Task prioritization",
       "phonetic": "/tɑːsk praɪˌɒr.ɪˈtaɪ.zeɪ.ʃən/",
       "ipaUs": "/tɑːsk praɪˌɒr.ɪˈtaɪ.zeɪ.ʃən/",
@@ -8727,7 +8909,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 723,
+      "id": 3120,
       "word": "Desk organization",
       "phonetic": "/desk ˌɔː.ɡə.naɪˈzeɪ.ʃən/",
       "ipaUs": "/desk ˌɔː.ɡə.naɪˈzeɪ.ʃən/",
@@ -8739,7 +8921,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 724,
+      "id": 3121,
       "word": "Expense report",
       "phonetic": "/ɪkˈspens rɪˈpɔːt/",
       "ipaUs": "/ɪkˈspens rɪˈpɔːt/",
@@ -8751,7 +8933,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 725,
+      "id": 3122,
       "word": "Internal memo",
       "phonetic": "/ɪnˈtɜː.nəl ˈmem.əʊ/",
       "ipaUs": "/ɪnˈtɜː.nəl ˈmem.əʊ/",
@@ -8763,7 +8945,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 726,
+      "id": 3123,
       "word": "Meeting coordination",
       "phonetic": "/ˈmiː.tɪŋ kəʊˌɔː.dɪˈneɪ.ʃən/",
       "ipaUs": "/ˈmiː.tɪŋ kəʊˌɔː.dɪˈneɪ.ʃən/",
@@ -8775,7 +8957,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 727,
+      "id": 3124,
       "word": "Visitor management",
       "phonetic": "/ˈvɪz.ɪ.tər ˌmæn.ɪdʒ.mənt/",
       "ipaUs": "/ˈvɪz.ɪ.tər ˌmæn.ɪdʒ.mənt/",
@@ -8787,9 +8969,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "30": [
+  "32": [
     {
-      "id": 728,
+      "id": 3201,
       "word": "Sport",
       "phonetic": "/spɔːt/",
       "ipaUs": "/spɔːt/",
@@ -8801,7 +8983,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 729,
+      "id": 3202,
       "word": "Athlete",
       "phonetic": "/ˈæθ.liːt/",
       "ipaUs": "/ˈæθ.liːt/",
@@ -8813,7 +8995,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 730,
+      "id": 3203,
       "word": "Coach",
       "phonetic": "/kəʊtʃ/",
       "ipaUs": "/kəʊtʃ/",
@@ -8825,7 +9007,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 731,
+      "id": 3204,
       "word": "Referee",
       "phonetic": "/ˌref.əˈriː/",
       "ipaUs": "/ˌref.əˈriː/",
@@ -8837,7 +9019,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 732,
+      "id": 3205,
       "word": "Spectator",
       "phonetic": "/spekˈteɪ.tər/",
       "ipaUs": "/spekˈteɪ.tər/",
@@ -8849,7 +9031,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 733,
+      "id": 3206,
       "word": "Team",
       "phonetic": "/tiːm/",
       "ipaUs": "/tiːm/",
@@ -8861,7 +9043,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 734,
+      "id": 3207,
       "word": "Match",
       "phonetic": "/mætʃ/",
       "ipaUs": "/mætʃ/",
@@ -8873,7 +9055,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 735,
+      "id": 3208,
       "word": "Championship",
       "phonetic": "/ˈtʃæm.pi.ən.ʃɪp/",
       "ipaUs": "/ˈtʃæm.pi.ən.ʃɪp/",
@@ -8885,7 +9067,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 736,
+      "id": 3209,
       "word": "Tournament",
       "phonetic": "/ˈtʊə.nə.mənt/",
       "ipaUs": "/ˈtʊə.nə.mənt/",
@@ -8897,7 +9079,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 737,
+      "id": 3210,
       "word": "Competition",
       "phonetic": "/ˌkɒm.pɪˈtɪʃ.ən/",
       "ipaUs": "/ˌkɒm.pɪˈtɪʃ.ən/",
@@ -8909,7 +9091,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 738,
+      "id": 3211,
       "word": "Medal",
       "phonetic": "/ˈmed.əl/",
       "ipaUs": "/ˈmed.əl/",
@@ -8921,7 +9103,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 739,
+      "id": 3212,
       "word": "Score",
       "phonetic": "/skɔːr/",
       "ipaUs": "/skɔːr/",
@@ -8933,7 +9115,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 740,
+      "id": 3213,
       "word": "Goal",
       "phonetic": "/ɡəʊl/",
       "ipaUs": "/ɡəʊl/",
@@ -8945,7 +9127,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 741,
+      "id": 3214,
       "word": "Field",
       "phonetic": "/fiːld/",
       "ipaUs": "/fiːld/",
@@ -8957,7 +9139,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 742,
+      "id": 3215,
       "word": "Court",
       "phonetic": "/kɔːt/",
       "ipaUs": "/kɔːt/",
@@ -8969,7 +9151,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 743,
+      "id": 3216,
       "word": "Stadium",
       "phonetic": "/ˈsteɪ.di.əm/",
       "ipaUs": "/ˈsteɪ.di.əm/",
@@ -8981,7 +9163,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 744,
+      "id": 3217,
       "word": "Exercise",
       "phonetic": "/ˈek.sə.saɪz/",
       "ipaUs": "/ˈek.sə.saɪz/",
@@ -8993,7 +9175,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 745,
+      "id": 3218,
       "word": "Training",
       "phonetic": "/ˈtreɪ.nɪŋ/",
       "ipaUs": "/ˈtreɪ.nɪŋ/",
@@ -9005,7 +9187,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 746,
+      "id": 3219,
       "word": "Fitness",
       "phonetic": "/ˈfɪt.nəs/",
       "ipaUs": "/ˈfɪt.nəs/",
@@ -9017,7 +9199,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 747,
+      "id": 3220,
       "word": "Equipment",
       "phonetic": "/ɪˈkwɪp.mənt/",
       "ipaUs": "/ɪˈkwɪp.mənt/",
@@ -9029,7 +9211,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 748,
+      "id": 3221,
       "word": "League",
       "phonetic": "/liːɡ/",
       "ipaUs": "/liːɡ/",
@@ -9041,7 +9223,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 749,
+      "id": 3222,
       "word": "Warm-up",
       "phonetic": "/ˈwɔːm.ʌp/",
       "ipaUs": "/ˈwɔːm.ʌp/",
@@ -9053,7 +9235,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 750,
+      "id": 3223,
       "word": "Sportsmanship",
       "phonetic": "/ˈspɔːts.mən.ʃɪp/",
       "ipaUs": "/ˈspɔːts.mən.ʃɪp/",
@@ -9065,7 +9247,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 751,
+      "id": 3224,
       "word": "Physical activity",
       "phonetic": "/ˈfɪz.ɪ.kəl ækˈtɪv.ɪ.ti/",
       "ipaUs": "/ˈfɪz.ɪ.kəl ækˈtɪv.ɪ.ti/",
@@ -9077,7 +9259,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 752,
+      "id": 3225,
       "word": "Endurance",
       "phonetic": "/ɪnˈdjʊə.rəns/",
       "ipaUs": "/ɪnˈdjʊə.rəns/",
@@ -9089,7 +9271,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 753,
+      "id": 3226,
       "word": "Tactic",
       "phonetic": "/ˈtæk.tɪk/",
       "ipaUs": "/ˈtæk.tɪk/",
@@ -9101,7 +9283,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 754,
+      "id": 3227,
       "word": "Victory",
       "phonetic": "/ˈvɪk.tər.i/",
       "ipaUs": "/ˈvɪk.tər.i/",
@@ -9113,9 +9295,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "31": [
+  "33": [
     {
-      "id": 755,
+      "id": 3301,
       "word": "Entertainment",
       "phonetic": "/ˌen.təˈteɪn.mənt/",
       "ipaUs": "/ˌen.təˈteɪn.mənt/",
@@ -9127,7 +9309,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 756,
+      "id": 3302,
       "word": "Movie",
       "phonetic": "/ˈmuː.vi/",
       "ipaUs": "/ˈmuː.vi/",
@@ -9139,7 +9321,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 757,
+      "id": 3303,
       "word": "Theater",
       "phonetic": "/ˈθɪə.tər/",
       "ipaUs": "/ˈθɪə.tər/",
@@ -9151,7 +9333,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 758,
+      "id": 3304,
       "word": "Concert",
       "phonetic": "/ˈkɒn.sɜːt/",
       "ipaUs": "/ˈkɒn.sɜːt/",
@@ -9163,7 +9345,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 759,
+      "id": 3305,
       "word": "Festival",
       "phonetic": "/ˈfes.tɪ.vəl/",
       "ipaUs": "/ˈfes.tɪ.vəl/",
@@ -9175,7 +9357,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 760,
+      "id": 3306,
       "word": "Exhibition",
       "phonetic": "/ˌek.sɪˈbɪʃ.ən/",
       "ipaUs": "/ˌek.sɪˈbɪʃ.ən/",
@@ -9187,7 +9369,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 761,
+      "id": 3307,
       "word": "Show",
       "phonetic": "/ʃəʊ/",
       "ipaUs": "/ʃəʊ/",
@@ -9199,7 +9381,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 762,
+      "id": 3308,
       "word": "Performance",
       "phonetic": "/pəˈfɔː.məns/",
       "ipaUs": "/pəˈfɔː.məns/",
@@ -9211,7 +9393,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 763,
+      "id": 3309,
       "word": "Audience",
       "phonetic": "/ˈɔː.di.əns/",
       "ipaUs": "/ˈɔː.di.əns/",
@@ -9223,7 +9405,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 764,
+      "id": 3310,
       "word": "Celebrity",
       "phonetic": "/səˈleb.rə.ti/",
       "ipaUs": "/səˈleb.rə.ti/",
@@ -9235,7 +9417,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 765,
+      "id": 3311,
       "word": "Actor",
       "phonetic": "/ˈæk.tər/",
       "ipaUs": "/ˈæk.tər/",
@@ -9247,7 +9429,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 766,
+      "id": 3312,
       "word": "Actress",
       "phonetic": "/ˈæk.trəs/",
       "ipaUs": "/ˈæk.trəs/",
@@ -9259,7 +9441,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 767,
+      "id": 3313,
       "word": "Director",
       "phonetic": "/dəˈrek.tər/",
       "ipaUs": "/dəˈrek.tər/",
@@ -9271,7 +9453,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 768,
+      "id": 3314,
       "word": "Ticket",
       "phonetic": "/ˈtɪk.ɪt/",
       "ipaUs": "/ˈtɪk.ɪt/",
@@ -9283,7 +9465,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 769,
+      "id": 3315,
       "word": "Box office",
       "phonetic": "/ˈbɒks ˌɒf.ɪs/",
       "ipaUs": "/ˈbɒks ˌɒf.ɪs/",
@@ -9295,7 +9477,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 770,
+      "id": 3316,
       "word": "Comedy",
       "phonetic": "/ˈkɒm.ə.di/",
       "ipaUs": "/ˈkɒm.ə.di/",
@@ -9307,7 +9489,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 771,
+      "id": 3317,
       "word": "Drama",
       "phonetic": "/ˈdrɑː.mə/",
       "ipaUs": "/ˈdrɑː.mə/",
@@ -9319,7 +9501,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 772,
+      "id": 3318,
       "word": "Animation",
       "phonetic": "/ˌæn.ɪˈmeɪ.ʃən/",
       "ipaUs": "/ˌæn.ɪˈmeɪ.ʃən/",
@@ -9331,7 +9513,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 773,
+      "id": 3319,
       "word": "Documentary",
       "phonetic": "/ˌdɒk.jəˈmen.tər.i/",
       "ipaUs": "/ˌdɒk.jəˈmen.tər.i/",
@@ -9343,7 +9525,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 774,
+      "id": 3320,
       "word": "Musician",
       "phonetic": "/mjuːˈzɪʃ.ən/",
       "ipaUs": "/mjuːˈzɪʃ.ən/",
@@ -9355,7 +9537,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 775,
+      "id": 3321,
       "word": "Orchestra",
       "phonetic": "/ˈɔː.kɪ.strə/",
       "ipaUs": "/ˈɔː.kɪ.strə/",
@@ -9367,7 +9549,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 776,
+      "id": 3322,
       "word": "Entertainment industry",
       "phonetic": "/ˌen.təˈteɪn.mənt ˈɪn.də.stri/",
       "ipaUs": "/ˌen.təˈteɪn.mənt ˈɪn.də.stri/",
@@ -9379,7 +9561,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 777,
+      "id": 3323,
       "word": "Nightclub",
       "phonetic": "/ˈnaɪt.klʌb/",
       "ipaUs": "/ˈnaɪt.klʌb/",
@@ -9391,7 +9573,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 778,
+      "id": 3324,
       "word": "Amusement park",
       "phonetic": "/əˈmjuːz.mənt ˌpɑːk/",
       "ipaUs": "/əˈmjuːz.mənt ˌpɑːk/",
@@ -9403,7 +9585,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 779,
+      "id": 3325,
       "word": "Streaming service",
       "phonetic": "/ˈstriː.mɪŋ ˌsɜː.vɪs/",
       "ipaUs": "/ˈstriː.mɪŋ ˌsɜː.vɪs/",
@@ -9415,7 +9597,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 780,
+      "id": 3326,
       "word": "Game show",
       "phonetic": "/ˈɡeɪm ˌʃəʊ/",
       "ipaUs": "/ˈɡeɪm ˌʃəʊ/",
@@ -9427,7 +9609,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 781,
+      "id": 3327,
       "word": "Fan",
       "phonetic": "/fæn/",
       "ipaUs": "/fæn/",
@@ -9439,7 +9621,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 782,
+      "id": 3328,
       "word": "Host",
       "phonetic": "/həʊst/",
       "ipaUs": "/həʊst/",
@@ -9451,9 +9633,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "32": [
+  "34": [
     {
-      "id": 783,
+      "id": 3401,
       "word": "Art",
       "phonetic": "/ɑːt/",
       "ipaUs": "/ɑːt/",
@@ -9465,7 +9647,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 784,
+      "id": 3402,
       "word": "Artist",
       "phonetic": "/ˈɑː.tɪst/",
       "ipaUs": "/ˈɑː.tɪst/",
@@ -9477,7 +9659,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 785,
+      "id": 3403,
       "word": "Painting",
       "phonetic": "/ˈpeɪn.tɪŋ/",
       "ipaUs": "/ˈpeɪn.tɪŋ/",
@@ -9489,7 +9671,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 786,
+      "id": 3404,
       "word": "Sculpture",
       "phonetic": "/ˈskʌlp.tʃər/",
       "ipaUs": "/ˈskʌlp.tʃər/",
@@ -9501,7 +9683,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 787,
+      "id": 3405,
       "word": "Exhibition",
       "phonetic": "/ˌek.sɪˈbɪʃ.ən/",
       "ipaUs": "/ˌek.sɪˈbɪʃ.ən/",
@@ -9513,7 +9695,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 788,
+      "id": 3406,
       "word": "Canvas",
       "phonetic": "/ˈkæn.vəs/",
       "ipaUs": "/ˈkæn.vəs/",
@@ -9525,7 +9707,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 789,
+      "id": 3407,
       "word": "Portrait",
       "phonetic": "/ˈpɔː.trət/",
       "ipaUs": "/ˈpɔː.trət/",
@@ -9537,7 +9719,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 790,
+      "id": 3408,
       "word": "Abstract",
       "phonetic": "/ˈæb.strækt/",
       "ipaUs": "/ˈæb.strækt/",
@@ -9549,7 +9731,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 791,
+      "id": 3409,
       "word": "Mural",
       "phonetic": "/ˈmjʊə.rəl/",
       "ipaUs": "/ˈmjʊə.rəl/",
@@ -9561,7 +9743,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 792,
+      "id": 3410,
       "word": "Gallery",
       "phonetic": "/ˈɡæl.ər.i/",
       "ipaUs": "/ˈɡæl.ər.i/",
@@ -9573,7 +9755,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 793,
+      "id": 3411,
       "word": "Calligraphy",
       "phonetic": "/kəˈlɪɡ.rə.fi/",
       "ipaUs": "/kəˈlɪɡ.rə.fi/",
@@ -9585,7 +9767,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 794,
+      "id": 3412,
       "word": "Masterpiece",
       "phonetic": "/ˈmɑː.stə.piːs/",
       "ipaUs": "/ˈmɑː.stə.piːs/",
@@ -9597,7 +9779,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 795,
+      "id": 3413,
       "word": "Fresco",
       "phonetic": "/ˈfres.kəʊ/",
       "ipaUs": "/ˈfres.kəʊ/",
@@ -9609,7 +9791,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 796,
+      "id": 3414,
       "word": "Contemporary",
       "phonetic": "/kənˈtem.pər.ər.i/",
       "ipaUs": "/kənˈtem.pər.ər.i/",
@@ -9621,7 +9803,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 797,
+      "id": 3415,
       "word": "Aesthetic",
       "phonetic": "/iːsˈθet.ɪk/",
       "ipaUs": "/iːsˈθet.ɪk/",
@@ -9633,7 +9815,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 798,
+      "id": 3416,
       "word": "Carving",
       "phonetic": "/ˈkɑː.vɪŋ/",
       "ipaUs": "/ˈkɑː.vɪŋ/",
@@ -9645,7 +9827,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 799,
+      "id": 3417,
       "word": "Museum",
       "phonetic": "/mjuːˈziː.əm/",
       "ipaUs": "/mjuːˈziː.əm/",
@@ -9657,7 +9839,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 800,
+      "id": 3418,
       "word": "Craft",
       "phonetic": "/krɑːft/",
       "ipaUs": "/krɑːft/",
@@ -9669,7 +9851,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 801,
+      "id": 3419,
       "word": "Pottery",
       "phonetic": "/ˈpɒt.ər.i/",
       "ipaUs": "/ˈpɒt.ər.i/",
@@ -9681,7 +9863,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 802,
+      "id": 3420,
       "word": "Drawing",
       "phonetic": "/ˈdrɔː.ɪŋ/",
       "ipaUs": "/ˈdrɔː.ɪŋ/",
@@ -9693,7 +9875,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 803,
+      "id": 3421,
       "word": "Engraving",
       "phonetic": "/ɪnˈɡreɪ.vɪŋ/",
       "ipaUs": "/ɪnˈɡreɪ.vɪŋ/",
@@ -9705,7 +9887,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 804,
+      "id": 3422,
       "word": "Installation art",
       "phonetic": "/ˌɪn.stəˈleɪ.ʃən ˌɑːt/",
       "ipaUs": "/ˌɪn.stəˈleɪ.ʃən ˌɑːt/",
@@ -9717,7 +9899,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 805,
+      "id": 3423,
       "word": "Medium",
       "phonetic": "/ˈmiː.di.əm/",
       "ipaUs": "/ˈmiː.di.əm/",
@@ -9729,7 +9911,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 806,
+      "id": 3424,
       "word": "Inspiration",
       "phonetic": "/ˌɪn.spɪˈreɪ.ʃən/",
       "ipaUs": "/ˌɪn.spɪˈreɪ.ʃən/",
@@ -9741,7 +9923,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 807,
+      "id": 3425,
       "word": "Art critic",
       "phonetic": "/ɑːt ˈkrɪt.ɪk/",
       "ipaUs": "/ɑːt ˈkrɪt.ɪk/",
@@ -9753,7 +9935,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 808,
+      "id": 3426,
       "word": "Palette",
       "phonetic": "/ˈpæl.ət/",
       "ipaUs": "/ˈpæl.ət/",
@@ -9765,7 +9947,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 809,
+      "id": 3427,
       "word": "Fine art",
       "phonetic": "/ˌfaɪn ˈɑːt/",
       "ipaUs": "/ˌfaɪn ˈɑːt/",
@@ -9777,7 +9959,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 810,
+      "id": 3428,
       "word": "Performing arts",
       "phonetic": "/pəˈfɔː.mɪŋ ɑːts/",
       "ipaUs": "/pəˈfɔː.mɪŋ ɑːts/",
@@ -9789,9 +9971,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "33": [
+  "35": [
     {
-      "id": 811,
+      "id": 3501,
       "word": "Fashion",
       "phonetic": "/ˈfæʃ.ən/",
       "ipaUs": "/ˈfæʃ.ən/",
@@ -9803,7 +9985,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 812,
+      "id": 3502,
       "word": "Designer",
       "phonetic": "/dɪˈzaɪ.nər/",
       "ipaUs": "/dɪˈzaɪ.nər/",
@@ -9815,7 +9997,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 813,
+      "id": 3503,
       "word": "Brand",
       "phonetic": "/brænd/",
       "ipaUs": "/brænd/",
@@ -9827,7 +10009,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 814,
+      "id": 3504,
       "word": "Trend",
       "phonetic": "/trend/",
       "ipaUs": "/trend/",
@@ -9839,7 +10021,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 815,
+      "id": 3505,
       "word": "Outfit",
       "phonetic": "/ˈaʊt.fɪt/",
       "ipaUs": "/ˈaʊt.fɪt/",
@@ -9851,7 +10033,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 816,
+      "id": 3506,
       "word": "Style",
       "phonetic": "/staɪl/",
       "ipaUs": "/staɪl/",
@@ -9863,7 +10045,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 817,
+      "id": 3507,
       "word": "Wardrobe",
       "phonetic": "/ˈwɔː.drəʊb/",
       "ipaUs": "/ˈwɔː.drəʊb/",
@@ -9875,7 +10057,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 818,
+      "id": 3508,
       "word": "Accessory",
       "phonetic": "/əkˈses.ər.i/",
       "ipaUs": "/əkˈses.ər.i/",
@@ -9887,7 +10069,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 819,
+      "id": 3509,
       "word": "Couture",
       "phonetic": "/kuːˈtjʊər/",
       "ipaUs": "/kuːˈtjʊər/",
@@ -9899,7 +10081,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 820,
+      "id": 3510,
       "word": "Fabric",
       "phonetic": "/ˈfæb.rɪk/",
       "ipaUs": "/ˈfæb.rɪk/",
@@ -9911,7 +10093,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 821,
+      "id": 3511,
       "word": "Tailor",
       "phonetic": "/ˈteɪ.lər/",
       "ipaUs": "/ˈteɪ.lər/",
@@ -9923,7 +10105,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 822,
+      "id": 3512,
       "word": "Runway",
       "phonetic": "/ˈrʌn.weɪ/",
       "ipaUs": "/ˈrʌn.weɪ/",
@@ -9935,7 +10117,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 823,
+      "id": 3513,
       "word": "Model",
       "phonetic": "/ˈmɒd.əl/",
       "ipaUs": "/ˈmɒd.əl/",
@@ -9947,7 +10129,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 824,
+      "id": 3514,
       "word": "Boutique",
       "phonetic": "/buːˈtiːk/",
       "ipaUs": "/buːˈtiːk/",
@@ -9959,7 +10141,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 825,
+      "id": 3515,
       "word": "Designer label",
       "phonetic": "/dɪˈzaɪ.nər ˈleɪ.bəl/",
       "ipaUs": "/dɪˈzaɪ.nər ˈleɪ.bəl/",
@@ -9971,7 +10153,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 826,
+      "id": 3516,
       "word": "Garment",
       "phonetic": "/ˈɡɑː.mənt/",
       "ipaUs": "/ˈɡɑː.mənt/",
@@ -9983,7 +10165,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 827,
+      "id": 3517,
       "word": "Trendy",
       "phonetic": "/ˈtren.di/",
       "ipaUs": "/ˈtren.di/",
@@ -9995,7 +10177,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 828,
+      "id": 3518,
       "word": "Vintage",
       "phonetic": "/ˈvɪn.tɪdʒ/",
       "ipaUs": "/ˈvɪn.tɪdʒ/",
@@ -10007,7 +10189,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 829,
+      "id": 3519,
       "word": "Casual",
       "phonetic": "/ˈkæʒ.u.əl/",
       "ipaUs": "/ˈkæʒ.u.əl/",
@@ -10019,7 +10201,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 830,
+      "id": 3520,
       "word": "Formal",
       "phonetic": "/ˈfɔː.məl/",
       "ipaUs": "/ˈfɔː.məl/",
@@ -10031,7 +10213,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 831,
+      "id": 3521,
       "word": "Fitting room",
       "phonetic": "/ˈfɪt.ɪŋ ˌruːm/",
       "ipaUs": "/ˈfɪt.ɪŋ ˌruːm/",
@@ -10043,7 +10225,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 832,
+      "id": 3522,
       "word": "Pattern",
       "phonetic": "/ˈpæt.ən/",
       "ipaUs": "/ˈpæt.ən/",
@@ -10055,7 +10237,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 833,
+      "id": 3523,
       "word": "Seasonal",
       "phonetic": "/ˈsiː.zən.əl/",
       "ipaUs": "/ˈsiː.zən.əl/",
@@ -10067,7 +10249,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 834,
+      "id": 3524,
       "word": "Embroidery",
       "phonetic": "/ɪmˈbrɔɪ.dər.i/",
       "ipaUs": "/ɪmˈbrɔɪ.dər.i/",
@@ -10079,7 +10261,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 835,
+      "id": 3525,
       "word": "Hem",
       "phonetic": "/hem/",
       "ipaUs": "/hem/",
@@ -10091,7 +10273,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 836,
+      "id": 3526,
       "word": "Knitwear",
       "phonetic": "/ˈnɪt.weər/",
       "ipaUs": "/ˈnɪt.weər/",
@@ -10103,7 +10285,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 837,
+      "id": 3527,
       "word": "Fast fashion",
       "phonetic": "/fɑːst ˈfæʃ.ən/",
       "ipaUs": "/fɑːst ˈfæʃ.ən/",
@@ -10115,7 +10297,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 838,
+      "id": 3528,
       "word": "High heels",
       "phonetic": "/ˌhaɪ ˈhiːlz/",
       "ipaUs": "/ˌhaɪ ˈhiːlz/",
@@ -10127,7 +10309,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 839,
+      "id": 3529,
       "word": "Accessories",
       "phonetic": "/əkˈses.ər.iz/",
       "ipaUs": "/əkˈses.ər.iz/",
@@ -10139,7 +10321,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 840,
+      "id": 3530,
       "word": "Silk",
       "phonetic": "/sɪlk/",
       "ipaUs": "/sɪlk/",
@@ -10151,9 +10333,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "34": [
+  "36": [
     {
-      "id": 841,
+      "id": 3601,
       "word": "Event",
       "phonetic": "/ɪˈvent/",
       "ipaUs": "/ɪˈvent/",
@@ -10165,7 +10347,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 842,
+      "id": 3602,
       "word": "Organizer",
       "phonetic": "/ˈɔː.ɡən.aɪ.zər/",
       "ipaUs": "/ˈɔː.ɡən.aɪ.zər/",
@@ -10177,7 +10359,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 843,
+      "id": 3603,
       "word": "Venue",
       "phonetic": "/ˈven.juː/",
       "ipaUs": "/ˈven.juː/",
@@ -10189,7 +10371,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 844,
+      "id": 3604,
       "word": "Guest list",
       "phonetic": "/ɡest lɪst/",
       "ipaUs": "/ɡest lɪst/",
@@ -10201,7 +10383,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 845,
+      "id": 3605,
       "word": "Invitation",
       "phonetic": "/ˌɪn.vɪˈteɪ.ʃən/",
       "ipaUs": "/ˌɪn.vɪˈteɪ.ʃən/",
@@ -10213,7 +10395,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 846,
+      "id": 3606,
       "word": "Attendee",
       "phonetic": "/əˈten.diː/",
       "ipaUs": "/əˈten.diː/",
@@ -10225,7 +10407,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 847,
+      "id": 3607,
       "word": "Agenda",
       "phonetic": "/əˈdʒen.də/",
       "ipaUs": "/əˈdʒen.də/",
@@ -10237,7 +10419,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 848,
+      "id": 3608,
       "word": "Conference",
       "phonetic": "/ˈkɒn.fər.əns/",
       "ipaUs": "/ˈkɒn.fər.əns/",
@@ -10249,7 +10431,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 849,
+      "id": 3609,
       "word": "Seminar",
       "phonetic": "/ˈsem.ɪ.nɑːr/",
       "ipaUs": "/ˈsem.ɪ.nɑːr/",
@@ -10261,7 +10443,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 850,
+      "id": 3610,
       "word": "Workshop",
       "phonetic": "/ˈwɜːk.ʃɒp/",
       "ipaUs": "/ˈwɜːk.ʃɒp/",
@@ -10273,7 +10455,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 851,
+      "id": 3611,
       "word": "Exhibit",
       "phonetic": "/ɪɡˈzɪb.ɪt/",
       "ipaUs": "/ɪɡˈzɪb.ɪt/",
@@ -10285,7 +10467,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 852,
+      "id": 3612,
       "word": "Reception",
       "phonetic": "/rɪˈsep.ʃən/",
       "ipaUs": "/rɪˈsep.ʃən/",
@@ -10297,7 +10479,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 853,
+      "id": 3613,
       "word": "Catering",
       "phonetic": "/ˈkeɪ.tər.ɪŋ/",
       "ipaUs": "/ˈkeɪ.tər.ɪŋ/",
@@ -10309,7 +10491,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 854,
+      "id": 3614,
       "word": "Keynote speaker",
       "phonetic": "/ˈkiː.nəʊt ˈspiː.kər/",
       "ipaUs": "/ˈkiː.nəʊt ˈspiː.kər/",
@@ -10321,7 +10503,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 855,
+      "id": 3615,
       "word": "Sponsor",
       "phonetic": "/ˈspɒn.sər/",
       "ipaUs": "/ˈspɒn.sər/",
@@ -10333,7 +10515,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 856,
+      "id": 3616,
       "word": "Program",
       "phonetic": "/ˈprəʊ.ɡræm/",
       "ipaUs": "/ˈprəʊ.ɡræm/",
@@ -10345,7 +10527,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 857,
+      "id": 3617,
       "word": "Schedule",
       "phonetic": "/ˈʃed.juːl/ or /ˈskedʒ.uːl/",
       "ipaUs": "/ˈʃed.juːl/ or /ˈskedʒ.uːl/",
@@ -10357,7 +10539,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 858,
+      "id": 3618,
       "word": "RSVP",
       "phonetic": "/ˌɑːr.es.viːˈpiː/",
       "ipaUs": "/ˌɑːr.es.viːˈpiː/",
@@ -10369,7 +10551,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 859,
+      "id": 3619,
       "word": "Gala",
       "phonetic": "/ˈɡɑː.lə/",
       "ipaUs": "/ˈɡɑː.lə/",
@@ -10381,7 +10563,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 860,
+      "id": 3620,
       "word": "Opening remarks",
       "phonetic": "/ˈəʊ.pən.ɪŋ rɪˈmɑːks/",
       "ipaUs": "/ˈəʊ.pən.ɪŋ rɪˈmɑːks/",
@@ -10393,7 +10575,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 861,
+      "id": 3621,
       "word": "Closing remarks",
       "phonetic": "/ˈkləʊ.zɪŋ rɪˈmɑːks/",
       "ipaUs": "/ˈkləʊ.zɪŋ rɪˈmɑːks/",
@@ -10405,7 +10587,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 862,
+      "id": 3622,
       "word": "Logistics",
       "phonetic": "/ləˈdʒɪs.tɪks/",
       "ipaUs": "/ləˈdʒɪs.tɪks/",
@@ -10417,7 +10599,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 863,
+      "id": 3623,
       "word": "Networking",
       "phonetic": "/ˈnet.wɜː.kɪŋ/",
       "ipaUs": "/ˈnet.wɜː.kɪŋ/",
@@ -10429,7 +10611,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 864,
+      "id": 3624,
       "word": "Stage setup",
       "phonetic": "/steɪdʒ ˈset.ʌp/",
       "ipaUs": "/steɪdʒ ˈset.ʌp/",
@@ -10441,7 +10623,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 865,
+      "id": 3625,
       "word": "Registration desk",
       "phonetic": "/ˌredʒ.ɪˈstreɪ.ʃən desk/",
       "ipaUs": "/ˌredʒ.ɪˈstreɪ.ʃən desk/",
@@ -10453,7 +10635,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 866,
+      "id": 3626,
       "word": "Event coordinator",
       "phonetic": "/ɪˈvent kəʊˈɔː.dɪ.neɪ.tər/",
       "ipaUs": "/ɪˈvent kəʊˈɔː.dɪ.neɪ.tər/",
@@ -10465,9 +10647,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "35": [
+  "37": [
     {
-      "id": 867,
+      "id": 3701,
       "word": "Media",
       "phonetic": "/ˈmiː.di.ə/",
       "ipaUs": "/ˈmiː.di.ə/",
@@ -10479,7 +10661,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 868,
+      "id": 3702,
       "word": "Journalist",
       "phonetic": "/ˈdʒɜː.nə.lɪst/",
       "ipaUs": "/ˈdʒɜː.nə.lɪst/",
@@ -10491,7 +10673,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 869,
+      "id": 3703,
       "word": "Broadcast",
       "phonetic": "/ˈbrɔːd.kɑːst/",
       "ipaUs": "/ˈbrɔːd.kɑːst/",
@@ -10503,7 +10685,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 870,
+      "id": 3704,
       "word": "Press",
       "phonetic": "/pres/",
       "ipaUs": "/pres/",
@@ -10515,7 +10697,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 871,
+      "id": 3705,
       "word": "Advertisement",
       "phonetic": "/ədˈvɜː.tɪs.mənt/",
       "ipaUs": "/ədˈvɜː.tɪs.mənt/",
@@ -10527,7 +10709,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 872,
+      "id": 3706,
       "word": "Social media",
       "phonetic": "/ˌsəʊ.ʃəl ˈmiː.di.ə/",
       "ipaUs": "/ˌsəʊ.ʃəl ˈmiː.di.ə/",
@@ -10539,7 +10721,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 873,
+      "id": 3707,
       "word": "News anchor",
       "phonetic": "/njuːz ˈæŋ.kər/",
       "ipaUs": "/njuːz ˈæŋ.kər/",
@@ -10551,7 +10733,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 874,
+      "id": 3708,
       "word": "Content",
       "phonetic": "/ˈkɒn.tent/",
       "ipaUs": "/ˈkɒn.tent/",
@@ -10563,7 +10745,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 875,
+      "id": 3709,
       "word": "Blog",
       "phonetic": "/blɒɡ/",
       "ipaUs": "/blɒɡ/",
@@ -10575,7 +10757,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 876,
+      "id": 3710,
       "word": "Podcast",
       "phonetic": "/ˈpɒd.kɑːst/",
       "ipaUs": "/ˈpɒd.kɑːst/",
@@ -10587,7 +10769,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 877,
+      "id": 3711,
       "word": "Article",
       "phonetic": "/ˈɑː.tɪ.kl/",
       "ipaUs": "/ˈɑː.tɪ.kl/",
@@ -10599,7 +10781,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 878,
+      "id": 3712,
       "word": "Editor",
       "phonetic": "/ˈed.ɪ.tər/",
       "ipaUs": "/ˈed.ɪ.tər/",
@@ -10611,7 +10793,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 879,
+      "id": 3713,
       "word": "Headline",
       "phonetic": "/ˈhed.laɪn/",
       "ipaUs": "/ˈhed.laɪn/",
@@ -10623,7 +10805,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 880,
+      "id": 3714,
       "word": "Column",
       "phonetic": "/ˈkɒl.əm/",
       "ipaUs": "/ˈkɒl.əm/",
@@ -10635,7 +10817,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 881,
+      "id": 3715,
       "word": "Circulation",
       "phonetic": "/ˌsɜː.kjəˈleɪ.ʃən/",
       "ipaUs": "/ˌsɜː.kjəˈleɪ.ʃən/",
@@ -10647,7 +10829,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 882,
+      "id": 3716,
       "word": "Coverage",
       "phonetic": "/ˈkʌv.ər.ɪdʒ/",
       "ipaUs": "/ˈkʌv.ər.ɪdʒ/",
@@ -10659,7 +10841,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 883,
+      "id": 3717,
       "word": "Streaming",
       "phonetic": "/ˈstriː.mɪŋ/",
       "ipaUs": "/ˈstriː.mɪŋ/",
@@ -10671,7 +10853,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 884,
+      "id": 3718,
       "word": "Press release",
       "phonetic": "/pres rɪˈliːs/",
       "ipaUs": "/pres rɪˈliːs/",
@@ -10683,7 +10865,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 885,
+      "id": 3719,
       "word": "Copyright",
       "phonetic": "/ˈkɒp.i.raɪt/",
       "ipaUs": "/ˈkɒp.i.raɪt/",
@@ -10695,7 +10877,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 886,
+      "id": 3720,
       "word": "Public relations",
       "phonetic": "/ˌpʌb.lɪk rɪˈleɪ.ʃənz/",
       "ipaUs": "/ˌpʌb.lɪk rɪˈleɪ.ʃənz/",
@@ -10707,7 +10889,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 887,
+      "id": 3721,
       "word": "Advertisement agency",
       "phonetic": "/ədˈvɜː.tɪs.mənt ˈeɪ.dʒən.si/",
       "ipaUs": "/ədˈvɜː.tɪs.mənt ˈeɪ.dʒən.si/",
@@ -10719,7 +10901,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 888,
+      "id": 3722,
       "word": "Viewer",
       "phonetic": "/ˈvjuː.ər/",
       "ipaUs": "/ˈvjuː.ər/",
@@ -10731,7 +10913,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 889,
+      "id": 3723,
       "word": "Rating",
       "phonetic": "/ˈreɪ.tɪŋ/",
       "ipaUs": "/ˈreɪ.tɪŋ/",
@@ -10743,7 +10925,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 890,
+      "id": 3724,
       "word": "Influencer",
       "phonetic": "/ˈɪn.flu.ən.sər/",
       "ipaUs": "/ˈɪn.flu.ən.sər/",
@@ -10755,7 +10937,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 891,
+      "id": 3725,
       "word": "Viral",
       "phonetic": "/ˈvaɪ.rəl/",
       "ipaUs": "/ˈvaɪ.rəl/",
@@ -10767,7 +10949,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 892,
+      "id": 3726,
       "word": "Campaign",
       "phonetic": "/kæmˈpeɪn/",
       "ipaUs": "/kæmˈpeɪn/",
@@ -10779,7 +10961,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 893,
+      "id": 3727,
       "word": "Fact-checking",
       "phonetic": "/fækt ˈtʃek.ɪŋ/",
       "ipaUs": "/fækt ˈtʃek.ɪŋ/",
@@ -10791,7 +10973,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 894,
+      "id": 3728,
       "word": "Journalism",
       "phonetic": "/ˈdʒɜː.nə.lɪ.zəm/",
       "ipaUs": "/ˈdʒɜː.nə.lɪ.zəm/",
@@ -10803,9 +10985,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "36": [
+  "38": [
     {
-      "id": 895,
+      "id": 3801,
       "word": "Telephone",
       "phonetic": "/ˈtel.ɪ.fəʊn/",
       "ipaUs": "/ˈtel.ɪ.fəʊn/",
@@ -10817,7 +10999,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 896,
+      "id": 3802,
       "word": "Smartphone",
       "phonetic": "/ˈsmɑːt.fəʊn/",
       "ipaUs": "/ˈsmɑːt.fəʊn/",
@@ -10829,7 +11011,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 897,
+      "id": 3803,
       "word": "Landline",
       "phonetic": "/ˈlænd.laɪn/",
       "ipaUs": "/ˈlænd.laɪn/",
@@ -10841,7 +11023,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 898,
+      "id": 3804,
       "word": "Mobile phone",
       "phonetic": "/ˈməʊ.baɪl fəʊn/",
       "ipaUs": "/ˈməʊ.baɪl fəʊn/",
@@ -10853,7 +11035,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 899,
+      "id": 3805,
       "word": "Signal",
       "phonetic": "/ˈsɪɡ.nəl/",
       "ipaUs": "/ˈsɪɡ.nəl/",
@@ -10865,7 +11047,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 900,
+      "id": 3806,
       "word": "Network",
       "phonetic": "/ˈnet.wɜːk/",
       "ipaUs": "/ˈnet.wɜːk/",
@@ -10877,7 +11059,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 901,
+      "id": 3807,
       "word": "Voicemail",
       "phonetic": "/ˈvɔɪs.meɪl/",
       "ipaUs": "/ˈvɔɪs.meɪl/",
@@ -10889,7 +11071,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 902,
+      "id": 3808,
       "word": "Dial",
       "phonetic": "/ˈdaɪ.əl/",
       "ipaUs": "/ˈdaɪ.əl/",
@@ -10901,7 +11083,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 903,
+      "id": 3809,
       "word": "Extension",
       "phonetic": "/ɪkˈsten.ʃən/",
       "ipaUs": "/ɪkˈsten.ʃən/",
@@ -10913,7 +11095,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 904,
+      "id": 3810,
       "word": "Caller",
       "phonetic": "/ˈkɔː.lər/",
       "ipaUs": "/ˈkɔː.lər/",
@@ -10925,7 +11107,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 905,
+      "id": 3811,
       "word": "Receiver",
       "phonetic": "/rɪˈsiː.vər/",
       "ipaUs": "/rɪˈsiː.vər/",
@@ -10937,7 +11119,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 906,
+      "id": 3812,
       "word": "Busy signal",
       "phonetic": "/ˈbɪz.i ˈsɪɡ.nəl/",
       "ipaUs": "/ˈbɪz.i ˈsɪɡ.nəl/",
@@ -10949,7 +11131,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 907,
+      "id": 3813,
       "word": "Ringtone",
       "phonetic": "/ˈrɪŋ.təʊn/",
       "ipaUs": "/ˈrɪŋ.təʊn/",
@@ -10961,7 +11143,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 908,
+      "id": 3814,
       "word": "Missed call",
       "phonetic": "/mɪst kɔːl/",
       "ipaUs": "/mɪst kɔːl/",
@@ -10973,7 +11155,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 909,
+      "id": 3815,
       "word": "Call forwarding",
       "phonetic": "/ˈkɔːl ˌfɔː.wəd.ɪŋ/",
       "ipaUs": "/ˈkɔːl ˌfɔː.wəd.ɪŋ/",
@@ -10985,7 +11167,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 910,
+      "id": 3816,
       "word": "Text message",
       "phonetic": "/tekst ˈmes.ɪdʒ/",
       "ipaUs": "/tekst ˈmes.ɪdʒ/",
@@ -10997,7 +11179,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 911,
+      "id": 3817,
       "word": "Conference call",
       "phonetic": "/ˈkɒn.fər.əns ˌkɔːl/",
       "ipaUs": "/ˈkɒn.fər.əns ˌkɔːl/",
@@ -11009,7 +11191,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 912,
+      "id": 3818,
       "word": "Speakerphone",
       "phonetic": "/ˈspiː.kə.fəʊn/",
       "ipaUs": "/ˈspiː.kə.fəʊn/",
@@ -11021,7 +11203,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 913,
+      "id": 3819,
       "word": "Contact list",
       "phonetic": "/ˈkɒn.tækt lɪst/",
       "ipaUs": "/ˈkɒn.tækt lɪst/",
@@ -11033,7 +11215,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 914,
+      "id": 3820,
       "word": "Phone number",
       "phonetic": "/fəʊn ˈnʌm.bər/",
       "ipaUs": "/fəʊn ˈnʌm.bər/",
@@ -11045,7 +11227,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 915,
+      "id": 3821,
       "word": "Call log",
       "phonetic": "/kɔːl lɒɡ/",
       "ipaUs": "/kɔːl lɒɡ/",
@@ -11057,7 +11239,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 916,
+      "id": 3822,
       "word": "Recharge",
       "phonetic": "/ˌriːˈtʃɑːdʒ/",
       "ipaUs": "/ˌriːˈtʃɑːdʒ/",
@@ -11069,7 +11251,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 917,
+      "id": 3823,
       "word": "SIM card",
       "phonetic": "/ˈsɪm ˌkɑːd/",
       "ipaUs": "/ˈsɪm ˌkɑːd/",
@@ -11081,7 +11263,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 918,
+      "id": 3824,
       "word": "Data plan",
       "phonetic": "/ˈdeɪ.tə ˌplæn/",
       "ipaUs": "/ˈdeɪ.tə ˌplæn/",
@@ -11093,7 +11275,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 919,
+      "id": 3825,
       "word": "Call center",
       "phonetic": "/ˈkɔːl ˌsen.tər/",
       "ipaUs": "/ˈkɔːl ˌsen.tər/",
@@ -11105,7 +11287,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 920,
+      "id": 3826,
       "word": "Voice recognition",
       "phonetic": "/ˈvɔɪs ˌrek.əɡˈnɪʃ.ən/",
       "ipaUs": "/ˈvɔɪs ˌrek.əɡˈnɪʃ.ən/",
@@ -11117,7 +11299,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 921,
+      "id": 3827,
       "word": "Bluetooth",
       "phonetic": "/ˈbluː.tuːθ/",
       "ipaUs": "/ˈbluː.tuːθ/",
@@ -11129,7 +11311,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 922,
+      "id": 3828,
       "word": "Charger",
       "phonetic": "/ˈtʃɑː.dʒər/",
       "ipaUs": "/ˈtʃɑː.dʒər/",
@@ -11141,7 +11323,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 923,
+      "id": 3829,
       "word": "Call waiting",
       "phonetic": "/kɔːl ˈweɪ.tɪŋ/",
       "ipaUs": "/kɔːl ˈweɪ.tɪŋ/",
@@ -11153,9 +11335,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "37": [
+  "39": [
     {
-      "id": 924,
+      "id": 3901,
       "word": "Agriculture",
       "phonetic": "/ˈæɡ.rɪ.kʌl.tʃər/",
       "ipaUs": "/ˈæɡ.rɪ.kʌl.tʃər/",
@@ -11167,7 +11349,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 925,
+      "id": 3902,
       "word": "Farmer",
       "phonetic": "/ˈfɑː.mər/",
       "ipaUs": "/ˈfɑː.mər/",
@@ -11179,7 +11361,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 926,
+      "id": 3903,
       "word": "Crop",
       "phonetic": "/krɒp/",
       "ipaUs": "/krɒp/",
@@ -11191,7 +11373,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 927,
+      "id": 3904,
       "word": "Harvest",
       "phonetic": "/ˈhɑː.vɪst/",
       "ipaUs": "/ˈhɑː.vɪst/",
@@ -11203,7 +11385,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 928,
+      "id": 3905,
       "word": "Livestock",
       "phonetic": "/ˈlaɪv.stɒk/",
       "ipaUs": "/ˈlaɪv.stɒk/",
@@ -11215,7 +11397,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 929,
+      "id": 3906,
       "word": "Irrigation",
       "phonetic": "/ˌɪr.ɪˈɡeɪ.ʃən/",
       "ipaUs": "/ˌɪr.ɪˈɡeɪ.ʃən/",
@@ -11227,7 +11409,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 930,
+      "id": 3907,
       "word": "Fertilizer",
       "phonetic": "/ˈfɜː.tɪ.laɪ.zər/",
       "ipaUs": "/ˈfɜː.tɪ.laɪ.zər/",
@@ -11239,7 +11421,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 931,
+      "id": 3908,
       "word": "Pesticide",
       "phonetic": "/ˈpes.tɪ.saɪd/",
       "ipaUs": "/ˈpes.tɪ.saɪd/",
@@ -11251,7 +11433,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 932,
+      "id": 3909,
       "word": "Seed",
       "phonetic": "/siːd/",
       "ipaUs": "/siːd/",
@@ -11263,7 +11445,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 933,
+      "id": 3910,
       "word": "Soil",
       "phonetic": "/sɔɪl/",
       "ipaUs": "/sɔɪl/",
@@ -11275,7 +11457,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 934,
+      "id": 3911,
       "word": "Tractor",
       "phonetic": "/ˈtræk.tər/",
       "ipaUs": "/ˈtræk.tər/",
@@ -11287,7 +11469,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 935,
+      "id": 3912,
       "word": "Greenhouse",
       "phonetic": "/ˈɡriːn.haʊs/",
       "ipaUs": "/ˈɡriːn.haʊs/",
@@ -11299,7 +11481,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 936,
+      "id": 3913,
       "word": "Organic farming",
       "phonetic": "/ɔːˈɡæn.ɪk ˈfɑː.mɪŋ/",
       "ipaUs": "/ɔːˈɡæn.ɪk ˈfɑː.mɪŋ/",
@@ -11311,7 +11493,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 937,
+      "id": 3914,
       "word": "Yield",
       "phonetic": "/jiːld/",
       "ipaUs": "/jiːld/",
@@ -11323,7 +11505,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 938,
+      "id": 3915,
       "word": "Agribusiness",
       "phonetic": "/ˈæɡ.rɪˌbɪz.nɪs/",
       "ipaUs": "/ˈæɡ.rɪˌbɪz.nɪs/",
@@ -11335,7 +11517,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 939,
+      "id": 3916,
       "word": "Plantation",
       "phonetic": "/plænˈteɪ.ʃən/",
       "ipaUs": "/plænˈteɪ.ʃən/",
@@ -11347,7 +11529,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 940,
+      "id": 3917,
       "word": "Sustainable farming",
       "phonetic": "/səˈsteɪ.nə.bəl ˈfɑː.mɪŋ/",
       "ipaUs": "/səˈsteɪ.nə.bəl ˈfɑː.mɪŋ/",
@@ -11359,7 +11541,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 941,
+      "id": 3918,
       "word": "Compost",
       "phonetic": "/ˈkɒm.pɒst/",
       "ipaUs": "/ˈkɒm.pɒst/",
@@ -11371,7 +11553,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 942,
+      "id": 3919,
       "word": "Dairy farm",
       "phonetic": "/ˈdeə.ri fɑːm/",
       "ipaUs": "/ˈdeə.ri fɑːm/",
@@ -11383,7 +11565,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 943,
+      "id": 3920,
       "word": "Grain",
       "phonetic": "/ɡreɪn/",
       "ipaUs": "/ɡreɪn/",
@@ -11395,7 +11577,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 944,
+      "id": 3921,
       "word": "Poultry",
       "phonetic": "/ˈpəʊl.tri/",
       "ipaUs": "/ˈpəʊl.tri/",
@@ -11407,7 +11589,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 945,
+      "id": 3922,
       "word": "Mechanization",
       "phonetic": "/ˌmek.ə.naɪˈzeɪ.ʃən/",
       "ipaUs": "/ˌmek.ə.naɪˈzeɪ.ʃən/",
@@ -11419,7 +11601,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 946,
+      "id": 3923,
       "word": "Crop rotation",
       "phonetic": "/krɒp rəʊˈteɪ.ʃən/",
       "ipaUs": "/krɒp rəʊˈteɪ.ʃən/",
@@ -11431,7 +11613,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 947,
+      "id": 3924,
       "word": "Fisheries",
       "phonetic": "/ˈfɪʃ.ər.iz/",
       "ipaUs": "/ˈfɪʃ.ər.iz/",
@@ -11443,7 +11625,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 948,
+      "id": 3925,
       "word": "Horticulture",
       "phonetic": "/ˈhɔː.tɪˌkʌl.tʃər/",
       "ipaUs": "/ˈhɔː.tɪˌkʌl.tʃər/",
@@ -11455,7 +11637,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 949,
+      "id": 3926,
       "word": "Weeding",
       "phonetic": "/ˈwiː.dɪŋ/",
       "ipaUs": "/ˈwiː.dɪŋ/",
@@ -11467,7 +11649,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 950,
+      "id": 3927,
       "word": "Subsidy",
       "phonetic": "/ˈsʌb.sɪ.di/",
       "ipaUs": "/ˈsʌb.sɪ.di/",
@@ -11479,7 +11661,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 951,
+      "id": 3928,
       "word": "Pest control",
       "phonetic": "/pest kənˈtrəʊl/",
       "ipaUs": "/pest kənˈtrəʊl/",
@@ -11491,9 +11673,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "38": [
+  "40": [
     {
-      "id": 952,
+      "id": 4001,
       "word": "Cuisine",
       "phonetic": "/kwɪˈziːn/",
       "ipaUs": "/kwɪˈziːn/",
@@ -11505,7 +11687,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 953,
+      "id": 4002,
       "word": "Beverage",
       "phonetic": "/ˈbev.ər.ɪdʒ/",
       "ipaUs": "/ˈbev.ər.ɪdʒ/",
@@ -11517,7 +11699,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 954,
+      "id": 4003,
       "word": "Meal",
       "phonetic": "/miːl/",
       "ipaUs": "/miːl/",
@@ -11529,7 +11711,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 955,
+      "id": 4004,
       "word": "Dish",
       "phonetic": "/dɪʃ/",
       "ipaUs": "/dɪʃ/",
@@ -11541,7 +11723,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 956,
+      "id": 4005,
       "word": "Dessert",
       "phonetic": "/dɪˈzɜːt/",
       "ipaUs": "/dɪˈzɜːt/",
@@ -11553,7 +11735,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 957,
+      "id": 4006,
       "word": "Ingredient",
       "phonetic": "/ɪnˈɡriː.di.ənt/",
       "ipaUs": "/ɪnˈɡriː.di.ənt/",
@@ -11565,7 +11747,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 958,
+      "id": 4007,
       "word": "Recipe",
       "phonetic": "/ˈres.ɪ.pi/",
       "ipaUs": "/ˈres.ɪ.pi/",
@@ -11577,7 +11759,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 959,
+      "id": 4008,
       "word": "Buffet",
       "phonetic": "/ˈbʊf.eɪ/ or /bəˈfeɪ/",
       "ipaUs": "/ˈbʊf.eɪ/ or /bəˈfeɪ/",
@@ -11589,7 +11771,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 960,
+      "id": 4009,
       "word": "Appetizer",
       "phonetic": "/ˈæp.ɪ.taɪ.zər/",
       "ipaUs": "/ˈæp.ɪ.taɪ.zər/",
@@ -11601,7 +11783,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 961,
+      "id": 4010,
       "word": "Main course",
       "phonetic": "/meɪn kɔːs/",
       "ipaUs": "/meɪn kɔːs/",
@@ -11613,7 +11795,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 962,
+      "id": 4011,
       "word": "Takeaway",
       "phonetic": "/ˈteɪk.ə.weɪ/",
       "ipaUs": "/ˈteɪk.ə.weɪ/",
@@ -11625,7 +11807,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 963,
+      "id": 4012,
       "word": "Fast food",
       "phonetic": "/fɑːst fuːd/",
       "ipaUs": "/fɑːst fuːd/",
@@ -11637,7 +11819,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 964,
+      "id": 4013,
       "word": "Fine dining",
       "phonetic": "/faɪn ˈdaɪ.nɪŋ/",
       "ipaUs": "/faɪn ˈdaɪ.nɪŋ/",
@@ -11649,7 +11831,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 965,
+      "id": 4014,
       "word": "Refreshment",
       "phonetic": "/rɪˈfreʃ.mənt/",
       "ipaUs": "/rɪˈfreʃ.mənt/",
@@ -11661,7 +11843,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 966,
+      "id": 4015,
       "word": "Chef",
       "phonetic": "/ʃef/",
       "ipaUs": "/ʃef/",
@@ -11673,7 +11855,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 967,
+      "id": 4016,
       "word": "Bartender",
       "phonetic": "/ˈbɑː.tendər/",
       "ipaUs": "/ˈbɑː.tendər/",
@@ -11685,7 +11867,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 968,
+      "id": 4017,
       "word": "Waiter/Waitress",
       "phonetic": "/ˈweɪ.tər/ /ˈweɪ.trəs/",
       "ipaUs": "/ˈweɪ.tər/ /ˈweɪ.trəs/",
@@ -11697,7 +11879,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 969,
+      "id": 4018,
       "word": "Menu",
       "phonetic": "/ˈmen.juː/",
       "ipaUs": "/ˈmen.juː/",
@@ -11709,7 +11891,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 970,
+      "id": 4019,
       "word": "Catering",
       "phonetic": "/ˈkeɪ.tər.ɪŋ/",
       "ipaUs": "/ˈkeɪ.tər.ɪŋ/",
@@ -11721,7 +11903,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 971,
+      "id": 4020,
       "word": "Utensils",
       "phonetic": "/juːˈten.sɪlz/",
       "ipaUs": "/juːˈten.sɪlz/",
@@ -11733,7 +11915,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 972,
+      "id": 4021,
       "word": "Beverage menu",
       "phonetic": "/ˈbev.ər.ɪdʒ ˈmen.juː/",
       "ipaUs": "/ˈbev.ər.ɪdʒ ˈmen.juː/",
@@ -11745,7 +11927,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 973,
+      "id": 4022,
       "word": "Vegetarian",
       "phonetic": "/ˌvedʒ.ɪˈteə.ri.ən/",
       "ipaUs": "/ˌvedʒ.ɪˈteə.ri.ən/",
@@ -11757,7 +11939,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 974,
+      "id": 4023,
       "word": "Spicy",
       "phonetic": "/ˈspaɪ.si/",
       "ipaUs": "/ˈspaɪ.si/",
@@ -11769,7 +11951,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 975,
+      "id": 4024,
       "word": "Sweet",
       "phonetic": "/swiːt/",
       "ipaUs": "/swiːt/",
@@ -11781,7 +11963,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 976,
+      "id": 4025,
       "word": "Savory",
       "phonetic": "/ˈseɪ.vər.i/",
       "ipaUs": "/ˈseɪ.vər.i/",
@@ -11793,7 +11975,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 977,
+      "id": 4026,
       "word": "Beverage dispenser",
       "phonetic": "/ˈbev.ər.ɪdʒ dɪˈspen.sər/",
       "ipaUs": "/ˈbev.ər.ɪdʒ dɪˈspen.sər/",
@@ -11805,7 +11987,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 978,
+      "id": 4027,
       "word": "Table reservation",
       "phonetic": "/ˈteɪ.bəl ˌrez.əˈveɪ.ʃən/",
       "ipaUs": "/ˈteɪ.bəl ˌrez.əˈveɪ.ʃən/",
@@ -11817,7 +11999,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 979,
+      "id": 4028,
       "word": "Allergies",
       "phonetic": "/ˈæl.ə.dʒiz/",
       "ipaUs": "/ˈæl.ə.dʒiz/",
@@ -11829,7 +12011,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 980,
+      "id": 4029,
       "word": "Carbonated drink",
       "phonetic": "/ˈkɑː.bə.neɪ.tɪd ˌdrɪŋk/",
       "ipaUs": "/ˈkɑː.bə.neɪ.tɪd ˌdrɪŋk/",
@@ -11841,7 +12023,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 981,
+      "id": 4030,
       "word": "Non-alcoholic",
       "phonetic": "/ˌnɒn.æl.kəˈhɒl.ɪk/",
       "ipaUs": "/ˌnɒn.æl.kəˈhɒl.ɪk/",
@@ -11853,9 +12035,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "39": [
+  "41": [
     {
-      "id": 982,
+      "id": 4101,
       "word": "Transportation",
       "phonetic": "/ˌtræn.spɔːˈteɪ.ʃən/",
       "ipaUs": "/ˌtræn.spɔːˈteɪ.ʃən/",
@@ -11867,7 +12049,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 983,
+      "id": 4102,
       "word": "Vehicle",
       "phonetic": "/ˈviː.ɪ.kəl/",
       "ipaUs": "/ˈviː.ɪ.kəl/",
@@ -11879,7 +12061,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 984,
+      "id": 4103,
       "word": "Cargo",
       "phonetic": "/ˈkɑː.ɡəʊ/",
       "ipaUs": "/ˈkɑː.ɡəʊ/",
@@ -11891,7 +12073,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 985,
+      "id": 4104,
       "word": "Freight",
       "phonetic": "/freɪt/",
       "ipaUs": "/freɪt/",
@@ -11903,7 +12085,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 986,
+      "id": 4105,
       "word": "Logistics",
       "phonetic": "/ləˈdʒɪs.tɪks/",
       "ipaUs": "/ləˈdʒɪs.tɪks/",
@@ -11915,7 +12097,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 987,
+      "id": 4106,
       "word": "Shipping",
       "phonetic": "/ˈʃɪp.ɪŋ/",
       "ipaUs": "/ˈʃɪp.ɪŋ/",
@@ -11927,7 +12109,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 988,
+      "id": 4107,
       "word": "Railway",
       "phonetic": "/ˈreɪl.weɪ/",
       "ipaUs": "/ˈreɪl.weɪ/",
@@ -11939,7 +12121,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 989,
+      "id": 4108,
       "word": "Airline",
       "phonetic": "/ˈeə.laɪn/",
       "ipaUs": "/ˈeə.laɪn/",
@@ -11951,7 +12133,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 990,
+      "id": 4109,
       "word": "Terminal",
       "phonetic": "/ˈtɜː.mɪ.nəl/",
       "ipaUs": "/ˈtɜː.mɪ.nəl/",
@@ -11963,7 +12145,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 991,
+      "id": 4110,
       "word": "Passenger",
       "phonetic": "/ˈpæs.ɪn.dʒər/",
       "ipaUs": "/ˈpæs.ɪn.dʒər/",
@@ -11975,7 +12157,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 992,
+      "id": 4111,
       "word": "Ticket",
       "phonetic": "/ˈtɪk.ɪt/",
       "ipaUs": "/ˈtɪk.ɪt/",
@@ -11987,7 +12169,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 993,
+      "id": 4112,
       "word": "Traffic",
       "phonetic": "/ˈtræf.ɪk/",
       "ipaUs": "/ˈtræf.ɪk/",
@@ -11999,7 +12181,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 994,
+      "id": 4113,
       "word": "Public transport",
       "phonetic": "/ˌpʌb.lɪk ˈtræn.spɔːt/",
       "ipaUs": "/ˌpʌb.lɪk ˈtræn.spɔːt/",
@@ -12011,7 +12193,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 995,
+      "id": 4114,
       "word": "Taxi",
       "phonetic": "/ˈtæk.si/",
       "ipaUs": "/ˈtæk.si/",
@@ -12023,7 +12205,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 996,
+      "id": 4115,
       "word": "Ride-sharing",
       "phonetic": "/ˈraɪd ˌʃeə.rɪŋ/",
       "ipaUs": "/ˈraɪd ˌʃeə.rɪŋ/",
@@ -12035,7 +12217,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 997,
+      "id": 4116,
       "word": "Highway",
       "phonetic": "/ˈhaɪ.weɪ/",
       "ipaUs": "/ˈhaɪ.weɪ/",
@@ -12047,7 +12229,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 998,
+      "id": 4117,
       "word": "Toll road",
       "phonetic": "/ˈtəʊl ˌrəʊd/",
       "ipaUs": "/ˈtəʊl ˌrəʊd/",
@@ -12059,7 +12241,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 999,
+      "id": 4118,
       "word": "Fuel",
       "phonetic": "/fjʊəl/",
       "ipaUs": "/fjʊəl/",
@@ -12071,7 +12253,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1000,
+      "id": 4119,
       "word": "Delivery",
       "phonetic": "/dɪˈlɪv.ər.i/",
       "ipaUs": "/dɪˈlɪv.ər.i/",
@@ -12083,7 +12265,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1001,
+      "id": 4120,
       "word": "Transit",
       "phonetic": "/ˈtræn.zɪt/",
       "ipaUs": "/ˈtræn.zɪt/",
@@ -12095,7 +12277,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1002,
+      "id": 4121,
       "word": "Port",
       "phonetic": "/pɔːt/",
       "ipaUs": "/pɔːt/",
@@ -12107,7 +12289,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1003,
+      "id": 4122,
       "word": "Route",
       "phonetic": "/ruːt/ or /raʊt/",
       "ipaUs": "/ruːt/ or /raʊt/",
@@ -12119,7 +12301,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1004,
+      "id": 4123,
       "word": "Driver",
       "phonetic": "/ˈdraɪ.vər/",
       "ipaUs": "/ˈdraɪ.vər/",
@@ -12131,7 +12313,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1005,
+      "id": 4124,
       "word": "Bicycle",
       "phonetic": "/ˈbaɪ.sɪ.kəl/",
       "ipaUs": "/ˈbaɪ.sɪ.kəl/",
@@ -12143,7 +12325,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1006,
+      "id": 4125,
       "word": "Motorbike",
       "phonetic": "/ˈməʊ.tə.baɪk/",
       "ipaUs": "/ˈməʊ.tə.baɪk/",
@@ -12155,7 +12337,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1007,
+      "id": 4126,
       "word": "Plane",
       "phonetic": "/pleɪn/",
       "ipaUs": "/pleɪn/",
@@ -12167,7 +12349,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1008,
+      "id": 4127,
       "word": "Cruise",
       "phonetic": "/kruːz/",
       "ipaUs": "/kruːz/",
@@ -12179,7 +12361,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1009,
+      "id": 4128,
       "word": "Cargo ship",
       "phonetic": "/ˈkɑː.ɡəʊ ˌʃɪp/",
       "ipaUs": "/ˈkɑː.ɡəʊ ˌʃɪp/",
@@ -12191,7 +12373,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1010,
+      "id": 4129,
       "word": "Pipeline",
       "phonetic": "/ˈpaɪp.laɪn/",
       "ipaUs": "/ˈpaɪp.laɪn/",
@@ -12203,7 +12385,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1011,
+      "id": 4130,
       "word": "Commuter",
       "phonetic": "/kəˈmjuː.tər/",
       "ipaUs": "/kəˈmjuː.tər/",
@@ -12215,7 +12397,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1012,
+      "id": 4131,
       "word": "Subway",
       "phonetic": "/ˈsʌb.weɪ/",
       "ipaUs": "/ˈsʌb.weɪ/",
@@ -12227,7 +12409,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1013,
+      "id": 4132,
       "word": "Freight train",
       "phonetic": "/freɪt treɪn/",
       "ipaUs": "/freɪt treɪn/",
@@ -12239,9 +12421,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "40": [
+  "42": [
     {
-      "id": 1014,
+      "id": 4201,
       "word": "Workplace safety",
       "phonetic": "/ˈwɜːkpleɪs ˈseɪf.ti/",
       "ipaUs": "/ˈwɜːkpleɪs ˈseɪf.ti/",
@@ -12253,7 +12435,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1015,
+      "id": 4202,
       "word": "Hazard",
       "phonetic": "/ˈhæz.əd/",
       "ipaUs": "/ˈhæz.əd/",
@@ -12265,7 +12447,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1016,
+      "id": 4203,
       "word": "Protective equipment",
       "phonetic": "/prəˈtek.tɪv ɪˈkwɪp.mənt/",
       "ipaUs": "/prəˈtek.tɪv ɪˈkwɪp.mənt/",
@@ -12277,7 +12459,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1017,
+      "id": 4204,
       "word": "Safety goggles",
       "phonetic": "/ˈseɪf.ti ˌɡɒɡ.lz/",
       "ipaUs": "/ˈseɪf.ti ˌɡɒɡ.lz/",
@@ -12289,7 +12471,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1018,
+      "id": 4205,
       "word": "Hard hat",
       "phonetic": "/ˈhɑːd ˌhæt/",
       "ipaUs": "/ˈhɑːd ˌhæt/",
@@ -12301,7 +12483,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1019,
+      "id": 4206,
       "word": "Gloves",
       "phonetic": "/ɡlʌvz/",
       "ipaUs": "/ɡlʌvz/",
@@ -12313,7 +12495,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1020,
+      "id": 4207,
       "word": "First aid",
       "phonetic": "/ˌfɜːst ˈeɪd/",
       "ipaUs": "/ˌfɜːst ˈeɪd/",
@@ -12325,7 +12507,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1021,
+      "id": 4208,
       "word": "Emergency exit",
       "phonetic": "/ɪˈmɜː.dʒən.si ˈek.sɪt/",
       "ipaUs": "/ɪˈmɜː.dʒən.si ˈek.sɪt/",
@@ -12337,7 +12519,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1022,
+      "id": 4209,
       "word": "Fire extinguisher",
       "phonetic": "/ˈfaɪər ɪkˌstɪŋ.ɡwɪ.ʃər/",
       "ipaUs": "/ˈfaɪər ɪkˌstɪŋ.ɡwɪ.ʃər/",
@@ -12349,7 +12531,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1023,
+      "id": 4210,
       "word": "Safety inspection",
       "phonetic": "/ˈseɪf.ti ɪnˈspek.ʃən/",
       "ipaUs": "/ˈseɪf.ti ɪnˈspek.ʃən/",
@@ -12361,7 +12543,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1024,
+      "id": 4211,
       "word": "Accident report",
       "phonetic": "/ˈæk.sɪ.dənt rɪˈpɔːt/",
       "ipaUs": "/ˈæk.sɪ.dənt rɪˈpɔːt/",
@@ -12373,7 +12555,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1025,
+      "id": 4212,
       "word": "Safety training",
       "phonetic": "/ˈseɪf.ti ˈtreɪ.nɪŋ/",
       "ipaUs": "/ˈseɪf.ti ˈtreɪ.nɪŋ/",
@@ -12385,7 +12567,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1026,
+      "id": 4213,
       "word": "Fire drill",
       "phonetic": "/ˈfaɪər ˌdrɪl/",
       "ipaUs": "/ˈfaɪər ˌdrɪl/",
@@ -12397,7 +12579,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1027,
+      "id": 4214,
       "word": "Warning sign",
       "phonetic": "/ˈwɔː.nɪŋ ˌsaɪn/",
       "ipaUs": "/ˈwɔː.nɪŋ ˌsaɪn/",
@@ -12409,7 +12591,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1028,
+      "id": 4215,
       "word": "Safety policy",
       "phonetic": "/ˈseɪf.ti ˈpɒl.ɪ.si/",
       "ipaUs": "/ˈseɪf.ti ˈpɒl.ɪ.si/",
@@ -12421,7 +12603,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1029,
+      "id": 4216,
       "word": "Risk assessment",
       "phonetic": "/rɪsk əˈses.mənt/",
       "ipaUs": "/rɪsk əˈses.mənt/",
@@ -12433,7 +12615,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1030,
+      "id": 4217,
       "word": "Lockout/tagout",
       "phonetic": "/ˌlɒk.aʊt ˈtæɡ.aʊt/",
       "ipaUs": "/ˌlɒk.aʊt ˈtæɡ.aʊt/",
@@ -12445,7 +12627,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1031,
+      "id": 4218,
       "word": "Ergonomics",
       "phonetic": "/ˌɜː.ɡəˈnɒm.ɪks/",
       "ipaUs": "/ˌɜː.ɡəˈnɒm.ɪks/",
@@ -12457,7 +12639,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1032,
+      "id": 4219,
       "word": "Compliance",
       "phonetic": "/kəmˈplaɪ.əns/",
       "ipaUs": "/kəmˈplaɪ.əns/",
@@ -12469,7 +12651,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1033,
+      "id": 4220,
       "word": "Incident",
       "phonetic": "/ˈɪn.sɪ.dənt/",
       "ipaUs": "/ˈɪn.sɪ.dənt/",
@@ -12481,7 +12663,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1034,
+      "id": 4221,
       "word": "Respirator",
       "phonetic": "/ˈres.pɪ.reɪ.tər/",
       "ipaUs": "/ˈres.pɪ.reɪ.tər/",
@@ -12493,7 +12675,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1035,
+      "id": 4222,
       "word": "Safety harness",
       "phonetic": "/ˈseɪf.ti ˌhɑː.nɪs/",
       "ipaUs": "/ˈseɪf.ti ˌhɑː.nɪs/",
@@ -12505,7 +12687,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1036,
+      "id": 4223,
       "word": "Chemical spill",
       "phonetic": "/ˈkem.ɪ.kəl ˌspɪl/",
       "ipaUs": "/ˈkem.ɪ.kəl ˌspɪl/",
@@ -12517,7 +12699,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1037,
+      "id": 4224,
       "word": "Emergency procedure",
       "phonetic": "/ɪˈmɜː.dʒən.si prəˈsiː.dʒər/",
       "ipaUs": "/ɪˈmɜː.dʒən.si prəˈsiː.dʒər/",
@@ -12529,7 +12711,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1038,
+      "id": 4225,
       "word": "Health hazard",
       "phonetic": "/helθ ˈhæz.əd/",
       "ipaUs": "/helθ ˈhæz.əd/",
@@ -12541,7 +12723,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1039,
+      "id": 4226,
       "word": "Slip-resistant shoes",
       "phonetic": "/slɪp rɪˈzɪs.tənt ˌʃuːz/",
       "ipaUs": "/slɪp rɪˈzɪs.tənt ˌʃuːz/",
@@ -12553,7 +12735,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1040,
+      "id": 4227,
       "word": "Overhead hazard",
       "phonetic": "/ˌəʊ.vəˈhed ˈhæz.əd/",
       "ipaUs": "/ˌəʊ.vəˈhed ˈhæz.əd/",
@@ -12565,7 +12747,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1041,
+      "id": 4228,
       "word": "Safe work practices",
       "phonetic": "/seɪf wɜːk ˈpræk.tɪsɪz/",
       "ipaUs": "/seɪf wɜːk ˈpræk.tɪsɪz/",
@@ -12577,9 +12759,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "41": [
+  "43": [
     {
-      "id": 1042,
+      "id": 4301,
       "word": "Natural resources",
       "phonetic": "/ˈnætʃ.ər.əl rɪˈzɔː.sɪz/",
       "ipaUs": "/ˈnætʃ.ər.əl rɪˈzɔː.sɪz/",
@@ -12591,7 +12773,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1043,
+      "id": 4302,
       "word": "Renewable resource",
       "phonetic": "/rɪˈnjuː.ə.bəl rɪˈzɔːs/",
       "ipaUs": "/rɪˈnjuː.ə.bəl rɪˈzɔːs/",
@@ -12603,7 +12785,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1044,
+      "id": 4303,
       "word": "Non-renewable resource",
       "phonetic": "/ˌnɒn.rɪˈnjuː.ə.bəl rɪˈzɔːs/",
       "ipaUs": "/ˌnɒn.rɪˈnjuː.ə.bəl rɪˈzɔːs/",
@@ -12615,7 +12797,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1045,
+      "id": 4304,
       "word": "Water resource",
       "phonetic": "/ˈwɔː.tər rɪˈzɔːs/",
       "ipaUs": "/ˈwɔː.tər rɪˈzɔːs/",
@@ -12627,7 +12809,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1046,
+      "id": 4305,
       "word": "Fossil fuels",
       "phonetic": "/ˈfɒs.əl ˌfjʊəlz/",
       "ipaUs": "/ˈfɒs.əl ˌfjʊəlz/",
@@ -12639,7 +12821,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1047,
+      "id": 4306,
       "word": "Mineral",
       "phonetic": "/ˈmɪn.ər.əl/",
       "ipaUs": "/ˈmɪn.ər.əl/",
@@ -12651,7 +12833,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1048,
+      "id": 4307,
       "word": "Coal",
       "phonetic": "/kəʊl/",
       "ipaUs": "/kəʊl/",
@@ -12663,7 +12845,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1049,
+      "id": 4308,
       "word": "Oil",
       "phonetic": "/ɔɪl/",
       "ipaUs": "/ɔɪl/",
@@ -12675,7 +12857,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1050,
+      "id": 4309,
       "word": "Natural gas",
       "phonetic": "/ˈnætʃ.ər.əl ɡæs/",
       "ipaUs": "/ˈnætʃ.ər.əl ɡæs/",
@@ -12687,7 +12869,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1051,
+      "id": 4310,
       "word": "Forest",
       "phonetic": "/ˈfɒr.ɪst/",
       "ipaUs": "/ˈfɒr.ɪst/",
@@ -12699,7 +12881,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1052,
+      "id": 4311,
       "word": "Wildlife",
       "phonetic": "/ˈwaɪld.laɪf/",
       "ipaUs": "/ˈwaɪld.laɪf/",
@@ -12711,7 +12893,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1053,
+      "id": 4312,
       "word": "Biodiversity",
       "phonetic": "/ˌbaɪ.əʊ.daɪˈvɜː.sɪ.ti/",
       "ipaUs": "/ˌbaɪ.əʊ.daɪˈvɜː.sɪ.ti/",
@@ -12723,7 +12905,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1054,
+      "id": 4313,
       "word": "Timber",
       "phonetic": "/ˈtɪm.bər/",
       "ipaUs": "/ˈtɪm.bər/",
@@ -12735,7 +12917,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1055,
+      "id": 4314,
       "word": "Soil",
       "phonetic": "/sɔɪl/",
       "ipaUs": "/sɔɪl/",
@@ -12747,7 +12929,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1056,
+      "id": 4315,
       "word": "Land",
       "phonetic": "/lænd/",
       "ipaUs": "/lænd/",
@@ -12759,7 +12941,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1057,
+      "id": 4316,
       "word": "Renewable energy",
       "phonetic": "/rɪˈnjuː.ə.bəl ˈen.ə.dʒi/",
       "ipaUs": "/rɪˈnjuː.ə.bəl ˈen.ə.dʒi/",
@@ -12771,7 +12953,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1058,
+      "id": 4317,
       "word": "Solar energy",
       "phonetic": "/ˈsəʊ.lər ˈen.ə.dʒi/",
       "ipaUs": "/ˈsəʊ.lər ˈen.ə.dʒi/",
@@ -12783,7 +12965,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1059,
+      "id": 4318,
       "word": "Wind energy",
       "phonetic": "/wɪnd ˈen.ə.dʒi/",
       "ipaUs": "/wɪnd ˈen.ə.dʒi/",
@@ -12795,7 +12977,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1060,
+      "id": 4319,
       "word": "Hydropower",
       "phonetic": "/ˈhaɪ.drəʊˌpaʊər/",
       "ipaUs": "/ˈhaɪ.drəʊˌpaʊər/",
@@ -12807,7 +12989,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1061,
+      "id": 4320,
       "word": "Geothermal energy",
       "phonetic": "/ˌdʒiː.əʊˈθɜː.məl ˈen.ə.dʒi/",
       "ipaUs": "/ˌdʒiː.əʊˈθɜː.məl ˈen.ə.dʒi/",
@@ -12819,7 +13001,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1062,
+      "id": 4321,
       "word": "Conservation",
       "phonetic": "/ˌkɒn.səˈveɪ.ʃən/",
       "ipaUs": "/ˌkɒn.səˈveɪ.ʃən/",
@@ -12831,7 +13013,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1063,
+      "id": 4322,
       "word": "Deforestation",
       "phonetic": "/ˌdiːˌfɒr.ɪˈsteɪ.ʃən/",
       "ipaUs": "/ˌdiːˌfɒr.ɪˈsteɪ.ʃən/",
@@ -12843,7 +13025,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1064,
+      "id": 4323,
       "word": "Pollution",
       "phonetic": "/pəˈluː.ʃən/",
       "ipaUs": "/pəˈluː.ʃən/",
@@ -12855,7 +13037,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1065,
+      "id": 4324,
       "word": "Ecosystem",
       "phonetic": "/ˈiː.kəʊˌsɪs.təm/",
       "ipaUs": "/ˈiː.kəʊˌsɪs.təm/",
@@ -12867,7 +13049,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1066,
+      "id": 4325,
       "word": "Climate change",
       "phonetic": "/ˈklaɪ.mət tʃeɪndʒ/",
       "ipaUs": "/ˈklaɪ.mət tʃeɪndʒ/",
@@ -12879,7 +13061,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1067,
+      "id": 4326,
       "word": "Recycling",
       "phonetic": "/ˌriːˈsaɪ.klɪŋ/",
       "ipaUs": "/ˌriːˈsaɪ.klɪŋ/",
@@ -12891,7 +13073,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1068,
+      "id": 4327,
       "word": "Sustainable development",
       "phonetic": "/səˈsteɪ.nə.bəl dɪˈvel.əp.mənt/",
       "ipaUs": "/səˈsteɪ.nə.bəl dɪˈvel.əp.mənt/",
@@ -12903,7 +13085,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1069,
+      "id": 4328,
       "word": "Overexploitation",
       "phonetic": "/ˌəʊ.vərˌek.splɔɪˈteɪ.ʃən/",
       "ipaUs": "/ˌəʊ.vərˌek.splɔɪˈteɪ.ʃən/",
@@ -12915,9 +13097,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "42": [
+  "44": [
     {
-      "id": 1070,
+      "id": 4401,
       "word": "Product",
       "phonetic": "/ˈprɒdʌkt/",
       "ipaUs": "/ˈprɒdʌkt/",
@@ -12929,7 +13111,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1071,
+      "id": 4402,
       "word": "Service",
       "phonetic": "/ˈsɜːvɪs/",
       "ipaUs": "/ˈsɜːvɪs/",
@@ -12941,7 +13123,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1072,
+      "id": 4403,
       "word": "Quality",
       "phonetic": "/ˈkwɒlɪti/",
       "ipaUs": "/ˈkwɒlɪti/",
@@ -12953,7 +13135,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1073,
+      "id": 4404,
       "word": "Feature",
       "phonetic": "/ˈfiːtʃər/",
       "ipaUs": "/ˈfiːtʃər/",
@@ -12965,7 +13147,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1074,
+      "id": 4405,
       "word": "Brand",
       "phonetic": "/brænd/",
       "ipaUs": "/brænd/",
@@ -12977,7 +13159,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1075,
+      "id": 4406,
       "word": "Warranty",
       "phonetic": "/ˈwɒrənti/",
       "ipaUs": "/ˈwɒrənti/",
@@ -12989,7 +13171,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1076,
+      "id": 4407,
       "word": "Return policy",
       "phonetic": "/rɪˈtɜːn ˈpɒlɪsi/",
       "ipaUs": "/rɪˈtɜːn ˈpɒlɪsi/",
@@ -13001,7 +13183,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1077,
+      "id": 4408,
       "word": "Subscription",
       "phonetic": "/səbˈskrɪpʃən/",
       "ipaUs": "/səbˈskrɪpʃən/",
@@ -13013,7 +13195,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1078,
+      "id": 4409,
       "word": "Discount",
       "phonetic": "/ˈdɪskaʊnt/",
       "ipaUs": "/ˈdɪskaʊnt/",
@@ -13025,7 +13207,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1079,
+      "id": 4410,
       "word": "Supplier",
       "phonetic": "/səˈplaɪər/",
       "ipaUs": "/səˈplaɪər/",
@@ -13037,7 +13219,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1080,
+      "id": 4411,
       "word": "Demand",
       "phonetic": "/dɪˈmɑːnd/",
       "ipaUs": "/dɪˈmɑːnd/",
@@ -13049,7 +13231,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1081,
+      "id": 4412,
       "word": "Price",
       "phonetic": "/praɪs/",
       "ipaUs": "/praɪs/",
@@ -13061,7 +13243,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1082,
+      "id": 4413,
       "word": "Packaging",
       "phonetic": "/ˈpækɪdʒɪŋ/",
       "ipaUs": "/ˈpækɪdʒɪŋ/",
@@ -13073,7 +13255,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1083,
+      "id": 4414,
       "word": "Promotion",
       "phonetic": "/prəˈməʊʃən/",
       "ipaUs": "/prəˈməʊʃən/",
@@ -13085,7 +13267,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1084,
+      "id": 4415,
       "word": "Retail",
       "phonetic": "/ˈriː.teɪl/",
       "ipaUs": "/ˈriː.teɪl/",
@@ -13097,7 +13279,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1085,
+      "id": 4416,
       "word": "Customization",
       "phonetic": "/ˌkʌstəməˈzeɪʃən/",
       "ipaUs": "/ˌkʌstəməˈzeɪʃən/",
@@ -13109,7 +13291,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1086,
+      "id": 4417,
       "word": "Guarantee",
       "phonetic": "/ˌɡærənˈtiː/",
       "ipaUs": "/ˌɡærənˈtiː/",
@@ -13121,7 +13303,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1087,
+      "id": 4418,
       "word": "Service contract",
       "phonetic": "/ˈsɜːvɪs ˈkɒntrækt/",
       "ipaUs": "/ˈsɜːvɪs ˈkɒntrækt/",
@@ -13133,7 +13315,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1088,
+      "id": 4419,
       "word": "Upgrade",
       "phonetic": "/ˈʌpɡreɪd/",
       "ipaUs": "/ˈʌpɡreɪd/",
@@ -13145,7 +13327,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1089,
+      "id": 4420,
       "word": "Retailer",
       "phonetic": "/ˈriːˌteɪlər/",
       "ipaUs": "/ˈriːˌteɪlər/",
@@ -13157,7 +13339,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1090,
+      "id": 4421,
       "word": "After-sales service",
       "phonetic": "/ˈɑːftər seɪlz ˈsɜːvɪs/",
       "ipaUs": "/ˈɑːftər seɪlz ˈsɜːvɪs/",
@@ -13169,7 +13351,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1091,
+      "id": 4422,
       "word": "Subscription fee",
       "phonetic": "/səbˈskrɪpʃən fiː/",
       "ipaUs": "/səbˈskrɪpʃən fiː/",
@@ -13181,7 +13363,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1092,
+      "id": 4423,
       "word": "Consumer",
       "phonetic": "/kənˈsjuːmər/",
       "ipaUs": "/kənˈsjuːmər/",
@@ -13193,7 +13375,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1093,
+      "id": 4424,
       "word": "Client",
       "phonetic": "/ˈklaɪənt/",
       "ipaUs": "/ˈklaɪənt/",
@@ -13205,7 +13387,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1094,
+      "id": 4425,
       "word": "Product line",
       "phonetic": "/ˈprɒdʌkt laɪn/",
       "ipaUs": "/ˈprɒdʌkt laɪn/",
@@ -13217,7 +13399,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1095,
+      "id": 4426,
       "word": "Service provider",
       "phonetic": "/ˈsɜːvɪs prəˈvaɪdə(r)/",
       "ipaUs": "/ˈsɜːvɪs prəˈvaɪdə(r)/",
@@ -13229,7 +13411,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1096,
+      "id": 4427,
       "word": "Online shopping",
       "phonetic": "/ˈɒn.laɪn ˈʃɒpɪŋ/",
       "ipaUs": "/ˈɒn.laɪn ˈʃɒpɪŋ/",
@@ -13241,7 +13423,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1097,
+      "id": 4428,
       "word": "Customer satisfaction",
       "phonetic": "/ˈkʌstəmər ˌsætɪsˈfækʃən/",
       "ipaUs": "/ˈkʌstəmər ˌsætɪsˈfækʃən/",
@@ -13253,9 +13435,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "43": [
+  "45": [
     {
-      "id": 1098,
+      "id": 4501,
       "word": "Partnership",
       "phonetic": "/ˈpɑːt.nə.ʃɪp/",
       "ipaUs": "/ˈpɑːt.nə.ʃɪp/",
@@ -13267,7 +13449,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1099,
+      "id": 4502,
       "word": "Collaborate",
       "phonetic": "/kəˈlæb.ə.reɪt/",
       "ipaUs": "/kəˈlæb.ə.reɪt/",
@@ -13279,7 +13461,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1100,
+      "id": 4503,
       "word": "Alliance",
       "phonetic": "/əˈlaɪ.əns/",
       "ipaUs": "/əˈlaɪ.əns/",
@@ -13291,7 +13473,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1101,
+      "id": 4504,
       "word": "Joint venture",
       "phonetic": "/dʒɔɪnt ˈvɛn.tʃər/",
       "ipaUs": "/dʒɔɪnt ˈvɛn.tʃər/",
@@ -13303,7 +13485,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1102,
+      "id": 4505,
       "word": "Stakeholder",
       "phonetic": "/ˈsteɪkˌhəʊl.dər/",
       "ipaUs": "/ˈsteɪkˌhəʊl.dər/",
@@ -13315,7 +13497,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1103,
+      "id": 4506,
       "word": "Synergy",
       "phonetic": "/ˈsɪn.ə.dʒi/",
       "ipaUs": "/ˈsɪn.ə.dʒi/",
@@ -13327,7 +13509,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1104,
+      "id": 4507,
       "word": "Collaboration",
       "phonetic": "/kəˌlæb.əˈreɪ.ʃən/",
       "ipaUs": "/kəˌlæb.əˈreɪ.ʃən/",
@@ -13339,7 +13521,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1105,
+      "id": 4508,
       "word": "Co-branding",
       "phonetic": "/kəʊ ˈbrændɪŋ/",
       "ipaUs": "/kəʊ ˈbrændɪŋ/",
@@ -13351,7 +13533,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1106,
+      "id": 4509,
       "word": "Contractual",
       "phonetic": "/kənˈtræk.tjʊəl/",
       "ipaUs": "/kənˈtræk.tjʊəl/",
@@ -13363,7 +13545,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1107,
+      "id": 4510,
       "word": "Partnership agreement",
       "phonetic": "/ˈpɑːt.nə.ʃɪp əˈɡriː.mənt/",
       "ipaUs": "/ˈpɑːt.nə.ʃɪp əˈɡriː.mənt/",
@@ -13375,7 +13557,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1108,
+      "id": 4511,
       "word": "Business partner",
       "phonetic": "/ˈbɪz.nɪs ˈpɑːt.nər/",
       "ipaUs": "/ˈbɪz.nɪs ˈpɑːt.nər/",
@@ -13387,7 +13569,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1109,
+      "id": 4512,
       "word": "Equity",
       "phonetic": "/ˈekwɪti/",
       "ipaUs": "/ˈekwɪti/",
@@ -13399,7 +13581,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1110,
+      "id": 4513,
       "word": "Shareholder",
       "phonetic": "/ˈʃɛə.həʊldər/",
       "ipaUs": "/ˈʃɛə.həʊldər/",
@@ -13411,7 +13593,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1111,
+      "id": 4514,
       "word": "Investor",
       "phonetic": "/ɪnˈvɛstər/",
       "ipaUs": "/ɪnˈvɛstər/",
@@ -13423,7 +13605,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1112,
+      "id": 4515,
       "word": "Network",
       "phonetic": "/ˈnɛtwɜːk/",
       "ipaUs": "/ˈnɛtwɜːk/",
@@ -13435,7 +13617,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1113,
+      "id": 4516,
       "word": "Co-operation",
       "phonetic": "/ˌkəʊˌɒpəˈreɪʃən/",
       "ipaUs": "/ˌkəʊˌɒpəˈreɪʃən/",
@@ -13447,7 +13629,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1114,
+      "id": 4517,
       "word": "Strategic partner",
       "phonetic": "/strəˈtiːdʒɪk ˈpɑːtnə/",
       "ipaUs": "/strəˈtiːdʒɪk ˈpɑːtnə/",
@@ -13459,7 +13641,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1115,
+      "id": 4518,
       "word": "Profit-sharing",
       "phonetic": "/ˈprɒfɪt ˌʃeərɪŋ/",
       "ipaUs": "/ˈprɒfɪt ˌʃeərɪŋ/",
@@ -13471,7 +13653,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1116,
+      "id": 4519,
       "word": "Exclusive partnership",
       "phonetic": "/ɪkˈskluːsɪv ˈpɑːtnəʃɪp/",
       "ipaUs": "/ɪkˈskluːsɪv ˈpɑːtnəʃɪp/",
@@ -13483,7 +13665,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1117,
+      "id": 4520,
       "word": "Due diligence",
       "phonetic": "/djuː ˈdɪlɪdʒəns/",
       "ipaUs": "/djuː ˈdɪlɪdʒəns/",
@@ -13495,7 +13677,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1118,
+      "id": 4521,
       "word": "Growth opportunity",
       "phonetic": "/ɡrəʊθ ˌɒpəˈtjuːnəti/",
       "ipaUs": "/ɡrəʊθ ˌɒpəˈtjuːnəti/",
@@ -13507,7 +13689,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1119,
+      "id": 4522,
       "word": "Risk management",
       "phonetic": "/rɪsk ˈmænɪdʒ.mənt/",
       "ipaUs": "/rɪsk ˈmænɪdʒ.mənt/",
@@ -13519,7 +13701,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1120,
+      "id": 4523,
       "word": "Liability",
       "phonetic": "/ˌlaɪəˈbɪləti/",
       "ipaUs": "/ˌlaɪəˈbɪləti/",
@@ -13531,7 +13713,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1121,
+      "id": 4524,
       "word": "Integration",
       "phonetic": "/ˌɪn.tɪˈɡreɪ.ʃən/",
       "ipaUs": "/ˌɪn.tɪˈɡreɪ.ʃən/",
@@ -13543,7 +13725,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1122,
+      "id": 4525,
       "word": "Contribution",
       "phonetic": "/ˌkɒn.trɪˈbjuː.ʃən/",
       "ipaUs": "/ˌkɒn.trɪˈbjuː.ʃən/",
@@ -13555,9 +13737,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "44": [
+  "46": [
     {
-      "id": 1123,
+      "id": 4601,
       "word": "Time management",
       "phonetic": "/taɪm ˈmænɪdʒ.mənt/",
       "ipaUs": "/taɪm ˈmænɪdʒ.mənt/",
@@ -13569,7 +13751,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1124,
+      "id": 4602,
       "word": "Deadline",
       "phonetic": "/ˈded.laɪn/",
       "ipaUs": "/ˈded.laɪn/",
@@ -13581,7 +13763,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1125,
+      "id": 4603,
       "word": "Prioritize",
       "phonetic": "/ˈpraɪ.ɒr.aɪzeɪt/",
       "ipaUs": "/ˈpraɪ.ɒr.aɪzeɪt/",
@@ -13593,7 +13775,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1126,
+      "id": 4604,
       "word": "Schedule",
       "phonetic": "/ˈʃedjuːl/ or /ˈskedʒ.uːl/",
       "ipaUs": "/ˈʃedjuːl/ or /ˈskedʒ.uːl/",
@@ -13605,7 +13787,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1127,
+      "id": 4605,
       "word": "Time allocation",
       "phonetic": "/taɪm ˌæl.əˈkeɪ.ʃən/",
       "ipaUs": "/taɪm ˌæl.əˈkeɪ.ʃən/",
@@ -13617,7 +13799,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1128,
+      "id": 4606,
       "word": "Efficiency",
       "phonetic": "/ɪˈfɪʃ.ən.si/",
       "ipaUs": "/ɪˈfɪʃ.ən.si/",
@@ -13629,7 +13811,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1129,
+      "id": 4607,
       "word": "Productivity",
       "phonetic": "/prəˈdʌk.tɪ.vɪ.ti/",
       "ipaUs": "/prəˈdʌk.tɪ.vɪ.ti/",
@@ -13641,7 +13823,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1130,
+      "id": 4608,
       "word": "Time frame",
       "phonetic": "/taɪm freɪm/",
       "ipaUs": "/taɪm freɪm/",
@@ -13653,7 +13835,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1131,
+      "id": 4609,
       "word": "Planner",
       "phonetic": "/ˈplænər/",
       "ipaUs": "/ˈplænər/",
@@ -13665,7 +13847,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1132,
+      "id": 4610,
       "word": "To-do list",
       "phonetic": "/tuː dʊ lɪst/",
       "ipaUs": "/tuː dʊ lɪst/",
@@ -13677,7 +13859,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1133,
+      "id": 4611,
       "word": "Postpone",
       "phonetic": "/pəʊs(t)ˈpəʊn/",
       "ipaUs": "/pəʊs(t)ˈpəʊn/",
@@ -13689,7 +13871,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1134,
+      "id": 4612,
       "word": "Delegate",
       "phonetic": "/ˈdelɪɡeɪt/",
       "ipaUs": "/ˈdelɪɡeɪt/",
@@ -13701,7 +13883,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1135,
+      "id": 4613,
       "word": "Time blocking",
       "phonetic": "/taɪm ˈblɒkɪŋ/",
       "ipaUs": "/taɪm ˈblɒkɪŋ/",
@@ -13713,7 +13895,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1136,
+      "id": 4614,
       "word": "Time tracking",
       "phonetic": "/taɪm ˈtrækɪŋ/",
       "ipaUs": "/taɪm ˈtrækɪŋ/",
@@ -13725,7 +13907,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1137,
+      "id": 4615,
       "word": "Multitasking",
       "phonetic": "/ˈmʌl.tɪˌtɑːskɪŋ/",
       "ipaUs": "/ˈmʌl.tɪˌtɑːskɪŋ/",
@@ -13737,7 +13919,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1138,
+      "id": 4616,
       "word": "Focus",
       "phonetic": "/ˈfəʊ.kəs/",
       "ipaUs": "/ˈfəʊ.kəs/",
@@ -13749,7 +13931,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1139,
+      "id": 4617,
       "word": "Time-sensitive",
       "phonetic": "/ˈtaɪm ˌsen.sɪ.tɪv/",
       "ipaUs": "/ˈtaɪm ˌsen.sɪ.tɪv/",
@@ -13761,7 +13943,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1140,
+      "id": 4618,
       "word": "Procrastination",
       "phonetic": "/prəˌkræstɪˈneɪʃən/",
       "ipaUs": "/prəˌkræstɪˈneɪʃən/",
@@ -13773,7 +13955,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1141,
+      "id": 4619,
       "word": "Time-consuming",
       "phonetic": "/ˈtaɪm kənˌsjuːmɪŋ/",
       "ipaUs": "/ˈtaɪm kənˌsjuːmɪŋ/",
@@ -13785,7 +13967,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1142,
+      "id": 4620,
       "word": "Set a reminder",
       "phonetic": "/set ə rɪˈmaɪndər/",
       "ipaUs": "/set ə rɪˈmaɪndər/",
@@ -13797,7 +13979,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1143,
+      "id": 4621,
       "word": "Time management skills",
       "phonetic": "/taɪm ˈmænɪdʒ.mənt skɪlz/",
       "ipaUs": "/taɪm ˈmænɪdʒ.mənt skɪlz/",
@@ -13809,7 +13991,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1144,
+      "id": 4622,
       "word": "Work-life balance",
       "phonetic": "/wɜːk laɪf ˈbæləns/",
       "ipaUs": "/wɜːk laɪf ˈbæləns/",
@@ -13821,7 +14003,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1145,
+      "id": 4623,
       "word": "Streamline",
       "phonetic": "/ˈstriːm.laɪn/",
       "ipaUs": "/ˈstriːm.laɪn/",
@@ -13833,7 +14015,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1146,
+      "id": 4624,
       "word": "Calendar",
       "phonetic": "/ˈkælɪndər/",
       "ipaUs": "/ˈkælɪndər/",
@@ -13845,9 +14027,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "45": [
+  "47": [
     {
-      "id": 1147,
+      "id": 4701,
       "word": "Maintenance",
       "phonetic": "/meɪnˈteɪnəns/",
       "ipaUs": "/meɪnˈteɪnəns/",
@@ -13859,7 +14041,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1148,
+      "id": 4702,
       "word": "Repair",
       "phonetic": "/rɪˈpeə(r)/",
       "ipaUs": "/rɪˈpeə(r)/",
@@ -13871,7 +14053,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1149,
+      "id": 4703,
       "word": "Inspection",
       "phonetic": "/ɪnˈspekʃən/",
       "ipaUs": "/ɪnˈspekʃən/",
@@ -13883,7 +14065,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1150,
+      "id": 4704,
       "word": "Service",
       "phonetic": "/ˈsɜːvɪs/",
       "ipaUs": "/ˈsɜːvɪs/",
@@ -13895,7 +14077,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1151,
+      "id": 4705,
       "word": "Breakdown",
       "phonetic": "/ˈbreɪk.daʊn/",
       "ipaUs": "/ˈbreɪk.daʊn/",
@@ -13907,7 +14089,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1152,
+      "id": 4706,
       "word": "Preventive maintenance",
       "phonetic": "/prɪˈventɪv ˈmeɪnˌteɪnəns/",
       "ipaUs": "/prɪˈventɪv ˈmeɪnˌteɪnəns/",
@@ -13919,7 +14101,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1153,
+      "id": 4707,
       "word": "Downtime",
       "phonetic": "/ˈdaʊn.taɪm/",
       "ipaUs": "/ˈdaʊn.taɪm/",
@@ -13931,7 +14113,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1154,
+      "id": 4708,
       "word": "Calibration",
       "phonetic": "/ˌkælɪˈbreɪʃən/",
       "ipaUs": "/ˌkælɪˈbreɪʃən/",
@@ -13943,7 +14125,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1155,
+      "id": 4709,
       "word": "Troubleshooting",
       "phonetic": "/ˈtrʌbəlˌʃuːtɪŋ/",
       "ipaUs": "/ˈtrʌbəlˌʃuːtɪŋ/",
@@ -13955,7 +14137,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1156,
+      "id": 4710,
       "word": "Replacement",
       "phonetic": "/rɪˈpleɪsmənt/",
       "ipaUs": "/rɪˈpleɪsmənt/",
@@ -13967,7 +14149,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1157,
+      "id": 4711,
       "word": "Spare parts",
       "phonetic": "/ˈspɛə ˈpɑːts/",
       "ipaUs": "/ˈspɛə ˈpɑːts/",
@@ -13979,7 +14161,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1158,
+      "id": 4712,
       "word": "Servicing",
       "phonetic": "/ˈsɜːvɪsɪŋ/",
       "ipaUs": "/ˈsɜːvɪsɪŋ/",
@@ -13991,7 +14173,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1159,
+      "id": 4713,
       "word": "Wear and tear",
       "phonetic": "/weə(r) ənd teə(r)/",
       "ipaUs": "/weə(r) ənd teə(r)/",
@@ -14003,7 +14185,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1160,
+      "id": 4714,
       "word": "Lubrication",
       "phonetic": "/ˌluː.brɪˈkeɪʃən/",
       "ipaUs": "/ˌluː.brɪˈkeɪʃən/",
@@ -14015,7 +14197,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1161,
+      "id": 4715,
       "word": "Efficiency",
       "phonetic": "/ɪˈfɪʃənsi/",
       "ipaUs": "/ɪˈfɪʃənsi/",
@@ -14027,7 +14209,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1162,
+      "id": 4716,
       "word": "Manual",
       "phonetic": "/ˈmænjuəl/",
       "ipaUs": "/ˈmænjuəl/",
@@ -14039,7 +14221,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1163,
+      "id": 4717,
       "word": "Operator",
       "phonetic": "/ˈɒpəreɪtə(r)/",
       "ipaUs": "/ˈɒpəreɪtə(r)/",
@@ -14051,7 +14233,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1164,
+      "id": 4718,
       "word": "Inspection checklist",
       "phonetic": "/ɪnˈspekʃən ˈʧɛkˌlɪst/",
       "ipaUs": "/ɪnˈspekʃən ˈʧɛkˌlɪst/",
@@ -14063,7 +14245,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1165,
+      "id": 4719,
       "word": "Systematic approach",
       "phonetic": "/ˌsɪstəˈmætɪk əˈprəʊtʃ/",
       "ipaUs": "/ˌsɪstəˈmætɪk əˈprəʊtʃ/",
@@ -14075,7 +14257,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1166,
+      "id": 4720,
       "word": "Maintenance schedule",
       "phonetic": "/ˈmeɪnˈteɪnəns ˈʃedjuːl/",
       "ipaUs": "/ˈmeɪnˈteɪnəns ˈʃedjuːl/",
@@ -14087,7 +14269,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1167,
+      "id": 4721,
       "word": "Operational efficiency",
       "phonetic": "/ˌɒpəˈreɪʃənəl ɪˈfɪʃənsi/",
       "ipaUs": "/ˌɒpəˈreɪʃənəl ɪˈfɪʃənsi/",
@@ -14099,7 +14281,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1168,
+      "id": 4722,
       "word": "Condition monitoring",
       "phonetic": "/kənˈdɪʃən ˈmɒnɪtərɪŋ/",
       "ipaUs": "/kənˈdɪʃən ˈmɒnɪtərɪŋ/",
@@ -14111,7 +14293,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1169,
+      "id": 4723,
       "word": "Overhaul",
       "phonetic": "/ˈəʊ.və.hɔːl/",
       "ipaUs": "/ˈəʊ.və.hɔːl/",
@@ -14123,7 +14305,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1170,
+      "id": 4724,
       "word": "Emergency repair",
       "phonetic": "/ɪˈmɜːdʒənsi rɪˈpeə(r)/",
       "ipaUs": "/ɪˈmɜːdʒənsi rɪˈpeə(r)/",
@@ -14135,7 +14317,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1171,
+      "id": 4725,
       "word": "Service contract",
       "phonetic": "/ˈsɜːvɪs ˈkɒntrækt/",
       "ipaUs": "/ˈsɜːvɪs ˈkɒntrækt/",
@@ -14147,7 +14329,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1172,
+      "id": 4726,
       "word": "Inspection report",
       "phonetic": "/ɪnˈspekʃən rɪˈpɔːt/",
       "ipaUs": "/ɪnˈspekʃən rɪˈpɔːt/",
@@ -14159,7 +14341,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1173,
+      "id": 4727,
       "word": "Operational downtime",
       "phonetic": "/ˌɒpəˈreɪʃənəl ˈdaʊn.taɪm/",
       "ipaUs": "/ˌɒpəˈreɪʃənəl ˈdaʊn.taɪm/",
@@ -14171,9 +14353,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "46": [
+  "48": [
     {
-      "id": 1174,
+      "id": 4801,
       "word": "Import",
       "phonetic": "/ˈɪmpɔːt/",
       "ipaUs": "/ˈɪmpɔːt/",
@@ -14185,7 +14367,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1175,
+      "id": 4802,
       "word": "Export",
       "phonetic": "/ˈɛkspɔːt/",
       "ipaUs": "/ˈɛkspɔːt/",
@@ -14197,7 +14379,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1176,
+      "id": 4803,
       "word": "Customs",
       "phonetic": "/ˈkʌstəmz/",
       "ipaUs": "/ˈkʌstəmz/",
@@ -14209,7 +14391,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1177,
+      "id": 4804,
       "word": "Tariff",
       "phonetic": "/ˈtærɪf/",
       "ipaUs": "/ˈtærɪf/",
@@ -14221,7 +14403,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1178,
+      "id": 4805,
       "word": "Freight",
       "phonetic": "/freɪt/",
       "ipaUs": "/freɪt/",
@@ -14233,7 +14415,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1179,
+      "id": 4806,
       "word": "Bill of lading",
       "phonetic": "/bɪl ɒv ˈleɪdɪŋ/",
       "ipaUs": "/bɪl ɒv ˈleɪdɪŋ/",
@@ -14245,7 +14427,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1180,
+      "id": 4807,
       "word": "Shipment",
       "phonetic": "/ˈʃɪpmənt/",
       "ipaUs": "/ˈʃɪpmənt/",
@@ -14257,7 +14439,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1181,
+      "id": 4808,
       "word": "Importer",
       "phonetic": "/ˈɪmpɔːtə(r)/",
       "ipaUs": "/ˈɪmpɔːtə(r)/",
@@ -14269,7 +14451,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1182,
+      "id": 4809,
       "word": "Exporter",
       "phonetic": "/ɪksˈpɔːtə(r)/",
       "ipaUs": "/ɪksˈpɔːtə(r)/",
@@ -14281,7 +14463,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1183,
+      "id": 4810,
       "word": "International trade",
       "phonetic": "/ˌɪntəˈnæʃənl treɪd/",
       "ipaUs": "/ˌɪntəˈnæʃənl treɪd/",
@@ -14293,7 +14475,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1184,
+      "id": 4811,
       "word": "Customs clearance",
       "phonetic": "/ˈkʌstəmz ˈklɪərəns/",
       "ipaUs": "/ˈkʌstəmz ˈklɪərəns/",
@@ -14305,7 +14487,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1185,
+      "id": 4812,
       "word": "Free trade",
       "phonetic": "/friː treɪd/",
       "ipaUs": "/friː treɪd/",
@@ -14317,7 +14499,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1186,
+      "id": 4813,
       "word": "Quota",
       "phonetic": "/ˈkwəʊtə/",
       "ipaUs": "/ˈkwəʊtə/",
@@ -14329,7 +14511,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1187,
+      "id": 4814,
       "word": "Shipping terms",
       "phonetic": "/ˈʃɪpɪŋ tɜːmz/",
       "ipaUs": "/ˈʃɪpɪŋ tɜːmz/",
@@ -14341,7 +14523,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1188,
+      "id": 4815,
       "word": "Duty",
       "phonetic": "/ˈdjuːti/",
       "ipaUs": "/ˈdjuːti/",
@@ -14353,7 +14535,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1189,
+      "id": 4816,
       "word": "Trade agreement",
       "phonetic": "/treɪd əˈɡriːmənt/",
       "ipaUs": "/treɪd əˈɡriːmənt/",
@@ -14365,7 +14547,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1190,
+      "id": 4817,
       "word": "Import license",
       "phonetic": "/ˈɪmpɔːt ˈlaɪsəns/",
       "ipaUs": "/ˈɪmpɔːt ˈlaɪsəns/",
@@ -14377,7 +14559,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1191,
+      "id": 4818,
       "word": "Export license",
       "phonetic": "/ˈɛkspɔːt ˈlaɪsəns/",
       "ipaUs": "/ˈɛkspɔːt ˈlaɪsəns/",
@@ -14389,7 +14571,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1192,
+      "id": 4819,
       "word": "Customs duties",
       "phonetic": "/ˈkʌstəmz ˈdjuːti/",
       "ipaUs": "/ˈkʌstəmz ˈdjuːti/",
@@ -14401,7 +14583,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1193,
+      "id": 4820,
       "word": "Shipping cost",
       "phonetic": "/ˈʃɪpɪŋ kɒst/",
       "ipaUs": "/ˈʃɪpɪŋ kɒst/",
@@ -14413,7 +14595,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1194,
+      "id": 4821,
       "word": "Import tariff",
       "phonetic": "/ˈɪmpɔːt ˈtærɪf/",
       "ipaUs": "/ˈɪmpɔːt ˈtærɪf/",
@@ -14425,7 +14607,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1195,
+      "id": 4822,
       "word": "Export documentation",
       "phonetic": "/ˈɛkspɔːt ˌdɒkjʊˈmɛntəreɪʃən/",
       "ipaUs": "/ˈɛkspɔːt ˌdɒkjʊˈmɛntəreɪʃən/",
@@ -14437,7 +14619,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1196,
+      "id": 4823,
       "word": "Container",
       "phonetic": "/kənˈteɪnə(r)/",
       "ipaUs": "/kənˈteɪnə(r)/",
@@ -14449,7 +14631,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1197,
+      "id": 4824,
       "word": "Airfreight",
       "phonetic": "/ˈeəˌfreɪt/",
       "ipaUs": "/ˈeəˌfreɪt/",
@@ -14461,7 +14643,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1198,
+      "id": 4825,
       "word": "Seaport",
       "phonetic": "/ˈsiːpɔːt/",
       "ipaUs": "/ˈsiːpɔːt/",
@@ -14473,7 +14655,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1199,
+      "id": 4826,
       "word": "Export customs",
       "phonetic": "/ˈɛkspɔːt ˈkʌstəmz/",
       "ipaUs": "/ˈɛkspɔːt ˈkʌstəmz/",
@@ -14485,7 +14667,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1200,
+      "id": 4827,
       "word": "Port of entry",
       "phonetic": "/pɔːt ɒv ˈɛn.tri/",
       "ipaUs": "/pɔːt ɒv ˈɛn.tri/",
@@ -14497,9 +14679,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "47": [
+  "49": [
     {
-      "id": 1201,
+      "id": 4901,
       "word": "Product development",
       "phonetic": "/ˈprɒdʌkt dɪˈvɛləpmənt/",
       "ipaUs": "/ˈprɒdʌkt dɪˈvɛləpmənt/",
@@ -14511,7 +14693,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1202,
+      "id": 4902,
       "word": "Prototype",
       "phonetic": "/ˈprəʊtətaɪp/",
       "ipaUs": "/ˈprəʊtətaɪp/",
@@ -14523,7 +14705,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1203,
+      "id": 4903,
       "word": "Innovation",
       "phonetic": "/ˌɪnəˈveɪʃən/",
       "ipaUs": "/ˌɪnəˈveɪʃən/",
@@ -14535,7 +14717,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1204,
+      "id": 4904,
       "word": "Research and development",
       "phonetic": "/rɪˈsɜːʧ ənd dɪˈvɛləpmənt/",
       "ipaUs": "/rɪˈsɜːʧ ənd dɪˈvɛləpmənt/",
@@ -14547,7 +14729,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1205,
+      "id": 4905,
       "word": "Design",
       "phonetic": "/dɪˈzaɪn/",
       "ipaUs": "/dɪˈzaɪn/",
@@ -14559,7 +14741,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1206,
+      "id": 4906,
       "word": "Testing",
       "phonetic": "/ˈtɛstɪŋ/",
       "ipaUs": "/ˈtɛstɪŋ/",
@@ -14571,7 +14753,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1207,
+      "id": 4907,
       "word": "Features",
       "phonetic": "/ˈfiːtʃərz/",
       "ipaUs": "/ˈfiːtʃərz/",
@@ -14583,7 +14765,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1208,
+      "id": 4908,
       "word": "Market research",
       "phonetic": "/ˈmɑːkɪt rɪˈsɜːʧ/",
       "ipaUs": "/ˈmɑːkɪt rɪˈsɜːʧ/",
@@ -14595,7 +14777,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1209,
+      "id": 4909,
       "word": "Product launch",
       "phonetic": "/ˈprɒdʌkt lɔːntʃ/",
       "ipaUs": "/ˈprɒdʌkt lɔːntʃ/",
@@ -14607,7 +14789,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1210,
+      "id": 4910,
       "word": "Feasibility study",
       "phonetic": "/ˌfiːzəˈbɪləti ˈstʌdi/",
       "ipaUs": "/ˌfiːzəˈbɪləti ˈstʌdi/",
@@ -14619,7 +14801,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1211,
+      "id": 4911,
       "word": "Prototype testing",
       "phonetic": "/ˈprəʊtətaɪp ˈtɛstɪŋ/",
       "ipaUs": "/ˈprəʊtətaɪp ˈtɛstɪŋ/",
@@ -14631,7 +14813,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1212,
+      "id": 4912,
       "word": "Development cycle",
       "phonetic": "/dɪˈvɛləpmənt ˈsaɪkəl/",
       "ipaUs": "/dɪˈvɛləpmənt ˈsaɪkəl/",
@@ -14643,7 +14825,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1213,
+      "id": 4913,
       "word": "Collaboration",
       "phonetic": "/kəˌlæbəˈreɪʃən/",
       "ipaUs": "/kəˌlæbəˈreɪʃən/",
@@ -14655,7 +14837,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1214,
+      "id": 4914,
       "word": "Production",
       "phonetic": "/prəˈdʌkʃən/",
       "ipaUs": "/prəˈdʌkʃən/",
@@ -14667,7 +14849,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1215,
+      "id": 4915,
       "word": "Quality control",
       "phonetic": "/ˈkwɒləti kənˈtrəʊl/",
       "ipaUs": "/ˈkwɒləti kənˈtrəʊl/",
@@ -14679,7 +14861,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1216,
+      "id": 4916,
       "word": "Branding",
       "phonetic": "/ˈbrændɪŋ/",
       "ipaUs": "/ˈbrændɪŋ/",
@@ -14691,7 +14873,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1217,
+      "id": 4917,
       "word": "Product design",
       "phonetic": "/ˈprɒdʌkt dɪˈzaɪn/",
       "ipaUs": "/ˈprɒdʌkt dɪˈzaɪn/",
@@ -14703,7 +14885,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1218,
+      "id": 4918,
       "word": "Idea generation",
       "phonetic": "/ˈaɪdɪə dʒɛnəˈreɪʃən/",
       "ipaUs": "/ˈaɪdɪə dʒɛnəˈreɪʃən/",
@@ -14715,7 +14897,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1219,
+      "id": 4919,
       "word": "Consumer feedback",
       "phonetic": "/kənˈsjuːmər ˈfiːdbæk/",
       "ipaUs": "/kənˈsjuːmər ˈfiːdbæk/",
@@ -14727,7 +14909,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1220,
+      "id": 4920,
       "word": "Prototype development",
       "phonetic": "/ˈprəʊtətaɪp dɪˈvɛləpmənt/",
       "ipaUs": "/ˈprəʊtətaɪp dɪˈvɛləpmənt/",
@@ -14739,7 +14921,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1221,
+      "id": 4921,
       "word": "Design team",
       "phonetic": "/dɪˈzaɪn tiːm/",
       "ipaUs": "/dɪˈzaɪn tiːm/",
@@ -14751,7 +14933,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1222,
+      "id": 4922,
       "word": "Product improvement",
       "phonetic": "/ˈprɒdʌkt ɪmˈpruːvmənt/",
       "ipaUs": "/ˈprɒdʌkt ɪmˈpruːvmənt/",
@@ -14763,7 +14945,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1223,
+      "id": 4923,
       "word": "Testing phase",
       "phonetic": "/ˈtɛstɪŋ feɪz/",
       "ipaUs": "/ˈtɛstɪŋ feɪz/",
@@ -14775,7 +14957,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1224,
+      "id": 4924,
       "word": "Product cycle",
       "phonetic": "/ˈprɒdʌkt ˈsaɪkəl/",
       "ipaUs": "/ˈprɒdʌkt ˈsaɪkəl/",
@@ -14787,7 +14969,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1225,
+      "id": 4925,
       "word": "Customer satisfaction",
       "phonetic": "/ˈkʌstəmər ˌsætɪsˈfækʃən/",
       "ipaUs": "/ˈkʌstəmər ˌsætɪsˈfækʃən/",
@@ -14799,7 +14981,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1226,
+      "id": 4926,
       "word": "Scalability",
       "phonetic": "/ˌskeɪləˈbɪləti/",
       "ipaUs": "/ˌskeɪləˈbɪləti/",
@@ -14811,7 +14993,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1227,
+      "id": 4927,
       "word": "Iteration",
       "phonetic": "/ˌɪtəˈreɪʃən/",
       "ipaUs": "/ˌɪtəˈreɪʃən/",
@@ -14823,9 +15005,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "48": [
+  "50": [
     {
-      "id": 1228,
+      "id": 5001,
       "word": "Crisis",
       "phonetic": "/ˈkraɪsɪs/",
       "ipaUs": "/ˈkraɪsɪs/",
@@ -14837,7 +15019,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1229,
+      "id": 5002,
       "word": "Risk management",
       "phonetic": "/rɪsk ˈmænɪdʒmənt/",
       "ipaUs": "/rɪsk ˈmænɪdʒmənt/",
@@ -14849,7 +15031,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1230,
+      "id": 5003,
       "word": "Contingency plan",
       "phonetic": "/kənˈtɪndʒənsi plæn/",
       "ipaUs": "/kənˈtɪndʒənsi plæn/",
@@ -14861,7 +15043,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1231,
+      "id": 5004,
       "word": "Emergency response",
       "phonetic": "/ɪˈmɜːdʒənsi rɪˈspɒns/",
       "ipaUs": "/ɪˈmɜːdʒənsi rɪˈspɒns/",
@@ -14873,7 +15055,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1232,
+      "id": 5005,
       "word": "Crisis management",
       "phonetic": "/ˈkraɪsɪs ˈmænɪdʒmənt/",
       "ipaUs": "/ˈkraɪsɪs ˈmænɪdʒmənt/",
@@ -14885,7 +15067,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1233,
+      "id": 5006,
       "word": "Risk assessment",
       "phonetic": "/rɪsk əˈsɛsmənt/",
       "ipaUs": "/rɪsk əˈsɛsmənt/",
@@ -14897,7 +15079,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1234,
+      "id": 5007,
       "word": "Damage control",
       "phonetic": "/ˈdæmɪdʒ kənˈtrəʊl/",
       "ipaUs": "/ˈdæmɪdʒ kənˈtrəʊl/",
@@ -14909,7 +15091,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1235,
+      "id": 5008,
       "word": "Recovery plan",
       "phonetic": "/rɪˈkʌvəri plæn/",
       "ipaUs": "/rɪˈkʌvəri plæn/",
@@ -14921,7 +15103,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1236,
+      "id": 5009,
       "word": "Risk mitigation",
       "phonetic": "/rɪsk ˌmɪtɪˈɡeɪʃən/",
       "ipaUs": "/rɪsk ˌmɪtɪˈɡeɪʃən/",
@@ -14933,7 +15115,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1237,
+      "id": 5010,
       "word": "Incident response",
       "phonetic": "/ˈɪnsɪdənt rɪˈspɒns/",
       "ipaUs": "/ˈɪnsɪdənt rɪˈspɒns/",
@@ -14945,7 +15127,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1238,
+      "id": 5011,
       "word": "Vulnerability",
       "phonetic": "/ˌvʌlnərəˈbɪləti/",
       "ipaUs": "/ˌvʌlnərəˈbɪləti/",
@@ -14957,7 +15139,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1239,
+      "id": 5012,
       "word": "Disaster recovery",
       "phonetic": "/dɪˈzɑːstər rɪˈkʌvəri/",
       "ipaUs": "/dɪˈzɑːstər rɪˈkʌvəri/",
@@ -14969,7 +15151,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1240,
+      "id": 5013,
       "word": "Business continuity",
       "phonetic": "/ˈbɪznɪs kənˈtɪnjudʒɪti/",
       "ipaUs": "/ˈbɪznɪs kənˈtɪnjudʒɪti/",
@@ -14981,7 +15163,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1241,
+      "id": 5014,
       "word": "Risk analysis",
       "phonetic": "/rɪsk əˈnæləsɪs/",
       "ipaUs": "/rɪsk əˈnæləsɪs/",
@@ -14993,7 +15175,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1242,
+      "id": 5015,
       "word": "Contingency fund",
       "phonetic": "/kənˈtɪndʒənsi fʌnd/",
       "ipaUs": "/kənˈtɪndʒənsi fʌnd/",
@@ -15005,7 +15187,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1243,
+      "id": 5016,
       "word": "Stress test",
       "phonetic": "/ˈstrɛs tɛst/",
       "ipaUs": "/ˈstrɛs tɛst/",
@@ -15017,7 +15199,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1244,
+      "id": 5017,
       "word": "Emergency procedures",
       "phonetic": "/ɪˈmɜːdʒənsi prəˈsɛdʊr/",
       "ipaUs": "/ɪˈmɜːdʒənsi prəˈsɛdʊr/",
@@ -15029,7 +15211,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1245,
+      "id": 5018,
       "word": "Crisis communication",
       "phonetic": "/ˈkraɪsɪs kəˌmjunɪˈkeɪʃən/",
       "ipaUs": "/ˈkraɪsɪs kəˌmjunɪˈkeɪʃən/",
@@ -15041,7 +15223,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1246,
+      "id": 5019,
       "word": "Risk avoidance",
       "phonetic": "/rɪsk əˈvɔɪdəns/",
       "ipaUs": "/rɪsk əˈvɔɪdəns/",
@@ -15053,7 +15235,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1247,
+      "id": 5020,
       "word": "Business impact analysis",
       "phonetic": "/ˈbɪznɪs ˈɪmpækt əˈnæləsɪs/",
       "ipaUs": "/ˈbɪznɪs ˈɪmpækt əˈnæləsɪs/",
@@ -15065,7 +15247,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1248,
+      "id": 5021,
       "word": "Liability",
       "phonetic": "/ˌlaɪəˈbɪləti/",
       "ipaUs": "/ˌlaɪəˈbɪləti/",
@@ -15077,7 +15259,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1249,
+      "id": 5022,
       "word": "Recovery time objective",
       "phonetic": "/rɪˈkʌvəri taɪm əbˈdʒɛktɪv/",
       "ipaUs": "/rɪˈkʌvəri taɪm əbˈdʒɛktɪv/",
@@ -15089,7 +15271,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1250,
+      "id": 5023,
       "word": "Prevention",
       "phonetic": "/prɪˈvɛnʃən/",
       "ipaUs": "/prɪˈvɛnʃən/",
@@ -15101,7 +15283,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1251,
+      "id": 5024,
       "word": "Root cause analysis",
       "phonetic": "/ruːt kɔːz əˈnæləsɪs/",
       "ipaUs": "/ruːt kɔːz əˈnæləsɪs/",
@@ -15113,7 +15295,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1252,
+      "id": 5025,
       "word": "Contingency strategy",
       "phonetic": "/kənˈtɪndʒənsi ˈstrætədʒi/",
       "ipaUs": "/kənˈtɪndʒənsi ˈstrætədʒi/",
@@ -15125,7 +15307,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1253,
+      "id": 5026,
       "word": "Risk register",
       "phonetic": "/rɪsk ˈrɛdʒɪstər/",
       "ipaUs": "/rɪsk ˈrɛdʒɪstər/",
@@ -15137,7 +15319,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1254,
+      "id": 5027,
       "word": "Crisis team",
       "phonetic": "/ˈkraɪsɪs tiːm/",
       "ipaUs": "/ˈkraɪsɪs tiːm/",
@@ -15149,697 +15331,9 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     }
   ],
-  "49": [
-    {
-      "id": 1255,
-      "word": "Negotiation",
-      "phonetic": "/nɪˌɡəʊʃɪˈeɪʃən/",
-      "ipaUs": "/nɪˌɡəʊʃɪˈeɪʃən/",
-      "ipaUk": "/nɪˌɡəʊʃɪˈeɪʃən/",
-      "wordType": "noun",
-      "meaningVi": "Đàm phán",
-      "exampleEn": "The negotiation lasted for hours before both parties reached an agreement.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1256,
-      "word": "Agreement",
-      "phonetic": "/əˈɡriːmənt/",
-      "ipaUs": "/əˈɡriːmənt/",
-      "ipaUk": "/əˈɡriːmənt/",
-      "wordType": "noun",
-      "meaningVi": "Thỏa thuận",
-      "exampleEn": "We signed a formal agreement after the negotiation process.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1257,
-      "word": "Bargaining",
-      "phonetic": "/ˈbɑːɡɪnɪŋ/",
-      "ipaUs": "/ˈbɑːɡɪnɪŋ/",
-      "ipaUk": "/ˈbɑːɡɪnɪŋ/",
-      "wordType": "noun",
-      "meaningVi": "Mặc cả",
-      "exampleEn": "The bargaining took longer than expected, but we finally agreed on a price.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1258,
-      "word": "Terms",
-      "phonetic": "/tɜːmz/",
-      "ipaUs": "/tɜːmz/",
-      "ipaUk": "/tɜːmz/",
-      "wordType": "noun",
-      "meaningVi": "Điều khoản",
-      "exampleEn": "The terms of the contract were negotiated over several meetings.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1259,
-      "word": "Counteroffer",
-      "phonetic": "/ˈkaʊntərɒfə(r)/",
-      "ipaUs": "/ˈkaʊntərɒfə(r)/",
-      "ipaUk": "/ˈkaʊntərɒfə(r)/",
-      "wordType": "noun",
-      "meaningVi": "Đề nghị phản đối, phản biện",
-      "exampleEn": "The company made a counteroffer to the initial price.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1260,
-      "word": "Compromise",
-      "phonetic": "/ˈkɒmprəmaɪz/",
-      "ipaUs": "/ˈkɒmprəmaɪz/",
-      "ipaUk": "/ˈkɒmprəmaɪz/",
-      "wordType": "verb",
-      "meaningVi": "Thỏa hiệp",
-      "exampleEn": "Both sides reached a compromise to close the deal.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1261,
-      "word": "Mediation",
-      "phonetic": "/ˌmiːdɪˈeɪʃən/",
-      "ipaUs": "/ˌmiːdɪˈeɪʃən/",
-      "ipaUk": "/ˌmiːdɪˈeɪʃən/",
-      "wordType": "noun",
-      "meaningVi": "Hòa giải",
-      "exampleEn": "The parties hired a third party for mediation to resolve the dispute.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1262,
-      "word": "Negotiator",
-      "phonetic": "/nɪˈɡəʊʃɪeɪtə(r)/",
-      "ipaUs": "/nɪˈɡəʊʃɪeɪtə(r)/",
-      "ipaUk": "/nɪˈɡəʊʃɪeɪtə(r)/",
-      "wordType": "noun",
-      "meaningVi": "Người đàm phán",
-      "exampleEn": "The negotiator played a crucial role in facilitating the discussions.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1263,
-      "word": "Proposal",
-      "phonetic": "/prəˈpəʊzl/",
-      "ipaUs": "/prəˈpəʊzl/",
-      "ipaUk": "/prəˈpəʊzl/",
-      "wordType": "adjective",
-      "meaningVi": "Đề xuất",
-      "exampleEn": "The company submitted a proposal to the client for review.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1264,
-      "word": "Win-win situation",
-      "phonetic": "/wɪn wɪn ˌsɪtʃʊˈeɪʃən/",
-      "ipaUs": "/wɪn wɪn ˌsɪtʃʊˈeɪʃən/",
-      "ipaUk": "/wɪn wɪn ˌsɪtʃʊˈeɪʃən/",
-      "wordType": "noun",
-      "meaningVi": "Tình huống đôi bên cùng có lợi",
-      "exampleEn": "We aim to create a win-win situation where both parties benefit.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1265,
-      "word": "Agreement in principle",
-      "phonetic": "/əˈɡriːmənt ɪn ˈprɪnsəpl/",
-      "ipaUs": "/əˈɡriːmənt ɪn ˈprɪnsəpl/",
-      "ipaUk": "/əˈɡriːmənt ɪn ˈprɪnsəpl/",
-      "wordType": "noun",
-      "meaningVi": "Thỏa thuận nguyên tắc",
-      "exampleEn": "The two companies have reached an agreement in principle on the deal.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1266,
-      "word": "Concession",
-      "phonetic": "/kənˈsɛʃən/",
-      "ipaUs": "/kənˈsɛʃən/",
-      "ipaUk": "/kənˈsɛʃən/",
-      "wordType": "noun",
-      "meaningVi": "Nhượng bộ",
-      "exampleEn": "After lengthy discussions, the company made a concession on the price.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1267,
-      "word": "Terms of reference",
-      "phonetic": "/ˈtɜːmz əv rɪˈfɛrəns/",
-      "ipaUs": "/ˈtɜːmz əv rɪˈfɛrəns/",
-      "ipaUk": "/ˈtɜːmz əv rɪˈfɛrəns/",
-      "wordType": "noun",
-      "meaningVi": "Các điều khoản tham chiếu",
-      "exampleEn": "The terms of reference were agreed upon before starting the project.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1268,
-      "word": "Facilitator",
-      "phonetic": "/fəˈsɪlɪteɪtə(r)/",
-      "ipaUs": "/fəˈsɪlɪteɪtə(r)/",
-      "ipaUk": "/fəˈsɪlɪteɪtə(r)/",
-      "wordType": "noun",
-      "meaningVi": "Người tạo điều kiện, người điều phối",
-      "exampleEn": "The facilitator helped guide the conversation and ensured everyone’s input was heard.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1269,
-      "word": "Deal",
-      "phonetic": "/diːl/",
-      "ipaUs": "/diːl/",
-      "ipaUk": "/diːl/",
-      "wordType": "adjective",
-      "meaningVi": "Thỏa thuận, giao dịch",
-      "exampleEn": "They shook hands and closed the deal after several rounds of talks.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1270,
-      "word": "Trade-off",
-      "phonetic": "/ˈtreɪd ɒf/",
-      "ipaUs": "/ˈtreɪd ɒf/",
-      "ipaUk": "/ˈtreɪd ɒf/",
-      "wordType": "noun",
-      "meaningVi": "Sự đánh đổi",
-      "exampleEn": "Trade-offs are necessary when negotiating between competing interests.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1271,
-      "word": "Dealbreaker",
-      "phonetic": "/ˈdiːlˌbreɪkər/",
-      "ipaUs": "/ˈdiːlˌbreɪkər/",
-      "ipaUk": "/ˈdiːlˌbreɪkər/",
-      "wordType": "noun",
-      "meaningVi": "Điều kiện không thể thương lượng",
-      "exampleEn": "The contract’s payment terms were a dealbreaker for the supplier.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1272,
-      "word": "Terms and conditions",
-      "phonetic": "/tɜːmz ənd kənˈdɪʃənz/",
-      "ipaUs": "/tɜːmz ənd kənˈdɪʃənz/",
-      "ipaUk": "/tɜːmz ənd kənˈdɪʃənz/",
-      "wordType": "noun",
-      "meaningVi": "Điều khoản và điều kiện",
-      "exampleEn": "The terms and conditions of the agreement must be reviewed by both parties.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1273,
-      "word": "Conclude",
-      "phonetic": "/kənˈkluːd/",
-      "ipaUs": "/kənˈkluːd/",
-      "ipaUk": "/kənˈkluːd/",
-      "wordType": "noun",
-      "meaningVi": "Kết thúc, chấm dứt",
-      "exampleEn": "The meeting will conclude after both parties sign the contract.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1274,
-      "word": "Win-lose situation",
-      "phonetic": "/wɪn luːz ˌsɪtʃʊˈeɪʃən/",
-      "ipaUs": "/wɪn luːz ˌsɪtʃʊˈeɪʃən/",
-      "ipaUk": "/wɪn luːz ˌsɪtʃʊˈeɪʃən/",
-      "wordType": "noun",
-      "meaningVi": "Tình huống một bên thắng, một bên thua",
-      "exampleEn": "The deal ended in a win-lose situation, with one party dissatisfied.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1275,
-      "word": "Leverage",
-      "phonetic": "/ˈlɛvərɪdʒ/",
-      "ipaUs": "/ˈlɛvərɪdʒ/",
-      "ipaUk": "/ˈlɛvərɪdʒ/",
-      "wordType": "noun",
-      "meaningVi": "Sức ảnh hưởng",
-      "exampleEn": "The company used its leverage to secure a better deal on the price.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1276,
-      "word": "Negotiating position",
-      "phonetic": "/nɪˈɡəʊʃieɪtɪŋ pəˈzɪʃən/",
-      "ipaUs": "/nɪˈɡəʊʃieɪtɪŋ pəˈzɪʃən/",
-      "ipaUk": "/nɪˈɡəʊʃieɪtɪŋ pəˈzɪʃən/",
-      "wordType": "noun",
-      "meaningVi": "Vị trí đàm phán",
-      "exampleEn": "The two sides took opposite negotiating positions during the talks.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1277,
-      "word": "Closing the deal",
-      "phonetic": "/ˈkləʊzɪŋ ðə diːl/",
-      "ipaUs": "/ˈkləʊzɪŋ ðə diːl/",
-      "ipaUk": "/ˈkləʊzɪŋ ðə diːl/",
-      "wordType": "adjective",
-      "meaningVi": "Chốt hợp đồng",
-      "exampleEn": "After several weeks of negotiation, we are ready to close the deal.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1278,
-      "word": "Counterproposal",
-      "phonetic": "/ˈkaʊntərprəˈpəʊzl/",
-      "ipaUs": "/ˈkaʊntərprəˈpəʊzl/",
-      "ipaUk": "/ˈkaʊntərprəˈpəʊzl/",
-      "wordType": "adjective",
-      "meaningVi": "Đề nghị phản đối",
-      "exampleEn": "The supplier made a counterproposal to our initial offer.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1279,
-      "word": "Competing interests",
-      "phonetic": "/kəmˈpiːtɪŋ ˈɪntrəsts/",
-      "ipaUs": "/kəmˈpiːtɪŋ ˈɪntrəsts/",
-      "ipaUk": "/kəmˈpiːtɪŋ ˈɪntrəsts/",
-      "wordType": "noun",
-      "meaningVi": "Lợi ích mâu thuẫn",
-      "exampleEn": "The competing interests between the two companies caused delays in negotiations.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1280,
-      "word": "Terms of agreement",
-      "phonetic": "/tɜːmz əv əˈɡriːmənt/",
-      "ipaUs": "/tɜːmz əv əˈɡriːmənt/",
-      "ipaUk": "/tɜːmz əv əˈɡriːmənt/",
-      "wordType": "noun",
-      "meaningVi": "Các điều khoản của thỏa thuận",
-      "exampleEn": "Both parties agreed on the terms of agreement after much negotiation.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1281,
-      "word": "Mutual benefit",
-      "phonetic": "/ˈmjuːtʃuəl ˈbɛnɪfɪt/",
-      "ipaUs": "/ˈmjuːtʃuəl ˈbɛnɪfɪt/",
-      "ipaUk": "/ˈmjuːtʃuəl ˈbɛnɪfɪt/",
-      "wordType": "noun",
-      "meaningVi": "Lợi ích chung",
-      "exampleEn": "The agreement was structured to ensure mutual benefit for both sides.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1282,
-      "word": "Mediate",
-      "phonetic": "/ˈmiːdieɪt/",
-      "ipaUs": "/ˈmiːdieɪt/",
-      "ipaUk": "/ˈmiːdieɪt/",
-      "wordType": "verb",
-      "meaningVi": "Hòa giải, trung gian",
-      "exampleEn": "The mediator was brought in to mediate between the two parties.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1283,
-      "word": "Final offer",
-      "phonetic": "/ˈfaɪnəl ˈɒfə(r)/",
-      "ipaUs": "/ˈfaɪnəl ˈɒfə(r)/",
-      "ipaUk": "/ˈfaɪnəl ˈɒfə(r)/",
-      "wordType": "noun",
-      "meaningVi": "Đề nghị cuối cùng",
-      "exampleEn": "The company made its final offer to close the deal.",
-      "exampleVi": null,
-      "spriteKey": null
-    }
-  ],
-  "50": [
-    {
-      "id": 1284,
-      "word": "Charity",
-      "phonetic": "/ˈtʃærəti/",
-      "ipaUs": "/ˈtʃærəti/",
-      "ipaUk": "/ˈtʃærəti/",
-      "wordType": "noun",
-      "meaningVi": "Từ thiện",
-      "exampleEn": "The organization provides charity to those in need.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1285,
-      "word": "Donation",
-      "phonetic": "/dəʊˈneɪʃən/",
-      "ipaUs": "/dəʊˈneɪʃən/",
-      "ipaUk": "/dəʊˈneɪʃən/",
-      "wordType": "noun",
-      "meaningVi": "Sự quyên góp",
-      "exampleEn": "The company made a donation to the local food bank.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1286,
-      "word": "Volunteer",
-      "phonetic": "/ˌvɒlənˈtɪə(r)/",
-      "ipaUs": "/ˌvɒlənˈtɪə(r)/",
-      "ipaUk": "/ˌvɒlənˈtɪə(r)/",
-      "wordType": "noun",
-      "meaningVi": "Tình nguyện viên",
-      "exampleEn": "She works as a volunteer at the animal shelter every weekend.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1287,
-      "word": "Fundraising",
-      "phonetic": "/ˈfʌndˌreɪzɪŋ/",
-      "ipaUs": "/ˈfʌndˌreɪzɪŋ/",
-      "ipaUk": "/ˈfʌndˌreɪzɪŋ/",
-      "wordType": "noun",
-      "meaningVi": "Gây quỹ",
-      "exampleEn": "The event was a fundraising campaign for cancer research.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1288,
-      "word": "Non-profit",
-      "phonetic": "/ˌnɒnˈprɒfɪt/",
-      "ipaUs": "/ˌnɒnˈprɒfɪt/",
-      "ipaUk": "/ˌnɒnˈprɒfɪt/",
-      "wordType": "noun",
-      "meaningVi": "Phi lợi nhuận",
-      "exampleEn": "The non-profit organization aims to support local communities.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1289,
-      "word": "Beneficiary",
-      "phonetic": "/ˌbenɪˈfɪʃəri/",
-      "ipaUs": "/ˌbenɪˈfɪʃəri/",
-      "ipaUk": "/ˌbenɪˈfɪʃəri/",
-      "wordType": "noun",
-      "meaningVi": "Người hưởng lợi, đối tượng thụ hưởng",
-      "exampleEn": "The beneficiaries of the program include low-income families.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1290,
-      "word": "Cause",
-      "phonetic": "/kɔːz/",
-      "ipaUs": "/kɔːz/",
-      "ipaUk": "/kɔːz/",
-      "wordType": "noun",
-      "meaningVi": "Nguyên nhân, lý do",
-      "exampleEn": "The organization supports the cause of environmental conservation.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1291,
-      "word": "Community service",
-      "phonetic": "/kəˈmjunəti ˈsɜːvɪs/",
-      "ipaUs": "/kəˈmjunəti ˈsɜːvɪs/",
-      "ipaUk": "/kəˈmjunəti ˈsɜːvɪs/",
-      "wordType": "noun",
-      "meaningVi": "Dịch vụ cộng đồng",
-      "exampleEn": "Many high school students are required to complete community service hours.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1292,
-      "word": "Philanthropy",
-      "phonetic": "/fɪˈlænθrəpi/",
-      "ipaUs": "/fɪˈlænθrəpi/",
-      "ipaUk": "/fɪˈlænθrəpi/",
-      "wordType": "noun",
-      "meaningVi": "Lòng bác ái, hoạt động từ thiện",
-      "exampleEn": "The billionaire is known for his philanthropy in healthcare and education.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1293,
-      "word": "Social responsibility",
-      "phonetic": "/ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
-      "ipaUs": "/ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
-      "ipaUk": "/ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
-      "wordType": "noun",
-      "meaningVi": "Trách nhiệm xã hội",
-      "exampleEn": "Social responsibility encourages businesses to contribute to the welfare of society.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1294,
-      "word": "Grant",
-      "phonetic": "/ɡrænt/",
-      "ipaUs": "/ɡrænt/",
-      "ipaUk": "/ɡrænt/",
-      "wordType": "noun",
-      "meaningVi": "Khoản tài trợ",
-      "exampleEn": "The foundation received a grant to fund their research project.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1295,
-      "word": "Impact",
-      "phonetic": "/ˈɪmpækt/",
-      "ipaUs": "/ˈɪmpækt/",
-      "ipaUk": "/ˈɪmpækt/",
-      "wordType": "noun",
-      "meaningVi": "Tác động, ảnh hưởng",
-      "exampleEn": "The charity aims to make a positive impact on the community.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1296,
-      "word": "Outreach",
-      "phonetic": "/ˈaʊtˌriːtʃ/",
-      "ipaUs": "/ˈaʊtˌriːtʃ/",
-      "ipaUk": "/ˈaʊtˌriːtʃ/",
-      "wordType": "noun",
-      "meaningVi": "Tiếp cận",
-      "exampleEn": "The organization conducts outreach programs to raise awareness of mental health.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1297,
-      "word": "Sponsorship",
-      "phonetic": "/ˈspɒnsəʃɪp/",
-      "ipaUs": "/ˈspɒnsəʃɪp/",
-      "ipaUk": "/ˈspɒnsəʃɪp/",
-      "wordType": "noun",
-      "meaningVi": "Sự tài trợ",
-      "exampleEn": "The event was made possible through sponsorship from several companies.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1298,
-      "word": "Benefactor",
-      "phonetic": "/ˈbenɪfæktə(r)/",
-      "ipaUs": "/ˈbenɪfæktə(r)/",
-      "ipaUk": "/ˈbenɪfæktə(r)/",
-      "wordType": "noun",
-      "meaningVi": "Nhà hảo tâm, người tài trợ",
-      "exampleEn": "The benefactor generously funded the new school building.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1299,
-      "word": "Voluntary",
-      "phonetic": "/ˈvɒləntri/",
-      "ipaUs": "/ˈvɒləntri/",
-      "ipaUk": "/ˈvɒləntri/",
-      "wordType": "noun",
-      "meaningVi": "Tình nguyện, tự nguyện",
-      "exampleEn": "He gave voluntary time to help with the community cleanup.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1300,
-      "word": "Advocacy",
-      "phonetic": "/ˈædvəkəsi/",
-      "ipaUs": "/ˈædvəkəsi/",
-      "ipaUk": "/ˈædvəkəsi/",
-      "wordType": "noun",
-      "meaningVi": "Sự ủng hộ, vận động",
-      "exampleEn": "The group works in advocacy to fight for animal rights.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1301,
-      "word": "Relief",
-      "phonetic": "/rɪˈliːf/",
-      "ipaUs": "/rɪˈliːf/",
-      "ipaUk": "/rɪˈliːf/",
-      "wordType": "noun",
-      "meaningVi": "Giảm nhẹ, cứu trợ",
-      "exampleEn": "The charity provided relief to victims of the natural disaster.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1302,
-      "word": "Humanitarian",
-      "phonetic": "/hjuːˌmænɪˈteəriən/",
-      "ipaUs": "/hjuːˌmænɪˈteəriən/",
-      "ipaUk": "/hjuːˌmænɪˈteəriən/",
-      "wordType": "noun",
-      "meaningVi": "Nhân đạo, nhân ái",
-      "exampleEn": "The humanitarian organization helps refugees find shelter and food.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1303,
-      "word": "Empowerment",
-      "phonetic": "/ɪmˈpaʊə(r)mənt/",
-      "ipaUs": "/ɪmˈpaʊə(r)mənt/",
-      "ipaUk": "/ɪmˈpaʊə(r)mənt/",
-      "wordType": "noun",
-      "meaningVi": "Trao quyền",
-      "exampleEn": "The program promotes empowerment through education and resources.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1304,
-      "word": "Fundraiser",
-      "phonetic": "/ˈfʌndˌreɪzər/",
-      "ipaUs": "/ˈfʌndˌreɪzər/",
-      "ipaUk": "/ˈfʌndˌreɪzər/",
-      "wordType": "noun",
-      "meaningVi": "Người gây quỹ, sự kiện gây quỹ",
-      "exampleEn": "The charity is hosting a fundraiser to support cancer research.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1305,
-      "word": "Charitable",
-      "phonetic": "/ˈtʃærɪtəbl/",
-      "ipaUs": "/ˈtʃærɪtəbl/",
-      "ipaUk": "/ˈtʃærɪtəbl/",
-      "wordType": "adjective",
-      "meaningVi": "Từ thiện, hảo tâm",
-      "exampleEn": "He made a charitable donation to support disaster relief efforts.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1306,
-      "word": "Social welfare",
-      "phonetic": "/ˈsəʊʃəl ˈwɛlfɛə(r)/",
-      "ipaUs": "/ˈsəʊʃəl ˈwɛlfɛə(r)/",
-      "ipaUk": "/ˈsəʊʃəl ˈwɛlfɛə(r)/",
-      "wordType": "noun",
-      "meaningVi": "Phúc lợi xã hội",
-      "exampleEn": "The government provides social welfare programs to assist low-income families.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1307,
-      "word": "Endowment",
-      "phonetic": "/ɪnˈdaʊmənt/",
-      "ipaUs": "/ɪnˈdaʊmənt/",
-      "ipaUk": "/ɪnˈdaʊmənt/",
-      "wordType": "noun",
-      "meaningVi": "Quỹ tài trợ",
-      "exampleEn": "The university received a large endowment to fund scholarships.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1308,
-      "word": "Human rights",
-      "phonetic": "/ˈhjuːmən raɪts/",
-      "ipaUs": "/ˈhjuːmən raɪts/",
-      "ipaUk": "/ˈhjuːmən raɪts/",
-      "wordType": "noun",
-      "meaningVi": "Quyền con người",
-      "exampleEn": "The organization fights for human rights across the globe.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1309,
-      "word": "Corporate social responsibility",
-      "phonetic": "/ˌkɔːpərət ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
-      "ipaUs": "/ˌkɔːpərət ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
-      "ipaUk": "/ˌkɔːpərət ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
-      "wordType": "noun",
-      "meaningVi": "Trách nhiệm xã hội của doanh nghiệp",
-      "exampleEn": "Companies often engage in corporate social responsibility to give back to communities.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1310,
-      "word": "Volunteerism",
-      "phonetic": "/ˌvɒlənˈtɪərɪzəm/",
-      "ipaUs": "/ˌvɒlənˈtɪərɪzəm/",
-      "ipaUk": "/ˌvɒlənˈtɪərɪzəm/",
-      "wordType": "noun",
-      "meaningVi": "Tinh thần tình nguyện",
-      "exampleEn": "The event was organized through volunteerism and donations.",
-      "exampleVi": null,
-      "spriteKey": null
-    },
-    {
-      "id": 1311,
-      "word": "Charity event",
-      "phonetic": "/ˈtʃærɪti ɪˈvent/",
-      "ipaUs": "/ˈtʃærɪti ɪˈvent/",
-      "ipaUk": "/ˈtʃærɪti ɪˈvent/",
-      "wordType": "noun",
-      "meaningVi": "Sự kiện từ thiện",
-      "exampleEn": "The charity event raised over $50,000 for medical research.",
-      "exampleVi": null,
-      "spriteKey": null
-    }
-  ],
   "51": [
     {
-      "id": 1255,
+      "id": 5101,
       "word": "Negotiation",
       "phonetic": "/nɪˌɡəʊʃɪˈeɪʃən/",
       "ipaUs": "/nɪˌɡəʊʃɪˈeɪʃən/",
@@ -15851,7 +15345,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1256,
+      "id": 5102,
       "word": "Agreement",
       "phonetic": "/əˈɡriːmənt/",
       "ipaUs": "/əˈɡriːmənt/",
@@ -15863,7 +15357,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1257,
+      "id": 5103,
       "word": "Bargaining",
       "phonetic": "/ˈbɑːɡɪnɪŋ/",
       "ipaUs": "/ˈbɑːɡɪnɪŋ/",
@@ -15875,7 +15369,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1258,
+      "id": 5104,
       "word": "Terms",
       "phonetic": "/tɜːmz/",
       "ipaUs": "/tɜːmz/",
@@ -15887,7 +15381,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1259,
+      "id": 5105,
       "word": "Counteroffer",
       "phonetic": "/ˈkaʊntərɒfə(r)/",
       "ipaUs": "/ˈkaʊntərɒfə(r)/",
@@ -15899,7 +15393,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1260,
+      "id": 5106,
       "word": "Compromise",
       "phonetic": "/ˈkɒmprəmaɪz/",
       "ipaUs": "/ˈkɒmprəmaɪz/",
@@ -15911,7 +15405,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1261,
+      "id": 5107,
       "word": "Mediation",
       "phonetic": "/ˌmiːdɪˈeɪʃən/",
       "ipaUs": "/ˌmiːdɪˈeɪʃən/",
@@ -15923,7 +15417,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1262,
+      "id": 5108,
       "word": "Negotiator",
       "phonetic": "/nɪˈɡəʊʃɪeɪtə(r)/",
       "ipaUs": "/nɪˈɡəʊʃɪeɪtə(r)/",
@@ -15935,7 +15429,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1263,
+      "id": 5109,
       "word": "Proposal",
       "phonetic": "/prəˈpəʊzl/",
       "ipaUs": "/prəˈpəʊzl/",
@@ -15947,7 +15441,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1264,
+      "id": 5110,
       "word": "Win-win situation",
       "phonetic": "/wɪn wɪn ˌsɪtʃʊˈeɪʃən/",
       "ipaUs": "/wɪn wɪn ˌsɪtʃʊˈeɪʃən/",
@@ -15959,7 +15453,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1265,
+      "id": 5111,
       "word": "Agreement in principle",
       "phonetic": "/əˈɡriːmənt ɪn ˈprɪnsəpl/",
       "ipaUs": "/əˈɡriːmənt ɪn ˈprɪnsəpl/",
@@ -15971,7 +15465,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1266,
+      "id": 5112,
       "word": "Concession",
       "phonetic": "/kənˈsɛʃən/",
       "ipaUs": "/kənˈsɛʃən/",
@@ -15983,7 +15477,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1267,
+      "id": 5113,
       "word": "Terms of reference",
       "phonetic": "/ˈtɜːmz əv rɪˈfɛrəns/",
       "ipaUs": "/ˈtɜːmz əv rɪˈfɛrəns/",
@@ -15995,7 +15489,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1268,
+      "id": 5114,
       "word": "Facilitator",
       "phonetic": "/fəˈsɪlɪteɪtə(r)/",
       "ipaUs": "/fəˈsɪlɪteɪtə(r)/",
@@ -16007,7 +15501,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1269,
+      "id": 5115,
       "word": "Deal",
       "phonetic": "/diːl/",
       "ipaUs": "/diːl/",
@@ -16019,7 +15513,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1270,
+      "id": 5116,
       "word": "Trade-off",
       "phonetic": "/ˈtreɪd ɒf/",
       "ipaUs": "/ˈtreɪd ɒf/",
@@ -16031,7 +15525,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1271,
+      "id": 5117,
       "word": "Dealbreaker",
       "phonetic": "/ˈdiːlˌbreɪkər/",
       "ipaUs": "/ˈdiːlˌbreɪkər/",
@@ -16043,7 +15537,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1272,
+      "id": 5118,
       "word": "Terms and conditions",
       "phonetic": "/tɜːmz ənd kənˈdɪʃənz/",
       "ipaUs": "/tɜːmz ənd kənˈdɪʃənz/",
@@ -16055,7 +15549,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1273,
+      "id": 5119,
       "word": "Conclude",
       "phonetic": "/kənˈkluːd/",
       "ipaUs": "/kənˈkluːd/",
@@ -16067,7 +15561,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1274,
+      "id": 5120,
       "word": "Win-lose situation",
       "phonetic": "/wɪn luːz ˌsɪtʃʊˈeɪʃən/",
       "ipaUs": "/wɪn luːz ˌsɪtʃʊˈeɪʃən/",
@@ -16079,7 +15573,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1275,
+      "id": 5121,
       "word": "Leverage",
       "phonetic": "/ˈlɛvərɪdʒ/",
       "ipaUs": "/ˈlɛvərɪdʒ/",
@@ -16091,7 +15585,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1276,
+      "id": 5122,
       "word": "Negotiating position",
       "phonetic": "/nɪˈɡəʊʃieɪtɪŋ pəˈzɪʃən/",
       "ipaUs": "/nɪˈɡəʊʃieɪtɪŋ pəˈzɪʃən/",
@@ -16103,7 +15597,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1277,
+      "id": 5123,
       "word": "Closing the deal",
       "phonetic": "/ˈkləʊzɪŋ ðə diːl/",
       "ipaUs": "/ˈkləʊzɪŋ ðə diːl/",
@@ -16115,7 +15609,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1278,
+      "id": 5124,
       "word": "Counterproposal",
       "phonetic": "/ˈkaʊntərprəˈpəʊzl/",
       "ipaUs": "/ˈkaʊntərprəˈpəʊzl/",
@@ -16127,7 +15621,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1279,
+      "id": 5125,
       "word": "Competing interests",
       "phonetic": "/kəmˈpiːtɪŋ ˈɪntrəsts/",
       "ipaUs": "/kəmˈpiːtɪŋ ˈɪntrəsts/",
@@ -16139,7 +15633,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1280,
+      "id": 5126,
       "word": "Terms of agreement",
       "phonetic": "/tɜːmz əv əˈɡriːmənt/",
       "ipaUs": "/tɜːmz əv əˈɡriːmənt/",
@@ -16151,7 +15645,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1281,
+      "id": 5127,
       "word": "Mutual benefit",
       "phonetic": "/ˈmjuːtʃuəl ˈbɛnɪfɪt/",
       "ipaUs": "/ˈmjuːtʃuəl ˈbɛnɪfɪt/",
@@ -16163,7 +15657,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1282,
+      "id": 5128,
       "word": "Mediate",
       "phonetic": "/ˈmiːdieɪt/",
       "ipaUs": "/ˈmiːdieɪt/",
@@ -16175,7 +15669,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1283,
+      "id": 5129,
       "word": "Final offer",
       "phonetic": "/ˈfaɪnəl ˈɒfə(r)/",
       "ipaUs": "/ˈfaɪnəl ˈɒfə(r)/",
@@ -16189,7 +15683,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
   ],
   "52": [
     {
-      "id": 1284,
+      "id": 5201,
       "word": "Charity",
       "phonetic": "/ˈtʃærəti/",
       "ipaUs": "/ˈtʃærəti/",
@@ -16201,7 +15695,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1285,
+      "id": 5202,
       "word": "Donation",
       "phonetic": "/dəʊˈneɪʃən/",
       "ipaUs": "/dəʊˈneɪʃən/",
@@ -16213,7 +15707,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1286,
+      "id": 5203,
       "word": "Volunteer",
       "phonetic": "/ˌvɒlənˈtɪə(r)/",
       "ipaUs": "/ˌvɒlənˈtɪə(r)/",
@@ -16225,7 +15719,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1287,
+      "id": 5204,
       "word": "Fundraising",
       "phonetic": "/ˈfʌndˌreɪzɪŋ/",
       "ipaUs": "/ˈfʌndˌreɪzɪŋ/",
@@ -16237,7 +15731,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1288,
+      "id": 5205,
       "word": "Non-profit",
       "phonetic": "/ˌnɒnˈprɒfɪt/",
       "ipaUs": "/ˌnɒnˈprɒfɪt/",
@@ -16249,7 +15743,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1289,
+      "id": 5206,
       "word": "Beneficiary",
       "phonetic": "/ˌbenɪˈfɪʃəri/",
       "ipaUs": "/ˌbenɪˈfɪʃəri/",
@@ -16261,7 +15755,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1290,
+      "id": 5207,
       "word": "Cause",
       "phonetic": "/kɔːz/",
       "ipaUs": "/kɔːz/",
@@ -16273,7 +15767,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1291,
+      "id": 5208,
       "word": "Community service",
       "phonetic": "/kəˈmjunəti ˈsɜːvɪs/",
       "ipaUs": "/kəˈmjunəti ˈsɜːvɪs/",
@@ -16285,7 +15779,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1292,
+      "id": 5209,
       "word": "Philanthropy",
       "phonetic": "/fɪˈlænθrəpi/",
       "ipaUs": "/fɪˈlænθrəpi/",
@@ -16297,7 +15791,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1293,
+      "id": 5210,
       "word": "Social responsibility",
       "phonetic": "/ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
       "ipaUs": "/ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
@@ -16309,7 +15803,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1294,
+      "id": 5211,
       "word": "Grant",
       "phonetic": "/ɡrænt/",
       "ipaUs": "/ɡrænt/",
@@ -16321,7 +15815,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1295,
+      "id": 5212,
       "word": "Impact",
       "phonetic": "/ˈɪmpækt/",
       "ipaUs": "/ˈɪmpækt/",
@@ -16333,7 +15827,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1296,
+      "id": 5213,
       "word": "Outreach",
       "phonetic": "/ˈaʊtˌriːtʃ/",
       "ipaUs": "/ˈaʊtˌriːtʃ/",
@@ -16345,7 +15839,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1297,
+      "id": 5214,
       "word": "Sponsorship",
       "phonetic": "/ˈspɒnsəʃɪp/",
       "ipaUs": "/ˈspɒnsəʃɪp/",
@@ -16357,7 +15851,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1298,
+      "id": 5215,
       "word": "Benefactor",
       "phonetic": "/ˈbenɪfæktə(r)/",
       "ipaUs": "/ˈbenɪfæktə(r)/",
@@ -16369,7 +15863,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1299,
+      "id": 5216,
       "word": "Voluntary",
       "phonetic": "/ˈvɒləntri/",
       "ipaUs": "/ˈvɒləntri/",
@@ -16381,7 +15875,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1300,
+      "id": 5217,
       "word": "Advocacy",
       "phonetic": "/ˈædvəkəsi/",
       "ipaUs": "/ˈædvəkəsi/",
@@ -16393,7 +15887,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1301,
+      "id": 5218,
       "word": "Relief",
       "phonetic": "/rɪˈliːf/",
       "ipaUs": "/rɪˈliːf/",
@@ -16405,7 +15899,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1302,
+      "id": 5219,
       "word": "Humanitarian",
       "phonetic": "/hjuːˌmænɪˈteəriən/",
       "ipaUs": "/hjuːˌmænɪˈteəriən/",
@@ -16417,7 +15911,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1303,
+      "id": 5220,
       "word": "Empowerment",
       "phonetic": "/ɪmˈpaʊə(r)mənt/",
       "ipaUs": "/ɪmˈpaʊə(r)mənt/",
@@ -16429,7 +15923,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1304,
+      "id": 5221,
       "word": "Fundraiser",
       "phonetic": "/ˈfʌndˌreɪzər/",
       "ipaUs": "/ˈfʌndˌreɪzər/",
@@ -16441,7 +15935,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1305,
+      "id": 5222,
       "word": "Charitable",
       "phonetic": "/ˈtʃærɪtəbl/",
       "ipaUs": "/ˈtʃærɪtəbl/",
@@ -16453,7 +15947,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1306,
+      "id": 5223,
       "word": "Social welfare",
       "phonetic": "/ˈsəʊʃəl ˈwɛlfɛə(r)/",
       "ipaUs": "/ˈsəʊʃəl ˈwɛlfɛə(r)/",
@@ -16465,7 +15959,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1307,
+      "id": 5224,
       "word": "Endowment",
       "phonetic": "/ɪnˈdaʊmənt/",
       "ipaUs": "/ɪnˈdaʊmənt/",
@@ -16477,7 +15971,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1308,
+      "id": 5225,
       "word": "Human rights",
       "phonetic": "/ˈhjuːmən raɪts/",
       "ipaUs": "/ˈhjuːmən raɪts/",
@@ -16489,7 +15983,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1309,
+      "id": 5226,
       "word": "Corporate social responsibility",
       "phonetic": "/ˌkɔːpərət ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
       "ipaUs": "/ˌkɔːpərət ˈsəʊʃəl rɪˌspɒnsəˈbɪləti/",
@@ -16501,7 +15995,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1310,
+      "id": 5227,
       "word": "Volunteerism",
       "phonetic": "/ˌvɒlənˈtɪərɪzəm/",
       "ipaUs": "/ˌvɒlənˈtɪərɪzəm/",
@@ -16513,7 +16007,7 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "spriteKey": null
     },
     {
-      "id": 1311,
+      "id": 5228,
       "word": "Charity event",
       "phonetic": "/ˈtʃærɪti ɪˈvent/",
       "ipaUs": "/ˈtʃærɪti ɪˈvent/",
@@ -16521,6 +16015,296 @@ export const DEFAULT_VOCABULARIES: Record<number, VocabularyDto[]> = {
       "wordType": "noun",
       "meaningVi": "Sự kiện từ thiện",
       "exampleEn": "The charity event raised over $50,000 for medical research.",
+      "exampleVi": null,
+      "spriteKey": null
+    }
+  ],
+  "2": [
+    {
+      "id": 301,
+      "word": "Appointment",
+      "phonetic": "/əˈpɔɪntmənt/",
+      "ipaUs": "/əˈpɔɪntmənt/",
+      "ipaUk": "/əˈpɔɪntmənt/",
+      "wordType": "noun",
+      "meaningVi": "Cuộc hẹn",
+      "exampleEn": "I have an appointment with the manager at 10 a.m.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 302,
+      "word": "Briefcase",
+      "phonetic": "/ˈbriːf.keɪs/",
+      "ipaUs": "/ˈbriːf.keɪs/",
+      "ipaUk": "/ˈbriːf.keɪs/",
+      "wordType": "noun",
+      "meaningVi": "Cặp tài liệu",
+      "exampleEn": "He carried his documents in a leather briefcase.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 303,
+      "word": "Conference",
+      "phonetic": "/ˈkɒn.fər.əns/",
+      "ipaUs": "/ˈkɒn.fər.əns/",
+      "ipaUk": "/ˈkɒn.fər.əns/",
+      "wordType": "noun",
+      "meaningVi": "Hội nghị",
+      "exampleEn": "The annual conference will be held next week.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 304,
+      "word": "Desk",
+      "phonetic": "/desk/",
+      "ipaUs": "/desk/",
+      "ipaUk": "/desk/",
+      "wordType": "noun",
+      "meaningVi": "Bàn làm việc",
+      "exampleEn": "She left her notebook on the desk.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 305,
+      "word": "Employee",
+      "phonetic": "/ɪmˈplɔɪ.iː/",
+      "ipaUs": "/ɪmˈplɔɪ.iː/",
+      "ipaUk": "/ɪmˈplɔɪ.iː/",
+      "wordType": "noun",
+      "meaningVi": "Nhân viên",
+      "exampleEn": "Our company has over 500 employees.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 306,
+      "word": "Employer",
+      "phonetic": "/ɪmˈplɔɪ.ər/",
+      "ipaUs": "/ɪmˈplɔɪ.ər/",
+      "ipaUk": "/ɪmˈplɔɪ.ər/",
+      "wordType": "noun",
+      "meaningVi": "Người tuyển dụng",
+      "exampleEn": "The employer offered her a generous salary.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 307,
+      "word": "File",
+      "phonetic": "/faɪl/",
+      "ipaUs": "/faɪl/",
+      "ipaUk": "/faɪl/",
+      "wordType": "noun",
+      "meaningVi": "Tệp tài liệu",
+      "exampleEn": "Please save the document in this file.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 308,
+      "word": "Fax",
+      "phonetic": "/fæks/",
+      "ipaUs": "/fæks/",
+      "ipaUk": "/fæks/",
+      "wordType": "noun",
+      "meaningVi": "Máy fax",
+      "exampleEn": "Could you send this document via fax?",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 309,
+      "word": "Keyboard",
+      "phonetic": "/ˈkiː.bɔːd/",
+      "ipaUs": "/ˈkiː.bɔːd/",
+      "ipaUk": "/ˈkiː.bɔːd/",
+      "wordType": "noun",
+      "meaningVi": "Bàn phím",
+      "exampleEn": "The keyboard on my laptop isn’t working.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 310,
+      "word": "Meeting",
+      "phonetic": "/ˈmiː.tɪŋ/",
+      "ipaUs": "/ˈmiː.tɪŋ/",
+      "ipaUk": "/ˈmiː.tɪŋ/",
+      "wordType": "noun",
+      "meaningVi": "Cuộc họp",
+      "exampleEn": "The team has a meeting every Monday morning.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 311,
+      "word": "Office",
+      "phonetic": "/ˈɒf.ɪs/",
+      "ipaUs": "/ˈɒf.ɪs/",
+      "ipaUk": "/ˈɒf.ɪs/",
+      "wordType": "noun",
+      "meaningVi": "Văn phòng",
+      "exampleEn": "She works in a large office downtown.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 312,
+      "word": "Paperclip",
+      "phonetic": "/ˈpeɪ.pə.klɪp/",
+      "ipaUs": "/ˈpeɪ.pə.klɪp/",
+      "ipaUk": "/ˈpeɪ.pə.klɪp/",
+      "wordType": "noun",
+      "meaningVi": "Kẹp giấy",
+      "exampleEn": "Use a paperclip to keep these pages together.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 313,
+      "word": "Printer",
+      "phonetic": "/ˈprɪn.tər/",
+      "ipaUs": "/ˈprɪn.tər/",
+      "ipaUk": "/ˈprɪn.tər/",
+      "wordType": "noun",
+      "meaningVi": "Máy in",
+      "exampleEn": "The printer is out of paper again.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 314,
+      "word": "Schedule",
+      "phonetic": "/ˈʃedʒ.uːl/",
+      "ipaUs": "/ˈʃedʒ.uːl/",
+      "ipaUk": "/ˈʃedʒ.uːl/",
+      "wordType": "noun",
+      "meaningVi": "Lịch trình",
+      "exampleEn": "Check the schedule to confirm the meeting time.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 315,
+      "word": "Supervisor",
+      "phonetic": "/ˈsuː.pə.vaɪ.zər/",
+      "ipaUs": "/ˈsuː.pə.vaɪ.zər/",
+      "ipaUk": "/ˈsuː.pə.vaɪ.zər/",
+      "wordType": "noun",
+      "meaningVi": "Người giám sát",
+      "exampleEn": "My supervisor is very supportive and helpful.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 316,
+      "word": "Task",
+      "phonetic": "/tæsk/",
+      "ipaUs": "/tæsk/",
+      "ipaUk": "/tæsk/",
+      "wordType": "noun",
+      "meaningVi": "Nhiệm vụ",
+      "exampleEn": "Each task must be completed by the deadline.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 317,
+      "word": "Telephone",
+      "phonetic": "/ˈtel.ɪ.fəʊn/",
+      "ipaUs": "/ˈtel.ɪ.fəʊn/",
+      "ipaUk": "/ˈtel.ɪ.fəʊn/",
+      "wordType": "noun",
+      "meaningVi": "Điện thoại bàn",
+      "exampleEn": "She answered the telephone after two rings.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 318,
+      "word": "Workspace",
+      "phonetic": "/ˈwɜːk.speɪs/",
+      "ipaUs": "/ˈwɜːk.speɪs/",
+      "ipaUk": "/ˈwɜːk.speɪs/",
+      "wordType": "noun",
+      "meaningVi": "Không gian làm việc",
+      "exampleEn": "His workspace is always clean and organized.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 319,
+      "word": "Document",
+      "phonetic": "/ˈdɒk.jə.mənt/",
+      "ipaUs": "/ˈdɒk.jə.mənt/",
+      "ipaUk": "/ˈdɒk.jə.mənt/",
+      "wordType": "noun",
+      "meaningVi": "Tài liệu",
+      "exampleEn": "Please print the document for the meeting.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 320,
+      "word": "Projector",
+      "phonetic": "/prəˈdʒek.tər/",
+      "ipaUs": "/prəˈdʒek.tər/",
+      "ipaUk": "/prəˈdʒek.tər/",
+      "wordType": "noun",
+      "meaningVi": "Máy chiếu",
+      "exampleEn": "The projector is used for presentations.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 321,
+      "word": "Deadline",
+      "phonetic": "/ˈded.laɪn/",
+      "ipaUs": "/ˈded.laɪn/",
+      "ipaUk": "/ˈded.laɪn/",
+      "wordType": "noun",
+      "meaningVi": "Hạn chót",
+      "exampleEn": "We have to meet the deadline for this project.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 322,
+      "word": "Receptionist",
+      "phonetic": "/rɪˈsep.ʃən.ɪst/",
+      "ipaUs": "/rɪˈsep.ʃən.ɪst/",
+      "ipaUk": "/rɪˈsep.ʃən.ɪst/",
+      "wordType": "noun",
+      "meaningVi": "Lễ tân",
+      "exampleEn": "The receptionist greeted us with a warm smile.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 323,
+      "word": "Stationery",
+      "phonetic": "/ˈsteɪ.ʃən.ər.i/",
+      "ipaUs": "/ˈsteɪ.ʃən.ər.i/",
+      "ipaUk": "/ˈsteɪ.ʃən.ər.i/",
+      "wordType": "noun",
+      "meaningVi": "Văn phòng phẩm",
+      "exampleEn": "We need to order more stationery for the office.",
+      "exampleVi": null,
+      "spriteKey": null
+    },
+    {
+      "id": 324,
+      "word": "Memo",
+      "phonetic": "/ˈmem.əʊ/",
+      "ipaUs": "/ˈmem.əʊ/",
+      "ipaUk": "/ˈmem.əʊ/",
+      "wordType": "noun",
+      "meaningVi": "Thông báo nội bộ",
+      "exampleEn": "I sent a memo to all staff regarding the changes.",
       "exampleVi": null,
       "spriteKey": null
     }

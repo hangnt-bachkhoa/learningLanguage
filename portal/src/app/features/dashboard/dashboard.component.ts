@@ -23,7 +23,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       <!-- Thư viện học tập (3 Sổ tay da vintage mạ vàng) -->
       <div class="section-header-row">
         <div class="section-title">Thư viện học tập</div>
-        <a routerLink="/lessons" class="view-all-link">Xem tất cả 52 bài học →</a>
+        <a routerLink="/lessons" class="view-all-link">Xem tất cả 51 bài học →</a>
       </div>
       
       <div class="books-showcase">
