@@ -15,7 +15,9 @@ import { GameStateService } from '../../../core/services/game-state.service';
         </button>
 
         <h1 class="page-title">
-          <span class="title-logo">🌱</span>
+          <span class="title-logo">
+            <img src="assets/icons/language_farm_logo.svg" alt="Language Farm" class="topbar-logo-img pixel-art" />
+          </span>
           <span class="title-text">{{ title }}</span>
         </h1>
       </div>
@@ -92,8 +94,20 @@ import { GameStateService } from '../../../core/services/game-state.service';
       color: var(--navy);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       margin: 0;
+    }
+    .title-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .topbar-logo-img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      border-radius: 50%;
+      display: block;
     }
     .topbar-right {
       display: flex;

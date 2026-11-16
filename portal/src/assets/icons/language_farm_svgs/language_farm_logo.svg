@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <path id="topArc" d="M 46,120 A 74,74 0 1,1 194,120" fill="none"/>
+    <path id="botArc" d="M 52,132 A 70,70 0 0,0 188,132" fill="none"/>
+  </defs>
+  <!-- Cream Paper Circle -->
+  <circle cx="120" cy="120" r="112" fill="#F8F4EB" stroke="#D9C8B5" stroke-width="3"/>
+  <circle cx="120" cy="120" r="102" fill="none" stroke="#E8D7A8" stroke-width="2"/>
+  <circle cx="120" cy="120" r="62" fill="none" stroke="#E8D7A8" stroke-width="1.5"/>
+
+  <!-- Curved Serif Text -->
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="700" fill="#263847" letter-spacing="1.2">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">Language Farm</textPath>
+  </text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="11.5" font-weight="700" fill="#263847" letter-spacing="2.2">
+    <textPath href="#botArc" startOffset="50%" text-anchor="middle">LEARN &amp; GROW</textPath>
+  </text>
+
+  <!-- Botanical Side Leaves -->
+  <g fill="#78815D">
+    <ellipse cx="42" cy="112" rx="4" ry="8" transform="rotate(-30 42 112)"/>
+    <ellipse cx="198" cy="112" rx="4" ry="8" transform="rotate(30 198 112)"/>
+  </g>
+  <g fill="#A65E65">
+    <ellipse cx="46" cy="134" rx="3.5" ry="7" transform="rotate(25 46 134)"/>
+    <ellipse cx="194" cy="134" rx="3.5" ry="7" transform="rotate(-25 194 134)"/>
+  </g>
+
+  <!-- Pixel-Art Open Book + Olive Sprout Centerpiece -->
+  <g transform="translate(64, 64) scale(7)" shape-rendering="crispEdges">
+    <!-- Open Book -->
+    <rect x="1" y="7" width="14" height="7" fill="#263847"/>
+    <rect x="2" y="6" width="5" height="7" fill="#FFFDF9"/>
+    <rect x="9" y="6" width="5" height="7" fill="#FFFDF9"/>
+    <rect x="7" y="7" width="2" height="6" fill="#D9C8B5"/>
+    <rect x="2" y="13" width="12" height="1" fill="#E8D7A8"/>
+    <!-- Dusty Rose Accents -->
+    <rect x="3" y="9" width="2" height="1" fill="#A65E65"/>
+    <rect x="11" y="9" width="2" height="1" fill="#A65E65"/>
+    <!-- Olive Green Sprout -->
+    <rect x="7" y="4" width="2" height="6" fill="#78815D"/>
+    <rect x="4" y="2" width="3" height="2" fill="#78815D"/>
+    <rect x="5" y="1" width="2" height="1" fill="#9BB068"/>
+    <rect x="9" y="1" width="3" height="2" fill="#9BB068"/>
+    <rect x="9" y="3" width="2" height="1" fill="#78815D"/>
+  </g>
+</svg>

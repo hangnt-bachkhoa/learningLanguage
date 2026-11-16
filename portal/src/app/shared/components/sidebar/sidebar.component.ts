@@ -22,7 +22,9 @@ import { GameStateService } from '../../../core/services/game-state.service';
       <!-- Phần Header Menu (Logo thương hiệu + Nút đóng X trên mobile) -->
       <div class="sidebar-top-section">
         <a routerLink="/" class="nav-brand" (click)="state.closeMobileSidebar()" title="Language Farm">
-          <span class="brand-sprout">🌱</span>
+          <span class="brand-sprout">
+            <img src="assets/icons/language_farm_logo.svg" alt="Language Farm" class="brand-logo-img pixel-art" />
+          </span>
           <span class="drawer-brand-name">English Farm</span>
         </a>
         <button class="drawer-close-btn" (click)="state.closeMobileSidebar()" title="Đóng menu">✕</button>
@@ -38,7 +40,9 @@ import { GameStateService } from '../../../core/services/game-state.service';
             class="nav-tab-btn"
             (click)="state.closeMobileSidebar()"
             [title]="item.label">
-            <span class="nav-icon">{{ item.icon }}</span>
+            <span class="nav-icon">
+              <img [src]="item.icon" class="nav-icon-img pixel-art" [alt]="item.label" width="22" height="22" />
+            </span>
             <span class="nav-text">{{ item.label }}</span>
             @if (item.path === '/farm' && hasReadyPlots()) {
               <span class="nav-dot"></span>
@@ -169,8 +173,32 @@ import { GameStateService } from '../../../core/services/game-state.service';
       color: #FFFDF9;
       font-weight: 700;
     }
+    .brand-sprout {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .brand-logo-img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      border-radius: 50%;
+      display: block;
+    }
     .nav-icon {
-      font-size: 20px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-icon-img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      display: block;
     }
     .nav-text {
       font-size: 11px;
@@ -277,14 +305,14 @@ export class SidebarComponent {
   state = inject(GameStateService);
 
   navItems = [
-    { path: '/', label: 'Trang chủ', icon: '🏠', exact: true },
-    { path: '/lessons', label: 'Từ vựng', icon: '📖', exact: false },
-    { path: '/grammar', label: 'Ngữ pháp', icon: '📜', exact: false },
-    { path: '/farm', label: 'Nông trại', icon: '🌱', exact: false },
-    { path: '/shop', label: 'Cửa hàng', icon: '🏪', exact: false },
-    { path: '/inventory', label: 'Kho đồ', icon: '🎒', exact: false },
-    { path: '/review', label: 'Tiến độ', icon: '📊', exact: false },
-    { path: '/quiz', label: 'Luyện tập', icon: '✓', exact: false }
+    { path: '/', label: 'Trang chủ', icon: 'assets/icons/icon_home.svg', exact: true },
+    { path: '/lessons', label: 'Từ vựng', icon: 'assets/icons/icon_vocabulary.svg', exact: false },
+    { path: '/grammar', label: 'Ngữ pháp', icon: 'assets/icons/icon_grammar.svg', exact: false },
+    { path: '/farm', label: 'Nông trại', icon: 'assets/icons/icon_farm.svg', exact: false },
+    { path: '/shop', label: 'Cửa hàng', icon: 'assets/icons/icon_shop.svg', exact: false },
+    { path: '/inventory', label: 'Kho đồ', icon: 'assets/icons/icon_inventory.svg', exact: false },
+    { path: '/review', label: 'Tiến độ', icon: 'assets/icons/icon_progress.svg', exact: false },
+    { path: '/quiz', label: 'Luyện tập', icon: 'assets/icons/icon_practice.svg', exact: false }
   ];
 
   hasReadyPlots(): boolean {

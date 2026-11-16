@@ -1,12 +1,25 @@
 import { CropCatalog } from '../models/game.models';
 import { FARM_ASSETS } from './farm-assets.constant';
 
-export function kraftSeedPacket(emblemSvg: string): string {
-  return `<svg width="46" height="46" viewBox="0 0 16 16" class="pixel-art">
-    <rect x="2" y="3" width="12" height="11" fill="#3B2D24"/>
-    <rect x="3" y="4" width="10" height="9" fill="#C49A71"/>
-    <rect x="4" y="5" width="8" height="8" fill="#EBDAC0"/>
-    ${emblemSvg}
+export function kraftSeedPacket(cropIdOrEmblem: string): string {
+  const knownCrops = [
+    'carrot', 'potato', 'corn', 'tomato', 'strawberry',
+    'pumpkin', 'wheat', 'blueberry', 'lemon', 'watermelon',
+    'mango', 'apple', 'cherry'
+  ];
+  const isKnown = knownCrops.includes(cropIdOrEmblem.toLowerCase());
+  const cropFile = isKnown ? cropIdOrEmblem.toLowerCase() : null;
+
+  return `<svg width="46" height="46" viewBox="0 0 32 32" class="pixel-art" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="4" width="24" height="26" rx="2" fill="#3B2D24"/>
+    <rect x="5" y="5" width="22" height="24" rx="1.5" fill="#C49A71"/>
+    <rect x="7" y="9" width="18" height="18" rx="1" fill="#FFFDF8" stroke="#A8815B" stroke-width="0.8"/>
+    <rect x="5" y="5" width="22" height="3" fill="#B5885C"/>
+    <line x1="6" y1="6.5" x2="26" y2="6.5" stroke="#8C6339" stroke-width="0.8" stroke-dasharray="1.5 1.5"/>
+    ${cropFile
+      ? `<image href="assets/farm-assets/crops/${cropFile}.png" x="8" y="10" width="16" height="16" preserveAspectRatio="xMidYMid meet" image-rendering="pixelated"/>`
+      : `<g transform="translate(8, 10)">${cropIdOrEmblem}</g>`
+    }
   </svg>`;
 }
 
@@ -298,7 +311,7 @@ export const CROP_CATALOG: CropCatalog[] = [
 ];
 
 export const SPRITES: Record<string, string> = {
-  seed: kraftSeedPacket(`<rect x="6" y="9" width="4" height="2" fill="#639E46"/><rect x="7" y="7" width="2" height="2" fill="#81C25B"/>`),
+  seed: kraftSeedPacket('carrot'),
   seeds_on_soil: FARM_ASSETS.seedsOnSoil,
   sprout: FARM_ASSETS.sprout,
   padlock: FARM_ASSETS.lockedPadlock,
@@ -320,8 +333,8 @@ export const SPRITES: Record<string, string> = {
 
 CROP_CATALOG.forEach(c => {
   SPRITES[c.id] = c.matureSvg;
-  SPRITES[c.shopId] = kraftSeedPacket(c.emblemSvg);
-  SPRITES['seed_' + c.id] = kraftSeedPacket(c.emblemSvg);
+  SPRITES[c.shopId] = kraftSeedPacket(c.id);
+  SPRITES['seed_' + c.id] = kraftSeedPacket(c.id);
 });
 
 // Backward-compatibility aliases cho dữ liệu cũ (sunflower, tulip, rose, kiwi)

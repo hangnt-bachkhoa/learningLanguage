@@ -126,12 +126,13 @@ export const FARM_ASSETS = {
 
   // 3. BỐN NÚT CÔNG CỤ CANH TÁC
   seedBag: `
-    <svg viewBox="0 0 60 60" width="46" height="46">
-      <path d="M14 16 L46 16 L42 50 L18 50 Z" fill="#C9A377" stroke="#694C2D" stroke-width="2.5"/>
-      <rect x="12" y="12" width="36" height="7" rx="2" fill="#DFC099" stroke="#694C2D" stroke-width="2"/>
-      <rect x="20" y="25" width="20" height="18" rx="2" fill="#FFFDF8"/>
-      <path d="M30 38 V32 M30 33 C26 31 24 26 28 25 C31 27 30 31 30 33 Z" fill="#6FA338" stroke="#487328" stroke-width="1.2"/>
-      <path d="M30 33 C34 31 36 26 32 25 C29 27 30 31 30 33 Z" fill="#8DCB49" stroke="#487328" stroke-width="1.2"/>
+    <svg viewBox="0 0 32 32" width="46" height="46" class="pixel-art" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="4" width="24" height="26" rx="2" fill="#3B2D24"/>
+      <rect x="5" y="5" width="22" height="24" rx="1.5" fill="#C49A71"/>
+      <rect x="7" y="9" width="18" height="18" rx="1" fill="#FFFDF8" stroke="#A8815B" stroke-width="0.8"/>
+      <rect x="5" y="5" width="22" height="3" fill="#B5885C"/>
+      <line x1="6" y1="6.5" x2="26" y2="6.5" stroke="#8C6339" stroke-width="0.8" stroke-dasharray="1.5 1.5"/>
+      <image href="assets/farm-assets/crops/carrot.png" x="8" y="10" width="16" height="16" preserveAspectRatio="xMidYMid meet" image-rendering="pixelated"/>
     </svg>
   `,
 

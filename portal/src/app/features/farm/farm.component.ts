@@ -173,7 +173,13 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                   [class.empty-seed]="isUnlocked && (state.inventory().seeds[s.id] || 0) === 0"
                   [class.seed-locked]="!isUnlocked"
                   (click)="onSelectSeed(s.id, isUnlocked, lockInfo)">
-                  <span class="seed-icon">{{ isUnlocked ? s.icon : '🔒' }}</span>
+                  <span class="seed-icon">
+                    @if (isUnlocked) {
+                      <img [src]="'assets/farm-assets/crops/' + s.id + '.png'" class="seed-picker-thumb pixel-art" [alt]="s.name" />
+                    } @else {
+                      <span class="seed-lock-glyph">🔒</span>
+                    }
+                  </span>
                   <div class="seed-meta">
                     <span class="seed-name">{{ s.name }}</span>
                     @if (isUnlocked) {
@@ -718,9 +724,24 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
       background: #F3ECE2;
     }
     .seed-icon {
-      font-size: 18px;
-      line-height: 1;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
+    }
+    .seed-picker-thumb {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      display: block;
+    }
+    .seed-lock-glyph {
+      font-size: 13px;
+      line-height: 1;
     }
     .seed-meta {
       display: flex;
