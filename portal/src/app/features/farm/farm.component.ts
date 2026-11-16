@@ -67,7 +67,9 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                 <!-- 3. Nhãn phân biệt tên & icon cây trồng rõ ràng cho từng loại -->
                 @if (plot.crop && (plot.status === 'seeded' || plot.status === 'growing' || plot.status === 'ready')) {
                   <div class="crop-badge-tag" [class.ready-badge]="plot.status === 'ready'">
-                    <span class="tag-icon">{{ getCropIcon(plot.crop) }}</span>
+                    <span class="tag-icon">
+                      <img [src]="'assets/farm-assets/crops/' + plot.crop + '.png'" class="plot-tag-thumb pixel-art" [alt]="getCropName(plot.crop)" />
+                    </span>
                     <span class="tag-name">{{ getCropName(plot.crop) }}</span>
                   </div>
                 }
@@ -562,8 +564,19 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
       border-color: #E5A912;
     }
     .tag-icon {
-      font-size: 11px;
-      line-height: 1;
+      width: 14px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .plot-tag-thumb {
+      width: 13px;
+      height: 13px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      display: block;
     }
     .tag-name {
       font-size: 9.5px;
@@ -1177,141 +1190,21 @@ export class FarmComponent implements OnInit {
     );
   }
 
-  seedOptions = [
-    { id: 'carrot', name: 'Cà rốt', icon: '🥕' },
-    { id: 'potato', name: 'Khoai tây', icon: '🥔' },
-    { id: 'corn', name: 'Bắp ngô', icon: '🌽' },
-    { id: 'tomato', name: 'Cà chua', icon: '🍅' },
-    { id: 'strawberry', name: 'Dâu tây', icon: '🍓' },
-    { id: 'pumpkin', name: 'Bí ngô', icon: '🎃' },
-    { id: 'wheat', name: 'Lúa mì', icon: '🌾' },
-    { id: 'blueberry', name: 'Việt quất', icon: '🫐' },
-    { id: 'watermelon', name: 'Dưa hấu', icon: '🍉' },
-    { id: 'mango', name: 'Xoài', icon: '🥭' },
-    { id: 'lemon', name: 'Chanh', icon: '🍋' },
-    { id: 'apple', name: 'Táo', icon: '🍎' },
-    { id: 'cherry', name: 'Cherry', icon: '🍒' }
-  ];
+  seedOptions = CROP_CATALOG.map(c => ({
+    id: c.id,
+    name: c.nameVi,
+    icon: c.id
+  }));
 
-  catalogList = [
-    {
-      id: 'carrot',
-      nameVi: 'Cà rốt giòn ngọt',
-      growthTime: '5 phút (Tưới -2p, Phân -5p)',
-      coins: 15,
-      xp: 20,
-      desc: 'Cây củ cam giàu vitamin A. Thu hoạch để nhận Xu và mở khóa bài học.',
-      icon: FARM_ASSETS.readyCarrot
-    },
-    {
-      id: 'potato',
-      nameVi: 'Khoai tây bùi bở',
-      growthTime: '6 phút (Tưới -2p, Phân -5p)',
-      coins: 20,
-      xp: 25,
-      desc: 'Củ khoai tây mộc mạc giàu tinh bột, thiết yếu cho nông trại.',
-      icon: FARM_ASSETS.readyPotato
-    },
-    {
-      id: 'corn',
-      nameVi: 'Bắp ngô vàng',
-      growthTime: '8 phút (Tưới -2p, Phân -5p)',
-      coins: 30,
-      xp: 35,
-      desc: 'Bắp ngô vàng óng ả giàu dinh dưỡng, giá bán cao tại Cửa hàng.',
-      icon: FARM_ASSETS.readyCorn
-    },
-    {
-      id: 'tomato',
-      nameVi: 'Cà chua mọng nước',
-      growthTime: '10 phút (Tưới -2p, Phân -5p)',
-      coins: 45,
-      xp: 50,
-      desc: 'Cà chua đỏ chín mọng, giúp tăng nhanh điểm kinh nghiệm và nông sản.',
-      icon: FARM_ASSETS.readyTomato
-    },
-    {
-      id: 'strawberry',
-      nameVi: 'Dâu tây đỏ ngọt',
-      growthTime: '12 phút (Tưới -2p, Phân -5p)',
-      coins: 40,
-      xp: 45,
-      desc: 'Những trái dâu tây đỏ tươi mọng nước, giá trị cao.',
-      icon: FARM_ASSETS.readyStrawberry
-    },
-    {
-      id: 'pumpkin',
-      nameVi: 'Bí ngô vàng cam',
-      growthTime: '15 phút (Tưới -2p, Phân -5p)',
-      coins: 25,
-      xp: 30,
-      desc: 'Trái bí ngô tròn vàng cam đậm đà, thu hoạch cho mùa vụ bội thu.',
-      icon: FARM_ASSETS.readyPumpkin
-    },
-    {
-      id: 'wheat',
-      nameVi: 'Lúa mì vàng óng',
-      growthTime: '12 phút (Tưới -2p, Phân -5p)',
-      coins: 30,
-      xp: 35,
-      desc: 'Những bông lúa mì vàng óng trĩu hạt, biểu tượng của sự no ấm.',
-      icon: FARM_ASSETS.readyWheat
-    },
-    {
-      id: 'blueberry',
-      nameVi: 'Việt quất ngọt thơm',
-      growthTime: '15 phút (Tưới -2p, Phân -5p)',
-      coins: 35,
-      xp: 40,
-      desc: 'Những chùm việt quất tím thẫm mọng nước, giàu chất chống oxy hóa.',
-      icon: FARM_ASSETS.readyBlueberry
-    },
-    {
-      id: 'watermelon',
-      nameVi: 'Dưa hấu thanh mát',
-      growthTime: '18 phút (Tưới -2p, Phân -5p)',
-      coins: 45,
-      xp: 50,
-      desc: 'Trái dưa hấu vỏ xanh ruột đỏ mọng ngọt, giải khát ngày hè oi ả.',
-      icon: FARM_ASSETS.readyWatermelon
-    },
-    {
-      id: 'mango',
-      nameVi: 'Xoài cát ngọt lịm',
-      growthTime: '18 phút (Tưới -2p, Phân -5p)',
-      coins: 50,
-      xp: 55,
-      desc: 'Cây xoài quả vàng căng tròn, mang lại năng suất và lợi nhuận cao.',
-      icon: FARM_ASSETS.readyMango
-    },
-    {
-      id: 'lemon',
-      nameVi: 'Chanh vàng tươi',
-      growthTime: '15 phút (Tưới -2p, Phân -5p)',
-      coins: 35,
-      xp: 40,
-      desc: 'Cây chanh vàng thơm ngát, dễ chăm sóc và cho trái đều đặn.',
-      icon: FARM_ASSETS.readyLemon
-    },
-    {
-      id: 'apple',
-      nameVi: 'Táo đỏ chín mọng',
-      growthTime: '15 phút (Tưới -2p, Phân -5p)',
-      coins: 60,
-      xp: 65,
-      desc: 'Cây táo đỏ ngọt giòn kinh điển, mang lại nhiều Xu và điểm XP.',
-      icon: FARM_ASSETS.readyApple
-    },
-    {
-      id: 'cherry',
-      nameVi: 'Cherry đỏ mọng',
-      growthTime: '20 phút (Tưới -2p, Phân -5p)',
-      coins: 80,
-      xp: 85,
-      desc: 'Cặp cherry đỏ mọng thượng hạng, phần thưởng giá trị cao nhất.',
-      icon: FARM_ASSETS.readyCherry
-    }
-  ];
+  catalogList = CROP_CATALOG.map(c => ({
+    id: c.id,
+    nameVi: c.nameVi,
+    growthTime: c.duration,
+    coins: c.price * 2,
+    xp: c.requiredXp || 20,
+    desc: c.desc,
+    icon: c.matureSvg
+  }));
 
   activeCropInfo = computed(() => {
     const readyPlot = this.state.plots().find(p => (p.status || '').toLowerCase() === 'ready');
@@ -1367,14 +1260,18 @@ export class FarmComponent implements OnInit {
   }
 
   getCropName(cropKey?: string): string {
-    const names: Record<string, string> = {
-      carrot: 'Cà rốt', potato: 'Khoai tây', corn: 'Bắp ngô', tomato: 'Cà chua',
-      strawberry: 'Dâu tây', pumpkin: 'Bí ngô', sunflower: 'Bí ngô',
-      wheat: 'Lúa mì', tulip: 'Lúa mì', blueberry: 'Việt quất', rose: 'Việt quất',
-      mango: 'Xoài', watermelon: 'Dưa hấu', kiwi: 'Dưa hấu', lemon: 'Chanh',
-      apple: 'Táo', cherry: 'Cherry'
+    if (!cropKey) return 'Cây trồng';
+    const key = cropKey.toLowerCase();
+    const cat = CROP_CATALOG.find(c => c.id === key);
+    if (cat) return cat.nameVi;
+    // Backward compatibility aliases
+    const legacyNames: Record<string, string> = {
+      sunflower: 'Bí ngô',
+      tulip: 'Lúa mì',
+      rose: 'Việt quất',
+      kiwi: 'Dưa hấu'
     };
-    return (cropKey && names[cropKey.toLowerCase()]) || 'Cây trồng';
+    return legacyNames[key] || cropKey;
   }
 
   getPlantSprite(plot: FarmPlot): string {
@@ -1387,27 +1284,15 @@ export class FarmComponent implements OnInit {
       return plot.growthProgress >= 50 ? this.assets.growingPlant : this.assets.sprout;
     }
     if (status === 'ready') {
-      switch (cropKey) {
-        case 'potato': return this.assets.readyPotato;
-        case 'strawberry': return this.assets.readyStrawberry;
-        case 'corn': return this.assets.readyCorn;
-        case 'tomato': return this.assets.readyTomato;
-        case 'pumpkin':
-        case 'sunflower': return this.assets.readyPumpkin;
-        case 'wheat':
-        case 'tulip': return this.assets.readyWheat;
-        case 'blueberry':
-        case 'rose': return this.assets.readyBlueberry;
-        case 'watermelon':
-        case 'kiwi': return this.assets.readyWatermelon;
-        case 'mango': return this.assets.readyMango;
-        case 'lemon': return this.assets.readyLemon;
-        case 'apple': return this.assets.readyApple;
-        case 'cherry': return this.assets.readyCherry;
-        case 'carrot':
-        default:
-          return this.assets.readyCarrot;
-      }
+      const cat = CROP_CATALOG.find(c => c.id === cropKey);
+      if (cat?.matureSvg) return cat.matureSvg;
+
+      if (cropKey === 'sunflower') return this.assets.readyPumpkin;
+      if (cropKey === 'tulip') return this.assets.readyWheat;
+      if (cropKey === 'rose') return this.assets.readyBlueberry;
+      if (cropKey === 'kiwi') return this.assets.readyWatermelon;
+
+      return this.assets.readyCarrot;
     }
     return '';
   }

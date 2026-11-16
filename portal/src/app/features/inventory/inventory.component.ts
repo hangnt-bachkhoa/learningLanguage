@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../core/services/game-state.service';
-import { SPRITES } from '../../core/constants/crop-catalog.constant';
+import { CROP_CATALOG, SPRITES } from '../../core/constants/crop-catalog.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 
 @Component({
@@ -22,11 +22,13 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         <h3 class="card-title" style="margin-bottom:14px;">🧺 Nông Sản Thu Hoạch</h3>
         <div class="items-grid">
           @for (k of objectKeys(state.inventory().harvested); track k) {
-            <div class="inv-slot">
-              <div class="slot-sprite" [innerHTML]="getCropSprite(k) | safeHtml"></div>
-              <div class="slot-name">{{ k | titlecase }}</div>
-              <div class="slot-qty">x{{ state.inventory().harvested[k] }}</div>
-            </div>
+            @if ((state.inventory().harvested[k] || 0) > 0 || isKnownCrop(k)) {
+              <div class="inv-slot">
+                <div class="slot-sprite" [innerHTML]="getCropSprite(k) | safeHtml"></div>
+                <div class="slot-name">{{ getCropName(k) }}</div>
+                <div class="slot-qty">x{{ state.inventory().harvested[k] || 0 }}</div>
+              </div>
+            }
           }
         </div>
       </div>
@@ -36,11 +38,13 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         <h3 class="card-title" style="margin-bottom:14px;">🌱 Hạt Giống</h3>
         <div class="items-grid">
           @for (k of objectKeys(state.inventory().seeds); track k) {
-            <div class="inv-slot">
-              <div class="slot-sprite" [innerHTML]="getSeedSprite(k) | safeHtml"></div>
-              <div class="slot-name">Hạt {{ k | titlecase }}</div>
-              <div class="slot-qty">x{{ state.inventory().seeds[k] }}</div>
-            </div>
+            @if ((state.inventory().seeds[k] || 0) > 0 || isKnownCrop(k)) {
+              <div class="inv-slot">
+                <div class="slot-sprite" [innerHTML]="getSeedSprite(k) | safeHtml"></div>
+                <div class="slot-name">Hạt {{ getCropName(k) }}</div>
+                <div class="slot-qty">x{{ state.inventory().seeds[k] || 0 }}</div>
+              </div>
+            }
           }
         </div>
       </div>
@@ -102,6 +106,22 @@ export class InventoryComponent {
   state = inject(GameStateService);
 
   objectKeys = Object.keys;
+
+  isKnownCrop(key: string): boolean {
+    return CROP_CATALOG.some(c => c.id === key);
+  }
+
+  getCropName(key: string): string {
+    const cat = CROP_CATALOG.find(c => c.id === key.toLowerCase());
+    if (cat) return cat.nameVi;
+    const legacy: Record<string, string> = {
+      sunflower: 'Bí ngô',
+      tulip: 'Lúa mì',
+      rose: 'Việt quất',
+      kiwi: 'Dưa hấu'
+    };
+    return legacy[key.toLowerCase()] || key;
+  }
 
   getCropSprite(key: string): string {
     return SPRITES[key] || SPRITES['carrot'];

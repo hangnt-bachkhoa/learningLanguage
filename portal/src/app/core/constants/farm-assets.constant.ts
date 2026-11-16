@@ -106,6 +106,18 @@ export const FARM_ASSETS = {
   // 13. CHERRY
   readyCherry: `<img src="assets/farm-assets/crops/cherry.png" class="pixel-art crop-pixel-img" alt="Cherry" width="48" height="48" />`,
 
+  // NÔNG SẢN BỔ SUNG ĐẦY ĐỦ TỪ BỘ ASSETS
+  readyCucumber: `<img src="assets/farm-assets/crops/cucumber.png" class="pixel-art crop-pixel-img" alt="Dưa chuột" width="48" height="48" />`,
+  readyOrange: `<img src="assets/farm-assets/crops/orange.png" class="pixel-art crop-pixel-img" alt="Cam sành" width="48" height="48" />`,
+  readyBanana: `<img src="assets/farm-assets/crops/banana.png" class="pixel-art crop-pixel-img" alt="Chuối chín" width="48" height="48" />`,
+  readyPeach: `<img src="assets/farm-assets/crops/peach.png" class="pixel-art crop-pixel-img" alt="Đào tiên" width="48" height="48" />`,
+  readyGrapes: `<img src="assets/farm-assets/crops/grapes.png" class="pixel-art crop-pixel-img" alt="Nho tím" width="48" height="48" />`,
+  readyChili: `<img src="assets/farm-assets/crops/chili.png" class="pixel-art crop-pixel-img" alt="Ớt hiểm" width="48" height="48" />`,
+  readyCoconut: `<img src="assets/farm-assets/crops/coconut.png" class="pixel-art crop-pixel-img" alt="Dừa xiêm" width="48" height="48" />`,
+  readyRadish: `<img src="assets/farm-assets/crops/radish.png" class="pixel-art crop-pixel-img" alt="Củ cải đỏ" width="48" height="48" />`,
+  readyBroccoli: `<img src="assets/farm-assets/crops/broccoli.png" class="pixel-art crop-pixel-img" alt="Súp lơ xanh" width="48" height="48" />`,
+  readyPear: `<img src="assets/farm-assets/crops/pear.png" class="pixel-art crop-pixel-img" alt="Quả lê" width="48" height="48" />`,
+
   // Backward compatibility aliases cho dữ liệu cũ (sunflower, tulip, rose, kiwi)
   readySunflower: `<img src="assets/farm-assets/crops/pumpkin.png" class="pixel-art crop-pixel-img" alt="Bí ngô" width="48" height="48" />`,
   readyTulip: `<img src="assets/farm-assets/crops/wheat.png" class="pixel-art crop-pixel-img" alt="Lúa mì" width="48" height="48" />`,

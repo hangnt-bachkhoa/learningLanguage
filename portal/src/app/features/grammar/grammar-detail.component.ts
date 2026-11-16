@@ -455,7 +455,6 @@ import { GameStateService } from '../../core/services/game-state.service';
       font-weight: 600;
       text-decoration: none;
       text-align: center;
-      white-space: nowrap;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -509,20 +508,27 @@ import { GameStateService } from '../../core/services/game-state.service';
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid var(--border-strong, #C2AD95);
         border-radius: 12px;
-        padding: 8px 8px;
+        padding: 8px;
         box-shadow: 0 6px 20px rgba(38, 56, 71, 0.12);
         z-index: 20;
         margin-top: 16px;
-        gap: 6px;
+        display: flex;
+        gap: 8px;
         width: 100%;
         box-sizing: border-box;
       }
 
       .action-btn-study, .action-btn-quiz {
-        font-size: 12px;
-        padding: 8px 4px;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: 12.5px;
+        padding: 9px 6px;
+        min-height: 42px;
+        white-space: normal;
+        line-height: 1.25;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
       }
     }
   `]

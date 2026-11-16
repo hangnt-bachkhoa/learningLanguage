@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../core/services/game-state.service';
-import { SPRITES } from '../../core/constants/crop-catalog.constant';
+import { CROP_CATALOG, SPRITES } from '../../core/constants/crop-catalog.constant';
 import { ShopItem } from '../../core/models/game.models';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 
@@ -46,7 +46,9 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 
                 <div class="vintage-card crop-sell-card" [class.has-stock]="qty > 0">
                   <div class="crop-sell-header">
-                    <span class="crop-sell-icon">{{ crop.icon }}</span>
+                    <span class="crop-sell-icon">
+                      <img [src]="'assets/farm-assets/crops/' + crop.id + '.png'" class="crop-market-thumb pixel-art" [alt]="crop.nameVi" width="32" height="32" />
+                    </span>
                     <div>
                       <h4 class="crop-sell-name">{{ crop.nameVi }}</h4>
                       <span class="crop-sell-price">🪙 +{{ unitPrice }} Xu / củ, quả</span>
@@ -93,7 +95,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
               <div class="vintage-card trade-recipe-card">
                 <div class="recipe-badge">⚡ Công thức VIP</div>
                 <div class="recipe-visual">
-                  <span class="recipe-icon">🌾 x3</span>
+                  <span class="recipe-icon">🧺 x3 Nông sản</span>
                   <span class="recipe-arrow">➔</span>
                   <span class="recipe-icon">⚡ x1 Phân bón</span>
                 </div>
@@ -103,7 +105,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
                 <div class="trade-selector-row">
                   <select #fertSelect class="market-select">
                     @for (crop of eligibleForFertilizer(); track crop.id) {
-                      <option [value]="crop.id">{{ crop.icon }} {{ crop.nameVi }} (có {{ state.inventory().harvested[crop.id] }})</option>
+                      <option [value]="crop.id">{{ crop.nameVi }} (có {{ state.inventory().harvested[crop.id] || 0 }})</option>
                     }
                   </select>
                   <button
@@ -122,7 +124,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
               <div class="vintage-card trade-recipe-card">
                 <div class="recipe-badge blue">💧 Công thức thường</div>
                 <div class="recipe-visual">
-                  <span class="recipe-icon">🌾 x2</span>
+                  <span class="recipe-icon">🧺 x2 Nông sản</span>
                   <span class="recipe-arrow">➔</span>
                   <span class="recipe-icon">💧 x2 Nước tưới</span>
                 </div>
@@ -132,7 +134,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
                 <div class="trade-selector-row">
                   <select #waterSelect class="market-select">
                     @for (crop of eligibleForWater(); track crop.id) {
-                      <option [value]="crop.id">{{ crop.icon }} {{ crop.nameVi }} (có {{ state.inventory().harvested[crop.id] }})</option>
+                      <option [value]="crop.id">{{ crop.nameVi }} (có {{ state.inventory().harvested[crop.id] || 0 }})</option>
                     }
                   </select>
                   <button
@@ -282,7 +284,20 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       gap: 10px;
     }
     .crop-sell-icon {
-      font-size: 26px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .crop-market-thumb {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      display: block;
     }
     .crop-sell-name {
       font-size: 15px;
@@ -563,59 +578,114 @@ export class ShopComponent {
       cropKey: 'strawberry'
     },
     {
-      id: 's_sunflower',
+      id: 's_pumpkin',
       cat: 'seeds',
-      name: 'Hạt giống Hoa hướng dương',
+      name: 'Hạt giống Bí ngô',
       price: 18,
-      sprite: 's_sunflower',
-      duration: '2 lượt tưới',
-      usage: 'Trồng hoa hướng dương vàng óng.',
-      desc: 'Hoa hướng dương rực rỡ đón nắng.',
-      cropKey: 'sunflower'
-    },
-    {
-      id: 's_rose',
-      cat: 'seeds',
-      name: 'Hạt giống Hoa hồng',
-      price: 24,
-      sprite: 's_rose',
+      sprite: 's_pumpkin',
       duration: '3 lượt tưới',
-      usage: 'Trồng hoa hồng nhung kiêu sa.',
-      desc: 'Sắc hoa quyến rũ cho khu vườn.',
-      cropKey: 'rose'
+      usage: 'Trồng bí ngô vàng cam tròn xoe.',
+      desc: 'Trái bí ngô tròn vàng cam đậm đà, thu hoạch cho mùa vụ bội thu.',
+      cropKey: 'pumpkin'
     },
     {
-      id: 's_tulip',
+      id: 's_wheat',
       cat: 'seeds',
-      name: 'Hạt giống Hoa tulip',
+      name: 'Hạt giống Lúa mì',
       price: 20,
-      sprite: 's_tulip',
+      sprite: 's_wheat',
       duration: '2 lượt tưới',
-      usage: 'Gieo hoa tulip Hà Lan thanh tao.',
-      desc: 'Búp hoa màu tím hồng vintage.',
-      cropKey: 'tulip'
+      usage: 'Gieo lúa mì trên ruộng đất màu mỡ.',
+      desc: 'Những bông lúa mì vàng óng trĩu hạt, biểu tượng của sự no ấm.',
+      cropKey: 'wheat'
     },
     {
-      id: 's_mango',
+      id: 's_blueberry',
       cat: 'seeds',
-      name: 'Hạt giống Xoài',
-      price: 35,
-      sprite: 's_mango',
+      name: 'Hạt giống Việt quất',
+      price: 24,
+      sprite: 's_blueberry',
       duration: '3 lượt tưới',
-      usage: 'Trồng cây xoài cát ngọt lịm.',
-      desc: 'Xoài vàng thơm ngọt, giá bán cao.',
-      cropKey: 'mango'
+      usage: 'Trồng bụi việt quất ngọt thơm.',
+      desc: 'Những chùm việt quất tím thẫm mọng nước, giàu chất chống oxy hóa.',
+      cropKey: 'blueberry'
     },
     {
-      id: 's_kiwi',
+      id: 's_watermelon',
       cat: 'seeds',
-      name: 'Hạt giống Kiwi',
+      name: 'Hạt giống Dưa hấu',
       price: 32,
-      sprite: 's_kiwi',
+      sprite: 's_watermelon',
       duration: '3 lượt tưới',
-      usage: 'Trồng giàn kiwi xanh tươi mát.',
-      desc: 'Kiwi giàu vitamin, sinh trưởng tốt.',
-      cropKey: 'kiwi'
+      usage: 'Trồng dưa hấu giải nhiệt thanh mát.',
+      desc: 'Trái dưa hấu vỏ xanh ruột đỏ mọng ngọt, giải khát ngày hè oi ả.',
+      cropKey: 'watermelon'
+    },
+    {
+      id: 's_cucumber',
+      cat: 'seeds',
+      name: 'Hạt giống Dưa chuột',
+      price: 12,
+      sprite: 's_cucumber',
+      duration: '2 lượt tưới',
+      usage: 'Trồng dưa chuột thanh mát, mau cho trái.',
+      desc: 'Dưa chuột xanh giòn ngọt nước, dễ canh tác và thu hoạch nhanh.',
+      cropKey: 'cucumber'
+    },
+    {
+      id: 's_radish',
+      cat: 'seeds',
+      name: 'Hạt giống Củ cải đỏ',
+      price: 14,
+      sprite: 's_radish',
+      duration: '2 lượt tưới',
+      usage: 'Trồng củ cải đỏ tròn xoe xinh xắn.',
+      desc: 'Củ cải đỏ giàu khoáng chất, màu sắc rực rỡ vui mắt.',
+      cropKey: 'radish'
+    },
+    {
+      id: 's_orange',
+      cat: 'seeds',
+      name: 'Hạt giống Cam sành',
+      price: 26,
+      sprite: 's_orange',
+      duration: '3 lượt tưới',
+      usage: 'Trồng cây cam sai quả mọng vàng ươm.',
+      desc: 'Cam sành vỏ mỏng mọng nước, giàu vitamin C.',
+      cropKey: 'orange'
+    },
+    {
+      id: 's_peach',
+      cat: 'seeds',
+      name: 'Hạt giống Đào tiên',
+      price: 28,
+      sprite: 's_peach',
+      duration: '3 lượt tưới',
+      usage: 'Gieo hạt đào tiên hồng thắm.',
+      desc: 'Trái đào hồng nhung thơm ngọt dịu dàng.',
+      cropKey: 'peach'
+    },
+    {
+      id: 's_banana',
+      cat: 'seeds',
+      name: 'Hạt giống Chuối chín',
+      price: 30,
+      sprite: 's_banana',
+      duration: '3 lượt tưới',
+      usage: 'Trồng cây chuối cho buồng quả vàng.',
+      desc: 'Nải chuối vàng ươm giàu kali và năng lượng học tập.',
+      cropKey: 'banana'
+    },
+    {
+      id: 's_grapes',
+      cat: 'seeds',
+      name: 'Hạt giống Nho tím',
+      price: 38,
+      sprite: 's_grapes',
+      duration: '4 lượt tưới',
+      usage: 'Trồng giàn nho tím trĩu quả đồng quê.',
+      desc: 'Chùm nho tím đậm đà vị ngọt tự nhiên, giá trị kinh tế rất cao.',
+      cropKey: 'grapes'
     },
     {
       id: 's_lemon',
@@ -723,30 +793,20 @@ export class ShopComponent {
   }
 
   allHarvestedCrops() {
-    return [
-      { id: 'carrot', nameVi: 'Cà rốt', icon: '🥕' },
-      { id: 'potato', nameVi: 'Khoai tây', icon: '🥔' },
-      { id: 'corn', nameVi: 'Bắp ngô', icon: '🌽' },
-      { id: 'tomato', nameVi: 'Cà chua', icon: '🍅' },
-      { id: 'strawberry', nameVi: 'Dâu tây', icon: '🍓' },
-      { id: 'sunflower', nameVi: 'Hướng dương', icon: '🌻' },
-      { id: 'tulip', nameVi: 'Hoa tulip', icon: '🌷' },
-      { id: 'rose', nameVi: 'Hoa hồng', icon: '🌹' },
-      { id: 'lemon', nameVi: 'Chanh', icon: '🍋' },
-      { id: 'kiwi', nameVi: 'Kiwi', icon: '🥝' },
-      { id: 'mango', nameVi: 'Xoài', icon: '🥭' },
-      { id: 'apple', nameVi: 'Táo', icon: '🍎' },
-      { id: 'cherry', nameVi: 'Cherry', icon: '🍒' }
-    ];
+    return CROP_CATALOG.map(c => ({
+      id: c.id,
+      nameVi: c.nameVi,
+      icon: c.id
+    }));
   }
 
   getCropSellPrice(cropId: string): number {
-    const prices: Record<string, number> = {
-      carrot: 5, potato: 8, corn: 10, tomato: 12, strawberry: 15,
-      sunflower: 14, tulip: 16, rose: 18, lemon: 18, kiwi: 22,
-      mango: 25, apple: 28, cherry: 35
+    const crop = CROP_CATALOG.find(c => c.id === cropId);
+    if (crop) return Math.round(crop.price * 0.7);
+    const legacyPrices: Record<string, number> = {
+      sunflower: 14, tulip: 16, rose: 18, kiwi: 22
     };
-    return prices[cropId] || 8;
+    return legacyPrices[cropId] || 8;
   }
 
   eligibleForFertilizer() {
