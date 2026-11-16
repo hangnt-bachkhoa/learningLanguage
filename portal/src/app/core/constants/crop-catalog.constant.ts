@@ -42,7 +42,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     price: 15,
     duration: '6 phút (Tưới -2p, Phân -5p)',
     growthMinutes: 6,
-    usage: 'Trồng củ khoai tây bùi bở để mở khóa bài học Daily Routines.',
+    usage: 'Thu hoạch khoai tây bùi bở để mở khóa các bài học Logistics, Xây dựng & Bất động sản.',
     desc: 'Củ khoai tây giàu tinh bột, cây trồng kinh tế mộc mạc và thiết yếu.',
     initialSeeds: 3,
     initialHarvested: 3,
@@ -52,8 +52,8 @@ export const CROP_CATALOG: CropCatalog[] = [
     tierNameVi: 'Hạng I - Mầm non',
     requiredLevel: 1,
     requiredXp: 30,
-    requiredLessonId: 2,
-    requiredLessonTitle: 'Animals'
+    requiredLessonId: 1,
+    requiredLessonTitle: 'Fruits & Vegetables'
   },
   {
     id: 'corn',
@@ -108,7 +108,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     price: 25,
     duration: '12 phút (Tưới -2p, Phân -5p)',
     growthMinutes: 12,
-    usage: 'Gieo hạt dâu tây chín đỏ mọng để mở khóa bài Food & Drinks.',
+    usage: 'Gieo hạt dâu tây chín đỏ mọng để thu hoạch trái ngọt giá trị cao.',
     desc: 'Những trái dâu tây đỏ tươi chua ngọt hấp dẫn, giá trị cao.',
     initialSeeds: 3,
     initialHarvested: 2,
@@ -119,7 +119,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     requiredLevel: 2,
     requiredXp: 80,
     requiredLessonId: 4,
-    requiredLessonTitle: 'Food & Drinks'
+    requiredLessonTitle: 'Nhân sự (Human Resources)'
   },
   {
     id: 'sunflower',
@@ -140,8 +140,8 @@ export const CROP_CATALOG: CropCatalog[] = [
     tierNameVi: 'Hạng II - Hoa trái',
     requiredLevel: 2,
     requiredXp: 150,
-    requiredLessonId: 4,
-    requiredLessonTitle: 'Nhân sự (Human Resources)'
+    requiredLessonId: 6,
+    requiredLessonTitle: 'Tài chính (Finance)'
   },
   {
     id: 'tulip',
@@ -161,8 +161,8 @@ export const CROP_CATALOG: CropCatalog[] = [
     tierNameVi: 'Hạng II - Hoa trái',
     requiredLevel: 2,
     requiredXp: 200,
-    requiredLessonId: 6,
-    requiredLessonTitle: 'Tài chính (Finance)'
+    requiredLessonId: 7,
+    requiredLessonTitle: 'Ngân hàng (Banking)'
   },
   {
     id: 'rose',

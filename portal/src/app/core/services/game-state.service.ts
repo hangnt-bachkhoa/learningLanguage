@@ -606,51 +606,20 @@ export class GameStateService {
       };
     }
 
-    switch (lessonId) {
-      case 1:
-        return { minLevel: 1, requiredCrops: [] }; // Fruits & Vegetables: Mở sẵn
-      case 2:
-        return { minLevel: 2, requiredCrops: [{ cropId: 'carrot', qty: 3, cropNameVi: 'Cà rốt' }] }; // Animals
-      case 3:
-        return {
-          minLevel: 3,
-          requiredCrops: [
-            { cropId: 'potato', qty: 3, cropNameVi: 'Khoai tây' },
-            { cropId: 'corn', qty: 2, cropNameVi: 'Bắp ngô' }
-          ]
-        }; // Daily Routines
-      case 4:
-        return {
-          minLevel: 4,
-          requiredCrops: [
-            { cropId: 'tomato', qty: 3, cropNameVi: 'Cà chua' },
-            { cropId: 'strawberry', qty: 2, cropNameVi: 'Dâu tây' }
-          ]
-        }; // Food & Drinks
-      case 5:
-        return {
-          minLevel: 5,
-          requiredCrops: [
-            { cropId: 'apple', qty: 2, cropNameVi: 'Táo' },
-            { cropId: 'sunflower', qty: 2, cropNameVi: 'Hoa hướng dương' }
-          ]
-        }; // Nature & Weather
-      default: {
-        const minLvl = Math.min(20, Math.floor(lessonId / 2) + 2);
-        const cropPool = [
-          { cropId: 'tulip', qty: 2, cropNameVi: 'Hoa tulip' },
-          { cropId: 'rose', qty: 2, cropNameVi: 'Hoa hồng' },
-          { cropId: 'lemon', qty: 2, cropNameVi: 'Chanh' },
-          { cropId: 'kiwi', qty: 2, cropNameVi: 'Kiwi' },
-          { cropId: 'mango', qty: 2, cropNameVi: 'Xoài' },
-          { cropId: 'cherry', qty: 2, cropNameVi: 'Cherry' }
-        ];
-        return {
-          minLevel: minLvl,
-          requiredCrops: [cropPool[(lessonId - 6) % cropPool.length]]
-        };
-      }
+    if (lesson && (lesson.isUnlocked || !lesson.requiredCropId)) {
+      return { minLevel: lesson.requiredLevel || 1, requiredCrops: [] };
     }
+
+    const minLvl = Math.min(10, Math.floor((lessonId - 1) / 5) + 1);
+    const cropPool = [
+      { cropId: 'carrot', qty: 2, cropNameVi: 'Cà rốt' },
+      { cropId: 'potato', qty: 3, cropNameVi: 'Khoai tây' },
+      { cropId: 'corn', qty: 3, cropNameVi: 'Bắp ngô' }
+    ];
+    return {
+      minLevel: minLvl,
+      requiredCrops: [cropPool[lessonId % cropPool.length]]
+    };
   }
 
   canUnlockLesson(lessonId: number): { canUnlock: boolean; missingReasons: string[]; req: UnlockRequirement } {

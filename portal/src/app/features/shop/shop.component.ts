@@ -514,7 +514,7 @@ export class ShopComponent {
       price: 15,
       sprite: 's_carrot',
       duration: '2 lượt tưới',
-      usage: 'Gieo hạt để thu hoạch 3 củ cà rốt mở bài Animals.',
+      usage: 'Gieo hạt để thu hoạch cà rốt mở khóa bài học Marketing & Khách sạn.',
       desc: 'Giống cà rốt ngọt giòn cho người mới.',
       cropKey: 'carrot'
     },
@@ -525,7 +525,7 @@ export class ShopComponent {
       price: 15,
       sprite: 's_potato',
       duration: '2 lượt tưới',
-      usage: 'Thu hoạch khoai tây bùi bở để mở bài Daily Routines.',
+      usage: 'Thu hoạch khoai tây bùi bở để mở khóa các bài học Logistics & Xây dựng.',
       desc: 'Củ khoai tây giàu tinh bột, cây trồng thiết yếu.',
       cropKey: 'potato'
     },
@@ -536,7 +536,7 @@ export class ShopComponent {
       price: 18,
       sprite: 's_corn',
       duration: '2 lượt tưới',
-      usage: 'Thu hoạch bắp ngô vàng giàu dinh dưỡng.',
+      usage: 'Thu hoạch bắp ngô vàng để mở khóa các bài học TOEIC nâng cao.',
       desc: 'Dễ trồng, giá trị bán cao.',
       cropKey: 'corn'
     },
@@ -558,7 +558,7 @@ export class ShopComponent {
       price: 25,
       sprite: 's_strawberry',
       duration: '3 lượt tưới',
-      usage: 'Trồng dâu tây chín đỏ mọng để mở bài Food & Drinks.',
+      usage: 'Trồng dâu tây chín đỏ mọng để thu hoạch nông sản giá trị cao.',
       desc: 'Trái dâu tây thơm ngọt thanh tao mang lại giá trị cao.',
       cropKey: 'strawberry'
     },
