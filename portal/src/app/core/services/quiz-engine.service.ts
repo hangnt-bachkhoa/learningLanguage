@@ -40,6 +40,7 @@ export interface GeneratedQuestion {
 export interface UserRewardState {
   pityFertilizerMisses: number; // default 0, bảo hiểm tại 20
   pitySeedMisses: number;       // default 0, bảo hiểm tại 26
+  pitySpeedFertilizerMisses?: number; // default 0, bảo hiểm tại 20 cho Speed Fertilizer
   dailyBonusRollsUsed: number;  // default 0, giới hạn tối đa 10 lượt/ngày
   lastBonusRollDate: string;    // YYYY-MM-DD cho reset hàng ngày
 }
@@ -94,6 +95,7 @@ export interface BalancedQuizRewardResult {
   xpGained: number;
   coinsGained: number;
   fertilizerGained: number;
+  speedFertilizerGained: number;
   seedGainedId: string | null;
   isEligibleForBonus: boolean;
   isMaxStarsAlready: boolean;
@@ -112,6 +114,7 @@ export function calculateBalancedQuizReward(
   let dailyRolls = rewardState.lastBonusRollDate === todayStr ? rewardState.dailyBonusRollsUsed : 0;
   let pityFert = rewardState.pityFertilizerMisses || 0;
   let pitySeed = rewardState.pitySeedMisses || 0;
+  let pitySpeedFert = rewardState.pitySpeedFertilizerMisses || 0;
 
   const ratio = totalQuestions > 0 ? firstTryCorrect / totalQuestions : 0;
   const newStars = ratio === 1 ? 3 : ratio >= 0.8 ? 2 : 1;
@@ -137,20 +140,30 @@ export function calculateBalancedQuizReward(
   }
 
   let fertilizerGained = 0;
+  let speedFertilizerGained = 0;
   let seedGainedId: string | null = null;
   const isEligibleForBonus = newStars >= 2 && dailyRolls < 10;
 
-  // Rule 3: Probabilistic Farm Drops (5% Phân bón & 1% mỗi loại Hạt giống có sẵn)
+  // Rule 3: Probabilistic Farm Drops (5% Phân bón cơ bản, 5% Phân bón tăng tốc, 1% Hạt giống có sẵn)
   if (isEligibleForBonus) {
     dailyRolls += 1;
 
-    // 5% Fertilizer (3% ở 2-Star) + Bảo hiểm tại 20 lần trượt
+    // 5% Base Fertilizer (3% ở 2-Star) + Bảo hiểm tại 20 lần trượt
     const fertProb = newStars === 3 ? 0.05 : 0.03;
     if (pityFert >= 19 || Math.random() < fertProb) {
       fertilizerGained = 1;
       pityFert = 0;
     } else {
       pityFert += 1;
+    }
+
+    // 5% Speed Fertilizer (3% ở 2-Star) + Bảo hiểm tại 20 lần trượt (Care-Gated & Speed Fertilizer Rule)
+    const speedFertProb = newStars === 3 ? 0.05 : 0.03;
+    if (pitySpeedFert >= 19 || Math.random() < speedFertProb) {
+      speedFertilizerGained = 1;
+      pitySpeedFert = 0;
+    } else {
+      pitySpeedFert += 1;
     }
 
     // 1% mỗi loại hạt giống đang mở + Session Cap = 1 + Bảo hiểm tại 26 lần trượt
@@ -174,12 +187,14 @@ export function calculateBalancedQuizReward(
     xpGained,
     coinsGained,
     fertilizerGained,
+    speedFertilizerGained,
     seedGainedId,
     isEligibleForBonus,
     isMaxStarsAlready,
     updatedRewardState: {
       pityFertilizerMisses: pityFert,
       pitySeedMisses: pitySeed,
+      pitySpeedFertilizerMisses: pitySpeedFert,
       dailyBonusRollsUsed: dailyRolls,
       lastBonusRollDate: todayStr
     }

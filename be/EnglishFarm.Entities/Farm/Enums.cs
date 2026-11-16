@@ -15,5 +15,6 @@ public enum InventoryItemType
     Water = 2,
     Fertilizer = 3,
     HarvestedCrop = 4,
-    Decor = 5
+    Decor = 5,
+    SpeedFertilizer = 6
 }

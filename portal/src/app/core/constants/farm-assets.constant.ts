@@ -150,6 +150,8 @@ export const FARM_ASSETS = {
 
   fertilizerSack: `<img src="assets/farm-assets/tools/fertilizer.png" class="pixel-art tool-pixel-img" alt="Phân bón" width="46" height="46" style="image-rendering: pixelated; object-fit: contain; display: block;" />`,
 
+  speedFertilizer: `<img src="assets/sprites/items/icon_speed_fertilizer.svg" class="pixel-art tool-pixel-img" alt="Phân bón tăng tốc" width="46" height="46" style="image-rendering: pixelated; object-fit: contain; display: block;" />`,
+
   harvestBasket: `
     <svg viewBox="0 0 60 60" width="46" height="46">
       <path d="M16 28 C16 10 44 10 44 28" fill="none" stroke="#634525" stroke-width="3.5" stroke-linecap="round"/>

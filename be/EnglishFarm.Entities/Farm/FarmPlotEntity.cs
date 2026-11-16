@@ -11,9 +11,11 @@ public class FarmPlotEntity : BaseEntity
     public int? CropId { get; set; }
     public virtual CropCatalogEntity? Crop { get; set; }
     public bool IsWatered { get; set; }
+    public bool IsFertilized { get; set; }
     public int GrowthProgress { get; set; } = 0; // 0 -> 100%
     public DateTime? PlantedAt { get; set; }
     public DateTime? PlantedAtUtc { get; set; }
+    public DateTime? GrowthStartedAtUtc { get; set; }
     public DateTime? HarvestableAtUtc { get; set; }
 
     public virtual UserEntity? User { get; set; }

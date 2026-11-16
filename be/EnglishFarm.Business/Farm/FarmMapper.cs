@@ -23,9 +23,11 @@ public static class FarmMapper
             CropCode = entity.Crop?.Code,
             CropNameVi = entity.Crop?.NameVi,
             IsWatered = entity.IsWatered,
+            IsFertilized = entity.IsFertilized,
             GrowthProgress = entity.GrowthProgress,
             PlantedAt = entity.PlantedAt,
             PlantedAtUtc = entity.PlantedAtUtc ?? entity.PlantedAt,
+            GrowthStartedAtUtc = entity.GrowthStartedAtUtc,
             HarvestableAtUtc = entity.HarvestableAtUtc,
             RemainingSeconds = remainingSec,
             ServerUtcNow = now

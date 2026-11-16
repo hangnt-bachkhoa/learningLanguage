@@ -38,9 +38,11 @@ public class FarmPlotResponseModel
     public string? CropNameVi { get; set; }
     public string? CropCode { get; set; }
     public bool IsWatered { get; set; }
+    public bool IsFertilized { get; set; }
     public int GrowthProgress { get; set; }
     public DateTime? PlantedAt { get; set; }
     public DateTime? PlantedAtUtc { get; set; }
+    public DateTime? GrowthStartedAtUtc { get; set; }
     public DateTime? HarvestableAtUtc { get; set; }
     public int RemainingSeconds { get; set; }
     public DateTime ServerUtcNow { get; set; } = DateTime.UtcNow;

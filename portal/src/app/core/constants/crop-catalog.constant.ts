@@ -468,6 +468,7 @@ export const SPRITES: Record<string, string> = {
   padlock: FARM_ASSETS.lockedPadlock,
   water: FARM_ASSETS.wateringCan,
   fertilizer: FARM_ASSETS.fertilizerSack,
+  speed_fertilizer: FARM_ASSETS.speedFertilizer,
   basket: FARM_ASSETS.harvestBasket,
   lamp: `<svg width="44" height="44" viewBox="0 0 16 16" class="pixel-art">
     <rect x="5" y="2" width="6" height="12" fill="#263847"/>

@@ -55,9 +55,11 @@ export interface FarmPlotDto {
   cropNameVi: string | null;
   cropCode: string | null;
   isWatered: boolean;
+  isFertilized?: boolean;
   growthProgress: number;
   plantedAt: string | null;
   plantedAtUtc?: string | null;
+  growthStartedAtUtc?: string | null;
   harvestableAtUtc?: string | null;
 }
 
@@ -221,7 +223,7 @@ export class FarmApiService {
       .pipe(map(r => r.data));
   }
 
-  applyCare(plotIndex: number, careType: 'water' | 'fertilizer'): Observable<FarmPlotDto> {
+  applyCare(plotIndex: number, careType: 'water' | 'fertilizer' | 'speed_fertilizer'): Observable<FarmPlotDto> {
     return this.http.post<ApiResponse<FarmPlotDto>>(`${this.baseUrl}/farm/care`, {
       plotIndex,
       careType

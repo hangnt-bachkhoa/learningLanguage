@@ -759,12 +759,22 @@ export class ShopComponent {
     {
       id: 'c_fert',
       cat: 'care',
-      name: 'Phân bón hữu cơ',
-      price: 20,
+      name: 'Phân bón cơ bản (Bón lót)',
+      price: 12,
       sprite: 'fertilizer',
-      duration: 'Tăng tốc',
-      usage: 'Thúc đẩy cây trồng chín tức thì.',
-      desc: 'Phân bón ủ tự nhiên giàu dưỡng chất.'
+      duration: 'Kích hoạt',
+      usage: 'Bón lót kích hoạt tính giờ sinh trưởng cho hạt giống mới gieo.',
+      desc: 'Cần thiết cùng Nước tưới để hạt bắt đầu tính giờ lớn.'
+    },
+    {
+      id: 'c_speed_fert',
+      cat: 'care',
+      name: 'Phân bón tăng tốc (VIP)',
+      price: 35,
+      sprite: 'speed_fertilizer',
+      duration: '-5 phút',
+      usage: 'Giảm ngay 5 phút sinh trưởng cho cây đang lớn.',
+      desc: 'Rút ngắn thời gian chín của cây trồng đang sinh trưởng.'
     },
     {
       id: 'd_lamp',

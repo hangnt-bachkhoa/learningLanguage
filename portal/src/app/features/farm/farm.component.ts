@@ -73,11 +73,23 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                   height="96"
                 />
 
-                <!-- 2. Overlay Layer: Sprout, Moisture badge, hoặc Mature Crop -->
+                <!-- 2. Overlay Layer: Sprout (3 giai đoạn), Care badges, hoặc Mature Crop -->
                 @if (status === 'growing') {
-                  <div class="sprout-overlay pixel-sprite" [innerHTML]="(plot.growthProgress >= 50 ? assets.growingPlant : assets.sprout) | safeHtml"></div>
-                } @else if (status === 'seeded' && plot.isWatered) {
-                  <span class="moisture-badge" title="Đã tưới nước">💧</span>
+                  <div class="sprout-overlay">
+                    <img
+                      [src]="getGrowthStageAsset(cd.progress)"
+                      class="stage-sprout-sprite pixel-sprite"
+                      alt="Giai đoạn sinh trưởng"
+                      width="56"
+                      height="56"
+                    />
+                  </div>
+                } @else if (status === 'seeded') {
+                  @if (plot.isWatered && !plot.isFertilized) {
+                    <span class="care-badge care-watered" title="Đã tưới nước - Cần bón phân lót">💧</span>
+                  } @else if (!plot.isWatered && plot.isFertilized) {
+                    <span class="care-badge care-fertilized" title="Đã bón phân lót - Cần tưới nước">🌿</span>
+                  }
                 } @else if (status === 'ready' && plot.crop) {
                   <div class="mature-overlay">
                     <img
@@ -108,14 +120,16 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                   </div>
                 }
 
-                <!-- 5. Bottom Status Pill (Khóa: 50 Xu, Trống: Trống, Đang lớn: mm:ss, Chín: Thu hoạch!) -->
-                <div class="bottom-status-pill" [class.status-locked]="status === 'locked'" [class.status-ready]="status === 'ready'" [class.status-empty]="status === 'empty'">
+                <!-- 5. Bottom Status Pill (Khóa: 50 Xu, Trống: Trống, Cần chăm sóc: Cần Nước & Phân, Đang lớn: mm:ss, Chín: Thu hoạch!) -->
+                <div class="bottom-status-pill" [class.status-locked]="status === 'locked'" [class.status-ready]="status === 'ready'" [class.status-empty]="status === 'empty'" [class.status-seeded]="status === 'seeded'">
                   @if (status === 'locked') {
                     <span>{{ getPlotLockedPillText(idx) }}</span>
                   } @else if (status === 'empty') {
                     <span>Trống</span>
                   } @else if (status === 'ready') {
                     <span>Thu hoạch!</span>
+                  } @else if (status === 'seeded') {
+                    <span>{{ getSeededPillText(plot) }}</span>
                   } @else {
                     <span>{{ cd.label }}</span>
                   }
@@ -139,7 +153,7 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
           </div>
         </div>
 
-        <!-- 4 NÚT THAO TÁC NÔNG TRẠI (Gieo hạt, Tưới nước, Bón phân, Thu hoạch) -->
+        <!-- 5 NÚT THAO TÁC NÔNG TRẠI (Gieo hạt, Tưới nước, Bón phân, Tăng tốc, Thu hoạch) -->
         <div class="action-dock">
           <button
             class="action-card"
@@ -164,8 +178,17 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
             [class.active]="state.selectedTool() === 'fertilize'"
             (click)="selectTool('fertilize')">
             <div class="action-icon" [innerHTML]="assets.fertilizerSack | safeHtml"></div>
-            <span class="action-label">Bón phân</span>
+            <span class="action-label">Bón lót</span>
             <span class="action-count">({{ state.inventory().care.fertilizer }})</span>
+          </button>
+
+          <button
+            class="action-card"
+            [class.active]="state.selectedTool() === 'speed_fertilizer'"
+            (click)="selectTool('speed_fertilizer')">
+            <div class="action-icon" [innerHTML]="assets.speedFertilizer | safeHtml"></div>
+            <span class="action-label">Tăng tốc</span>
+            <span class="action-count">({{ state.inventory().care.speedFertilizer || 0 }})</span>
           </button>
 
           <button
@@ -493,10 +516,20 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
       z-index: 2;
       pointer-events: none;
     }
-    .sprout-overlay svg {
+    .sprout-overlay svg, .stage-sprout-sprite {
       width: 100%;
       height: 100%;
       object-fit: contain;
+    }
+    .care-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      z-index: 3;
+      pointer-events: none;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35));
     }
     .moisture-badge {
       position: absolute;
@@ -580,11 +613,11 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
       border-radius: 999px;
       font-weight: 600;
     }
-    /* 4 Thao tác canh tác */
+    /* 5 Thao tác canh tác */
     .action-dock {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
       margin-bottom: 14px;
     }
     .action-card {
@@ -730,6 +763,14 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
       color: #8C7862;
       border-color: #CBB9A3;
       font-family: var(--font-sans, inherit);
+    }
+    .bottom-status-pill.status-seeded {
+      background: #F3EBD9;
+      color: #8C5B28;
+      border-color: #BA966E;
+      font-family: var(--font-sans, inherit);
+      font-size: 9px;
+      font-weight: 700;
     }
     .bottom-status-pill.status-locked {
       background: #5C5346;
@@ -1060,12 +1101,12 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
         font-size: 8px;
       }
       .action-dock {
-        gap: 6px;
+        gap: 4px;
         margin-bottom: 12px;
       }
       .action-card {
-        padding: 6px 2px 5px;
-        border-radius: 10px;
+        padding: 5px 1px 4px;
+        border-radius: 8px;
       }
       .action-icon {
         height: 32px;
@@ -1280,6 +1321,19 @@ export class FarmComponent implements OnInit {
     icon: c.matureSvg
   }));
 
+  getGrowthStageAsset(progress: number): string {
+    if (progress <= 33) return 'assets/sprites/stages/stage_1_sprout_tiny.svg';
+    if (progress <= 66) return 'assets/sprites/stages/stage_2_sprout_leafy.svg';
+    return 'assets/sprites/stages/stage_3_budding.svg';
+  }
+
+  getSeededPillText(plot: FarmPlot): string {
+    if (!plot.isWatered && !plot.isFertilized) return 'Cần Nước & Phân';
+    if (!plot.isWatered) return 'Cần Nước tưới';
+    if (!plot.isFertilized) return 'Cần Phân bón';
+    return 'Đang nảy mầm';
+  }
+
   activeCropInfo = computed(() => {
     const readyPlot = this.state.plots().find(p => (p.status || '').toLowerCase() === 'ready');
     if (readyPlot) {
@@ -1292,19 +1346,30 @@ export class FarmComponent implements OnInit {
         icon: this.getPlantSprite(readyPlot)
       };
     }
-    const growingPlot = this.state.plots().find(p => {
-      const s = (p.status || '').toLowerCase();
-      return s === 'growing' || s === 'seeded';
-    });
+    const growingPlot = this.state.plots().find(p => (p.status || '').toLowerCase() === 'growing');
     if (growingPlot) {
       const crop = growingPlot.crop || 'carrot';
       const cat = CROP_CATALOG.find(c => c.id === crop);
       const cd = this.getPlotCountdown(growingPlot);
       return {
         name: cat?.nameVi || 'Cây non',
-        status: growingPlot.isWatered ? 'Đang lớn tươi tốt (Đã tưới)' : 'Cần chăm sóc (-2p tưới, -5p phân)',
+        status: 'Đang lớn tươi tốt (Đủ Nước & Phân)',
         time: `⏱️ ${cd.label} (${cd.progress}%)`,
         icon: this.getPlantSprite(growingPlot)
+      };
+    }
+    const seededPlot = this.state.plots().find(p => (p.status || '').toLowerCase() === 'seeded');
+    if (seededPlot) {
+      const crop = seededPlot.crop || 'carrot';
+      const cat = CROP_CATALOG.find(c => c.id === crop);
+      let careStatus = 'Cần Nước & Phân để kích hoạt tính giờ!';
+      if (seededPlot.isWatered && !seededPlot.isFertilized) careStatus = 'Đã tưới nước - Cần bón lót để kích hoạt';
+      else if (!seededPlot.isWatered && seededPlot.isFertilized) careStatus = 'Đã bón lót - Cần tưới nước để kích hoạt';
+      return {
+        name: cat?.nameVi || 'Hạt giống mới gieo',
+        status: careStatus,
+        time: 'Chờ chăm sóc',
+        icon: this.assets.seedsOnSoil
       };
     }
     return {
@@ -1315,10 +1380,12 @@ export class FarmComponent implements OnInit {
     };
   });
 
-  selectTool(tool: 'plant' | 'water' | 'fertilize' | 'harvest') {
+  selectTool(tool: 'plant' | 'water' | 'fertilize' | 'speed_fertilizer' | 'harvest') {
     this.state.selectedTool.set(tool);
     if (tool === 'harvest') {
       this.state.showToast('🧺 Chọn ô cây chín để thu hoạch');
+    } else if (tool === 'speed_fertilizer') {
+      this.state.showToast('⚡ Chọn ô cây đang lớn để giảm ngay 5 phút');
     }
   }
 
@@ -1439,15 +1506,29 @@ export class FarmComponent implements OnInit {
       this.state.plantSeed(index);
     } else if (tool === 'water') {
       this.state.waterPlot(index);
-    } else if (tool === 'harvest') {
-      this.state.harvestPlot(index);
     } else if (tool === 'fertilize') {
       this.state.fertilizePlot(index);
+    } else if (tool === 'speed_fertilizer') {
+      this.state.speedFertilizePlot(index);
+    } else if (tool === 'harvest') {
+      this.state.harvestPlot(index);
     } else {
-      // Nhấp vào cây đang lớn -> ưu tiên tưới nước
-      if (status === 'seeded' || status === 'growing') {
-        this.state.selectedTool.set('water');
-        this.state.waterPlot(index);
+      // Nhấp vào ô mà chưa chọn công cụ chủ động:
+      if (status === 'seeded') {
+        if (!plot.isWatered) {
+          this.state.selectedTool.set('water');
+          this.state.waterPlot(index);
+        } else if (!plot.isFertilized) {
+          this.state.selectedTool.set('fertilize');
+          this.state.fertilizePlot(index);
+        }
+      } else if (status === 'growing') {
+        if ((this.state.inventory().care.speedFertilizer || 0) > 0) {
+          this.state.selectedTool.set('speed_fertilizer');
+          this.state.speedFertilizePlot(index);
+        } else {
+          this.state.showToast('🌱 Cây đang sinh trưởng tươi tốt!');
+        }
       }
     }
   }

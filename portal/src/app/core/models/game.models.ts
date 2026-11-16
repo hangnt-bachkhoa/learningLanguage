@@ -32,9 +32,11 @@ export interface FarmPlot {
   status: PlotStatus;
   crop?: string;
   isWatered: boolean;
+  isFertilized?: boolean;
   growthProgress: number; // 0..100
   plantedAt?: Date | string;
   plantedAtUtc?: string; // Mốc thời gian gieo hạt theo chuẩn UTC ISO (Rule 1)
+  growthStartedAtUtc?: string; // Mốc thời gian bắt đầu tính giờ khi đã đủ Nước & Phân bón
   harvestableAtUtc?: string; // Mốc thời gian chín sẵn sàng thu hoạch (Rule 1 & 3)
 }
 
@@ -44,6 +46,7 @@ export interface UserInventory {
   care: {
     water: number;
     fertilizer: number;
+    speedFertilizer?: number;
   };
   decor: Record<string, number>;
 }
