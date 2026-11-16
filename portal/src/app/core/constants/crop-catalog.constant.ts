@@ -2,24 +2,33 @@ import { CropCatalog } from '../models/game.models';
 import { FARM_ASSETS } from './farm-assets.constant';
 
 export function kraftSeedPacket(cropIdOrEmblem: string): string {
-  const knownCrops = [
-    'carrot', 'potato', 'corn', 'tomato', 'strawberry',
-    'pumpkin', 'wheat', 'blueberry', 'lemon', 'watermelon',
-    'mango', 'apple', 'cherry'
-  ];
-  const isKnown = knownCrops.includes(cropIdOrEmblem.toLowerCase());
-  const cropFile = isKnown ? cropIdOrEmblem.toLowerCase() : null;
+  const trimmed = (cropIdOrEmblem || '').trim();
+  const isSvgMarkup = trimmed.startsWith('<');
 
-  return `<svg width="46" height="46" viewBox="0 0 32 32" class="pixel-art" xmlns="http://www.w3.org/2000/svg">
+  if (isSvgMarkup) {
+    return `<svg width="46" height="46" viewBox="0 0 32 32" class="pixel-art" xmlns="http://www.w3.org/2000/svg">
     <rect x="4" y="4" width="24" height="26" rx="2" fill="#3B2D24"/>
     <rect x="5" y="5" width="22" height="24" rx="1.5" fill="#C49A71"/>
     <rect x="7" y="9" width="18" height="18" rx="1" fill="#FFFDF8" stroke="#A8815B" stroke-width="0.8"/>
     <rect x="5" y="5" width="22" height="3" fill="#B5885C"/>
     <line x1="6" y1="6.5" x2="26" y2="6.5" stroke="#8C6339" stroke-width="0.8" stroke-dasharray="1.5 1.5"/>
-    ${cropFile
-      ? `<image href="assets/farm-assets/crops/${cropFile}.png" x="8" y="10" width="16" height="16" preserveAspectRatio="xMidYMid meet" image-rendering="pixelated"/>`
-      : `<g transform="translate(8, 10)">${cropIdOrEmblem}</g>`
-    }
+    <g transform="translate(8, 10)">${trimmed}</g>
+  </svg>`;
+  }
+
+  let id = trimmed.toLowerCase();
+  if (id === 'sunflower') id = 'pumpkin';
+  if (id === 'rose') id = 'blueberry';
+  if (id === 'tulip') id = 'wheat';
+  if (id === 'kiwi') id = 'watermelon';
+
+  return `<svg width="46" height="46" viewBox="0 0 32 32" class="pixel-art" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <rect x="4" y="4" width="24" height="26" rx="2" fill="#3B2D24"/>
+    <rect x="5" y="5" width="22" height="24" rx="1.5" fill="#C49A71"/>
+    <rect x="7" y="9" width="18" height="18" rx="1" fill="#FFFDF8" stroke="#A8815B" stroke-width="0.8"/>
+    <rect x="5" y="5" width="22" height="3" fill="#B5885C"/>
+    <line x1="6" y1="6.5" x2="26" y2="6.5" stroke="#8C6339" stroke-width="0.8" stroke-dasharray="1.5 1.5"/>
+    <image href="assets/farm-assets/crops/${id}.png" xlink:href="assets/farm-assets/crops/${id}.png" x="8" y="10" width="16" height="16" preserveAspectRatio="xMidYMid meet" image-rendering="pixelated"/>
   </svg>`;
 }
 
@@ -321,7 +330,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     initialSeeds: 3,
     initialHarvested: 0,
     matureSvg: FARM_ASSETS.readyCucumber,
-    emblemSvg: '',
+    emblemSvg: `<ellipse cx="8" cy="8" rx="2" ry="5" transform="rotate(-30 8 8)" fill="#4A8532"/>`,
     tier: 1,
     tierNameVi: 'Hạng I - Mầm non',
     requiredLevel: 1,
@@ -342,7 +351,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     initialSeeds: 3,
     initialHarvested: 0,
     matureSvg: FARM_ASSETS.readyRadish,
-    emblemSvg: '',
+    emblemSvg: `<circle cx="8" cy="8.5" r="3.5" fill="#D6384C"/><path d="M7 5 L8 2 L9 5 Z" fill="#4B8B2E"/>`,
     tier: 1,
     tierNameVi: 'Hạng I - Mầm non',
     requiredLevel: 1,
@@ -363,7 +372,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     initialSeeds: 3,
     initialHarvested: 0,
     matureSvg: FARM_ASSETS.readyOrange,
-    emblemSvg: '',
+    emblemSvg: `<circle cx="8" cy="8.5" r="4" fill="#F28500"/><circle cx="8" cy="4.5" r="1" fill="#4B8B2E"/>`,
     tier: 2,
     tierNameVi: 'Hạng II - Hoa trái',
     requiredLevel: 2,
@@ -384,7 +393,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     initialSeeds: 3,
     initialHarvested: 0,
     matureSvg: FARM_ASSETS.readyPeach,
-    emblemSvg: '',
+    emblemSvg: `<circle cx="7" cy="8.5" r="3.2" fill="#FF8DA1"/><circle cx="9" cy="8.5" r="3.2" fill="#FFA5B5"/>`,
     tier: 3,
     tierNameVi: 'Hạng III - Làm vườn',
     requiredLevel: 3,
@@ -405,7 +414,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     initialSeeds: 3,
     initialHarvested: 0,
     matureSvg: FARM_ASSETS.readyBanana,
-    emblemSvg: '',
+    emblemSvg: `<path d="M5 11 Q8 10 11 5 Q10 4 8 7 Q6 9 5 11 Z" fill="#F4D03F"/>`,
     tier: 3,
     tierNameVi: 'Hạng III - Làm vườn',
     requiredLevel: 3,
@@ -426,7 +435,7 @@ export const CROP_CATALOG: CropCatalog[] = [
     initialSeeds: 3,
     initialHarvested: 0,
     matureSvg: FARM_ASSETS.readyGrapes,
-    emblemSvg: '',
+    emblemSvg: `<circle cx="7" cy="7" r="2" fill="#6C3483"/><circle cx="9" cy="7" r="2" fill="#7D3C98"/><circle cx="8" cy="9.5" r="2" fill="#884EA0"/>`,
     tier: 4,
     tierNameVi: 'Hạng IV - Thượng hạng',
     requiredLevel: 4,
