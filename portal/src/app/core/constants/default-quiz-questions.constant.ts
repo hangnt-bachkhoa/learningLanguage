@@ -495,7 +495,7 @@ export function getDefaultQuizSession(lessonId: number, lessonTitle?: string): Q
       }
     });
 
-    const cropNames = ['Cà rốt', 'Bắp ngô', 'Cà chua', 'Hướng dương', 'Hoa hồng', 'Hoa tulip', 'Xoài', 'Kiwi', 'Chanh vàng', 'Táo đỏ', 'Cherry'];
+    const cropNames = ['Cà rốt', 'Khoai tây', 'Bắp ngô', 'Cà chua', 'Dâu tây', 'Bí ngô', 'Lúa mì', 'Việt quất', 'Chanh vàng', 'Dưa hấu', 'Xoài', 'Táo đỏ', 'Cherry'];
     const requiredCropName = cropNames[(lessonId - 1) % cropNames.length];
 
     return {

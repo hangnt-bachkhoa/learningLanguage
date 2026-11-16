@@ -63,7 +63,7 @@ export function getPlotUnlockRequirement(plotIndex: number): PlotUnlockRequireme
         index: 8,
         coinPrice: 160,
         minLevel: 6,
-        requiredCrops: [{ cropId: 'sunflower', qty: 2, cropNameVi: 'Hoa hướng dương' }]
+        requiredCrops: [{ cropId: 'pumpkin', qty: 2, cropNameVi: 'Bí ngô' }]
       };
     default:
       return { index: plotIndex, coinPrice: 20, minLevel: 1, requiredCrops: [] };
@@ -172,6 +172,10 @@ export class GameStateService {
       corn: 2,
       tomato: 2,
       strawberry: 3,
+      pumpkin: 3,
+      wheat: 3,
+      blueberry: 3,
+      watermelon: 3,
       sunflower: 3,
       rose: 3,
       tulip: 3,
@@ -187,6 +191,10 @@ export class GameStateService {
       corn: 2,
       tomato: 2,
       strawberry: 1,
+      pumpkin: 1,
+      wheat: 0,
+      blueberry: 0,
+      watermelon: 0,
       sunflower: 1,
       rose: 0,
       tulip: 0,
@@ -356,13 +364,32 @@ export class GameStateService {
           }
           if (typeof data.coins === 'number') this.coins.set(data.coins);
           if (Array.isArray(data.plots) && data.plots.length > 0) {
-            this.plots.set(data.plots);
+            const migratedPlots = data.plots.map((p: FarmPlot) => {
+              if (p.crop === 'sunflower') return { ...p, crop: 'pumpkin' };
+              if (p.crop === 'tulip') return { ...p, crop: 'wheat' };
+              if (p.crop === 'rose') return { ...p, crop: 'blueberry' };
+              if (p.crop === 'kiwi') return { ...p, crop: 'watermelon' };
+              return p;
+            });
+            this.plots.set(migratedPlots);
             this.recalculatePlotStates();
           }
           if (data.inventory && typeof data.inventory === 'object') {
+            const rawSeeds = data.inventory.seeds || {};
+            const rawHarvested = data.inventory.harvested || {};
+            if (rawSeeds.sunflower && !rawSeeds.pumpkin) rawSeeds.pumpkin = rawSeeds.sunflower;
+            if (rawSeeds.tulip && !rawSeeds.wheat) rawSeeds.wheat = rawSeeds.tulip;
+            if (rawSeeds.rose && !rawSeeds.blueberry) rawSeeds.blueberry = rawSeeds.rose;
+            if (rawSeeds.kiwi && !rawSeeds.watermelon) rawSeeds.watermelon = rawSeeds.kiwi;
+
+            if (rawHarvested.sunflower && !rawHarvested.pumpkin) rawHarvested.pumpkin = rawHarvested.sunflower;
+            if (rawHarvested.tulip && !rawHarvested.wheat) rawHarvested.wheat = rawHarvested.tulip;
+            if (rawHarvested.rose && !rawHarvested.blueberry) rawHarvested.blueberry = rawHarvested.rose;
+            if (rawHarvested.kiwi && !rawHarvested.watermelon) rawHarvested.watermelon = rawHarvested.kiwi;
+
             this.inventory.update(current => ({
-              seeds: { ...current.seeds, ...(data.inventory.seeds || {}) },
-              harvested: { ...current.harvested, ...(data.inventory.harvested || {}) },
+              seeds: { ...current.seeds, ...rawSeeds },
+              harvested: { ...current.harvested, ...rawHarvested },
               care: { ...current.care, ...(data.inventory.care || {}) },
               decor: { ...current.decor, ...(data.inventory.decor || {}) }
             }));
@@ -518,12 +545,14 @@ export class GameStateService {
     ]);
     this.inventory.set({
       seeds: {
-        carrot: 5, corn: 3, tomato: 0, sunflower: 0, rose: 0,
-        tulip: 0, mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
+        carrot: 5, potato: 3, corn: 3, tomato: 0, strawberry: 0,
+        pumpkin: 0, wheat: 0, blueberry: 0, watermelon: 0,
+        sunflower: 0, rose: 0, tulip: 0, mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
       },
       harvested: {
-        carrot: 0, corn: 0, tomato: 0, sunflower: 0, rose: 0,
-        tulip: 0, mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
+        carrot: 0, potato: 0, corn: 0, tomato: 0, strawberry: 0,
+        pumpkin: 0, wheat: 0, blueberry: 0, watermelon: 0,
+        sunflower: 0, rose: 0, tulip: 0, mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
       },
       care: { water: 15, fertilizer: 3 },
       decor: { lamp: 0 }
@@ -841,12 +870,14 @@ export class GameStateService {
       next: (items: UserInventoryItemDto[]) => {
         const newInv: UserInventory = {
           seeds: {
-            carrot: 0, corn: 0, tomato: 0,
+            carrot: 0, potato: 0, corn: 0, tomato: 0, strawberry: 0,
+            pumpkin: 0, wheat: 0, blueberry: 0, watermelon: 0,
             sunflower: 0, rose: 0, tulip: 0,
             mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
           },
           harvested: {
-            carrot: 0, corn: 0, tomato: 0,
+            carrot: 0, potato: 0, corn: 0, tomato: 0, strawberry: 0,
+            pumpkin: 0, wheat: 0, blueberry: 0, watermelon: 0,
             sunflower: 0, rose: 0, tulip: 0,
             mango: 0, kiwi: 0, lemon: 0, apple: 0, cherry: 0
           },

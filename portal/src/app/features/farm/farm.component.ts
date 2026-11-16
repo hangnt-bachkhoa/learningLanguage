@@ -1162,11 +1162,11 @@ export class FarmComponent implements OnInit {
     { id: 'corn', name: 'Bắp ngô', icon: '🌽' },
     { id: 'tomato', name: 'Cà chua', icon: '🍅' },
     { id: 'strawberry', name: 'Dâu tây', icon: '🍓' },
-    { id: 'sunflower', name: 'Hướng dương', icon: '🌻' },
-    { id: 'rose', name: 'Hoa hồng', icon: '🌹' },
-    { id: 'tulip', name: 'Hoa tulip', icon: '🌷' },
+    { id: 'pumpkin', name: 'Bí ngô', icon: '🎃' },
+    { id: 'wheat', name: 'Lúa mì', icon: '🌾' },
+    { id: 'blueberry', name: 'Việt quất', icon: '🫐' },
+    { id: 'watermelon', name: 'Dưa hấu', icon: '🍉' },
     { id: 'mango', name: 'Xoài', icon: '🥭' },
-    { id: 'kiwi', name: 'Kiwi', icon: '🥝' },
     { id: 'lemon', name: 'Chanh', icon: '🍋' },
     { id: 'apple', name: 'Táo', icon: '🍎' },
     { id: 'cherry', name: 'Cherry', icon: '🍒' }
@@ -1219,31 +1219,40 @@ export class FarmComponent implements OnInit {
       icon: FARM_ASSETS.readyStrawberry
     },
     {
-      id: 'sunflower',
-      nameVi: 'Hoa hướng dương',
+      id: 'pumpkin',
+      nameVi: 'Bí ngô vàng cam',
       growthTime: '15 phút (Tưới -2p, Phân -5p)',
       coins: 25,
       xp: 30,
-      desc: 'Đóa hoa vàng rực rỡ đón ánh mặt trời, biểu tượng của sự kiên trì.',
-      icon: FARM_ASSETS.readySunflower
+      desc: 'Trái bí ngô tròn vàng cam đậm đà, thu hoạch cho mùa vụ bội thu.',
+      icon: FARM_ASSETS.readyPumpkin
     },
     {
-      id: 'rose',
-      nameVi: 'Hoa hồng nhung',
-      growthTime: '15 phút (Tưới -2p, Phân -5p)',
-      coins: 35,
-      xp: 40,
-      desc: 'Hoa hồng kiêu sa đỏ thắm, tô điểm sắc màu cho nông trại của bạn.',
-      icon: FARM_ASSETS.readyRose
-    },
-    {
-      id: 'tulip',
-      nameVi: 'Hoa tulip Hà Lan',
+      id: 'wheat',
+      nameVi: 'Lúa mì vàng óng',
       growthTime: '12 phút (Tưới -2p, Phân -5p)',
       coins: 30,
       xp: 35,
-      desc: 'Búp hoa tulip màu tím hồng duyên dáng, dễ trồng và nhanh lớn.',
-      icon: FARM_ASSETS.readyTulip
+      desc: 'Những bông lúa mì vàng óng trĩu hạt, biểu tượng của sự no ấm.',
+      icon: FARM_ASSETS.readyWheat
+    },
+    {
+      id: 'blueberry',
+      nameVi: 'Việt quất ngọt thơm',
+      growthTime: '15 phút (Tưới -2p, Phân -5p)',
+      coins: 35,
+      xp: 40,
+      desc: 'Những chùm việt quất tím thẫm mọng nước, giàu chất chống oxy hóa.',
+      icon: FARM_ASSETS.readyBlueberry
+    },
+    {
+      id: 'watermelon',
+      nameVi: 'Dưa hấu thanh mát',
+      growthTime: '18 phút (Tưới -2p, Phân -5p)',
+      coins: 45,
+      xp: 50,
+      desc: 'Trái dưa hấu vỏ xanh ruột đỏ mọng ngọt, giải khát ngày hè oi ả.',
+      icon: FARM_ASSETS.readyWatermelon
     },
     {
       id: 'mango',
@@ -1253,15 +1262,6 @@ export class FarmComponent implements OnInit {
       xp: 55,
       desc: 'Cây xoài quả vàng căng tròn, mang lại năng suất và lợi nhuận cao.',
       icon: FARM_ASSETS.readyMango
-    },
-    {
-      id: 'kiwi',
-      nameVi: 'Kiwi xanh mát',
-      growthTime: '18 phút (Tưới -2p, Phân -5p)',
-      coins: 45,
-      xp: 50,
-      desc: 'Quả kiwi ruột xanh ngọc ngọt dịu thanh mát, giàu vitamin C.',
-      icon: FARM_ASSETS.readyKiwi
     },
     {
       id: 'lemon',
@@ -1337,8 +1337,9 @@ export class FarmComponent implements OnInit {
   getCropIcon(cropKey?: string): string {
     const icons: Record<string, string> = {
       carrot: '🥕', potato: '🥔', corn: '🌽', tomato: '🍅',
-      strawberry: '🍓', sunflower: '🌻', rose: '🌹', tulip: '🌷',
-      mango: '🥭', kiwi: '🥝', lemon: '🍋',
+      strawberry: '🍓', pumpkin: '🎃', sunflower: '🎃',
+      wheat: '🌾', tulip: '🌾', blueberry: '🫐', rose: '🫐',
+      mango: '🥭', watermelon: '🍉', kiwi: '🍉', lemon: '🍋',
       apple: '🍎', cherry: '🍒'
     };
     return (cropKey && icons[cropKey.toLowerCase()]) || '🌱';
@@ -1347,8 +1348,9 @@ export class FarmComponent implements OnInit {
   getCropName(cropKey?: string): string {
     const names: Record<string, string> = {
       carrot: 'Cà rốt', potato: 'Khoai tây', corn: 'Bắp ngô', tomato: 'Cà chua',
-      strawberry: 'Dâu tây', sunflower: 'H.Dương', rose: 'Hoa hồng', tulip: 'Tulip',
-      mango: 'Xoài', kiwi: 'Kiwi', lemon: 'Chanh',
+      strawberry: 'Dâu tây', pumpkin: 'Bí ngô', sunflower: 'Bí ngô',
+      wheat: 'Lúa mì', tulip: 'Lúa mì', blueberry: 'Việt quất', rose: 'Việt quất',
+      mango: 'Xoài', watermelon: 'Dưa hấu', kiwi: 'Dưa hấu', lemon: 'Chanh',
       apple: 'Táo', cherry: 'Cherry'
     };
     return (cropKey && names[cropKey.toLowerCase()]) || 'Cây trồng';
@@ -1369,11 +1371,15 @@ export class FarmComponent implements OnInit {
         case 'strawberry': return this.assets.readyStrawberry;
         case 'corn': return this.assets.readyCorn;
         case 'tomato': return this.assets.readyTomato;
-        case 'sunflower': return this.assets.readySunflower;
-        case 'rose': return this.assets.readyRose;
-        case 'tulip': return this.assets.readyTulip;
+        case 'pumpkin':
+        case 'sunflower': return this.assets.readyPumpkin;
+        case 'wheat':
+        case 'tulip': return this.assets.readyWheat;
+        case 'blueberry':
+        case 'rose': return this.assets.readyBlueberry;
+        case 'watermelon':
+        case 'kiwi': return this.assets.readyWatermelon;
         case 'mango': return this.assets.readyMango;
-        case 'kiwi': return this.assets.readyKiwi;
         case 'lemon': return this.assets.readyLemon;
         case 'apple': return this.assets.readyApple;
         case 'cherry': return this.assets.readyCherry;

@@ -122,20 +122,20 @@ export const CROP_CATALOG: CropCatalog[] = [
     requiredLessonTitle: 'Nhân sự (Human Resources)'
   },
   {
-    id: 'sunflower',
-    nameVi: 'Hoa hướng dương',
-    seedNameVi: 'Hạt giống Hướng dương',
-    shopId: 's_sunflower',
+    id: 'pumpkin',
+    nameVi: 'Bí ngô',
+    seedNameVi: 'Hạt giống Bí ngô',
+    shopId: 's_pumpkin',
     price: 18,
     duration: '15 phút (Tưới -2p, Phân -5p)',
     growthMinutes: 15,
-    usage: 'Gieo trồng hoa hướng dương đón nắng.',
-    desc: 'Hoa hướng dương vàng rực rỡ, biểu tượng của sự kiên trì học tập.',
+    usage: 'Gieo hạt bí ngô trên luống đất tơi xốp.',
+    desc: 'Trái bí ngô tròn vàng cam đậm đà, thu hoạch cho mùa vụ bội thu.',
     initialSeeds: 3,
-    initialHarvested: 0,
-    matureSvg: FARM_ASSETS.readySunflower,
-    emblemSvg: `<circle cx="8" cy="8" r="3" fill="#F7BA1E"/>
-      <circle cx="8" cy="8" r="1.5" fill="#543315"/>`,
+    initialHarvested: 1,
+    matureSvg: FARM_ASSETS.readyPumpkin,
+    emblemSvg: `<ellipse cx="8" cy="8.5" rx="3.5" ry="3" fill="#E87817"/>
+      <rect x="7.5" y="5" width="1" height="1.5" fill="#588E33"/>`,
     tier: 2,
     tierNameVi: 'Hạng II - Hoa trái',
     requiredLevel: 2,
@@ -144,19 +144,19 @@ export const CROP_CATALOG: CropCatalog[] = [
     requiredLessonTitle: 'Tài chính (Finance)'
   },
   {
-    id: 'tulip',
-    nameVi: 'Hoa tulip',
-    seedNameVi: 'Hạt giống Hoa tulip',
-    shopId: 's_tulip',
+    id: 'wheat',
+    nameVi: 'Lúa mì',
+    seedNameVi: 'Hạt giống Lúa mì',
+    shopId: 's_wheat',
     price: 20,
     duration: '12 phút (Tưới -2p, Phân -5p)',
     growthMinutes: 12,
-    usage: 'Gieo hoa tulip phong cách Hà Lan thanh lịch.',
-    desc: 'Búp hoa tulip màu hồng tím duyên dáng, sinh trưởng nhanh.',
+    usage: 'Gieo lúa mì trên ruộng đất màu mỡ.',
+    desc: 'Những bông lúa mì vàng óng trĩu hạt, biểu tượng của sự no ấm.',
     initialSeeds: 3,
     initialHarvested: 0,
-    matureSvg: FARM_ASSETS.readyTulip,
-    emblemSvg: `<path d="M6 9 C5 6 7 5 8 7 C9 5 11 6 10 9 Z" fill="#D6386C"/>`,
+    matureSvg: FARM_ASSETS.readyWheat,
+    emblemSvg: `<path d="M7 11 L9 7 M7 8 L9 8 M7 6 L9 6" stroke="#DCA22C" stroke-width="1.2"/>`,
     tier: 2,
     tierNameVi: 'Hạng II - Hoa trái',
     requiredLevel: 2,
@@ -165,20 +165,20 @@ export const CROP_CATALOG: CropCatalog[] = [
     requiredLessonTitle: 'Ngân hàng (Banking)'
   },
   {
-    id: 'rose',
-    nameVi: 'Hoa hồng',
-    seedNameVi: 'Hạt giống Hoa hồng',
-    shopId: 's_rose',
+    id: 'blueberry',
+    nameVi: 'Việt quất',
+    seedNameVi: 'Hạt giống Việt quất',
+    shopId: 's_blueberry',
     price: 24,
     duration: '15 phút (Tưới -2p, Phân -5p)',
     growthMinutes: 15,
-    usage: 'Trồng hoa hồng đỏ kiêu sa làm đẹp cho nông trại.',
-    desc: 'Những đóa hồng nhung đỏ thắm, tỏa hương thơm ngát.',
+    usage: 'Trồng bụi việt quất ngọt ngào.',
+    desc: 'Những chùm việt quất tím thẫm mọng nước, giàu chất chống oxy hóa.',
     initialSeeds: 3,
     initialHarvested: 0,
-    matureSvg: FARM_ASSETS.readyRose,
-    emblemSvg: `<circle cx="8" cy="8" r="3" fill="#C91834"/>
-      <circle cx="8" cy="7.5" r="1.5" fill="#FF7088"/>`,
+    matureSvg: FARM_ASSETS.readyBlueberry,
+    emblemSvg: `<circle cx="7" cy="8" r="2" fill="#3D4A8A"/>
+      <circle cx="9.5" cy="8.5" r="1.8" fill="#5B6AB5"/>`,
     tier: 3,
     tierNameVi: 'Hạng III - Làm vườn',
     requiredLevel: 3,
@@ -208,20 +208,20 @@ export const CROP_CATALOG: CropCatalog[] = [
     requiredLessonTitle: 'Nhà hàng (Restaurant)'
   },
   {
-    id: 'kiwi',
-    nameVi: 'Kiwi',
-    seedNameVi: 'Hạt giống Kiwi',
-    shopId: 's_kiwi',
+    id: 'watermelon',
+    nameVi: 'Dưa hấu',
+    seedNameVi: 'Hạt giống Dưa hấu',
+    shopId: 's_watermelon',
     price: 32,
     duration: '18 phút (Tưới -2p, Phân -5p)',
     growthMinutes: 18,
-    usage: 'Trồng giàn kiwi thanh mát.',
-    desc: 'Quả kiwi ruột xanh ngọc ngọt dịu, giàu vitamin C.',
+    usage: 'Trồng dưa hấu giải nhiệt thanh mát.',
+    desc: 'Trái dưa hấu vỏ xanh ruột đỏ mọng ngọt, giải khát ngày hè oi ả.',
     initialSeeds: 3,
     initialHarvested: 0,
-    matureSvg: FARM_ASSETS.readyKiwi,
-    emblemSvg: `<circle cx="8" cy="8" r="3" fill="#75522E"/>
-      <circle cx="8" cy="8" r="2.2" fill="#99C942"/>`,
+    matureSvg: FARM_ASSETS.readyWatermelon,
+    emblemSvg: `<path d="M5 8 C5 11 11 11 11 8 Z" fill="#2E7535"/>
+      <path d="M6 8 C6 10 10 10 10 8 Z" fill="#D62839"/>`,
     tier: 3,
     tierNameVi: 'Hạng III - Làm vườn',
     requiredLevel: 3,
@@ -321,4 +321,22 @@ export const SPRITES: Record<string, string> = {
 CROP_CATALOG.forEach(c => {
   SPRITES[c.id] = c.matureSvg;
   SPRITES[c.shopId] = kraftSeedPacket(c.emblemSvg);
+  SPRITES['seed_' + c.id] = kraftSeedPacket(c.emblemSvg);
 });
+
+// Backward-compatibility aliases cho dữ liệu cũ (sunflower, tulip, rose, kiwi)
+SPRITES['sunflower'] = FARM_ASSETS.readyPumpkin;
+SPRITES['s_sunflower'] = SPRITES['s_pumpkin'];
+SPRITES['seed_sunflower'] = SPRITES['s_pumpkin'];
+
+SPRITES['tulip'] = FARM_ASSETS.readyWheat;
+SPRITES['s_tulip'] = SPRITES['s_wheat'];
+SPRITES['seed_tulip'] = SPRITES['s_wheat'];
+
+SPRITES['rose'] = FARM_ASSETS.readyBlueberry;
+SPRITES['s_rose'] = SPRITES['s_blueberry'];
+SPRITES['seed_rose'] = SPRITES['s_blueberry'];
+
+SPRITES['kiwi'] = FARM_ASSETS.readyWatermelon;
+SPRITES['s_kiwi'] = SPRITES['s_watermelon'];
+SPRITES['seed_kiwi'] = SPRITES['s_watermelon'];

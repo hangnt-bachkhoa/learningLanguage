@@ -149,7 +149,7 @@ export class GrammarQuizGeneratorService {
       m.includes('cà rốt') || m.includes('khoai') || m.includes('ngô') ||
       m.includes('cà chua') || m.includes('dâu') || m.includes('táo') ||
       m.includes('hoa') || m.includes('rau') || m.includes('nông sản') ||
-      ['carrot', 'potato', 'corn', 'tomato', 'strawberry', 'apple', 'sunflower', 'vegetable'].includes(w)
+      ['carrot', 'potato', 'corn', 'tomato', 'strawberry', 'apple', 'pumpkin', 'wheat', 'blueberry', 'watermelon', 'sunflower', 'vegetable'].includes(w)
     ) {
       return 'food_crop';
     }
