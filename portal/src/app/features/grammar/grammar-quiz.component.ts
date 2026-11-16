@@ -604,7 +604,7 @@ interface QueueItem {
     /* RESPONSIVE DESIGN (<= 767px) */
     @media (max-width: 767px) {
       .grammar-quiz-screen {
-        padding: 10px 12px 64px;
+        padding: 4px 2px 64px;
       }
 
       .quiz-card {

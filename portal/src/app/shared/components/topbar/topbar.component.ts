@@ -36,14 +36,22 @@ import { GameStateService } from '../../../core/services/game-state.service';
     </header>
   `,
   styles: [`
+    :host {
+      display: block;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+    }
     .topbar {
       height: 60px;
       background: rgba(245, 241, 232, 0.94);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      z-index: 30;
+      z-index: 50;
       display: flex;
       align-items: center;
       justify-content: space-between;

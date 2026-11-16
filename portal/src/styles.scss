@@ -32,8 +32,8 @@
 }
 
 html, body {
-  height: 100%;
-  overflow-x: hidden;
+  min-height: 100%;
+  overflow-x: clip;
   background-color: var(--bg-paper);
   background-image:
     radial-gradient(rgba(194, 173, 149, 0.22) 1px, transparent 1px),

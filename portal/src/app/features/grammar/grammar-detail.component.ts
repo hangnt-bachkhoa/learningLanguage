@@ -471,7 +471,7 @@ import { GameStateService } from '../../core/services/game-state.service';
     /* RESPONSIVE DESIGN (<= 767px) */
     @media (max-width: 767px) {
       .grammar-detail-page {
-        padding: 10px 12px 72px;
+        padding: 4px 2px 72px;
       }
 
       .detail-card {

@@ -491,7 +491,7 @@ interface LevelGroup {
     /* RESPONSIVE DESIGN (MOBILE-FIRST) */
     @media (max-width: 767px) {
       .grammar-catalog-page {
-        padding: 10px 12px 64px;
+        padding: 4px 2px 64px;
       }
       .hero-banner {
         padding: 16px;

@@ -53,12 +53,23 @@ import { GameStateService } from './core/services/game-state.service';
     .main-content.desktop-collapsed {
       margin-left: 0 !important;
     }
+    app-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: block;
+      width: 100%;
+    }
     @media (max-width: 768px) {
       .main-content {
         margin-left: 0 !important;
       }
       .content-body {
-        padding: 14px 14px 40px;
+        flex: 1;
+        padding: 11px 4px 48px;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
       }
     }
     .content-body {
