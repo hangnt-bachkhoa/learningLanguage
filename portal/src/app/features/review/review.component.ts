@@ -768,6 +768,12 @@ interface ReviewCard {
       align-items: center;
       justify-content: center;
     }
+    .reward-icon img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
     .reward-name {
       font-size: 10.5px;
       font-weight: 600;

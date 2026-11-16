@@ -533,6 +533,12 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
       justify-content: center;
       margin-bottom: 4px;
     }
+    .action-icon img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
     .action-label {
       font-size: 12px;
       font-weight: 700;

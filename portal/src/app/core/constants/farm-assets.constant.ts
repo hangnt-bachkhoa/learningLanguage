@@ -148,26 +148,9 @@ export const FARM_ASSETS = {
     </svg>
   `,
 
-  wateringCan: `
-    <svg viewBox="0 0 60 60" width="46" height="46">
-      <path d="M20 22 H40 L44 48 H16 Z" fill="#5F8E9B" stroke="#2B464E" stroke-width="2.5"/>
-      <ellipse cx="30" cy="22" rx="10" ry="3" fill="#80B0BE"/>
-      <path d="M16 26 C8 28 8 44 17 46" fill="none" stroke="#2B464E" stroke-width="3" stroke-linecap="round"/>
-      <path d="M38 36 L52 20" fill="none" stroke="#2B464E" stroke-width="4" stroke-linecap="round"/>
-      <ellipse cx="54" cy="18" rx="5" ry="3" transform="rotate(-30 54 18)" fill="#D4AF37" stroke="#2B464E" stroke-width="1.8"/>
-      <circle cx="56" cy="12" r="1.5" fill="#55B4D4"/>
-      <circle cx="59" cy="16" r="1.2" fill="#55B4D4"/>
-    </svg>
-  `,
+  wateringCan: `<img src="assets/farm-assets/tools/watering_can.png" class="pixel-art tool-pixel-img" alt="Bình tưới nước" width="46" height="46" style="image-rendering: pixelated; object-fit: contain; display: block;" />`,
 
-  fertilizerSack: `
-    <svg viewBox="0 0 60 60" width="46" height="46">
-      <path d="M18 20 C18 16 24 16 30 18 C36 16 42 16 42 20 L46 50 H14 Z" fill="#C49F74" stroke="#5E4020" stroke-width="2.5"/>
-      <rect x="22" y="20" width="16" height="4" rx="2" fill="#E8D5B5" stroke="#5E4020" stroke-width="1.8"/>
-      <circle cx="30" cy="35" r="7" fill="#E8D9BF"/>
-      <circle cx="30" cy="35" r="4" fill="#6DA637"/>
-    </svg>
-  `,
+  fertilizerSack: `<img src="assets/farm-assets/tools/fertilizer.png" class="pixel-art tool-pixel-img" alt="Phân bón" width="46" height="46" style="image-rendering: pixelated; object-fit: contain; display: block;" />`,
 
   harvestBasket: `
     <svg viewBox="0 0 60 60" width="46" height="46">

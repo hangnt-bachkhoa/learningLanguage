@@ -937,6 +937,12 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
       align-items: center;
       justify-content: center;
     }
+    .reward-svg img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
 
     .reward-emoji {
       font-size: 24px;

@@ -97,7 +97,10 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
                 <div class="recipe-visual">
                   <span class="recipe-icon">🧺 x3 Nông sản</span>
                   <span class="recipe-arrow">➔</span>
-                  <span class="recipe-icon">⚡ x1 Phân bón</span>
+                  <span class="recipe-icon">
+                    <img src="assets/farm-assets/tools/fertilizer.png" width="24" height="24" class="pixel-art" style="vertical-align: middle; margin-right: 4px; display: inline-block;" />
+                    x1 Phân bón
+                  </span>
                 </div>
                 <h4 class="recipe-title">Đổi 3 Nông sản lấy 1 Phân bón</h4>
                 <p class="recipe-desc">Chọn loại nông sản bạn có từ 3 củ/quả trở lên để đổi lấy phân bón tăng tốc:</p>
@@ -126,7 +129,10 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
                 <div class="recipe-visual">
                   <span class="recipe-icon">🧺 x2 Nông sản</span>
                   <span class="recipe-arrow">➔</span>
-                  <span class="recipe-icon">💧 x2 Nước tưới</span>
+                  <span class="recipe-icon">
+                    <img src="assets/farm-assets/tools/watering_can.png" width="24" height="24" class="pixel-art" style="vertical-align: middle; margin-right: 4px; display: inline-block;" />
+                    x2 Nước tưới
+                  </span>
                 </div>
                 <h4 class="recipe-title">Đổi 2 Nông sản lấy 2 Lượt nước</h4>
                 <p class="recipe-desc">Chọn loại nông sản bạn có từ 2 củ/quả trở lên để bổ sung nước tưới:</p>
@@ -423,6 +429,12 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       justify-content: center;
       transform: scale(1.4);
       margin: 10px 0;
+    }
+    .prod-sprite img {
+      max-height: 48px;
+      max-width: 48px;
+      object-fit: contain;
+      image-rendering: pixelated;
     }
     .prod-title {
       font-family: var(--font-serif);

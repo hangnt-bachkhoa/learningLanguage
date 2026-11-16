@@ -90,6 +90,12 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       justify-content: center;
       margin-bottom: 8px;
     }
+    .slot-sprite img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
     .slot-name {
       font-weight: 600;
       font-size: 13px;
