@@ -1,468 +1,543 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { GrammarService } from '../../core/services/grammar.service';
 import { GrammarTopic } from '../../core/constants/default-grammar-topics.constant';
+
+interface LevelGroup {
+  level: string;
+  badgeLabel: string;
+  heading: string;
+  items: GrammarTopic[];
+}
 
 @Component({
   selector: 'app-grammar-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   template: `
     <div class="grammar-catalog-page">
-      <!-- HEADER CHUYÊN ĐỀ -->
-      <header class="catalog-header">
-        <div class="header-pre-title">
-          <span class="sprout-icon">📜</span>
-          <span>Sổ tay Ngữ pháp TOEIC</span>
+      <!-- HERO SUMMARY BANNER -->
+      <section class="hero-banner">
+        <div class="hero-text-wrap">
+          <div class="hero-eyebrow">📖 Sổ tay Ngữ pháp TOEIC</div>
+          <h1 class="hero-title">13 Chuyên Đề Trọng Điểm</h1>
+          <p class="hero-sub">Học công thức & bẫy Part 5 theo nhóm cấp độ, sau đó làm Quiz để nhận XP và Xu.</p>
         </div>
-        <h1 class="catalog-title">13 Chuyên Đề Trọng Điểm</h1>
-        <p class="catalog-subtitle">
-          Tổng hợp công thức cốt lõi, bẫy đề thi Part 5 và bài tập thực chiến có giải thích chi tiết.
-        </p>
 
-        <!-- BẢNG TỔNG KẾT NHANH -->
-        <div class="quick-stats-bar">
-          <div class="stat-pill">
-            <span class="stat-num">{{ studiedCount() }}/{{ grammarService.topics().length }}</span>
-            <span class="stat-label">Chuyên đề đã học</span>
+        <div class="hero-progress-wrap">
+          <div class="hero-progress-header">
+            <span>{{ studiedCount() }}/13 đã học</span>
+            <span>{{ totalStarsClaimed() }}/39 ★</span>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat-pill">
-            <span class="stat-num">{{ totalStarsClaimed() }}/39 ⭐</span>
-            <span class="stat-label">Tổng sao đạt được</span>
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="progressPercent()"></div>
           </div>
-        </div>
-      </header>
-
-      <!-- BỘ LỌC CẤP ĐỘ TOEIC -->
-      <nav class="level-tabs-nav" aria-label="Lọc cấp độ">
-        @for (lvl of levels; track lvl.key) {
-          <button
-            type="button"
-            class="level-tab-btn"
-            [class.active]="selectedLevel() === lvl.key"
-            (click)="selectedLevel.set(lvl.key)">
-            <span class="tab-label">{{ lvl.label }}</span>
-            <span class="tab-badge">{{ getCountForLevel(lvl.key) }}</span>
+          <button type="button" class="btn btn-primary btn-sm btn-random" (click)="startRandomQuiz()">
+            ⚡ Ôn tập ngẫu nhiên
           </button>
-        }
-      </nav>
+        </div>
+      </section>
 
-      <!-- DANH SÁCH CÁC THẺ CHUYÊN ĐỀ NGỮ PHÁP -->
+      <!-- CONTROLS ROW (FILTER & SEARCH) -->
+      <div class="controls-row">
+        <nav class="filter-scroll" aria-label="Lọc cấp độ ngữ pháp">
+          @for (lvl of levels; track lvl.key) {
+            <button
+              type="button"
+              class="filter-chip"
+              [class.active]="selectedLevel() === lvl.key"
+              (click)="selectedLevel.set(lvl.key)">
+              {{ lvl.label }} ({{ getCountForLevel(lvl.key) }})
+            </button>
+          }
+        </nav>
+
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            placeholder="Tìm chuyên đề ngữ pháp..."
+            [ngModel]="searchQuery()"
+            (ngModelChange)="searchQuery.set($event)"
+            aria-label="Tìm kiếm chuyên đề" />
+        </div>
+      </div>
+
+      <!-- DANH SÁCH CHUYÊN ĐỀ THEO NHÓM CẤP ĐỘ (Fix orphan card #13) -->
       @if (grammarService.isLoading()) {
-        <div class="vintage-loading-card">
+        <div class="loading-card">
           <span class="pulse-icon">⏳</span>
-          <p>Đang tải danh sách chuyên đề ngữ pháp...</p>
+          <p>Đang tải sổ tay ngữ pháp TOEIC...</p>
+        </div>
+      } @else if (levelGroups().length === 0) {
+        <div class="empty-card">
+          <span class="empty-icon">🍃</span>
+          <p>Không tìm thấy chuyên đề phù hợp với từ khóa "{{ searchQuery() }}".</p>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="searchQuery.set(''); selectedLevel.set('ALL')">
+            Xóa bộ lọc
+          </button>
         </div>
       } @else {
-        <div class="topics-grid">
-          @for (topic of filteredTopics(); track topic.code) {
-            <article class="vintage-topic-card" [class.studied-card]="topic.isStudied">
-              <div class="card-top-row">
-                <span class="order-pill">#{{ topic.orderIndex < 10 ? '0' + topic.orderIndex : topic.orderIndex }}</span>
-                <div class="badge-cluster">
-                  <span class="level-pill" [attr.data-level]="topic.level">{{ topic.level }}</span>
-                  <span class="toeic-pill">TOEIC {{ topic.toeicTarget }}</span>
-                </div>
-              </div>
+        @for (group of levelGroups(); track group.level) {
+          <section class="level-section">
+            <header class="level-header">
+              <span class="level-badge">{{ group.badgeLabel }}</span>
+              <h2 class="level-heading">{{ group.heading }}</h2>
+              <div class="level-line"></div>
+            </header>
 
-              <div class="card-headings">
-                <h2 class="topic-title-en">{{ topic.titleEn }}</h2>
-                <h3 class="topic-title-vi">{{ topic.titleVi }}</h3>
-              </div>
+            <div class="topics-grid">
+              @for (topic of group.items; track topic.code) {
+                <article class="topic-card" [class.studied-card]="topic.isStudied">
+                  <div class="topic-main">
+                    <div class="topic-top">
+                      <span class="topic-num">#{{ topic.orderIndex < 10 ? '0' + topic.orderIndex : topic.orderIndex }}</span>
+                      <div class="topic-tags">
+                        <span class="tag-pill">{{ topic.level }}</span>
+                        <span class="tag-pill">TOEIC {{ topic.toeicTarget }}</span>
+                      </div>
+                    </div>
 
-              <p class="topic-summary">{{ topic.summary }}</p>
+                    <h3 class="topic-title-en">{{ topic.titleEn }}</h3>
+                    <h4 class="topic-title-vi">{{ topic.titleVi }}</h4>
+                    <p class="topic-summary">{{ topic.summary }}</p>
+                  </div>
 
-              <!-- THANH CHỈ BÁO TIẾN ĐỘ -->
-              <div class="card-progress-footer">
-                <div class="status-tags">
-                  @if (topic.isStudied) {
-                    <span class="studied-tag">✓ Đã học</span>
-                  } @else {
-                    <span class="unstudied-tag">Chưa học</span>
-                  }
-                  <span class="q-count-tag">{{ topic.questions.length }} câu hỏi</span>
-                </div>
+                  <footer class="topic-footer">
+                    <div class="topic-meta-left">
+                      <div class="stars-row" title="Sao đạt được qua bài kiểm tra">
+                        <span class="star" [class.filled]="(topic.bestStars || 0) >= 1">★</span>
+                        <span class="star" [class.filled]="(topic.bestStars || 0) >= 2">★</span>
+                        <span class="star" [class.filled]="(topic.bestStars || 0) >= 3">★</span>
+                      </div>
+                      <span class="status-tag" [class.studied]="topic.isStudied">
+                        {{ topic.isStudied ? '✓ Đã học' : 'Chưa học' }}
+                      </span>
+                    </div>
 
-                <!-- 3 SAO ĐẠT ĐƯỢC -->
-                <div class="stars-row" title="Sao đạt được qua bài kiểm tra">
-                  <span class="star" [class.filled]="(topic.bestStars || 0) >= 1">★</span>
-                  <span class="star" [class.filled]="(topic.bestStars || 0) >= 2">★</span>
-                  <span class="star" [class.filled]="(topic.bestStars || 0) >= 3">★</span>
-                </div>
-              </div>
-
-              <!-- HÀNH ĐỘNG -->
-              <div class="card-action-row">
-                <a [routerLink]="['/grammar', topic.code]" class="btn btn-outline btn-study">
-                  Lý thuyết ›
-                </a>
-                <a [routerLink]="['/grammar', topic.code, 'quiz']" class="btn btn-primary btn-quiz">
-                  Làm Quiz ✍️
-                </a>
-              </div>
-            </article>
-          }
-        </div>
+                    <div class="topic-actions">
+                      <a [routerLink]="['/grammar', topic.code]" class="btn btn-secondary btn-sm action-btn">
+                        Lý thuyết
+                      </a>
+                      <a [routerLink]="['/grammar', topic.code, 'quiz']" class="btn btn-primary btn-sm action-btn">
+                        Làm Quiz
+                      </a>
+                    </div>
+                  </footer>
+                </article>
+              }
+            </div>
+          </section>
+        }
       }
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      width: 100%;
+    }
+
     .grammar-catalog-page {
-      max-width: 960px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 12px 16px 48px;
+      padding: 14px 16px 56px;
     }
 
-    /* HEADER */
-    .catalog-header {
-      text-align: center;
-      margin-bottom: 24px;
-      padding: 24px 20px 20px;
-      background: #FAF6EF;
-      border: 1.5px solid #DDD3C3;
-      border-radius: 18px;
-      box-shadow: 0 4px 16px rgba(38, 56, 71, 0.03);
-    }
-
-    .header-pre-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #78815D;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 6px;
-    }
-
-    .catalog-title {
-      font-family: var(--font-serif);
-      font-size: 30px;
-      font-weight: 800;
-      color: var(--navy);
-      margin: 0 0 8px;
-      letter-spacing: -0.5px;
-    }
-
-    .catalog-subtitle {
-      font-size: 14.5px;
-      color: var(--ink-muted);
-      margin: 0 0 16px;
-      max-width: 620px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.5;
-    }
-
-    .quick-stats-bar {
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      background: #F2EADB;
-      border: 1px solid #D9C8B5;
-      padding: 6px 18px;
-      border-radius: 999px;
-    }
-
-    .stat-pill {
+    /* HERO SUMMARY BANNER */
+    .hero-banner {
+      background: var(--bg-card, #FFFDF9);
+      border: 1px solid var(--border, #D9C8B5);
+      border-radius: var(--radius-lg, 16px);
+      padding: 20px 22px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      box-shadow: 0 3px 12px rgba(38, 56, 71, 0.03);
+    }
+
+    .hero-text-wrap {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--olive, #78815D);
+      margin-bottom: 4px;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy, #263847);
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .hero-sub {
       font-size: 13px;
+      color: var(--ink-muted, #6D665C);
+      margin-top: 4px;
+      line-height: 1.45;
     }
 
-    .stat-num {
-      font-weight: 800;
-      color: var(--navy);
-      font-family: var(--font-serif);
-      font-size: 15px;
+    .hero-progress-wrap {
+      min-width: 250px;
+      background: var(--bg-paper, #F8F4EB);
+      border: 1px solid var(--border, #D9C8B5);
+      border-radius: var(--radius-md, 12px);
+      padding: 12px 14px;
     }
 
-    .stat-label {
-      color: var(--ink-muted);
+    .hero-progress-header {
+      display: flex;
+      justify-content: space-between;
       font-size: 12px;
+      font-weight: 700;
+      color: var(--navy, #263847);
     }
 
-    .stat-divider {
-      width: 1px;
-      height: 16px;
-      background: #D9C8B5;
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      background: #EFE8D8;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 7px 0 10px;
     }
 
-    /* BỘ LỌC CẤP ĐỘ */
-    .level-tabs-nav {
+    .progress-fill {
+      height: 100%;
+      background: var(--olive, #78815D);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .btn-random {
+      width: 100%;
+      font-weight: 700;
+    }
+
+    /* CONTROLS ROW (FILTER & SEARCH) */
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-scroll {
       display: flex;
       gap: 8px;
-      margin-bottom: 22px;
       overflow-x: auto;
       padding-bottom: 4px;
       scrollbar-width: none;
+      -ms-overflow-style: none;
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .level-tabs-nav::-webkit-scrollbar {
+    .filter-scroll::-webkit-scrollbar {
       display: none;
     }
 
-    .level-tab-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
-      background: #FAF6EF;
-      border: 1.5px solid #DDD3C3;
+    .filter-chip {
+      flex-shrink: 0;
+      padding: 6px 14px;
       border-radius: 999px;
-      font-family: var(--font-sans);
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--navy);
-      cursor: pointer;
+      background: var(--bg-card, #FFFDF9);
+      border: 1px solid var(--border, #D9C8B5);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink-muted, #6D665C);
       white-space: nowrap;
-      transition: all 0.2s ease;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
-    .level-tab-btn:hover {
-      border-color: #78815D;
-      background: #F4EFE6;
+    .filter-chip:hover {
+      border-color: var(--border-strong, #C2AD95);
+      color: var(--navy, #263847);
     }
 
-    .level-tab-btn.active {
-      background: #78815D;
-      border-color: #78815D;
-      color: #FFF;
+    .filter-chip.active {
+      background: var(--navy, #263847);
+      border-color: var(--navy, #263847);
+      color: #FFFDF9;
     }
 
-    .tab-badge {
-      font-size: 11px;
-      padding: 1px 6px;
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card, #FFFDF9);
+      border: 1px solid var(--border-strong, #C2AD95);
       border-radius: 999px;
-      background: rgba(0, 0, 0, 0.08);
+      padding: 6px 14px;
+      min-width: 240px;
     }
 
-    .level-tab-btn.active .tab-badge {
-      background: rgba(255, 255, 255, 0.25);
-      color: #FFF;
+    .search-icon {
+      font-size: 13px;
+      color: var(--ink-muted, #6D665C);
     }
 
-    /* LƯỚI THẺ CHUYÊN ĐỀ */
+    .search-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 13px;
+      color: var(--ink, #2C2A25);
+      width: 100%;
+    }
+
+    /* LEVEL GROUP SECTION */
+    .level-section {
+      margin-bottom: 24px;
+    }
+
+    .level-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .level-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--olive-tint, #E9ECE1);
+      color: #4A5435;
+      border: 1px solid #C5CEB0;
+      white-space: nowrap;
+    }
+
+    .level-heading {
+      font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy, #263847);
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .level-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border, #D9C8B5);
+    }
+
+    /* TOPIC GRID: 2 COLUMNS DESKTOP, 1 COLUMN MOBILE */
     .topics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
     }
 
-    .vintage-topic-card {
-      background: #FAF6EF;
-      border: 1.5px solid #DDD3C3;
-      border-radius: 16px;
-      padding: 18px;
+    .topic-card {
+      background: var(--bg-card, #FFFDF9);
+      border: 1px solid var(--border, #D9C8B5);
+      border-radius: var(--radius-md, 12px);
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 3px 10px rgba(38, 56, 71, 0.03);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      justify-content: space-between;
+      gap: 12px;
+      transition: border-color 0.15s, transform 0.15s;
     }
 
-    .vintage-topic-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(38, 56, 71, 0.06);
-      border-color: #C8BAA6;
+    .topic-card:hover {
+      border-color: var(--border-strong, #C2AD95);
+      transform: translateY(-1px);
     }
 
-    .vintage-topic-card.studied-card {
-      border-left: 4px solid #78815D;
-    }
-
-    .card-top-row {
+    .topic-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      gap: 8px;
     }
 
-    .order-pill {
-      font-family: monospace;
-      font-weight: 800;
-      font-size: 13px;
-      color: #8C5E58;
-      background: #F2E4DF;
-      padding: 2px 8px;
-      border-radius: 6px;
+    .topic-num {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--ink-muted, #6D665C);
     }
 
-    .badge-cluster {
+    .topic-tags {
       display: flex;
       gap: 5px;
     }
 
-    .level-pill {
-      font-size: 11px;
-      font-weight: 700;
+    .tag-pill {
+      font-size: 10.5px;
+      font-weight: 600;
       padding: 2px 8px;
       border-radius: 999px;
-      background: #EAE2D2;
-      color: var(--navy);
-    }
-
-    .level-pill[data-level="Pre-A1"] { background: #E8EFE8; color: #3E633E; }
-    .level-pill[data-level="A2"] { background: #E4EFF3; color: #2B576C; }
-    .level-pill[data-level="B1-B2"] { background: #F6EDE2; color: #8C571D; }
-    .level-pill[data-level="B2-C1"] { background: #F5E6E6; color: #8A373E; }
-
-    .toeic-pill {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: #F0EAE1;
-      color: var(--ink-muted);
-      border: 1px solid #E2D7C7;
-    }
-
-    .card-headings {
-      margin-bottom: 8px;
+      background: var(--bg-paper, #F8F4EB);
+      border: 1px solid var(--border, #D9C8B5);
+      color: var(--ink-muted, #6D665C);
     }
 
     .topic-title-en {
-      font-family: var(--font-serif);
+      font-family: var(--font-serif, 'Newsreader', Georgia, serif);
       font-size: 17.5px;
-      font-weight: 800;
-      color: var(--navy);
-      margin: 0 0 2px;
-      line-height: 1.3;
+      font-weight: 700;
+      color: var(--navy, #263847);
+      line-height: 1.25;
+      margin: 4px 0 0;
     }
 
     .topic-title-vi {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
-      color: #78815D;
-      margin: 0;
-      line-height: 1.3;
+      color: var(--olive, #78815D);
+      margin: 2px 0 0;
     }
 
     .topic-summary {
-      font-size: 13px;
-      color: var(--ink-muted);
+      font-size: 12.5px;
+      color: var(--ink-muted, #6D665C);
+      margin: 6px 0 0;
       line-height: 1.45;
-      margin: 0 0 14px;
-      flex: 1;
     }
 
-    .card-progress-footer {
+    .topic-footer {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
+      gap: 8px;
       padding-top: 10px;
-      border-top: 1px dashed #E2D7C7;
-      margin-bottom: 12px;
+      border-top: 1px dashed var(--border, #D9C8B5);
     }
 
-    .status-tags {
+    .topic-meta-left {
       display: flex;
-      gap: 6px;
       align-items: center;
-    }
-
-    .studied-tag {
-      font-size: 11px;
-      font-weight: 700;
-      color: #385E38;
-      background: #E4EFE4;
-      padding: 1px 7px;
-      border-radius: 999px;
-    }
-
-    .unstudied-tag {
-      font-size: 11px;
-      color: var(--ink-muted);
-      background: #F0ECE4;
-      padding: 1px 7px;
-      border-radius: 999px;
-    }
-
-    .q-count-tag {
-      font-size: 11px;
-      color: var(--ink-muted);
+      gap: 8px;
     }
 
     .stars-row {
       display: flex;
       gap: 2px;
+      font-size: 13px;
     }
 
     .star {
-      font-size: 15px;
-      color: #DDD3C3;
-      transition: color 0.2s;
+      color: #D8CFC0;
     }
 
     .star.filled {
       color: #E2A03F;
     }
 
-    .card-action-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+    .status-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-muted, #6D665C);
+      background: var(--bg-paper, #F8F4EB);
+      padding: 1px 7px;
+      border-radius: 999px;
+      border: 1px solid var(--border, #D9C8B5);
     }
 
-    .btn-study, .btn-quiz {
-      padding: 9px 8px;
-      font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      border-radius: 10px;
+    .status-tag.studied {
+      background: var(--olive-tint, #E9ECE1);
+      color: #3B4A2B;
+      border-color: #C3CAAE;
+    }
+
+    .topic-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .action-btn {
       text-decoration: none;
+      white-space: nowrap;
     }
 
-    .vintage-loading-card {
+    .loading-card, .empty-card {
       text-align: center;
-      padding: 40px;
-      background: #FAF6EF;
-      border: 1.5px dashed #DDD3C3;
-      border-radius: 16px;
-      color: var(--ink-muted);
+      padding: 36px 20px;
+      background: var(--bg-card, #FFFDF9);
+      border: 1px dashed var(--border, #D9C8B5);
+      border-radius: var(--radius-md, 12px);
+      color: var(--ink-muted, #6D665C);
+      margin-top: 12px;
     }
 
-    .pulse-icon {
-      font-size: 32px;
+    .pulse-icon, .empty-icon {
+      font-size: 28px;
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    @media (max-width: 600px) {
+    /* RESPONSIVE DESIGN (MOBILE-FIRST) */
+    @media (max-width: 767px) {
       .grammar-catalog-page {
-        padding: 8px 10px 36px;
+        padding: 10px 12px 64px;
       }
-      .catalog-title {
-        font-size: 24px;
+      .hero-banner {
+        padding: 16px;
+      }
+      .hero-title {
+        font-size: 21px;
+      }
+      .hero-progress-wrap {
+        width: 100%;
+        min-width: 0;
+      }
+      .search-box {
+        width: 100%;
+        min-width: 0;
       }
       .topics-grid {
         grid-template-columns: 1fr;
+      }
+      .level-heading {
+        font-size: 15px;
+        white-space: normal;
       }
     }
   `]
 })
 export class GrammarListComponent {
   grammarService = inject(GrammarService);
+  private router = inject(Router);
 
-  selectedLevel = signal<string>('all');
+  selectedLevel = signal<string>('ALL');
+  searchQuery = signal<string>('');
 
-  levels = [
-    { key: 'all', label: 'Tất cả' },
+  readonly levels = [
+    { key: 'ALL', label: 'Tất cả' },
     { key: 'Pre-A1', label: 'Pre-A1 (0-350)' },
     { key: 'A2', label: 'A2 (350-550)' },
     { key: 'B1-B2', label: 'B1-B2 (550-750)' },
     { key: 'B2-C1', label: 'B2-C1 (750-990+)' }
   ];
 
-  filteredTopics = computed(() => {
-    const list = this.grammarService.topics();
-    const lvl = this.selectedLevel();
-    if (lvl === 'all') return list;
-    return list.filter(t => t.level === lvl);
-  });
+  private readonly levelMetas: Record<string, { label: string; heading: string }> = {
+    'Pre-A1': { label: 'Pre-A1 · 0-350', heading: 'Pre-A1 (0 - 350 TOEIC) · Nền tảng cốt lõi' },
+    'A2': { label: 'A2 · 350-550', heading: 'A2 (350 - 550 TOEIC) · Sơ cấp vững vàng' },
+    'B1-B2': { label: 'B1-B2 · 550-750', heading: 'B1 - B2 (550 - 750 TOEIC) · Trung cấp bứt phá' },
+    'B2-C1': { label: 'B2-C1 · 750-990+', heading: 'B2 - C1 (750 - 990+ TOEIC) · Cao cấp tinh hoa' }
+  };
 
   studiedCount = computed(() => {
     return this.grammarService.topics().filter(t => t.isStudied).length;
@@ -472,9 +547,57 @@ export class GrammarListComponent {
     return this.grammarService.topics().reduce((sum, t) => sum + (t.bestStars || 0), 0);
   });
 
+  progressPercent = computed(() => {
+    const total = 13;
+    return Math.round((this.studiedCount() / total) * 100);
+  });
+
+  levelGroups = computed<LevelGroup[]>(() => {
+    const topics = this.grammarService.topics();
+    const selLevel = this.selectedLevel();
+    const query = this.searchQuery().trim().toLowerCase();
+
+    // Lọc theo cấp độ & từ khóa tìm kiếm
+    const filtered = topics.filter(t => {
+      const matchLevel = selLevel === 'ALL' || t.level === selLevel;
+      const matchQuery =
+        !query ||
+        t.titleEn.toLowerCase().includes(query) ||
+        t.titleVi.toLowerCase().includes(query) ||
+        t.summary.toLowerCase().includes(query);
+      return matchLevel && matchQuery;
+    });
+
+    const groups: LevelGroup[] = [];
+    const orderedLevels = ['Pre-A1', 'A2', 'B1-B2', 'B2-C1'];
+
+    for (const lvl of orderedLevels) {
+      const itemsInLvl = filtered.filter(t => t.level === lvl);
+      if (itemsInLvl.length > 0) {
+        const meta = this.levelMetas[lvl] || { label: lvl, heading: `Cấp độ ${lvl}` };
+        groups.push({
+          level: lvl,
+          badgeLabel: meta.label,
+          heading: meta.heading,
+          items: itemsInLvl
+        });
+      }
+    }
+
+    return groups;
+  });
+
   getCountForLevel(key: string): number {
     const list = this.grammarService.topics();
-    if (key === 'all') return list.length;
+    if (key === 'ALL') return list.length;
     return list.filter(t => t.level === key).length;
+  }
+
+  startRandomQuiz(): void {
+    const topics = this.grammarService.topics();
+    if (!topics.length) return;
+    const randomIndex = Math.floor(Math.random() * topics.length);
+    const target = topics[randomIndex];
+    this.router.navigate(['/grammar', target.code, 'quiz']);
   }
 }

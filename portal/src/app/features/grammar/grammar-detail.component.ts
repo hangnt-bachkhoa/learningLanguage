@@ -11,478 +11,523 @@ import { GameStateService } from '../../core/services/game-state.service';
   imports: [CommonModule, RouterLink],
   template: `
     <div class="grammar-detail-page">
-      <!-- HEADER / QUAY LẠI -->
-      <div class="detail-nav-row">
-        <a routerLink="/grammar" class="back-link">
-          <span class="chevron">‹</span>
-          <span>Sổ tay Ngữ pháp</span>
-        </a>
-        <div class="header-level-badges">
-          @if (topic(); as t) {
-            <span class="level-pill" [attr.data-level]="t.level">{{ t.level }}</span>
-            <span class="toeic-pill">TOEIC {{ t.toeicTarget }}</span>
-          }
-        </div>
-      </div>
-
       @if (!topic()) {
-        <div class="vintage-card not-found-card">
+        <div class="empty-detail-card">
           <span class="icon">🍃</span>
           <h2>Không tìm thấy chuyên đề ngữ pháp</h2>
           <p>Mã chuyên đề không tồn tại trong hệ thống.</p>
-          <a routerLink="/grammar" class="btn btn-secondary">Về danh mục chuyên đề</a>
+          <a routerLink="/grammar" class="btn btn-secondary btn-sm">Về sổ tay Ngữ pháp</a>
         </div>
       } @else {
-        <!-- SỔ TAY GHI CHÚ PHONG CÁCH NOTEBOOK (2D FLAT NATURALIST VINTAGE) -->
-        <main class="notebook-sheet">
-          <header class="sheet-header">
-            <div class="sheet-order-tag">Chuyên đề #{{ topic()?.orderIndex }}</div>
-            <h1 class="sheet-title-en">{{ topic()?.titleEn }}</h1>
-            <h2 class="sheet-title-vi">{{ topic()?.titleVi }}</h2>
-            <p class="sheet-summary">{{ topic()?.summary }}</p>
+        <article class="detail-card">
+          <!-- TOP META HEADER -->
+          <div class="detail-top-nav">
+            <a routerLink="/grammar" class="btn btn-secondary btn-sm back-btn">
+              ‹ Sổ tay Ngữ pháp
+            </a>
+            <div class="top-meta-badges">
+              <span class="tag-pill">{{ topic()?.level }}</span>
+              <span class="tag-pill">TOEIC {{ topic()?.toeicTarget }}</span>
+            </div>
+          </div>
 
-            <div class="sheet-status-row">
-              @if (topic()?.isStudied) {
-                <span class="studied-pill">✓ Đã đánh dấu học</span>
-              } @else {
-                <span class="unstudied-pill">Chưa đánh dấu học</span>
-              }
-              <div class="stars-indicator" title="Thành tích bài kiểm tra">
-                <span>Kỷ lục: </span>
+          <div class="topic-meta-header">
+            <div class="order-num">Chuyên đề #{{ (topic()?.orderIndex || 0) < 10 ? '0' + topic()?.orderIndex : topic()?.orderIndex }}</div>
+            <h1 class="topic-title-en">{{ topic()?.titleEn }}</h1>
+            <h2 class="topic-title-vi">{{ topic()?.titleVi }}</h2>
+            <p class="topic-summary">{{ topic()?.summary }}</p>
+
+            <div class="status-stars-bar">
+              <span class="status-pill" [class.studied]="topic()?.isStudied">
+                {{ topic()?.isStudied ? '✓ Đã đánh dấu học' : 'Chưa đánh dấu học' }}
+              </span>
+              <div class="record-stars" title="Kỷ lục sao làm bài kiểm tra">
+                <span class="record-label">Kỷ lục: </span>
                 <span class="star" [class.filled]="(topic()?.bestStars || 0) >= 1">★</span>
                 <span class="star" [class.filled]="(topic()?.bestStars || 0) >= 2">★</span>
                 <span class="star" [class.filled]="(topic()?.bestStars || 0) >= 3">★</span>
               </div>
             </div>
-          </header>
+          </div>
 
-          <!-- KHỐI 1: CÔNG THỨC CỐT LÕI -->
-          <section class="notebook-section rules-section">
-            <div class="section-title-row">
-              <span class="section-icon">📐</span>
-              <h3 class="section-heading">Công thức cốt lõi & Quy tắc</h3>
-            </div>
-            <div class="rules-list">
-              @for (rule of topic()?.rules; track rule; let idx = $index) {
-                <div class="rule-item-box">
-                  <span class="rule-bullet">{{ idx + 1 }}</span>
-                  <div class="rule-content">{{ rule }}</div>
-                </div>
-              }
-            </div>
-          </section>
-
-          <!-- KHỐI 2: BẪY TOEIC HAY GẶP -->
-          <section class="notebook-section traps-section">
-            <div class="section-title-row">
-              <span class="section-icon">⚠️</span>
-              <h3 class="section-heading trap-heading">Bẫy TOEIC Part 5 thường gặp</h3>
-            </div>
-            <div class="traps-list">
-              @for (trap of topic()?.traps; track trap) {
-                <div class="trap-item-box">
-                  <span class="trap-bullet">✕</span>
-                  <div class="trap-content">{{ trap }}</div>
-                </div>
-              }
-            </div>
-          </section>
-
-          <!-- KHỐI 3: VÍ DỤ MINH HỌA SONG NGỮ -->
-          <section class="notebook-section examples-section">
-            <div class="section-title-row">
-              <span class="section-icon">💡</span>
-              <h3 class="section-heading">Ví dụ minh họa song ngữ</h3>
-            </div>
-            <div class="examples-grid">
-              @for (ex of topic()?.examples; track ex.en) {
-                <div class="example-card">
-                  <div class="ex-en-row">
-                    <button class="speaker-pill" (click)="state.speak(ex.en)" title="Nghe phát âm">🔊</button>
-                    <p class="ex-en">"{{ ex.en }}"</p>
-                  </div>
-                  <p class="ex-vi">{{ ex.vi }}</p>
-                </div>
-              }
-            </div>
-          </section>
-
-          <!-- THANH HÀNH ĐỘNG DƯỚI CÙNG -->
-          <footer class="notebook-action-footer">
+          <!-- MOBILE CONTENT TABS (<= 767px only) -->
+          <nav class="detail-tabs" aria-label="Chuyển tab nội dung">
             <button
               type="button"
-              class="btn btn-outline mark-studied-btn"
+              class="filter-chip"
+              [class.active]="detailTab() === 'theory'"
+              (click)="detailTab.set('theory')">
+              📐 Công thức & Bẫy
+            </button>
+            <button
+              type="button"
+              class="filter-chip"
+              [class.active]="detailTab() === 'examples'"
+              (click)="detailTab.set('examples')">
+              💡 Ví dụ song ngữ
+            </button>
+          </nav>
+
+          <!-- KHỐI 1 & 2: CÔNG THỨC VÀ BẪY TOEIC -->
+          <div class="tab-pane theory-pane" [class.tab-hidden]="detailTab() !== 'theory'">
+            <!-- CÔNG THỨC CỐT LÕI -->
+            <section class="content-section">
+              <h3 class="section-title">📐 Công thức cốt lõi & Quy tắc</h3>
+              <div class="rules-list">
+                @for (rule of topic()?.rules; track rule; let idx = $index) {
+                  <div class="rule-item">
+                    <span class="rule-badge">{{ idx + 1 }}</span>
+                    <div class="rule-text">{{ rule }}</div>
+                  </div>
+                }
+              </div>
+            </section>
+
+            <!-- BẪY TOEIC PART 5 -->
+            <section class="content-section">
+              <h3 class="section-title trap-title">⚠️ Bẫy TOEIC Part 5 thường gặp</h3>
+              <div class="traps-list">
+                @for (trap of topic()?.traps; track trap) {
+                  <div class="trap-item">
+                    <span class="trap-icon">✕</span>
+                    <div class="trap-text">{{ trap }}</div>
+                  </div>
+                }
+              </div>
+            </section>
+          </div>
+
+          <!-- KHỐI 3: VÍ DỤ MINH HỌA SONG NGỮ -->
+          <div class="tab-pane examples-pane" [class.tab-hidden]="detailTab() !== 'examples'">
+            <section class="content-section">
+              <h3 class="section-title">💡 Ví dụ minh họa song ngữ</h3>
+              <div class="examples-list">
+                @for (ex of topic()?.examples; track ex.en) {
+                  <div class="example-item">
+                    <div class="example-body">
+                      <div class="example-en">"{{ ex.en }}"</div>
+                      <div class="example-vi">{{ ex.vi }}</div>
+                    </div>
+                    <button
+                      type="button"
+                      class="speak-btn"
+                      (click)="state.speak(ex.en)"
+                      title="Bấm để nghe phát âm tiếng Anh">
+                      🔊
+                    </button>
+                  </div>
+                }
+              </div>
+            </section>
+          </div>
+
+          <!-- STICKY ACTION BAR DƯỚI CÙNG -->
+          <footer class="detail-action-bar">
+            <button
+              type="button"
+              class="btn btn-secondary action-btn-study"
               [disabled]="topic()?.isStudied"
               (click)="markAsStudied()">
-              @if (topic()?.isStudied) {
-                ✓ Đã hoàn tất lý thuyết (0 XP)
-              } @else {
-                Đánh dấu Đã học (0 XP)
-              }
+              {{ topic()?.isStudied ? '✓ Đã hoàn tất lý thuyết' : 'Đánh dấu Đã học (0 XP)' }}
             </button>
 
-            <a [routerLink]="['/grammar', topic()?.code, 'quiz']" class="btn btn-primary start-quiz-btn">
+            <a
+              [routerLink]="['/grammar', topic()?.code, 'quiz']"
+              class="btn btn-primary action-btn-quiz">
               Làm bài kiểm tra ({{ topic()?.questions?.length }} câu) →
             </a>
           </footer>
-        </main>
+        </article>
       }
     </div>
   `,
   styles: [`
-    .grammar-detail-page {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 10px 16px 48px;
+    :host {
+      display: block;
+      width: 100%;
     }
 
-    .detail-nav-row {
+    .grammar-detail-page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 14px 16px 56px;
+    }
+
+    .detail-card {
+      background: var(--bg-card, #FFFDF9);
+      border: 1px solid var(--border, #D9C8B5);
+      border-radius: var(--radius-lg, 16px);
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(38, 56, 71, 0.03);
+    }
+
+    .detail-top-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
       margin-bottom: 16px;
+      flex-wrap: wrap;
     }
 
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      color: var(--navy);
+    .back-btn {
       text-decoration: none;
-      font-weight: 700;
-      font-size: 14.5px;
+      font-weight: 600;
     }
 
-    .chevron {
-      font-size: 24px;
-      line-height: 1;
-    }
-
-    .header-level-badges {
+    .top-meta-badges {
       display: flex;
       gap: 6px;
     }
 
-    .level-pill {
-      font-size: 11.5px;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: #EAE2D2;
-      color: var(--navy);
-    }
-    .level-pill[data-level="Pre-A1"] { background: #E8EFE8; color: #3E633E; }
-    .level-pill[data-level="A2"] { background: #E4EFF3; color: #2B576C; }
-    .level-pill[data-level="B1-B2"] { background: #F6EDE2; color: #8C571D; }
-    .level-pill[data-level="B2-C1"] { background: #F5E6E6; color: #8A373E; }
-
-    .toeic-pill {
-      font-size: 11.5px;
+    .tag-pill {
+      font-size: 11px;
       font-weight: 600;
       padding: 3px 9px;
       border-radius: 999px;
-      background: #FAF6EF;
-      color: var(--ink-muted);
-      border: 1px solid #DDD3C3;
+      background: var(--bg-paper, #F8F4EB);
+      border: 1px solid var(--border, #D9C8B5);
+      color: var(--ink-muted, #6D665C);
     }
 
-    /* NOTEBOOK SHEET */
-    .notebook-sheet {
-      background: #FAF6EF;
-      border: 1.5px solid #DDD3C3;
-      border-radius: 20px;
-      padding: 32px 28px;
-      box-shadow: 0 6px 20px rgba(38, 56, 71, 0.04);
-      position: relative;
+    .topic-meta-header {
+      border-bottom: 1px dashed var(--border, #D9C8B5);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
     }
 
-    .sheet-header {
-      margin-bottom: 24px;
-      padding-bottom: 20px;
-      border-bottom: 1.5px dashed #DDD3C3;
-    }
-
-    .sheet-order-tag {
-      font-family: monospace;
-      font-weight: 800;
-      font-size: 12px;
-      color: #78815D;
-      text-transform: uppercase;
+    .order-num {
+      font-size: 11.5px;
+      font-weight: 700;
       letter-spacing: 0.8px;
+      color: var(--ink-muted, #6D665C);
+      text-transform: uppercase;
       margin-bottom: 4px;
     }
 
-    .sheet-title-en {
-      font-family: var(--font-serif);
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--navy);
-      margin: 0 0 4px;
-      letter-spacing: -0.5px;
+    .topic-title-en {
+      font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy, #263847);
+      line-height: 1.25;
+      margin: 0 0 2px;
     }
 
-    .sheet-title-vi {
-      font-size: 17px;
+    .topic-title-vi {
+      font-size: 15px;
       font-weight: 600;
-      color: #78815D;
-      margin: 0 0 10px;
+      color: var(--olive, #78815D);
+      margin: 0 0 8px;
     }
 
-    .sheet-summary {
-      font-size: 14.5px;
-      color: var(--ink-muted);
+    .topic-summary {
+      font-size: 13.5px;
+      color: var(--ink-muted, #6D665C);
       line-height: 1.5;
-      margin: 0 0 16px;
+      margin: 0 0 14px;
     }
 
-    .sheet-status-row {
+    .status-stars-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .studied-pill {
-      font-size: 12px;
-      font-weight: 700;
-      color: #385E38;
-      background: #E4EFE4;
+    .status-pill {
+      font-size: 11.5px;
+      font-weight: 600;
       padding: 3px 10px;
       border-radius: 999px;
-      border: 1px solid #C4D7BE;
+      background: var(--bg-paper, #F8F4EB);
+      border: 1px solid var(--border, #D9C8B5);
+      color: var(--ink-muted, #6D665C);
     }
 
-    .unstudied-pill {
-      font-size: 12px;
-      color: var(--ink-muted);
-      background: #F0ECE4;
-      padding: 3px 10px;
-      border-radius: 999px;
+    .status-pill.studied {
+      background: var(--olive-tint, #E9ECE1);
+      border-color: #C3CAAE;
+      color: #3B4A2B;
     }
 
-    .stars-indicator {
+    .record-stars {
       display: flex;
       align-items: center;
       gap: 3px;
       font-size: 13px;
-      color: var(--ink-muted);
+      color: var(--ink-muted, #6D665C);
     }
 
     .star {
-      font-size: 16px;
-      color: #DDD3C3;
+      color: #D8CFC0;
+      font-size: 14px;
     }
 
     .star.filled {
       color: #E2A03F;
     }
 
-    /* SECTIONS */
-    .notebook-section {
-      margin-bottom: 24px;
+    /* MOBILE TABS (Hidden on desktop) */
+    .detail-tabs {
+      display: none;
+      gap: 8px;
+      margin: 14px 0 16px;
+      border-bottom: 1px solid var(--border, #D9C8B5);
+      padding-bottom: 10px;
     }
 
-    .section-title-row {
+    .filter-chip {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--bg-card, #FFFDF9);
+      border: 1px solid var(--border, #D9C8B5);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink-muted, #6D665C);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filter-chip.active {
+      background: var(--navy, #263847);
+      border-color: var(--navy, #263847);
+      color: #FFFDF9;
+    }
+
+    /* SECTIONS */
+    .content-section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--navy, #263847);
+      margin: 0 0 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
+      gap: 6px;
     }
 
-    .section-icon {
-      font-size: 18px;
+    .section-title.trap-title {
+      color: var(--rose, #A65E65);
     }
 
-    .section-heading {
-      font-family: var(--font-serif);
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--navy);
-      margin: 0;
-    }
-
-    .trap-heading {
-      color: #8C3E44;
-    }
-
-    /* KHỐI CÔNG THỨC */
+    /* RULES */
     .rules-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .rule-item-box {
+    .rule-item {
       display: flex;
-      gap: 12px;
       align-items: flex-start;
-      background: #F4EFE6;
-      border: 1px solid #E2D7C7;
-      border-radius: 12px;
-      padding: 12px 14px;
+      gap: 10px;
+      background: var(--bg-paper, #F8F4EB);
+      border: 1px solid var(--border, #D9C8B5);
+      border-radius: 10px;
+      padding: 11px 13px;
     }
 
-    .rule-bullet {
-      width: 22px;
-      height: 22px;
+    .rule-badge {
+      width: 24px;
+      height: 24px;
       border-radius: 6px;
-      background: #78815D;
-      color: #FFF;
+      background: var(--olive, #78815D);
+      color: #FFFDF9;
+      font-size: 11.5px;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      font-weight: 800;
       flex-shrink: 0;
       margin-top: 1px;
     }
 
-    .rule-content {
-      font-size: 14px;
-      color: var(--navy);
-      line-height: 1.45;
-      font-family: var(--font-sans);
+    .rule-text {
+      font-size: 13.5px;
+      color: var(--ink, #2C2A25);
+      line-height: 1.5;
     }
 
-    /* KHỐI BẪY */
+    /* TRAPS */
     .traps-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .trap-item-box {
+    .trap-item {
       display: flex;
-      gap: 12px;
       align-items: flex-start;
-      background: #FBECEB;
-      border: 1px solid #E6C5C5;
-      border-radius: 12px;
-      padding: 12px 14px;
-    }
-
-    .trap-bullet {
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
-      background: #A65E65;
-      color: #FFF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 800;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .trap-content {
-      font-size: 14px;
-      color: #5C272B;
+      gap: 10px;
+      background: var(--rose-soft, #FBE8E6);
+      border: 1px solid #E5B9B5;
+      border-left: 3.5px solid var(--rose, #A65E65);
+      border-radius: 10px;
+      padding: 11px 13px;
+      font-size: 13px;
+      color: #5C282D;
       line-height: 1.45;
     }
 
-    /* KHỐI VÍ DỤ */
-    .examples-grid {
+    .trap-icon {
+      font-weight: 700;
+      color: var(--rose, #A65E65);
+      margin-top: 1px;
+    }
+
+    /* EXAMPLES */
+    .examples-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
-    .example-card {
-      background: #F7F3EB;
-      border: 1px solid #DDD3C3;
-      border-radius: 12px;
-      padding: 12px 16px;
-    }
-
-    .ex-en-row {
+    .example-item {
+      background: #FFFDF9;
+      border: 1px solid var(--border, #D9C8B5);
+      border-radius: 10px;
+      padding: 12px 14px;
       display: flex;
       align-items: flex-start;
-      gap: 8px;
-      margin-bottom: 4px;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .speaker-pill {
-      background: #EAE2D2;
-      border: 1px solid #D9C8B5;
-      border-radius: 999px;
-      font-size: 12px;
-      padding: 2px 6px;
-      cursor: pointer;
-      flex-shrink: 0;
+    .example-body {
+      flex: 1;
     }
 
-    .speaker-pill:hover {
-      background: #DDD3C3;
-    }
-
-    .ex-en {
-      font-size: 14.5px;
+    .example-en {
+      font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+      font-size: 15.5px;
       font-weight: 600;
-      color: var(--navy);
-      margin: 0;
+      color: var(--navy, #263847);
+      line-height: 1.35;
+    }
+
+    .example-vi {
+      font-size: 12.5px;
+      color: var(--ink-muted, #6D665C);
+      margin-top: 4px;
       line-height: 1.4;
     }
 
-    .ex-vi {
-      font-size: 13.5px;
-      color: #5B6554;
-      margin: 0;
-      padding-left: 32px;
-      font-style: italic;
+    .speak-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--bg-paper, #F8F4EB);
+      border: 1px solid var(--border-strong, #C2AD95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.15s ease;
     }
 
-    /* FOOTER HÀNH ĐỘNG */
-    .notebook-action-footer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .speak-btn:hover {
+      background: #EFE8D8;
+    }
+
+    /* DETAIL ACTION BAR */
+    .detail-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1.5px dashed #DDD3C3;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border, #D9C8B5);
     }
 
-    .mark-studied-btn, .start-quiz-btn {
-      padding: 13px 14px;
-      font-size: 14.5px;
-      font-weight: 700;
-      border-radius: 12px;
-      text-align: center;
+    .action-btn-study, .action-btn-quiz {
+      font-weight: 600;
       text-decoration: none;
+      white-space: nowrap;
     }
 
-    .not-found-card {
+    .empty-detail-card {
       text-align: center;
-      padding: 40px;
-      border-radius: 16px;
+      padding: 48px 20px;
+      background: var(--bg-card, #FFFDF9);
+      border: 1.5px dashed var(--border, #D9C8B5);
+      border-radius: var(--radius-lg, 16px);
+      color: var(--ink-muted, #6D665C);
     }
 
-    @media (max-width: 600px) {
-      .notebook-sheet {
-        padding: 20px 16px;
-        border-radius: 16px;
+    .empty-detail-card .icon {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    /* RESPONSIVE DESIGN (<= 767px) */
+    @media (max-width: 767px) {
+      .grammar-detail-page {
+        padding: 10px 12px 72px;
       }
-      .sheet-title-en {
+
+      .detail-card {
+        padding: 16px;
+      }
+
+      .topic-title-en {
         font-size: 22px;
       }
-      .notebook-action-footer {
-        grid-template-columns: 1fr;
+
+      .detail-tabs {
+        display: flex;
+      }
+
+      .tab-pane.tab-hidden {
+        display: none !important;
+      }
+
+      .detail-action-bar {
+        position: sticky;
+        bottom: 10px;
+        background: rgba(255, 253, 249, 0.96);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid var(--border-strong, #C2AD95);
+        border-radius: 12px;
+        padding: 10px 12px;
+        box-shadow: 0 6px 20px rgba(38, 56, 71, 0.12);
+        z-index: 20;
+        margin-top: 16px;
+      }
+
+      .action-btn-study, .action-btn-quiz {
+        font-size: 13px;
+        padding: 8px 10px;
       }
     }
   `]
 })
 export class GrammarDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  grammarService = inject(GrammarService);
+  private grammarService = inject(GrammarService);
   state = inject(GameStateService);
 
   topic = signal<GrammarTopic | null>(null);
+  detailTab = signal<'theory' | 'examples'>('theory');
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const code = params.get('code') || '';
-      const found = this.grammarService.getTopicByCode(code);
-      this.topic.set(found || null);
+      const code = params.get('code');
+      if (code) {
+        const found = this.grammarService.getTopicByCode(code);
+        if (found) {
+          this.topic.set(found);
+        }
+      }
     });
   }
 
@@ -491,6 +536,8 @@ export class GrammarDetailComponent implements OnInit {
     if (!t) return;
     this.grammarService.markAsStudied(t.code);
     const updated = this.grammarService.getTopicByCode(t.code);
-    this.topic.set(updated || null);
+    if (updated) {
+      this.topic.set({ ...updated, isStudied: true });
+    }
   }
 }
