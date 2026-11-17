@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { TopbarComponent } from './shared/components/topbar/topbar.component';
+import { FooterNavComponent } from './shared/components/footer-nav/footer-nav.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { CartModalComponent } from './shared/components/cart-modal/cart-modal.component';
 import { GameStateService } from './core/services/game-state.service';
@@ -15,6 +16,7 @@ import { GameStateService } from './core/services/game-state.service';
     RouterOutlet,
     SidebarComponent,
     TopbarComponent,
+    FooterNavComponent,
     ToastComponent,
     CartModalComponent
   ],
@@ -26,6 +28,7 @@ import { GameStateService } from './core/services/game-state.service';
         <main class="content-body">
           <router-outlet></router-outlet>
         </main>
+        <app-footer-nav></app-footer-nav>
       </div>
 
       <!-- Toast Container -->
@@ -66,7 +69,7 @@ import { GameStateService } from './core/services/game-state.service';
       }
       .content-body {
         flex: 1;
-        padding: 11px 4px 48px;
+        padding: 11px 4px 76px;
         max-width: 1200px;
         width: 100%;
         margin: 0 auto;

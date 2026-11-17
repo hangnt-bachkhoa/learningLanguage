@@ -37,10 +37,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       <!-- Thẻ từ vựng Naturalist chính (Screen 3 Mockup) -->
       <div class="vintage-card flashcard-container">
         <!-- Hàng đầu: Tiêu đề từ vựng + Icon loa + Tranh hoa vẽ Botanical bên phải -->
-        <div class="word-hero-row">
-          <div class="word-hero-left">
-            <div class="word-status-tag-row">
-              <h1 class="word-text" [class.ja-word-text]="isJa()">
+        <div class="word-hero-row" [class.non-latin-hero]="isNonLatin()">
+          <div class="word-hero-left" [class.non-latin-content]="isNonLatin()">
+            <div class="word-status-tag-row" [class.non-latin-centered]="isNonLatin()">
+              <h1 class="word-text" [class.ja-word-text]="isJa()" [class.non-latin-word]="isNonLatin()">
                 @if (isJa() && currentWord.readingSub && jaService.showFurigana()) {
                   <ruby class="ja-ruby">
                     {{ currentWord.word }}
@@ -57,8 +57,8 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                 </span>
               }
             </div>
-            <div class="ipa-audio-row">
-              <span class="ipa-string">
+            <div class="ipa-audio-row" [class.non-latin-centered]="isNonLatin()">
+              <span class="ipa-string" [class.non-latin-reading]="isNonLatin()">
                 @if (isJa()) {
                   @if (jaService.showRomaji()) {
                     <span class="ja-romaji-pill">[{{ currentWord.romaji }}]</span>
@@ -70,14 +70,14 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   {{ currentWord.ipa }}
                 }
               </span>
-              <button class="speaker-pill" (click)="speakWord()" title="Nghe phát âm">
-                <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
+              <button class="speaker-pill" [class.speaker-pill-lg]="isNonLatin()" (click)="speakWord()" title="Nghe phát âm">
+                <app-pixel-icon name="icon_speaker" [size]="isNonLatin() ? 18 : 14"></app-pixel-icon>
               </button>
             </div>
 
             <!-- Toggles 3 tầng cho Tiếng Nhật N5 -->
             @if (isJa()) {
-              <div class="ja-toggles-row" style="display:flex; gap:6px; margin-top:8px;">
+              <div class="ja-toggles-row" [class.non-latin-centered]="isNonLatin()">
                 <button
                   type="button"
                   class="ja-toggle-chip"
@@ -96,11 +96,11 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
             }
 
             <!-- Thẻ loại từ thân thiện cho người mới bắt đầu -->
-            <div class="pos-badge-hero-row" style="margin-top: 8px;">
+            <div class="pos-badge-hero-row" [class.non-latin-centered]="isNonLatin()">
               <app-pos-tag [type]="currentWord.type" mode="full" [showQuestionHint]="true"></app-pos-tag>
             </div>
           </div>
-          <div class="botanical-art-box" [innerHTML]="assets.botanicalFlower | safeHtml"></div>
+          <div class="botanical-art-box" [class.botanical-corner]="isNonLatin()" [innerHTML]="assets.botanicalFlower | safeHtml"></div>
         </div>
 
         <!-- Bảng thông tin chi tiết: Loại từ, Nghĩa, Ví dụ, Ghi chú -->
@@ -302,6 +302,98 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       margin-bottom: 20px;
       padding-bottom: 14px;
       border-bottom: 1px solid var(--border);
+    }
+    /* ================= NON-LATIN HERO STYLES (1.5x SIZE & CENTERED) ================= */
+    .word-hero-row.non-latin-hero {
+      position: relative;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px 10px 22px;
+      margin-bottom: 22px;
+    }
+    .word-hero-left.non-latin-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .word-status-tag-row.non-latin-centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .word-text.non-latin-word {
+      font-size: 58px; /* 1.5x of 38px */
+      line-height: 1.15;
+      letter-spacing: 1px;
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+      margin-bottom: 4px;
+      text-align: center;
+      color: var(--navy);
+    }
+    .non-latin-word .ja-ruby {
+      ruby-align: center;
+    }
+    .non-latin-word .ja-rt {
+      font-size: 21px; /* 1.5x of 14px */
+      font-weight: 700;
+      color: #8C6B4F;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .ipa-audio-row.non-latin-centered {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+    .ipa-string.non-latin-reading {
+      font-size: 22px; /* 1.5x of 15px */
+    }
+    .ipa-string.non-latin-reading .ja-romaji-pill {
+      font-size: 22.5px; /* 1.5x of 15px */
+      font-weight: 700;
+      color: #8C6B4F;
+      letter-spacing: 0.5px;
+    }
+    .ipa-string.non-latin-reading .ja-sub-kana {
+      font-size: 18px; /* 1.5x of 12px */
+      color: var(--ink-muted);
+    }
+    .speaker-pill.speaker-pill-lg {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+    }
+    .ja-toggles-row.non-latin-centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      margin-bottom: 10px;
+    }
+    .pos-badge-hero-row.non-latin-centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .botanical-art-box.botanical-corner {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      opacity: 0.75;
+      pointer-events: none;
     }
     .word-text {
       font-family: var(--font-serif);
@@ -728,6 +820,11 @@ export class VocabComponent implements OnInit {
 
   currentIndex = signal<number>(0);
   isJa = computed(() => this.state.activeLang() === 'ja');
+  isNonLatin = computed(() => {
+    if (this.isJa()) return true;
+    const w = this.currentWord?.word || '';
+    return /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uac00-\ud7af]/.test(w);
+  });
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
