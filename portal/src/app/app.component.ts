@@ -69,7 +69,7 @@ import { GameStateService } from './core/services/game-state.service';
       }
       .content-body {
         flex: 1;
-        padding: 11px 4px 76px;
+        padding: 11px 4px calc(86px + env(safe-area-inset-bottom, 16px));
         max-width: 1200px;
         width: 100%;
         margin: 0 auto;

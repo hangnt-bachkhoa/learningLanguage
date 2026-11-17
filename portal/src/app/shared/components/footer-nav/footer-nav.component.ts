@@ -140,7 +140,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     .mobile-footer-dock.style-navy {
       background: #1C2B36;
       border-top: 1.5px solid rgba(232, 215, 168, 0.28);
-      padding: 5px 4px 7px;
+      padding: 7px 6px calc(14px + env(safe-area-inset-bottom, 16px));
       box-shadow: 0 -4px 18px rgba(20, 32, 44, 0.35);
     }
 
@@ -220,7 +220,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       background: var(--bg-card);
       border-top: 2px solid var(--border-strong);
       border-radius: 20px 20px 0 0;
-      padding: 16px 18px 84px;
+      padding: 16px 18px calc(92px + env(safe-area-inset-bottom, 16px));
       box-shadow: 0 -10px 32px rgba(0,0,0,0.22);
       animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
