@@ -5,11 +5,12 @@ import { GameStateService } from '../../core/services/game-state.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { DailyQuestsWidgetComponent } from './daily-quests-widget.component';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe, DailyQuestsWidgetComponent],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, DailyQuestsWidgetComponent, PixelIconComponent],
   template: `
     <div class="dashboard-screen">
       <!-- Header với tiêu đề sách và cối xay gió (Screen 1 Mockup) -->
@@ -64,6 +65,20 @@ import { DailyQuestsWidgetComponent } from './daily-quests-widget.component';
 
       <!-- Khung Nhiệm Vụ Hôm Nay (Daily Quests & Streak Engine) -->
       <app-daily-quests-widget></app-daily-quests-widget>
+
+      <!-- Cẩm Nang Hướng Dẫn Sử Dụng -->
+      <a routerLink="/guide" class="guide-banner" title="Mở Cẩm nang Hướng dẫn">
+        <div class="guide-banner-left">
+          <div class="guide-banner-icon">
+            <app-pixel-icon name="icon_books_stack" [size]="20"></app-pixel-icon>
+          </div>
+          <div class="guide-banner-text">
+            <div class="guide-banner-title">Cẩm nang Nông dân English Farm</div>
+            <div class="guide-banner-sub">Xem vòng lặp Farm, Lịch Ebbinghaus và cơ chế nhiệm vụ</div>
+          </div>
+        </div>
+        <span class="guide-banner-arrow">Khám phá ›</span>
+      </a>
     </div>
   `,
   styles: [`
@@ -322,6 +337,60 @@ import { DailyQuestsWidgetComponent } from './daily-quests-widget.component';
       .tasks-card {
         padding: 14px 14px;
       }
+    }
+
+    /* GUIDE BANNER AT BOTTOM */
+    .guide-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 12px 16px;
+      background: #FFFDF9;
+      border: 1.5px solid #D9C8B5;
+      border-radius: 14px;
+      text-decoration: none !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      transition: all 0.15s ease;
+
+      &:hover {
+        background: #F4EFE6;
+        border-color: #C2AD95;
+        transform: translateY(-1px);
+      }
+    }
+    .guide-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .guide-banner-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #EFE9DD;
+      border: 1px solid #D9C8B5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .guide-banner-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .guide-banner-sub {
+      font-size: 11.5px;
+      color: var(--ink-muted);
+    }
+    .guide-banner-arrow {
+      font-size: 12px;
+      font-weight: 700;
+      color: #78815D;
+      white-space: nowrap;
     }
   `]
 })

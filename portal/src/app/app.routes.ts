@@ -55,6 +55,14 @@ export const routes: Routes = [
     loadComponent: () => import('./features/inventory/inventory.component').then(m => m.InventoryComponent)
   },
   {
+    path: 'guide',
+    loadComponent: () => import('./features/guide/guide.component').then(m => m.GuideComponent)
+  },
+  {
+    path: 'help',
+    redirectTo: 'guide'
+  },
+  {
     path: '**',
     redirectTo: ''
   }

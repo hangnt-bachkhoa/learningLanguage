@@ -312,7 +312,8 @@ export class SidebarComponent {
     { path: '/shop', label: 'Cửa hàng', icon: 'assets/icons/icon_shop.svg', exact: false },
     { path: '/inventory', label: 'Kho đồ', icon: 'assets/icons/icon_inventory.svg', exact: false },
     { path: '/review', label: 'Tiến độ', icon: 'assets/icons/icon_progress.svg', exact: false },
-    { path: '/quiz', label: 'Luyện tập', icon: 'assets/icons/icon_practice.svg', exact: false }
+    { path: '/quiz', label: 'Luyện tập', icon: 'assets/icons/icon_practice.svg', exact: false },
+    { path: '/guide', label: 'Hướng dẫn', icon: 'assets/icons/icon_guide.svg', exact: false }
   ];
 
   hasReadyPlots(): boolean {

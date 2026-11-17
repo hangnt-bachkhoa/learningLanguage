@@ -1,12 +1,13 @@
 import { Component, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { GameStateService } from '../../../core/services/game-state.service';
 import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [CommonModule, PixelIconComponent],
+  imports: [CommonModule, RouterLink, PixelIconComponent],
   template: `
     <header class="topbar">
       <div class="topbar-left">
@@ -23,6 +24,10 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         </h1>
       </div>
       <div class="topbar-right">
+        <a routerLink="/guide" class="guide-btn" title="Hướng dẫn sử dụng English Farm">
+          <app-pixel-icon name="icon_books_stack" [size]="15"></app-pixel-icon>
+          <span class="guide-text hide-mobile">Hướng dẫn</span>
+        </a>
         <div class="stat-pill level-pill" title="Cấp độ hiện tại">Lv.{{ state.level() }}</div>
         <div class="stat-pill" title="Tiến độ thăng cấp: {{ state.currentXp() }}/{{ state.xpRequired() }} XP (Tối đa 1000 XP)">
           <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
@@ -121,6 +126,24 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       align-items: center;
       gap: 8px;
     }
+    .guide-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      background: #F4EFE6;
+      border: 1px solid #D9C8B5;
+      font-weight: 600;
+      font-size: 12.5px;
+      color: #554A3E;
+      text-decoration: none !important;
+      transition: background 0.15s, color 0.15s;
+    }
+    .guide-btn:hover {
+      background: #EAE2D2;
+      color: var(--navy);
+    }
     .cart-btn {
       display: inline-flex;
       align-items: center;
@@ -164,6 +187,10 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         padding: 3.5px 7px;
         font-size: 11px;
       }
+      .guide-btn {
+        padding: 4px 7px;
+        font-size: 11.5px;
+      }
       .cart-btn {
         padding: 4px 8px;
         font-size: 13px;
@@ -197,6 +224,10 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       .stat-pill {
         padding: 3px 5px;
         font-size: 10px;
+      }
+      .guide-btn {
+        padding: 3px 6px;
+        font-size: 11px;
       }
       .cart-btn {
         padding: 3px 6px;
