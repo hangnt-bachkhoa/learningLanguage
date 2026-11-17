@@ -124,3 +124,39 @@ export interface ToastMessage {
   id: number;
   text: string;
 }
+
+export type ReviewStage = 0 | 1 | 2 | 3 | 4; // 0: First, 1: D1, 2: D3, 3: D7, 4: D14 (Mastered)
+
+export interface UserVocabReview {
+  vocabId: number;
+  word?: string;
+  topicId: string;
+  learnedDate: string;      // YYYY-MM-DD (UTC+7) — groups words into daily cohort rows
+  stage: ReviewStage;       // starts at 0 when marked "Đã học"
+  nextReviewDate: string;   // YYYY-MM-DD (UTC+7)
+  lastReviewedDate: string; // YYYY-MM-DD (UTC+7)
+  d1Done: boolean;
+  d3Done: boolean;
+  d7Done: boolean;
+  d14Done: boolean;
+}
+
+export interface DailyCohortRow {
+  index: number;
+  learnedDate: string;
+  count: number;
+  words: UserVocabReview[];
+  firstDone: boolean;
+  day1Status: 'done' | 'due' | 'upcoming';
+  day1DueCount?: number;
+  day1NextDate?: string;
+  day3Status: 'done' | 'due' | 'upcoming';
+  day3DueCount?: number;
+  day3NextDate?: string;
+  day7Status: 'done' | 'due' | 'upcoming';
+  day7DueCount?: number;
+  day7NextDate?: string;
+  day14Status: 'done' | 'due' | 'upcoming';
+  day14DueCount?: number;
+  day14NextDate?: string;
+}

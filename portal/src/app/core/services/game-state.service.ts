@@ -1,10 +1,11 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
-import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessage, ShopItem } from '../models/game.models';
+import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessage, ShopItem, UserVocabReview, ReviewStage, DailyCohortRow } from '../models/game.models';
 import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryItemDto, QuizSubmitResultDto } from './farm-api.service';
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
 import { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
 import { computePlotCountdown, PlotCountdownResult } from '../utils/growth-countdown.util';
+import { getTodayVnDate, addDays, processReviewQuizCompletion, buildDailyCohorts } from '../utils/ebbinghaus.util';
 import {
   UserWordStat,
   UserLessonProgress,
@@ -89,6 +90,9 @@ export class GameStateService {
   private readonly WORD_STATS_KEY = 'english_farm_word_stats';
   private readonly LESSON_PROGRESS_KEY = 'english_farm_lesson_progress';
   private readonly REWARD_STATE_KEY = 'english_farm_reward_state';
+  private readonly REVIEW_STORAGE_KEY = 'english_farm_vocab_reviews_v1';
+  private readonly REVIEW_DAILY_REWARDS_KEY = 'english_farm_review_daily_rewards_v1';
+  private readonly STUDY_STATS_KEY = 'english_farm_study_stats_v1';
   private api = inject(FarmApiService);
 
   // Trạng thái kết nối Backend
@@ -275,6 +279,61 @@ export class GameStateService {
     lastBonusRollDate: ''
   });
 
+  // Spaced Repetition (Ebbinghaus) & Daily Review Rewards
+  userVocabReviews = signal<Record<number, UserVocabReview>>({});
+  dailyReviewRewardsClaimed = signal<number>(0);
+  lastReviewRewardDate = signal<string>('');
+
+  // Study Streak & Automated Daily Tasks
+  studyStreak = signal<number>(1);
+  lastStudyDate = signal<string>('');
+  dailyTaskState = signal<{ vocabLearned: number; quizDone: number; farmCare: number; date: string }>({
+    vocabLearned: 0,
+    quizDone: 0,
+    farmCare: 0,
+    date: ''
+  });
+
+  todayVn = computed(() => getTodayVnDate());
+
+  dueReviews = computed(() => {
+    const today = this.todayVn();
+    return Object.values(this.userVocabReviews()).filter(r => r.stage < 4 && r.nextReviewDate <= today);
+  });
+
+  dueTodayCount = computed(() => this.dueReviews().length);
+
+  inReviewCount = computed(() => {
+    return Object.values(this.userVocabReviews()).filter(r => r.stage >= 0 && r.stage < 4).length;
+  });
+
+  masteredCount = computed(() => {
+    return Object.values(this.userVocabReviews()).filter(r => r.stage === 4).length;
+  });
+
+  totalLearnedCount = computed(() => {
+    return Object.keys(this.userVocabReviews()).length;
+  });
+
+  dailyCohorts = computed(() => {
+    return buildDailyCohorts(this.userVocabReviews(), this.todayVn());
+  });
+
+  dailyTasks = computed(() => {
+    const today = this.todayVn();
+    const state = this.dailyTaskState();
+    const isToday = state.date === today;
+    const vCount = isToday ? state.vocabLearned : 0;
+    const qCount = isToday ? state.quizDone : 0;
+    const cCount = isToday ? state.farmCare : 0;
+
+    return [
+      { id: 1, title: 'Học 10 từ mới', current: Math.min(10, vCount), target: 10, done: vCount >= 10 },
+      { id: 2, title: 'Luyện tập / Ôn tập', current: Math.min(1, qCount), target: 1, done: qCount >= 1 },
+      { id: 3, title: 'Chăm sóc cây trồng', current: Math.min(3, cCount), target: 3, done: cCount >= 3 }
+    ];
+  });
+
   getUnlockedSeedIds(): string[] {
     return CROP_CATALOG.filter(c => this.isCropUnlocked(c.id)).map(c => c.id);
   }
@@ -343,6 +402,16 @@ export class GameStateService {
         localStorage.setItem(this.WORD_STATS_KEY, JSON.stringify(this.userWordStats()));
         localStorage.setItem(this.LESSON_PROGRESS_KEY, JSON.stringify(this.userLessonProgress()));
         localStorage.setItem(this.REWARD_STATE_KEY, JSON.stringify(this.userRewardState()));
+        localStorage.setItem(this.REVIEW_STORAGE_KEY, JSON.stringify(this.userVocabReviews()));
+        localStorage.setItem(this.REVIEW_DAILY_REWARDS_KEY, JSON.stringify({
+          claimed: this.dailyReviewRewardsClaimed(),
+          date: this.lastReviewRewardDate()
+        }));
+        localStorage.setItem(this.STUDY_STATS_KEY, JSON.stringify({
+          streak: this.studyStreak(),
+          lastStudyDate: this.lastStudyDate(),
+          dailyTasks: this.dailyTaskState()
+        }));
       }
     } catch (e) {
       console.warn('Không thể lưu localStorage:', e);
@@ -518,6 +587,85 @@ export class GameStateService {
             }
           } catch {}
         }
+      }
+
+      // Nạp Spaced Repetition Reviews
+      const rawReviews = localStorage.getItem(this.REVIEW_STORAGE_KEY);
+      if (rawReviews) {
+        try {
+          const parsed = JSON.parse(rawReviews);
+          if (parsed && typeof parsed === 'object') {
+            this.userVocabReviews.set(parsed);
+          }
+        } catch {}
+      }
+
+      // Nạp Review Daily Rewards
+      const rawReviewRewards = localStorage.getItem(this.REVIEW_DAILY_REWARDS_KEY);
+      if (rawReviewRewards) {
+        try {
+          const parsed = JSON.parse(rawReviewRewards);
+          const today = getTodayVnDate();
+          if (parsed && parsed.date === today) {
+            this.dailyReviewRewardsClaimed.set(parsed.claimed || 0);
+            this.lastReviewRewardDate.set(parsed.date);
+          } else {
+            this.dailyReviewRewardsClaimed.set(0);
+            this.lastReviewRewardDate.set(today);
+          }
+        } catch {}
+      } else {
+        this.lastReviewRewardDate.set(getTodayVnDate());
+      }
+
+      // Nạp Study Stats (Streak & Daily Tasks)
+      const rawStudyStats = localStorage.getItem(this.STUDY_STATS_KEY);
+      if (rawStudyStats) {
+        try {
+          const parsed = JSON.parse(rawStudyStats);
+          if (parsed && typeof parsed === 'object') {
+            if (typeof parsed.streak === 'number') this.studyStreak.set(parsed.streak);
+            if (typeof parsed.lastStudyDate === 'string') this.lastStudyDate.set(parsed.lastStudyDate);
+            if (parsed.dailyTasks && typeof parsed.dailyTasks === 'object') {
+              const today = getTodayVnDate();
+              if (parsed.dailyTasks.date === today) {
+                this.dailyTaskState.set(parsed.dailyTasks);
+              } else {
+                this.dailyTaskState.set({ vocabLearned: 0, quizDone: 0, farmCare: 0, date: today });
+              }
+            }
+          }
+        } catch {}
+      }
+
+      // Tự động seed UserVocabReview cho bất kỳ từ nào đã thuộc mà chưa có bản ghi
+      const reviews = this.userVocabReviews();
+      const learned = this.learnedWords();
+      let hasNewSeed = false;
+      const today = getTodayVnDate();
+      const updated = { ...reviews };
+
+      for (const w of learned) {
+        const info = this.findVocab(w);
+        if (info && !updated[info.vocab.id]) {
+          updated[info.vocab.id] = {
+            vocabId: info.vocab.id,
+            word: w,
+            topicId: info.topicId,
+            learnedDate: today,
+            stage: 0,
+            nextReviewDate: addDays(today, 1),
+            lastReviewedDate: today,
+            d1Done: false,
+            d3Done: false,
+            d7Done: false,
+            d14Done: false
+          };
+          hasNewSeed = true;
+        }
+      }
+      if (hasNewSeed) {
+        this.userVocabReviews.set(updated);
       }
     } catch (e) {
       console.warn('Lỗi đọc localStorage:', e);
@@ -1038,14 +1186,177 @@ export class GameStateService {
     });
   }
 
-  markWordLearned(word: string, notify: boolean = false) {
+  findVocab(wordOrId: string | number): { vocab: VocabularyDto; topicId: string } | null {
+    const map = this.vocabulariesByLesson();
+    for (const [topicId, list] of Object.entries(map)) {
+      if (typeof wordOrId === 'number') {
+        const found = list.find(v => v.id === wordOrId);
+        if (found) return { vocab: found, topicId };
+      } else {
+        const lower = wordOrId.trim().toLowerCase();
+        const found = list.find(v => v.word.trim().toLowerCase() === lower);
+        if (found) return { vocab: found, topicId };
+      }
+    }
+    return null;
+  }
+
+  recordDailyTaskActivity(type: 'vocab' | 'quiz' | 'care', amount: number = 1) {
+    const today = getTodayVnDate();
+    this.dailyTaskState.update(prev => {
+      const isToday = prev.date === today;
+      return {
+        date: today,
+        vocabLearned: (isToday ? prev.vocabLearned : 0) + (type === 'vocab' ? amount : 0),
+        quizDone: (isToday ? prev.quizDone : 0) + (type === 'quiz' ? amount : 0),
+        farmCare: (isToday ? prev.farmCare : 0) + (type === 'care' ? amount : 0)
+      };
+    });
+
+    if (type === 'vocab' || type === 'quiz') {
+      this.updateStudyStreak();
+    }
+  }
+
+  updateStudyStreak() {
+    const today = getTodayVnDate();
+    const last = this.lastStudyDate();
+    if (last === today) return;
+
+    if (!last) {
+      this.studyStreak.set(1);
+      this.lastStudyDate.set(today);
+    } else {
+      const yesterday = addDays(today, -1);
+      if (last === yesterday) {
+        this.studyStreak.update(s => s + 1);
+      } else {
+        this.studyStreak.set(1);
+      }
+      this.lastStudyDate.set(today);
+    }
+  }
+
+  markWordLearned(word: string, notify: boolean = false, vocabId?: number, topicId?: string) {
     if (!this.learnedWords().includes(word)) {
       this.learnedWords.update(list => [...list, word]);
       if (notify) {
         this.showToast(`✓ Đã thuộc từ "${word}"`);
       }
     }
+
+    let targetVocabId = vocabId;
+    let targetTopicId = topicId;
+    if (!targetVocabId || !targetTopicId) {
+      const info = this.findVocab(word);
+      if (info) {
+        targetVocabId = info.vocab.id;
+        targetTopicId = info.topicId;
+      }
+    }
+
+    if (targetVocabId) {
+      const currentReviews = this.userVocabReviews();
+      if (!currentReviews[targetVocabId]) {
+        const today = getTodayVnDate();
+        const newReview: UserVocabReview = {
+          vocabId: targetVocabId,
+          word,
+          topicId: targetTopicId || '1',
+          learnedDate: today,
+          stage: 0,
+          nextReviewDate: addDays(today, 1),
+          lastReviewedDate: today,
+          d1Done: false,
+          d3Done: false,
+          d7Done: false,
+          d14Done: false
+        };
+        this.userVocabReviews.update(m => ({ ...m, [targetVocabId!]: newReview }));
+      }
+    }
+
+    this.recordDailyTaskActivity('vocab', 1);
     this.saveToStorage();
+  }
+
+  completeReviewQuizSession(
+    reviewedWords: UserVocabReview[],
+    firstTryResults: Map<number, boolean>
+  ) {
+    const today = getTodayVnDate();
+
+    // Reset thưởng hàng ngày nếu sang ngày mới (UTC+7)
+    if (this.lastReviewRewardDate() !== today) {
+      this.dailyReviewRewardsClaimed.set(0);
+      this.lastReviewRewardDate.set(today);
+    }
+
+    const currentClaimed = this.dailyReviewRewardsClaimed();
+    const result = processReviewQuizCompletion(
+      reviewedWords,
+      firstTryResults,
+      today,
+      currentClaimed
+    );
+
+    // Cập nhật trạng thái chu kỳ Ebbinghaus
+    this.userVocabReviews.update(map => {
+      const next = { ...map };
+      for (const item of result.updatedReviews) {
+        next[item.vocabId] = item;
+      }
+      return next;
+    });
+
+    // Cấp bộ nguyên liệu kích hoạt cây (+1 Nước tưới & +1 Phân bón cơ bản)
+    if (result.waterGained > 0) {
+      this.inventory.update(inv => ({
+        ...inv,
+        care: {
+          ...inv.care,
+          water: inv.care.water + result.waterGained
+        }
+      }));
+    }
+    if (result.baseFertilizerGained > 0) {
+      this.inventory.update(inv => ({
+        ...inv,
+        care: {
+          ...inv.care,
+          fertilizer: inv.care.fertilizer + result.baseFertilizerGained
+        }
+      }));
+    }
+
+    this.dailyReviewRewardsClaimed.set(result.nextDailyReviewRewardsClaimed);
+    this.recordDailyTaskActivity('quiz', 1);
+    this.saveToStorage();
+
+    const firstTryCorrectCount = Array.from(firstTryResults.values()).filter(v => v).length;
+
+    return {
+      waterGained: result.waterGained,
+      baseFertilizerGained: result.baseFertilizerGained,
+      updatedReviews: result.updatedReviews,
+      firstTryCorrectCount,
+      totalQuestions: reviewedWords.length,
+      claimedToday: result.nextDailyReviewRewardsClaimed
+    };
+  }
+
+  getDueWordsForCohortAndStage(learnedDate: string, targetStage: ReviewStage, limit: number = 10): UserVocabReview[] {
+    const today = getTodayVnDate();
+    const words = Object.values(this.userVocabReviews()).filter(r =>
+      r.learnedDate === learnedDate &&
+      r.stage === targetStage - 1 &&
+      r.nextReviewDate <= today
+    );
+    return words.slice(0, limit);
+  }
+
+  getAllDueWordsBatch(limit: number = 10): UserVocabReview[] {
+    return this.dueReviews().slice(0, limit);
   }
 
   /**
@@ -1367,6 +1678,7 @@ export class GameStateService {
       growthProgress: bothReady ? 1 : 0
     } : p));
 
+    this.recordDailyTaskActivity('care', 1);
     this.saveToStorage();
     if (bothReady) {
       this.showToast(`💧 Đã tưới nước! Đủ cả Nước & Phân bón, cây bắt đầu nảy mầm tính giờ!`);
@@ -1427,6 +1739,7 @@ export class GameStateService {
       growthProgress: bothReady ? 1 : 0
     } : p));
 
+    this.recordDailyTaskActivity('care', 1);
     this.saveToStorage();
     if (bothReady) {
       this.showToast(`✨ Đã bón phân cơ bản! Đủ cả Nước & Phân bón, cây bắt đầu nảy mầm tính giờ!`);
@@ -1482,6 +1795,7 @@ export class GameStateService {
       growthProgress: progress
     } : p));
 
+    this.recordDailyTaskActivity('care', 1);
     this.saveToStorage();
     if (isReady) {
       this.showToast(`⚡ Đã dùng Phân bón tăng tốc (-5 phút)! Cây đã chín ngay lập tức.`);

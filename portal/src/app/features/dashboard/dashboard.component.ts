@@ -63,23 +63,13 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         </div>
 
         <div class="task-list">
-          <label class="task-row">
-            <input type="checkbox" [checked]="task1Done" (change)="task1Done = !task1Done" class="vintage-checkbox"/>
-            <span class="task-name">Học 10 từ mới</span>
-            <span class="task-count">0/10</span>
-          </label>
-
-          <label class="task-row">
-            <input type="checkbox" [checked]="task2Done" (change)="task2Done = !task2Done" class="vintage-checkbox"/>
-            <span class="task-name">Làm bài ngữ pháp</span>
-            <span class="task-count">0/1</span>
-          </label>
-
-          <label class="task-row">
-            <input type="checkbox" [checked]="task3Done" (change)="task3Done = !task3Done" class="vintage-checkbox"/>
-            <span class="task-name">Chăm sóc cây</span>
-            <span class="task-count">0/3</span>
-          </label>
+          @for (task of state.dailyTasks(); track task.id) {
+            <div class="task-row" [class.task-row-done]="task.done">
+              <span class="vintage-chk" [class.done]="task.done">{{ task.done ? '✓' : '○' }}</span>
+              <span class="task-name">{{ task.title }}</span>
+              <span class="task-count">{{ task.current }}/{{ task.target }}</span>
+            </div>
+          }
         </div>
       </div>
     </div>
@@ -262,11 +252,27 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
       gap: 12px;
       cursor: pointer;
     }
-    .vintage-checkbox {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--rose);
-      cursor: pointer;
+    .vintage-chk {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1.5px solid #D9C8B5;
+      background: #FAF6EF;
+      color: transparent;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .vintage-chk.done {
+      background: var(--olive, #78815D);
+      border-color: #555E3E;
+      color: #FFF;
+    }
+    .task-row-done .task-name {
+      text-decoration: line-through;
+      color: var(--ink-muted);
     }
     .task-name {
       flex: 1;

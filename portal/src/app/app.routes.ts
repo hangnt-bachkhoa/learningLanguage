@@ -38,6 +38,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/review/review.component').then(m => m.ReviewComponent)
   },
   {
+    path: 'progress',
+    redirectTo: 'review'
+  },
+  {
     path: 'shop',
     loadComponent: () => import('./features/shop/shop.component').then(m => m.ShopComponent)
   },
