@@ -151,9 +151,9 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         <span class="dock-label">Nông trại</span>
       </a>
 
-      <!-- 3. TRANG CHỦ (Vị trí giữa - Center Raised Button) -->
+      <!-- 3. TRANG CHỦ (Vị trí giữa - đồng bộ phẳng với các tab khác) -->
       <a routerLink="/" class="dock-tab center-tab" [class.active]="isHomeActive()" title="Trang chủ">
-        <app-pixel-icon name="icon_home" [size]="20"></app-pixel-icon>
+        <app-pixel-icon name="icon_home" [size]="18"></app-pixel-icon>
         <span class="dock-label">Trang chủ</span>
       </a>
 
@@ -354,27 +354,9 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       color: #FFFDF9;
     }
 
-    /* Center Raised Button (Trang chủ ở vị trí giữa) */
+    /* Center Tab đồng bộ phẳng tuyệt đối với các tab khác */
     .dock-tab.center-tab {
-      transform: translateY(-7px);
-      background: #233442;
-      color: rgba(248, 244, 235, 0.85);
-      border: 1.5px solid rgba(232, 215, 168, 0.45);
-      border-radius: 14px;
-      padding: 6px 10px;
-      min-width: 52px;
-      box-shadow: 0 4px 12px rgba(20, 32, 44, 0.35);
-    }
-    .dock-tab.center-tab:hover {
-      background: #2D4152;
-      color: #FFFDF9;
-      border-color: rgba(232, 215, 168, 0.7);
-    }
-    .dock-tab.center-tab.active {
-      background: #A65E65;
-      color: #FFFDF9 !important;
-      border: 2px solid #E8D7A8;
-      box-shadow: 0 6px 16px rgba(166, 94, 101, 0.5), 0 0 10px rgba(232, 215, 168, 0.35);
+      /* Đồng bộ hoàn toàn thuộc tính với .dock-tab, không nhô cao và không viền riêng */
     }
 
     .dock-dot {

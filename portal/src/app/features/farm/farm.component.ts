@@ -1762,16 +1762,16 @@ export class FarmComponent implements OnInit {
   selectedLockedPlotIndex = signal<number | null>(null);
   selectedPlotIndex = signal<number>(0);
 
-  // 1. Strict Seed-Only Counter (không cộng nhầm inventory.harvested)
+  // 1. Strict Seed-Only Counter (chỉ đếm hạt giống của cây đã mở khóa có thể gieo)
   readonly totalSeedCount = computed(() =>
-    Object.values(this.state.inventory().seeds).reduce((sum, qty) => sum + (qty ?? 0), 0)
+    this.ownedSeedPackets().reduce((sum, s) => sum + (s.quantity ?? 0), 0)
   );
 
-  // 2. Owned Seed Packets (chỉ lấy hạt giống có quantity > 0)
+  // 2. Owned Seed Packets (chỉ lấy hạt giống ĐÃ MỞ KHÓA VÀ có quantity > 0)
   readonly ownedSeedPackets = computed(() => {
     const seeds = this.state.inventory().seeds;
     return CROP_CATALOG
-      .filter(c => (seeds[c.id] ?? 0) > 0)
+      .filter(c => (seeds[c.id] ?? 0) > 0 && this.state.isCropUnlocked(c.id))
       .map(c => ({
         cropId: c.id,
         nameVi: c.nameVi,

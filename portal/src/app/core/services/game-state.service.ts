@@ -220,43 +220,10 @@ export class GameStateService {
   // Inventory
   inventory = signal<UserInventory>({
     seeds: {
-      carrot: 3,
-      potato: 3,
-      corn: 2,
-      tomato: 2,
-      strawberry: 3,
-      pumpkin: 3,
-      wheat: 3,
-      blueberry: 3,
-      watermelon: 3,
-      cucumber: 2,
-      radish: 2,
-      orange: 2,
-      peach: 2,
-      banana: 2,
-      grapes: 2,
-      apple: 3,
-      cherry: 3
+      carrot: 5,
+      cucumber: 3
     },
-    harvested: {
-      carrot: 3,
-      potato: 3,
-      corn: 2,
-      tomato: 2,
-      strawberry: 1,
-      pumpkin: 1,
-      wheat: 0,
-      blueberry: 0,
-      watermelon: 0,
-      cucumber: 0,
-      radish: 0,
-      orange: 0,
-      peach: 0,
-      banana: 0,
-      grapes: 0,
-      apple: 1,
-      cherry: 0
-    },
+    harvested: {},
     care: { water: 15, fertilizer: 5, speedFertilizer: 2 },
     decor: { lamp: 0, fence: 0, scarecrow: 0 }
   });
@@ -581,7 +548,24 @@ export class GameStateService {
       this.recalculatePlotStates();
     }
     if (ws.inventory) {
-      this.inventory.set(ws.inventory);
+      const currentLvl = ws.level || 1;
+      const sanitizedSeeds: Record<string, number> = {};
+      if (ws.inventory.seeds) {
+        for (const [k, v] of Object.entries(ws.inventory.seeds)) {
+          const crop = CROP_CATALOG.find(c => c.id === k);
+          const minLvl = crop?.minLevel ?? crop?.requiredLevel ?? 1;
+          if (currentLvl >= minLvl && (v ?? 0) > 0) {
+            sanitizedSeeds[k] = v!;
+          }
+        }
+      }
+      if (Object.keys(sanitizedSeeds).length === 0) {
+        sanitizedSeeds['carrot'] = 5;
+      }
+      this.inventory.set({
+        ...ws.inventory,
+        seeds: sanitizedSeeds
+      });
     }
     if (ws.books) {
       this.books.set(ws.books);
