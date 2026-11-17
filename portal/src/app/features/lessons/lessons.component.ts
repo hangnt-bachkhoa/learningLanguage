@@ -100,16 +100,23 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   </div>
                 }
               } @else {
-                @let check = state.canUnlockLesson(lesson.id);
-                <div class="status-badge status-locked">
-                  <span class="lock-icon"><app-pixel-icon name="icon_padlock" [size]="12"></app-pixel-icon></span>
-                  <span>
-                    Lv.{{ check.req.minLevel }}
-                    @for (c of check.req.requiredCrops; track c.cropId) {
-                      · {{ c.qty }}x {{ c.cropNameVi }}
-                    }
-                  </span>
-                </div>
+                @if (isJa()) {
+                  <div class="status-badge status-locked">
+                    <span class="lock-icon"><app-pixel-icon name="icon_padlock" [size]="12"></app-pixel-icon></span>
+                    <span>Yêu cầu Level {{ lesson.minLevel || 1 }}</span>
+                  </div>
+                } @else {
+                  @let check = state.canUnlockLesson(lesson.id);
+                  <div class="status-badge status-locked">
+                    <span class="lock-icon"><app-pixel-icon name="icon_padlock" [size]="12"></app-pixel-icon></span>
+                    <span>
+                      Lv.{{ check.req.minLevel }}
+                      @for (c of check.req.requiredCrops; track c.cropId) {
+                        · {{ c.qty }}x {{ c.cropNameVi }}
+                      }
+                    </span>
+                  </div>
+                }
               }
             </div>
 
@@ -131,18 +138,24 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   </button>
                 </div>
               } @else {
-                @let check = state.canUnlockLesson(lesson.id);
-                @if (check.canUnlock) {
-                  <button class="btn btn-unlock-now" (click)="state.unlockLessonWithCrops(lesson.id)">
-                    <span style="display:inline-flex; align-items:center; gap:4px;">
-                      <app-pixel-icon name="icon_padlock" [size]="14"></app-pixel-icon>
-                      <span>Mở khóa ngay (Đủ Level & Nông sản)</span>
-                    </span>
-                  </button>
-                } @else {
+                @if (isJa()) {
                   <div class="crop-hint">
-                    <span>{{ check.missingReasons.join(' · ') }}</span>
+                    <span>Yêu cầu Nông trại đạt Cấp độ Level {{ lesson.minLevel || 1 }} hoặc hoàn thành bài thi trước</span>
                   </div>
+                } @else {
+                  @let check = state.canUnlockLesson(lesson.id);
+                  @if (check.canUnlock) {
+                    <button class="btn btn-unlock-now" (click)="state.unlockLessonWithCrops(lesson.id)">
+                      <span style="display:inline-flex; align-items:center; gap:4px;">
+                        <app-pixel-icon name="icon_padlock" [size]="14"></app-pixel-icon>
+                        <span>Mở khóa ngay (Đủ Level &amp; Nông sản)</span>
+                      </span>
+                    </button>
+                  } @else {
+                    <div class="crop-hint">
+                      <span>{{ check.missingReasons.join(' · ') }}</span>
+                    </div>
+                  }
                 }
               }
             </div>
@@ -582,8 +595,8 @@ export class LessonsComponent {
     if (this.isJa()) {
       const jaProgress = this.jaService.topicProgress();
       return this.jaService.topics().map(t => {
+        const isUnlocked = this.jaService.isTopicUnlocked(t.code, t.minLevel);
         const prog = jaProgress[t.code];
-        const isUnlocked = prog ? prog.unlocked : (t.orderIndex <= 2);
         const bestStarsClaimed = prog ? prog.bestStarsClaimed : 0;
         return {
           id: t.orderIndex,
@@ -598,8 +611,9 @@ export class LessonsComponent {
           requiredCropName: null,
           topicCode: t.code,
           wordCount: t.wordCount,
-          wordTypeGroup: t.wordTypeGroup
-        } as LessonDto & { topicCode?: string; wordCount?: number; wordTypeGroup?: string };
+          wordTypeGroup: t.wordTypeGroup,
+          minLevel: t.minLevel
+        } as LessonDto & { topicCode?: string; wordCount?: number; wordTypeGroup?: string; minLevel?: number };
       });
     }
 

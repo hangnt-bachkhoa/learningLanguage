@@ -100,6 +100,22 @@ export class JapaneseLearningService {
 
   readonly kanaLearnedCount = computed(() => this.masteredKana().length);
 
+  isTopicUnlocked(topicCode: string, minLevel = 1): boolean {
+    const prog = this.topicProgress()[topicCode];
+    if (prog?.unlocked) return true;
+    return minLevel <= this.gameState.level();
+  }
+
+  unlockTopic(topicCode: string) {
+    this.topicProgress.update(p => ({
+      ...p,
+      [topicCode]: {
+        ...(p[topicCode] ?? { bestStarsClaimed: 0 }),
+        unlocked: true
+      }
+    }));
+  }
+
   constructor() {
     effect(() => this.saveJson(this.WORD_STAT_KEY, this.wordStats()));
     effect(() => this.saveJson(this.TOPIC_STAR_KEY, this.topicProgress()));

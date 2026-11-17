@@ -14,19 +14,22 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
     <div class="kana-screen">
       <!-- HEADER -->
       <header class="kana-header">
-        <a routerLink="/" class="back-link">
-          <span class="chevron">‹</span>
-          <span>Trang chủ</span>
-        </a>
-        <div class="header-center">
+        <div class="header-nav-row">
+          <a routerLink="/" class="back-link">
+            <span class="chevron">‹</span>
+            <span>Trang chủ</span>
+          </a>
+          <div class="header-stats">
+            <span class="stat-badge">
+              <app-pixel-icon name="icon_check" [size]="13"></app-pixel-icon>
+              <span>{{ jaService.kanaLearnedCount() }}/{{ kanaList().length }} Đã thuộc</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="header-title-box">
           <h1 class="page-title font-serif">Bảng Chữ Cái Kana Nhật Bản</h1>
           <p class="page-sub">Luyện phát âm &amp; ghi nhớ 46 chữ cái Hiragana &amp; Katakana cốt lõi</p>
-        </div>
-        <div class="header-stats">
-          <span class="stat-badge">
-            <app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon>
-            <span>{{ jaService.kanaLearnedCount() }}/{{ kanaList().length }} Đã thuộc</span>
-          </span>
         </div>
       </header>
 
@@ -34,20 +37,32 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
       @if (viewMode() === 'board') {
         <!-- CONTROLS & TABS -->
         <div class="kana-controls-bar">
-          <div class="kana-tabs">
+          <div class="controls-top-row">
+            <div class="kana-tabs">
+              <button
+                type="button"
+                class="k-tab"
+                [class.active]="scriptMode() === 'hiragana'"
+                (click)="scriptMode.set('hiragana')">
+                <span class="tab-main">Hiragana</span>
+                <span class="tab-sub">ひらがな</span>
+              </button>
+              <button
+                type="button"
+                class="k-tab"
+                [class.active]="scriptMode() === 'katakana'"
+                (click)="scriptMode.set('katakana')">
+                <span class="tab-main">Katakana</span>
+                <span class="tab-sub">カタカナ</span>
+              </button>
+            </div>
+
             <button
               type="button"
-              class="k-tab"
-              [class.active]="scriptMode() === 'hiragana'"
-              (click)="scriptMode.set('hiragana')">
-              <span>Hiragana (ひらがな)</span>
-            </button>
-            <button
-              type="button"
-              class="k-tab"
-              [class.active]="scriptMode() === 'katakana'"
-              (click)="scriptMode.set('katakana')">
-              <span>Katakana (カタカナ)</span>
+              class="btn btn-quiz-kana"
+              (click)="startKanaQuiz()">
+              <app-pixel-icon name="icon_target" [size]="16"></app-pixel-icon>
+              <span>Làm Quiz Kana (10 câu)</span>
             </button>
           </div>
 
@@ -74,14 +89,6 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
               Âm đục (Dakuon)
             </button>
           </div>
-
-          <button
-            type="button"
-            class="btn btn-quiz-kana"
-            (click)="startKanaQuiz()">
-            <app-pixel-icon name="icon_target" [size]="16"></app-pixel-icon>
-            <span>Làm Quiz Kana (10 câu)</span>
-          </button>
         </div>
 
         <!-- LƯỚI CHỮ CÁI KANA -->
@@ -224,17 +231,21 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
     .kana-screen {
       max-width: 900px;
       margin: 0 auto;
-      padding: 16px 20px 48px;
+      padding: 12px 16px 48px;
     }
 
     /* HEADER */
     .kana-header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      flex-direction: column;
+      gap: 12px;
       margin-bottom: 20px;
-      flex-wrap: wrap;
+    }
+    .header-nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
     }
     .back-link {
       display: inline-flex;
@@ -243,21 +254,31 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
       color: var(--navy);
       text-decoration: none;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 14.5px;
+      transition: color 0.15s;
     }
-    .header-center {
+    .back-link:hover {
+      color: var(--rose);
+    }
+    .chevron {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .header-title-box {
       text-align: center;
-      flex: 1;
+      width: 100%;
     }
     .page-title {
       font-size: 24px;
       color: var(--navy);
       margin: 0;
+      line-height: 1.25;
     }
     .page-sub {
       font-size: 13px;
       color: var(--ink-muted);
-      margin: 4px 0 0;
+      margin: 6px 0 0;
+      line-height: 1.4;
     }
     .stat-badge {
       display: inline-flex;
@@ -270,48 +291,73 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
       font-size: 12.5px;
       font-weight: 700;
       color: var(--navy);
+      white-space: nowrap;
     }
 
     /* CONTROLS BAR */
     .kana-controls-bar {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
       gap: 12px;
       margin-bottom: 20px;
-      flex-wrap: wrap;
       background: #FFFDF9;
       border: 1.5px solid var(--border);
       border-radius: 14px;
-      padding: 12px 16px;
+      padding: 14px 16px;
+    }
+    .controls-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
     .kana-tabs {
-      display: flex;
+      display: inline-flex;
       background: #EDE6D8;
       border-radius: 10px;
       padding: 3px;
       gap: 4px;
+      flex: 1;
+      max-width: 380px;
     }
     .k-tab {
-      padding: 7px 14px;
+      flex: 1;
+      padding: 8px 12px;
       border: none;
       background: transparent;
       border-radius: 8px;
-      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-main {
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--navy);
-      cursor: pointer;
-      transition: all 0.2s;
+    }
+    .tab-sub {
+      font-size: 12px;
+      color: var(--ink-muted);
     }
     .k-tab.active {
       background: var(--navy);
-      color: #FFFDF9;
       box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .k-tab.active .tab-main {
+      color: #FFFDF9;
+    }
+    .k-tab.active .tab-sub {
+      color: #E8D7A8;
     }
 
     .group-filter-pills {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
     }
     .filter-pill {
@@ -323,6 +369,8 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
       font-weight: 600;
       color: var(--navy);
       cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
     }
     .filter-pill.active {
       background: #78815D;
@@ -333,19 +381,25 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
     .btn-quiz-kana {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 8px;
       background: #A65E65;
       color: #FFFDF9;
       border: none;
-      padding: 8px 16px;
+      padding: 9px 18px;
       border-radius: 10px;
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 2px 4px rgba(166, 94, 101, 0.2);
+      white-space: nowrap;
+      transition: background 0.15s ease, transform 0.1s ease;
     }
     .btn-quiz-kana:hover {
       background: #8F4D53;
+    }
+    .btn-quiz-kana:active {
+      transform: scale(0.98);
     }
 
     /* KANA GRID */
@@ -595,11 +649,41 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
     }
 
     @media (max-width: 600px) {
+      .kana-screen {
+        padding: 10px 12px 36px;
+      }
+      .page-title {
+        font-size: 20px;
+      }
+      .controls-top-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .kana-tabs {
+        max-width: 100%;
+        width: 100%;
+      }
+      .btn-quiz-kana {
+        width: 100%;
+      }
       .kana-grid {
         grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
+      .kana-card {
+        padding: 8px 6px 6px;
+      }
+      .kana-char {
+        font-size: 28px;
       }
       .q-options-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .kana-grid {
+        grid-template-columns: repeat(3, 1fr);
       }
     }
   `]
