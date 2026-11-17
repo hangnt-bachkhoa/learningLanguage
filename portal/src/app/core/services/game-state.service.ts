@@ -20,6 +20,8 @@ import {
   canUnlockTarget
 } from './quiz-engine.service';
 
+import { LanguageContextService, LanguageWorkspaceState } from './language-context.service';
+
 export { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
 export { xpRequiredForLevel, applyXpWithReset, canUnlockTarget } from './quiz-engine.service';
 
@@ -94,27 +96,38 @@ export class GameStateService {
   private readonly REVIEW_STORAGE_KEY = 'english_farm_vocab_reviews_v1';
   private readonly REVIEW_DAILY_REWARDS_KEY = 'english_farm_review_daily_rewards_v1';
   private readonly STUDY_STATS_KEY = 'english_farm_study_stats_v1';
-  private readonly ACTIVE_LANG_KEY = 'language_farm_active_lang_v1';
   private api = inject(FarmApiService);
+  private langContext = inject(LanguageContextService);
 
   // Quản lý ngôn ngữ học tập (English TOEIC | Japanese JLPT N5)
-  readonly activeLang = signal<'en' | 'ja'>(this.loadActiveLang());
+  readonly activeLang = this.langContext.activeLang;
 
-  private loadActiveLang(): 'en' | 'ja' {
-    try {
-      const v = localStorage.getItem(this.ACTIVE_LANG_KEY);
-      return v === 'ja' ? 'ja' : 'en';
-    } catch {
-      return 'en';
-    }
+  getOtherLanguageLevel(): number {
+    const other = this.activeLang() === 'en' ? 'ja' : 'en';
+    return this.langContext.getLanguageLevel(other);
   }
 
   setLanguage(lang: 'en' | 'ja') {
-    this.activeLang.set(lang);
-    try {
-      localStorage.setItem(this.ACTIVE_LANG_KEY, lang);
-    } catch {}
-    this.showToast(lang === 'ja' ? '🇯🇵 Đã chuyển sang Tiếng Nhật JLPT N5!' : '🇬🇧 Đã chuyển sang Tiếng Anh TOEIC!');
+    if (this.activeLang() === lang) return;
+
+    // 1. Lưu workspace hiện tại
+    const currentWs = this.serializeCurrentWorkspace();
+
+    // 2. Chuyển đổi qua LanguageContextService
+    const { workspace: nextWs, welcomeGiftGranted } = this.langContext.switchLanguage(lang, currentWs);
+
+    // 3. Áp dụng workspace mới vào các signals
+    this.applyWorkspace(nextWs);
+
+    // 4. Thông báo Toast
+    if (welcomeGiftGranted) {
+      this.showToast('🎁 Chúc mừng! Bạn nhận được Quà chào mừng vườn Nhật: +2 Phân bón siêu tốc, +50 Xu!');
+    } else {
+      this.showToast(lang === 'ja'
+        ? `🇯🇵 Đã chuyển sang Tiếng Nhật JLPT N5 (Lv.${this.level()})!`
+        : `🇬🇧 Đã chuyển sang Tiếng Anh TOEIC (Lv.${this.level()})!`
+      );
+    }
   }
 
   // Trạng thái kết nối Backend
@@ -412,42 +425,67 @@ export class GameStateService {
   // BỘ NHỚ LÂU DÀI: LOCALSTORAGE & SAO LƯU / KHÔI PHỤC JSON
   // =========================================================================
 
+  serializeCurrentWorkspace(): LanguageWorkspaceState {
+    return {
+      langCode: this.activeLang(),
+      level: this.level(),
+      currentXp: this.currentXp(),
+      coins: this.coins(),
+      plots: this.plots(),
+      inventory: this.inventory(),
+      books: this.books(),
+      activeLessonId: this.activeLessonId(),
+      learnedWords: this.learnedWords(),
+      bookmarkedWords: this.bookmarkedWords(),
+      lessonProgress: this.userLessonProgress(),
+      wordStats: this.userWordStats(),
+      rewardState: this.userRewardState(),
+      ebbinghausReviews: this.userVocabReviews(),
+      dailyReviewRewardsClaimed: this.dailyReviewRewardsClaimed(),
+      lastReviewRewardDate: this.lastReviewRewardDate()
+    };
+  }
+
+  applyWorkspace(ws: LanguageWorkspaceState) {
+    this.level.set(ws.level || 1);
+    this.currentXp.set(ws.currentXp || 0);
+    this.coins.set(typeof ws.coins === 'number' ? ws.coins : 100);
+    if (Array.isArray(ws.plots) && ws.plots.length > 0) {
+      const migratedPlots = ws.plots.map((p: FarmPlot) => {
+        if (p.crop === 'sunflower') return { ...p, crop: 'pumpkin' };
+        if (p.crop === 'tulip') return { ...p, crop: 'wheat' };
+        if (p.crop === 'rose') return { ...p, crop: 'blueberry' };
+        if (p.crop === 'kiwi') return { ...p, crop: 'watermelon' };
+        return p;
+      });
+      this.plots.set(migratedPlots);
+      this.recalculatePlotStates();
+    }
+    if (ws.inventory) {
+      this.inventory.set(ws.inventory);
+    }
+    if (ws.books) {
+      this.books.set(ws.books);
+    }
+    if (ws.activeLessonId) {
+      this.activeLessonId.set(ws.activeLessonId);
+    }
+    this.learnedWords.set(ws.learnedWords || []);
+    this.bookmarkedWords.set(ws.bookmarkedWords || []);
+    this.userWordStats.set(ws.wordStats || {});
+    this.userLessonProgress.set(ws.lessonProgress || {});
+    if (ws.rewardState) {
+      this.userRewardState.set(ws.rewardState);
+    }
+    this.userVocabReviews.set((ws.ebbinghausReviews as any) || {});
+    this.dailyReviewRewardsClaimed.set(ws.dailyReviewRewardsClaimed || 0);
+    this.lastReviewRewardDate.set(ws.lastReviewRewardDate || '');
+  }
+
   saveToStorage() {
     try {
-      const data = {
-        version: 1,
-        savedAt: new Date().toISOString(),
-        level: this.level(),
-        currentXp: this.currentXp(),
-        xp: this.currentXp(),
-        coins: this.coins(),
-        plots: this.plots(),
-        inventory: this.inventory(),
-        lessons: this.lessons(),
-        books: this.books(),
-        activeLessonId: this.activeLessonId(),
-        learnedWords: this.learnedWords(),
-        bookmarkedWords: this.bookmarkedWords()
-      };
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
-
-      // Lưu trữ toàn bộ 1,300+ từ vựng vào localStorage
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(this.vocabulariesByLesson()));
-        localStorage.setItem(this.WORD_STATS_KEY, JSON.stringify(this.userWordStats()));
-        localStorage.setItem(this.LESSON_PROGRESS_KEY, JSON.stringify(this.userLessonProgress()));
-        localStorage.setItem(this.REWARD_STATE_KEY, JSON.stringify(this.userRewardState()));
-        localStorage.setItem(this.REVIEW_STORAGE_KEY, JSON.stringify(this.userVocabReviews()));
-        localStorage.setItem(this.REVIEW_DAILY_REWARDS_KEY, JSON.stringify({
-          claimed: this.dailyReviewRewardsClaimed(),
-          date: this.lastReviewRewardDate()
-        }));
-        localStorage.setItem(this.STUDY_STATS_KEY, JSON.stringify({
-          streak: this.studyStreak(),
-          lastStudyDate: this.lastStudyDate(),
-          dailyTasks: this.dailyTaskState()
-        }));
-      }
+      const ws = this.serializeCurrentWorkspace();
+      this.langContext.debouncedSaveWorkspace(this.activeLang(), ws);
     } catch (e) {
       console.warn('Không thể lưu localStorage:', e);
     }
@@ -455,280 +493,71 @@ export class GameStateService {
 
   loadFromStorage() {
     try {
-      const raw = localStorage.getItem(this.STORAGE_KEY);
-      if (raw) {
-        const data = JSON.parse(raw);
-        if (data && typeof data === 'object') {
-          if (typeof data.level === 'number') this.level.set(data.level);
-          if (typeof data.currentXp === 'number') {
-            this.currentXp.set(Math.min(1000, data.currentXp));
-          } else if (typeof data.xp === 'number') {
-            const req = xpRequiredForLevel(this.level());
-            this.currentXp.set(Math.min(1000, data.xp >= req ? 0 : data.xp));
-          }
-          if (typeof data.coins === 'number') this.coins.set(data.coins);
-          if (Array.isArray(data.plots) && data.plots.length > 0) {
-            const migratedPlots = data.plots.map((p: FarmPlot) => {
-              if (p.crop === 'sunflower') return { ...p, crop: 'pumpkin' };
-              if (p.crop === 'tulip') return { ...p, crop: 'wheat' };
-              if (p.crop === 'rose') return { ...p, crop: 'blueberry' };
-              if (p.crop === 'kiwi') return { ...p, crop: 'watermelon' };
-              return p;
-            });
-            this.plots.set(migratedPlots);
-            this.recalculatePlotStates();
-          }
-          if (data.inventory && typeof data.inventory === 'object') {
-            const rawSeeds: Record<string, number> = { ...(data.inventory.seeds || {}) };
-            const rawHarvested: Record<string, number> = { ...(data.inventory.harvested || {}) };
+      const ws = this.langContext.loadWorkspace(this.activeLang());
+      this.applyWorkspace(ws);
 
-            // Migration chính xác theo chuẩn nông sản mới:
-            // 1. Hoa hướng dương (không có asset) => Bí ngô (pumpkin)
-            if (rawSeeds['sunflower']) {
-              rawSeeds['pumpkin'] = (rawSeeds['pumpkin'] || 0) + rawSeeds['sunflower'];
-              delete rawSeeds['sunflower'];
-            }
-            if (rawHarvested['sunflower']) {
-              rawHarvested['pumpkin'] = (rawHarvested['pumpkin'] || 0) + rawHarvested['sunflower'];
-              delete rawHarvested['sunflower'];
-            }
-
-            // 2. Hoa hồng => Blueberry (Việt quất)
-            if (rawSeeds['rose']) {
-              rawSeeds['blueberry'] = (rawSeeds['blueberry'] || 0) + rawSeeds['rose'];
-              delete rawSeeds['rose'];
-            }
-            if (rawHarvested['rose']) {
-              rawHarvested['blueberry'] = (rawHarvested['blueberry'] || 0) + rawHarvested['rose'];
-              delete rawHarvested['rose'];
-            }
-
-            // 3. Hoa tulip => Lúa mì (wheat)
-            if (rawSeeds['tulip']) {
-              rawSeeds['wheat'] = (rawSeeds['wheat'] || 0) + rawSeeds['tulip'];
-              delete rawSeeds['tulip'];
-            }
-            if (rawHarvested['tulip']) {
-              rawHarvested['wheat'] = (rawHarvested['wheat'] || 0) + rawHarvested['tulip'];
-              delete rawHarvested['tulip'];
-            }
-
-            // 4. Kiwi => Dưa hấu (watermelon)
-            if (rawSeeds['kiwi']) {
-              rawSeeds['watermelon'] = (rawSeeds['watermelon'] || 0) + rawSeeds['kiwi'];
-              delete rawSeeds['kiwi'];
-            }
-            if (rawHarvested['kiwi']) {
-              rawHarvested['watermelon'] = (rawHarvested['watermelon'] || 0) + rawHarvested['kiwi'];
-              delete rawHarvested['kiwi'];
-            }
-
-            this.inventory.update(current => {
-              const updatedSeeds = { ...current.seeds, ...rawSeeds };
-              const updatedHarvested = { ...current.harvested, ...rawHarvested };
-              delete (updatedSeeds as any).sunflower;
-              delete (updatedSeeds as any).rose;
-              delete (updatedSeeds as any).tulip;
-              delete (updatedSeeds as any).kiwi;
-              delete (updatedHarvested as any).sunflower;
-              delete (updatedHarvested as any).rose;
-              delete (updatedHarvested as any).tulip;
-              delete (updatedHarvested as any).kiwi;
-              return {
-                seeds: updatedSeeds,
-                harvested: updatedHarvested,
-                care: { ...current.care, ...(data.inventory.care || {}) },
-                decor: { ...current.decor, ...(data.inventory.decor || {}) }
-              };
-            });
-          }
-          // Đồng bộ danh sách bài học: Loại bỏ các bài mock cũ và giữ đúng 51 bài học chuẩn từ Database
-          const savedList: LessonDto[] = Array.isArray(data.lessons) ? data.lessons : [];
-          const savedMap = new Map<number, LessonDto>(savedList.map(l => [l.id, l]));
-          const merged = DEFAULT_LESSONS.map(l => {
-            const saved = savedMap.get(l.id);
-            return saved ? {
-              ...l,
-              isUnlocked: saved.isUnlocked || l.isUnlocked,
-              bestStarsClaimed: saved.bestStarsClaimed || l.bestStarsClaimed
-            } : l;
-          });
-          this.lessons.set(merged);
-          if (Array.isArray(data.books) && data.books.length > 0) this.books.set(data.books);
-          if (typeof data.activeLessonId === 'number') this.activeLessonId.set(data.activeLessonId);
-          if (Array.isArray(data.learnedWords)) this.learnedWords.set(data.learnedWords);
-          if (Array.isArray(data.bookmarkedWords)) this.bookmarkedWords.set(data.bookmarkedWords);
-        }
+      // Nạp Global Streak & Last Study Date từ Global Profile
+      const profile = this.langContext.globalProfile();
+      if (typeof profile.globalStreak === 'number') {
+        this.studyStreak.set(profile.globalStreak);
+      }
+      if (profile.lastStudyDate) {
+        this.lastStudyDate.set(profile.lastStudyDate);
       }
 
-      // Nạp UserWordStats & UserLessonProgress
-      const rawWordStats = localStorage.getItem(this.WORD_STATS_KEY);
-      if (rawWordStats) {
-        try {
-          const parsed = JSON.parse(rawWordStats);
-          if (parsed && typeof parsed === 'object') this.userWordStats.set(parsed);
-        } catch {}
-      }
-
-      const rawProgress = localStorage.getItem(this.LESSON_PROGRESS_KEY);
-      if (rawProgress) {
-        try {
-          const parsed = JSON.parse(rawProgress);
-          if (parsed && typeof parsed === 'object') {
-            this.userLessonProgress.set(parsed);
-            // Đồng bộ lại BestStarsClaimed vào lessons signal
-            this.lessons.update(list => list.map(l => {
-              const p = parsed[l.id];
-              return p ? { ...l, bestStarsClaimed: p.bestStarsClaimed } : l;
-            }));
-          }
-        } catch {}
-      }
-
-      // Nạp UserRewardState (Pity Counter & Daily Rolls)
-      const rawReward = localStorage.getItem(this.REWARD_STATE_KEY);
-      if (rawReward) {
-        try {
-          const parsed = JSON.parse(rawReward);
-          if (parsed && typeof parsed === 'object') {
-            this.userRewardState.set({
-              pityFertilizerMisses: parsed.pityFertilizerMisses || 0,
-              pitySeedMisses: parsed.pitySeedMisses || 0,
-              dailyBonusRollsUsed: parsed.dailyBonusRollsUsed || 0,
-              lastBonusRollDate: parsed.lastBonusRollDate || ''
-            });
-          }
-        } catch {}
-      }
-
-      // Nạp từ vựng từ localStorage: Tự động nâng cấp sang 51 bộ từ vựng chuẩn Database
-      const VOCAB_VERSION_KEY = 'english_farm_vocab_version';
-      const CURRENT_VOCAB_VERSION = 'v2_real_db_toeic_51';
-      const savedVersion = localStorage.getItem(VOCAB_VERSION_KEY);
-
-      if (savedVersion !== CURRENT_VOCAB_VERSION) {
-        this.vocabulariesByLesson.set(DEFAULT_VOCABULARIES);
-        try {
-          localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(DEFAULT_VOCABULARIES));
-          localStorage.setItem(VOCAB_VERSION_KEY, CURRENT_VOCAB_VERSION);
-        } catch {}
-      } else {
-        const rawVocabs = localStorage.getItem(this.VOCAB_STORAGE_KEY);
-        if (rawVocabs) {
-          try {
-            const parsed = JSON.parse(rawVocabs);
-            if (parsed && typeof parsed === 'object') {
-              this.vocabulariesByLesson.set(parsed);
-            }
-          } catch {}
-        }
-      }
-
-      // Nạp Spaced Repetition Reviews
-      const rawReviews = localStorage.getItem(this.REVIEW_STORAGE_KEY);
-      if (rawReviews) {
-        try {
-          const parsed = JSON.parse(rawReviews);
-          if (parsed && typeof parsed === 'object') {
-            this.userVocabReviews.set(parsed);
-          }
-        } catch {}
-      }
-
-      // Nạp Review Daily Rewards
-      const rawReviewRewards = localStorage.getItem(this.REVIEW_DAILY_REWARDS_KEY);
-      if (rawReviewRewards) {
-        try {
-          const parsed = JSON.parse(rawReviewRewards);
-          const today = getTodayVnDate();
-          if (parsed && parsed.date === today) {
-            this.dailyReviewRewardsClaimed.set(parsed.claimed || 0);
-            this.lastReviewRewardDate.set(parsed.date);
-          } else {
-            this.dailyReviewRewardsClaimed.set(0);
-            this.lastReviewRewardDate.set(today);
-          }
-        } catch {}
-      } else {
-        this.lastReviewRewardDate.set(getTodayVnDate());
-      }
-
-      // Nạp Study Stats (Streak & Daily Tasks)
-      const rawStudyStats = localStorage.getItem(this.STUDY_STATS_KEY);
-      if (rawStudyStats) {
-        try {
-          const parsed = JSON.parse(rawStudyStats);
-          if (parsed && typeof parsed === 'object') {
-            if (typeof parsed.streak === 'number') this.studyStreak.set(parsed.streak);
-            if (typeof parsed.lastStudyDate === 'string') this.lastStudyDate.set(parsed.lastStudyDate);
-            if (parsed.dailyTasks && typeof parsed.dailyTasks === 'object') {
-              const today = getTodayVnDate();
-              if (parsed.dailyTasks.date === today) {
-                this.dailyTaskState.set(parsed.dailyTasks);
-              } else {
-                this.dailyTaskState.set({ vocabLearned: 0, quizDone: 0, farmCare: 0, date: today });
-              }
-            }
-          }
-        } catch {}
-      }
-
-      // Tự động seed UserVocabReview cho bất kỳ từ nào đã thuộc mà chưa có bản ghi
-      const reviews = this.userVocabReviews();
-      const learned = this.learnedWords();
-      let hasNewSeed = false;
-      const today = getTodayVnDate();
-      const updated = { ...reviews };
-
-      for (const w of learned) {
-        const info = this.findVocab(w);
-        if (info && !updated[info.vocab.id]) {
-          updated[info.vocab.id] = {
-            vocabId: info.vocab.id,
-            word: w,
-            topicId: info.topicId,
-            learnedDate: today,
-            stage: 0,
-            nextReviewDate: addDays(today, 1),
-            lastReviewedDate: today,
-            d1Done: false,
-            d3Done: false,
-            d7Done: false,
-            d14Done: false
-          };
-          hasNewSeed = true;
-        }
-      }
-      if (hasNewSeed) {
-        this.userVocabReviews.set(updated);
-      }
+      this.loadVocabularies();
     } catch (e) {
       console.warn('Lỗi đọc localStorage:', e);
     }
   }
 
+  loadVocabularies() {
+    const VOCAB_VERSION_KEY = 'english_farm_vocab_version';
+    const CURRENT_VOCAB_VERSION = 'v2_real_db_toeic_51';
+    const savedVersion = localStorage.getItem(VOCAB_VERSION_KEY);
+
+    if (savedVersion !== CURRENT_VOCAB_VERSION) {
+      this.vocabulariesByLesson.set(DEFAULT_VOCABULARIES);
+      try {
+        localStorage.setItem(this.VOCAB_STORAGE_KEY, JSON.stringify(DEFAULT_VOCABULARIES));
+        localStorage.setItem(VOCAB_VERSION_KEY, CURRENT_VOCAB_VERSION);
+      } catch {}
+    } else {
+      const rawVocabs = localStorage.getItem(this.VOCAB_STORAGE_KEY);
+      if (rawVocabs) {
+        try {
+          const parsed = JSON.parse(rawVocabs);
+          if (parsed && typeof parsed === 'object') {
+            this.vocabulariesByLesson.set(parsed);
+          }
+        } catch {}
+      }
+    }
+  }
+
   exportBackupJson() {
+    this.saveToStorage();
+    const enWs = this.activeLang() === 'en' ? this.serializeCurrentWorkspace() : this.langContext.loadWorkspace('en');
+    const jaWs = this.activeLang() === 'ja' ? this.serializeCurrentWorkspace() : this.langContext.loadWorkspace('ja');
     const data = {
-      app: 'EnglishFarm',
-      version: 1,
+      app: 'LanguageFarm',
+      version: 2,
       exportedAt: new Date().toISOString(),
-      xp: this.xp(),
-      coins: this.coins(),
-      level: this.level(),
-      plots: this.plots(),
-      inventory: this.inventory(),
-      lessons: this.lessons(),
-      books: this.books()
+      globalProfile: this.langContext.globalProfile(),
+      workspaces: {
+        en: enWs,
+        ja: jaWs
+      }
     };
     const jsonStr = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `english-farm-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `language-farm-backup-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    this.showToast('💾 Đã tải file sao lưu english-farm-backup.json về máy!');
+    this.showToast('💾 Đã tải file sao lưu language-farm-backup.json về máy!');
   }
 
   importBackupJson(jsonString: string): boolean {
@@ -737,6 +566,24 @@ export class GameStateService {
       if (!data || typeof data !== 'object') {
         throw new Error('Định dạng file không đúng');
       }
+
+      if (data.workspaces && typeof data.workspaces === 'object') {
+        if (data.workspaces.en) {
+          this.langContext.saveWorkspaceImmediately('en', data.workspaces.en);
+        }
+        if (data.workspaces.ja) {
+          this.langContext.saveWorkspaceImmediately('ja', data.workspaces.ja);
+        }
+        if (data.globalProfile) {
+          this.langContext.updateGlobalProfile(() => data.globalProfile);
+        }
+        const currentWs = this.langContext.loadWorkspace(this.activeLang());
+        this.applyWorkspace(currentWs);
+        this.showToast('✅ Khôi phục toàn bộ dữ liệu Đa Ngôn Ngữ thành công!');
+        return true;
+      }
+
+      // Legacy fallback
       if (typeof data.xp === 'number') this.xp.set(data.xp);
       if (typeof data.coins === 'number') this.coins.set(data.coins);
       if (typeof data.level === 'number') this.level.set(data.level);
@@ -1884,6 +1731,10 @@ export class GameStateService {
         [cropKey]: (inv.harvested[cropKey] || 0) + 1
       }
     }));
+
+    // Ghi nhận vụ mùa vào Global Profile (Synergy Gamification)
+    this.langContext.recordHarvest();
+    this.langContext.recordDailyStudy();
 
     // Đưa ô đất về trạng thái Empty hoàn chỉnh
     this.plots.update(list => list.map((p, idx) => idx === plotIndex ? {

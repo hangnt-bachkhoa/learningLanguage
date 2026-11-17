@@ -24,14 +24,18 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         </h1>
       </div>
       <div class="topbar-right">
-        <!-- NÚT CHUYỂN ĐỔI NGÔN NGỮ (🇬🇧 EN / 🇯🇵 JA) -->
+        <!-- NÚT CHUYỂN ĐỔI NGÔN NGỮ KÈM HUY HIỆU LEVEL RIÊNG (Isolated Language Profile) -->
         <button
           type="button"
           class="lang-switch-btn"
-          [title]="state.activeLang() === 'en' ? 'Đang học: Tiếng Anh (TOEIC) · Bấm để đổi sang Tiếng Nhật N5' : 'Đang học: Tiếng Nhật (JLPT N5) · Bấm để đổi sang Tiếng Anh TOEIC'"
+          [title]="state.activeLang() === 'en'
+            ? 'Đang học: Tiếng Anh (Lv.' + state.level() + ') · Bấm để đổi sang Tiếng Nhật (Lv.' + state.getOtherLanguageLevel() + ')'
+            : 'Đang học: Tiếng Nhật (Lv.' + state.level() + ') · Bấm để đổi sang Tiếng Anh (Lv.' + state.getOtherLanguageLevel() + ')'"
           (click)="toggleLanguage()">
           <span class="lang-flag">{{ state.activeLang() === 'en' ? '🇬🇧' : '🇯🇵' }}</span>
-          <span class="lang-code">{{ state.activeLang() === 'en' ? 'EN' : 'JA' }}</span>
+          <span class="lang-name-full hide-mobile">{{ state.activeLang() === 'en' ? 'Tiếng Anh' : 'Tiếng Nhật' }}</span>
+          <span class="lang-code show-mobile">{{ state.activeLang() === 'en' ? 'EN' : 'JA' }}</span>
+          <span class="lang-level-badge">Lv.{{ state.level() }}</span>
         </button>
 
         <a routerLink="/guide" class="guide-btn" title="Hướng dẫn sử dụng">
@@ -157,14 +161,14 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     .lang-switch-btn {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       height: 32px;
-      padding: 0 10px;
+      padding: 0 10px 0 8px;
       border-radius: 999px;
       background: #FFFDF9;
       border: 1.5px solid var(--border, #D9C8B5);
       color: var(--navy, #263847);
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 1px 3px rgba(38, 56, 71, 0.06);
@@ -176,11 +180,26 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       transform: translateY(-1px);
     }
     .lang-flag {
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1;
     }
+    .lang-name-full {
+      font-weight: 700;
+      color: var(--navy);
+    }
     .lang-code {
+      display: none;
+      font-weight: 700;
       letter-spacing: 0.5px;
+    }
+    .lang-level-badge {
+      background: #78815D;
+      color: #FFFDF9;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 999px;
+      line-height: 1.25;
     }
     .cart-btn {
       display: inline-flex;
@@ -217,6 +236,22 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       }
       .hide-mobile {
         display: none !important;
+      }
+      .lang-name-full {
+        display: none !important;
+      }
+      .lang-code.show-mobile {
+        display: inline !important;
+      }
+      .lang-switch-btn {
+        padding: 0 6px 0 5px;
+        height: 29px;
+        gap: 3px;
+        font-size: 11px;
+      }
+      .lang-level-badge {
+        font-size: 9.5px;
+        padding: 1px 4px;
       }
       .topbar-right {
         gap: 5px;

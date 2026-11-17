@@ -2,6 +2,7 @@ import { Injectable, signal, computed, effect, inject } from '@angular/core';
 import N5_SEED from '../../../assets/data/jlpt_n5_vocab_seed.json';
 import { UserVocabReview } from '../models/game.models';
 import { GameStateService } from './game-state.service';
+import { LanguageContextService } from './language-context.service';
 import { KANA_CATALOG, KanaItem } from '../constants/kana-catalog.constant';
 
 export type JaWordType = 'noun' | 'verb' | 'adj_i' | 'adj_na' | 'adv_expr';
@@ -57,6 +58,7 @@ export interface JaQuizQuestion {
 @Injectable({ providedIn: 'root' })
 export class JapaneseLearningService {
   private readonly gameState = inject(GameStateService);
+  private readonly langContext = inject(LanguageContextService);
 
   private readonly WORD_STAT_KEY = 'language_farm_vocab_progress_ja_v1';
   private readonly TOPIC_STAR_KEY = 'language_farm_topic_stars_ja_v1';
@@ -103,7 +105,8 @@ export class JapaneseLearningService {
   isTopicUnlocked(topicCode: string, minLevel = 1): boolean {
     const prog = this.topicProgress()[topicCode];
     if (prog?.unlocked) return true;
-    return minLevel <= this.gameState.level();
+    const jaLevel = this.langContext.getLanguageLevel('ja');
+    return minLevel <= jaLevel;
   }
 
   unlockTopic(topicCode: string) {
