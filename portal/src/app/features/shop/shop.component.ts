@@ -1,7 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../core/services/game-state.service';
-import { CROP_CATALOG, SPRITES } from '../../core/constants/crop-catalog.constant';
+import { LanguageContextService, WorkspaceService } from '../../core/services/language-context.service';
+import { CROP_CATALOG, CropCatalogItem, SPRITES, formatGrowthDuration } from '../../core/constants/crop-catalog.constant';
 import { ShopItem } from '../../core/models/game.models';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
@@ -168,14 +169,14 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         <!-- CHẾ ĐỘ 2: CỬA HÀNG MUA VẬT PHẨM (SEEDS, CARE, DECOR, BUNDLE) -->
         <div class="products-grid">
         @for (prod of filteredProducts(); track prod.id) {
-          @let isLocked = prod.cropKey ? !state.isCropUnlocked(prod.cropKey) : false;
-          @let lockInfo = prod.cropKey ? state.getCropLockInfo(prod.cropKey) : null;
+          @let cropItem = prod.cropKey ? getCrop(prod.cropKey) : null;
+          @let isLocked = cropItem ? !isSeedUnlocked(cropItem) : false;
 
           <div class="vintage-card product-card" [class.item-locked]="isLocked">
             <!-- Huy hiệu trạng thái -->
-            @if (isLocked) {
+            @if (isLocked && cropItem) {
               <div class="prod-badge lock-badge">
-                <app-pixel-icon name="icon_padlock" [size]="13"></app-pixel-icon> {{ lockInfo?.tierName }}
+                <app-pixel-icon name="icon_padlock" [size]="13"></app-pixel-icon> {{ cropItem.tierNameVi || ('Hạng ' + cropItem.tier) }}
               </div>
             } @else {
               <div class="prod-badge">{{ prod.duration }}</div>
@@ -186,14 +187,11 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
             <p class="prod-desc">{{ prod.desc }}</p>
 
             <!-- Điều kiện mở khóa nếu bị khóa -->
-            @if (isLocked) {
+            @if (isLocked && cropItem) {
               <div class="prod-lock-hint">
                 <span class="lock-req-icon"><app-pixel-icon name="icon_padlock" [size]="13"></app-pixel-icon></span>
                 <span class="lock-req-text">
-                  Cần Lv.{{ lockInfo?.requiredLevel }}
-                  @if (lockInfo?.requiredLessonTitle) {
-                    & Mở bài "{{ lockInfo?.requiredLessonTitle }}"
-                  }
+                  {{ getSeedLockLabel(cropItem) }}
                 </span>
               </div>
             } @else {
@@ -202,10 +200,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 
             <div class="prod-footer">
               <span class="price-tag"><app-pixel-icon name="icon_coin" [size]="14"></app-pixel-icon> {{ prod.price }} Xu</span>
-              @if (isLocked) {
+              @if (isLocked && cropItem) {
                 <button
                   class="btn btn-sm btn-locked"
-                  (click)="state.showToast('Hạt giống này đang khóa! ' + (lockInfo?.missingReasons?.join(' & ') || ''))"
+                  (click)="state.showToast('Hạt giống này đang khóa! ' + getSeedLockLabel(cropItem))"
                   title="Chưa đủ điều kiện mua">
                   <app-pixel-icon name="icon_padlock" [size]="13"></app-pixel-icon> Chưa mở
                 </button>
@@ -541,217 +539,24 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
   `]
 })
 export class ShopComponent {
-  state = inject(GameStateService);
+  readonly state = inject(GameStateService);
+  readonly workspaceService = inject(LanguageContextService);
 
   selectedCat = signal<string>('all');
 
-  items: ShopItem[] = [
-    // --- HẠNG I: MẦM NON (Lv. 1-3) ---
-    {
-      id: 's_carrot',
-      cat: 'seeds',
-      name: 'Hạt giống Cà rốt',
-      price: 15,
-      sprite: 's_carrot',
-      duration: '5 phút',
-      usage: 'Gieo hạt để thu hoạch Cà rốt mở khóa bài học TOEIC 450.',
-      desc: 'Giống cà rốt ngọt giòn cho người mới bắt đầu canh tác.',
-      cropKey: 'carrot'
-    },
-    {
-      id: 's_cucumber',
-      cat: 'seeds',
-      name: 'Hạt giống Dưa chuột',
-      price: 12,
-      sprite: 's_cucumber',
-      duration: '5 phút',
-      usage: 'Trồng dưa chuột thanh mát, mau cho trái và thu hồi vốn nhanh.',
-      desc: 'Dưa chuột xanh giòn ngọt nước, dễ canh tác và lớn nhanh.',
-      cropKey: 'cucumber'
-    },
-    {
-      id: 's_radish',
-      cat: 'seeds',
-      name: 'Hạt giống Củ cải đỏ',
-      price: 14,
-      sprite: 's_radish',
-      duration: '6 phút',
-      usage: 'Trồng củ cải đỏ tròn xoe xinh xắn.',
-      desc: 'Củ cải đỏ giàu khoáng chất, màu sắc rực rỡ vui mắt.',
-      cropKey: 'radish'
-    },
-    {
-      id: 's_potato',
-      cat: 'seeds',
-      name: 'Hạt giống Khoai tây',
-      price: 15,
-      sprite: 's_potato',
-      duration: '6 phút',
-      usage: 'Thu hoạch khoai tây bùi bở để mở khóa các bài học đời sống.',
-      desc: 'Củ khoai tây giàu tinh bột, cây trồng thiết yếu của nông trại.',
-      cropKey: 'potato'
-    },
-    {
-      id: 's_corn',
-      cat: 'seeds',
-      name: 'Hạt giống Bắp ngô',
-      price: 18,
-      sprite: 's_corn',
-      duration: '8 phút',
-      usage: 'Thu hoạch bắp ngô vàng để chuẩn bị bước lên TOEIC 600.',
-      desc: 'Hạt bắp vàng óng ả, sản lượng dồi dào, giá trị bán cao.',
-      cropKey: 'corn'
-    },
+  readonly seedItems: ShopItem[] = CROP_CATALOG.map(crop => ({
+    id: crop.shopId,
+    cat: 'seeds',
+    name: crop.seedNameVi || `Hạt giống ${crop.nameVi}`,
+    price: crop.seedPrice || crop.price,
+    sprite: crop.shopId,
+    duration: formatGrowthDuration(crop.growthMinutes),
+    usage: crop.usage,
+    desc: crop.desc,
+    cropKey: crop.id
+  }));
 
-    // --- HẠNG II: HOA TRÁI (Lv. 4-6) ---
-    {
-      id: 's_tomato',
-      cat: 'seeds',
-      name: 'Hạt giống Cà chua',
-      price: 22,
-      sprite: 's_tomato',
-      duration: '10 phút',
-      usage: 'Trồng giàn cà chua đỏ mọng nước mở khóa bài học TOEIC 600.',
-      desc: 'Nông sản chủ lực mùa vụ, quả mọng đỏ tươi.',
-      cropKey: 'tomato'
-    },
-    {
-      id: 's_strawberry',
-      cat: 'seeds',
-      name: 'Hạt giống Dâu tây',
-      price: 25,
-      sprite: 's_strawberry',
-      duration: '10 phút',
-      usage: 'Trồng dâu tây chín đỏ mọng để thu hoạch nông sản giá trị cao.',
-      desc: 'Trái dâu tây thơm ngọt thanh tao mang lại nguồn thu lớn.',
-      cropKey: 'strawberry'
-    },
-    {
-      id: 's_orange',
-      cat: 'seeds',
-      name: 'Hạt giống Cam sành',
-      price: 26,
-      sprite: 's_orange',
-      duration: '11 phút',
-      usage: 'Trồng cây cam sai quả mọng vàng ươm.',
-      desc: 'Cam sành vỏ mỏng mọng nước, giàu vitamin C.',
-      cropKey: 'orange'
-    },
-    {
-      id: 's_pumpkin',
-      cat: 'seeds',
-      name: 'Hạt giống Bí ngô',
-      price: 18,
-      sprite: 's_pumpkin',
-      duration: '12 phút',
-      usage: 'Trồng bí ngô vàng cam tròn xoe thu hoạch nhiều nông sản.',
-      desc: 'Trái bí ngô tròn vàng cam đậm đà, biểu tượng của mùa vụ bội thu.',
-      cropKey: 'pumpkin'
-    },
-    {
-      id: 's_wheat',
-      cat: 'seeds',
-      name: 'Hạt giống Lúa mì',
-      price: 20,
-      sprite: 's_wheat',
-      duration: '12 phút',
-      usage: 'Gieo lúa mì trên ruộng đất màu mỡ cho thu hoạch lớn.',
-      desc: 'Những bông lúa mì vàng óng trĩu hạt, biểu tượng của sự no ấm.',
-      cropKey: 'wheat'
-    },
-
-    // --- HẠNG III: LÀM VƯỜN (Lv. 7-9) ---
-    {
-      id: 's_lemon',
-      cat: 'seeds',
-      name: 'Hạt giống Chanh',
-      price: 22,
-      sprite: 's_lemon',
-      duration: '14 phút',
-      usage: 'Trồng cây chanh vàng mọng nước cho hương thơm thanh mát.',
-      desc: 'Chanh vàng thanh mát, mọng nước giàu dưỡng chất.',
-      cropKey: 'lemon'
-    },
-    {
-      id: 's_blueberry',
-      cat: 'seeds',
-      name: 'Hạt giống Việt quất',
-      price: 24,
-      sprite: 's_blueberry',
-      duration: '14 phút',
-      usage: 'Trồng bụi việt quất ngọt thơm mở khóa chuyên đề TOEIC 800.',
-      desc: 'Những chùm việt quất tím thẫm mọng nước, giàu chất chống oxy hóa.',
-      cropKey: 'blueberry'
-    },
-    {
-      id: 's_peach',
-      cat: 'seeds',
-      name: 'Hạt giống Đào tiên',
-      price: 28,
-      sprite: 's_peach',
-      duration: '15 phút',
-      usage: 'Gieo hạt đào tiên hồng thắm, nông sản cao cấp vùng ôn đới.',
-      desc: 'Trái đào hồng nhung thơm ngọt dịu dàng, hương vị thanh tao.',
-      cropKey: 'peach'
-    },
-    {
-      id: 's_banana',
-      cat: 'seeds',
-      name: 'Hạt giống Chuối chín',
-      price: 30,
-      sprite: 's_banana',
-      duration: '15 phút',
-      usage: 'Trồng chuối vàng ươm cho năng suất dồi dào.',
-      desc: 'Nải chuối vàng ươm giàu năng lượng cho các buổi học tập chuyên sâu.',
-      cropKey: 'banana'
-    },
-    {
-      id: 's_watermelon',
-      cat: 'seeds',
-      name: 'Hạt giống Dưa hấu',
-      price: 32,
-      sprite: 's_watermelon',
-      duration: '16 phút',
-      usage: 'Trồng dưa hấu giải nhiệt thanh mát, bán được giá cao tại Chợ.',
-      desc: 'Trái dưa hấu vỏ xanh ruột đỏ mọng ngọt, giải khát ngày hè oi ả.',
-      cropKey: 'watermelon'
-    },
-
-    // --- HẠNG IV: THƯỢNG HẠNG (Lv. 10+) ---
-    {
-      id: 's_grapes',
-      cat: 'seeds',
-      name: 'Hạt giống Nho tím',
-      price: 38,
-      sprite: 's_grapes',
-      duration: '18 phút',
-      usage: 'Trồng giàn nho tím trĩu quả đồng quê mở bài TOEIC 900.',
-      desc: 'Chùm nho tím đậm đà vị ngọt tự nhiên, giá trị kinh tế rất cao.',
-      cropKey: 'grapes'
-    },
-    {
-      id: 's_apple',
-      cat: 'seeds',
-      name: 'Hạt giống Táo đỏ',
-      price: 40,
-      sprite: 's_apple',
-      duration: '18 phút',
-      usage: 'Trồng cây táo đỏ trĩu cành, nông sản thượng hạng hàng đầu.',
-      desc: 'Táo đỏ giòn ngọt, mang lại nguồn Xu khổng lồ khi bán.',
-      cropKey: 'apple'
-    },
-    {
-      id: 's_cherry',
-      cat: 'seeds',
-      name: 'Hạt giống Cherry',
-      price: 50,
-      sprite: 's_cherry',
-      duration: '20 phút',
-      usage: 'Trồng cherry đỏ mọng thượng phẩm đỉnh cao của nông trại.',
-      desc: 'Loại quả hoàng gia mang lại giá trị bán cao nhất toàn nông trại.',
-      cropKey: 'cherry'
-    },
-
+  readonly careDecorItems: ShopItem[] = [
     // --- VẬT PHẨM CHĂM SÓC & DECOR ---
     {
       id: 'c_water',
@@ -779,8 +584,8 @@ export class ShopComponent {
       name: 'Phân bón tăng tốc (VIP)',
       price: 35,
       sprite: 'speed_fertilizer',
-      duration: '-5 phút',
-      usage: 'Giảm ngay 5 phút sinh trưởng cho cây đang lớn.',
+      duration: '-10 phút',
+      usage: 'Giảm ngay 10 phút sinh trưởng cho cây đang lớn.',
       desc: 'Rút ngắn thời gian chín của cây trồng đang sinh trưởng.'
     },
     {
@@ -824,6 +629,25 @@ export class ShopComponent {
       desc: 'Gói tiện lợi mở đầu cuộc hành trình.'
     }
   ];
+
+  get items(): ShopItem[] {
+    return [...this.seedItems, ...this.careDecorItems];
+  }
+
+  isSeedUnlocked(crop: CropCatalogItem): boolean {
+    const ws = this.workspaceService.currentWorkspace(); // Automatically points to 'en' or 'ja'
+    return ws.level >= crop.minLevel && (ws.completedLessonCodes?.length ?? 0) >= crop.minCompletedTopics;
+  }
+
+  getSeedLockLabel(crop: CropCatalogItem): string {
+    const langName = this.workspaceService.activeLang() === 'ja' ? 'Tiếng Nhật' : 'Tiếng Anh';
+    if (crop.minCompletedTopics <= 0) return `Cần Lv.${crop.minLevel}`;
+    return `Cần Lv.${crop.minLevel} & Hoàn thành ${crop.minCompletedTopics} bài ${langName}`;
+  }
+
+  getCrop(cropId: string): CropCatalogItem | undefined {
+    return CROP_CATALOG.find(c => c.id === cropId);
+  }
 
   filteredProducts(): ShopItem[] {
     const cat = this.selectedCat();

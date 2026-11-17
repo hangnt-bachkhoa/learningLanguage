@@ -77,13 +77,24 @@ export function computePlotCountdown(
 
   // Tiến độ từ 1% đến 99%
   const progress = Math.min(99, Math.max(1, Math.floor(((totalSec - remainingSec) / totalSec) * 100)));
-  const mm = String(Math.floor(remainingSec / 60)).padStart(2, '0');
-  const ss = String(remainingSec % 60).padStart(2, '0');
+
+  // Định dạng đếm ngược HH:mm:ss khi >= 3600s (>= 1 giờ), mm:ss khi < 1 giờ
+  let timeLabel = '';
+  if (remainingSec >= 3600) {
+    const hh = String(Math.floor(remainingSec / 3600)).padStart(2, '0');
+    const mm = String(Math.floor((remainingSec % 3600) / 60)).padStart(2, '0');
+    const ss = String(remainingSec % 60).padStart(2, '0');
+    timeLabel = `${hh}:${mm}:${ss}`;
+  } else {
+    const mm = String(Math.floor(remainingSec / 60)).padStart(2, '0');
+    const ss = String(remainingSec % 60).padStart(2, '0');
+    timeLabel = `${mm}:${ss}`;
+  }
 
   return {
     isReady: false,
     progress,
-    label: `${mm}:${ss}`,
+    label: timeLabel,
     remainingSeconds: remainingSec,
     status: 'growing'
   };

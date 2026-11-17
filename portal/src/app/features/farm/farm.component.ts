@@ -319,7 +319,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                     [disabled]="(state.inventory().care.speedFertilizer || 0) === 0"
                     (click)="speedFertilizeSelectedPlot()">
                     <app-pixel-icon name="icon_sparkle" [size]="15"></app-pixel-icon>
-                    <span>Dùng Tăng tốc (-5') (Còn {{ state.inventory().care.speedFertilizer || 0 }})</span>
+                    <span>Dùng Tăng tốc (-10') (Còn {{ state.inventory().care.speedFertilizer || 0 }})</span>
                   </button>
                 </div>
                 @if ((state.inventory().care.speedFertilizer || 0) === 0) {
@@ -1929,8 +1929,8 @@ export class FarmComponent implements OnInit {
     id: c.id,
     nameVi: c.nameVi,
     growthTime: c.duration,
-    coins: c.price * 2,
-    xp: c.requiredXp || 20,
+    coins: c.sellPrice,
+    xp: c.price * 2,
     desc: c.desc,
     icon: c.matureSvg
   }));

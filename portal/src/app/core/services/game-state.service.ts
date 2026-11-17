@@ -510,6 +510,22 @@ export class GameStateService {
   // =========================================================================
 
   serializeCurrentWorkspace(): LanguageWorkspaceState {
+    const completedCodes = new Set<string>();
+    if (this.activeLang() === 'ja') {
+      const jaStars = this.topicStars() || {};
+      for (const [code, item] of Object.entries(jaStars)) {
+        if (item && item.bestStarsClaimed > 0) {
+          completedCodes.add(code);
+        }
+      }
+    }
+    const prog = this.userLessonProgress() || {};
+    for (const [code, item] of Object.entries(prog)) {
+      if (item && item.bestStarsClaimed > 0) {
+        completedCodes.add(code);
+      }
+    }
+
     return {
       langCode: this.activeLang(),
       level: this.level(),
@@ -528,7 +544,8 @@ export class GameStateService {
       dailyReviewRewardsClaimed: this.dailyReviewRewardsClaimed(),
       lastReviewRewardDate: this.lastReviewRewardDate(),
       masteredKana: this.masteredKana(),
-      topicStars: this.topicStars()
+      topicStars: this.topicStars(),
+      completedLessonCodes: Array.from(completedCodes)
     };
   }
 
@@ -777,22 +794,16 @@ export class GameStateService {
   isCropUnlocked(cropId: string): boolean {
     const crop = CROP_CATALOG.find(c => c.id === cropId);
     if (!crop) return true;
-    // Cà rốt khởi đầu luôn mở sẵn
-    if (crop.id === 'carrot') return true;
-
-    // 1. Kiểm tra Level tối thiểu (tuyệt đối không kiểm tra currentXp)
-    const minLevel = crop.minLevel ?? crop.requiredLevel ?? 1;
-    if (this.level() < minLevel) return false;
-
-    // 2. Kiểm tra chủ đề bài học tiên quyết đã mở khóa
-    if (crop.requiredLessonId) {
-      const lesson = this.lessons().find(l => l.id === crop.requiredLessonId);
-      if (lesson && !lesson.isUnlocked) {
-        return false;
-      }
+    if (crop.id === 'carrot' || crop.id === 'cucumber') {
+      if ((crop.minCompletedTopics || 0) <= 0 && (crop.minLevel || 1) <= 1) return true;
     }
 
-    return true;
+    const ws = this.langContext.currentWorkspace();
+    const completedCount = ws.completedLessonCodes?.length ?? 0;
+    const minLevel = crop.minLevel ?? crop.requiredLevel ?? 1;
+    const minCompleted = crop.minCompletedTopics ?? 0;
+
+    return ws.level >= minLevel && completedCount >= minCompleted;
   }
 
   getCropLockInfo(cropId: string): CropLockInfo {
@@ -809,20 +820,22 @@ export class GameStateService {
       };
     }
 
+    const ws = this.langContext.currentWorkspace();
+    const completedCount = ws.completedLessonCodes?.length ?? 0;
     const minLevel = crop.minLevel ?? crop.requiredLevel ?? 1;
-    const isUnlocked = this.isCropUnlocked(cropId);
+    const minCompleted = crop.minCompletedTopics ?? 0;
+    const isUnlocked = ws.level >= minLevel && completedCount >= minCompleted;
+    const langName = this.activeLang() === 'ja' ? 'Tiếng Nhật' : 'Tiếng Anh';
+
     const missingReasons: string[] = [];
-
-    if (this.level() < minLevel) {
-      missingReasons.push(`Cần Cấp độ ${minLevel} (hiện tại: Lv.${this.level()})`);
+    if (ws.level < minLevel) {
+      missingReasons.push(`Cần Cấp độ ${minLevel} (hiện tại: Lv.${ws.level})`);
+    }
+    if (completedCount < minCompleted) {
+      missingReasons.push(`Hoàn thành ${minCompleted} bài ${langName} (hiện tại: ${completedCount} bài)`);
     }
 
-    if (crop.requiredLessonId) {
-      const lesson = this.lessons().find(l => l.id === crop.requiredLessonId);
-      if (!lesson || !lesson.isUnlocked) {
-        missingReasons.push(`Mở khóa bài học "${crop.requiredLessonTitle || ('Bài #' + crop.requiredLessonId)}"`);
-      }
-    }
+    const lockTitle = minCompleted > 0 ? `Hoàn thành ${minCompleted} bài ${langName}` : '';
 
     return {
       isUnlocked,
@@ -830,7 +843,7 @@ export class GameStateService {
       tierName: crop.tierNameVi,
       requiredXp: 0,
       requiredLevel: minLevel,
-      requiredLessonTitle: crop.requiredLessonTitle,
+      requiredLessonTitle: lockTitle,
       missingReasons
     };
   }
@@ -1857,13 +1870,13 @@ export class GameStateService {
       care: { ...inv.care, speedFertilizer: Math.max(0, (inv.care.speedFertilizer || 0) - 1) }
     }));
 
-    // Giảm 5 phút
-    const newHarvestMs = Math.max(nowMs, harvestMs - 5 * 60 * 1000);
+    // Giảm 10 phút (-10' per use theo thiết kế cân bằng cây 15m–240m)
+    const newHarvestMs = Math.max(nowMs, harvestMs - 10 * 60 * 1000);
     const isReady = newHarvestMs <= nowMs;
     const updatedHarvestableAtUtc = new Date(newHarvestMs).toISOString();
 
     const cropConfig = CROP_CATALOG.find(c => c.id === plot.crop);
-    const growthMinutes = cropConfig?.growthMinutes || 5;
+    const growthMinutes = cropConfig?.growthMinutes || 20;
     const totalSec = Math.max(1, growthMinutes * 60);
     const remainingSec = Math.max(0, Math.ceil((newHarvestMs - nowMs) / 1000));
     const progress = isReady ? 100 : Math.min(99, Math.max(1, Math.floor(((totalSec - remainingSec) / totalSec) * 100)));
@@ -1879,9 +1892,9 @@ export class GameStateService {
     this.emitQuestEvent('FARM_CARE_ACTION', `speedFertilize:${plotIndex}:${Date.now()}`);
     this.saveToStorage();
     if (isReady) {
-      this.showToast(`⚡ Đã dùng Phân bón tăng tốc (-5 phút)! Cây đã chín ngay lập tức.`);
+      this.showToast(`⚡ Đã dùng Phân bón tăng tốc (-10 phút)! Cây đã chín ngay lập tức.`);
     } else {
-      this.showToast(`⚡ Đã dùng Phân bón tăng tốc (-5 phút) cho ô #${plotIndex + 1}!`);
+      this.showToast(`⚡ Đã dùng Phân bón tăng tốc (-10 phút) cho ô #${plotIndex + 1}!`);
     }
 
     if (this.isApiConnected()) {

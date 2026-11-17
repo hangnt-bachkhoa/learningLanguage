@@ -24,6 +24,7 @@ export interface LanguageWorkspaceState {
   // Japanese-specific state
   masteredKana?: string[];
   topicStars?: Record<string, { unlocked: boolean; bestStarsClaimed: 0 | 1 | 2 | 3 }>;
+  completedLessonCodes: string[]; // Evaluated for seed unlocks
 }
 
 export interface GlobalProfileState {
@@ -266,6 +267,7 @@ export class LanguageContextService {
             this.mergeLegacyJapaneseIfMissing(ws);
           }
 
+          ws.completedLessonCodes = this.extractCompletedLessonCodes(ws, lang);
           return ws;
         }
       } catch (e) {
@@ -372,8 +374,33 @@ export class LanguageContextService {
       topicStars: {
         ja_n5_01: { unlocked: true, bestStarsClaimed: 0 },
         ja_n5_02: { unlocked: true, bestStarsClaimed: 0 }
-      }
+      },
+      completedLessonCodes: []
     };
+  }
+
+  extractCompletedLessonCodes(ws: Partial<LanguageWorkspaceState>, lang: LangCode): string[] {
+    const codes = new Set<string>();
+    if (Array.isArray(ws.completedLessonCodes)) {
+      ws.completedLessonCodes.forEach(c => { if (c) codes.add(String(c)); });
+    }
+    if (lang === 'ja' || ws.langCode === 'ja') {
+      if (ws.topicStars) {
+        Object.entries(ws.topicStars).forEach(([code, item]) => {
+          if (item && item.bestStarsClaimed > 0) {
+            codes.add(code);
+          }
+        });
+      }
+    }
+    if (ws.lessonProgress) {
+      Object.entries(ws.lessonProgress).forEach(([key, prog]) => {
+        if (prog && prog.bestStarsClaimed > 0) {
+          codes.add(key);
+        }
+      });
+    }
+    return Array.from(codes);
   }
 
   /**
@@ -405,7 +432,8 @@ export class LanguageContextService {
     try {
       const cleanWs: LanguageWorkspaceState = {
         ...ws,
-        langCode: lang
+        langCode: lang,
+        completedLessonCodes: this.extractCompletedLessonCodes(ws, lang)
       };
 
       const key = `${this.WORKSPACE_PREFIX}${lang}${this.WORKSPACE_VERSION}`;
@@ -503,7 +531,7 @@ export class LanguageContextService {
         const rawReviews = localStorage.getItem('english_farm_vocab_reviews_v1');
         const rawDailyRewards = localStorage.getItem('english_farm_review_daily_rewards_v1');
 
-        return {
+        const migratedWs: LanguageWorkspaceState = {
           langCode: 'en',
           level: typeof main.level === 'number' ? main.level : 1,
           currentXp: typeof main.currentXp === 'number' ? main.currentXp : 0,
@@ -524,8 +552,11 @@ export class LanguageContextService {
           },
           ebbinghausReviews: rawReviews ? JSON.parse(rawReviews) : [],
           dailyReviewRewardsClaimed: rawDailyRewards ? JSON.parse(rawDailyRewards).claimed || 0 : 0,
-          lastReviewRewardDate: rawDailyRewards ? JSON.parse(rawDailyRewards).date || '' : ''
+          lastReviewRewardDate: rawDailyRewards ? JSON.parse(rawDailyRewards).date || '' : '',
+          completedLessonCodes: []
         };
+        migratedWs.completedLessonCodes = this.extractCompletedLessonCodes(migratedWs, 'en');
+        return migratedWs;
       } catch (err) {
         console.warn('Lỗi migrate dữ liệu Tiếng Anh:', err);
       }
@@ -547,7 +578,7 @@ export class LanguageContextService {
           .filter(([_, s]: any) => s && s.bookmarked)
           .map(([id]) => id);
 
-        return {
+        const migratedJa: LanguageWorkspaceState = {
           ...def,
           learnedWords,
           bookmarkedWords,
@@ -556,6 +587,8 @@ export class LanguageContextService {
           masteredKana: rawKana ? JSON.parse(rawKana) : [],
           ebbinghausReviews: rawReviews ? JSON.parse(rawReviews) : []
         };
+        migratedJa.completedLessonCodes = this.extractCompletedLessonCodes(migratedJa, 'ja');
+        return migratedJa;
       } catch (err) {
         console.warn('Lỗi migrate dữ liệu Tiếng Nhật:', err);
       }
@@ -563,3 +596,5 @@ export class LanguageContextService {
     return null;
   }
 }
+
+export { LanguageContextService as WorkspaceService };

@@ -3,7 +3,8 @@ export interface CropCatalog {
   nameVi: string;
   seedNameVi: string;
   shopId: string;
-  price: number; // Giá mua hạt
+  price: number; // Giá mua hạt (seedPrice)
+  seedPrice: number;
   sellPrice: number; // Giá bán nông sản tại Chợ (~1.6x - 1.8x seedPrice)
   duration: string;
   growthMinutes: number; // Thời gian sinh trưởng tính bằng phút (Rule 2)
@@ -18,6 +19,7 @@ export interface CropCatalog {
   tierNameVi: string;
   minLevel: number; // Điều kiện Level thay cho XP
   requiredLevel: number;
+  minCompletedTopics: number; // Evaluated against currentWorkspace().completedLessonCodes.length
   requiredXp?: number;
   requiredLessonId?: number;
   requiredLessonCode?: string;
