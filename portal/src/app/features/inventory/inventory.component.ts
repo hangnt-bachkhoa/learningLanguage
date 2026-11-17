@@ -63,6 +63,11 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
             <div class="slot-name">Phân bón</div>
             <div class="slot-qty">{{ state.inventory().care.fertilizer }} túi</div>
           </div>
+          <div class="inv-slot">
+            <div class="slot-sprite" [innerHTML]="getSprite('speed_fertilizer') | safeHtml"></div>
+            <div class="slot-name">Tăng tốc (-5p)</div>
+            <div class="slot-qty">{{ state.inventory().care.speedFertilizer || 0 }} túi</div>
+          </div>
         </div>
       </div>
     </div>

@@ -8,11 +8,12 @@ import { FarmApiService, QuizQuestionDto, QuizSubmitResultDto, QuizSessionDto } 
 import { getDefaultQuizSession } from '../../core/constants/default-quiz-questions.constant';
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.constant';
+import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
 
 @Component({
   selector: 'app-quiz',
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, PosTagBadgeComponent],
   template: `
     <div class="quiz-screen">
       <!-- ======================================================== -->
@@ -71,6 +72,9 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
                     <div class="sheet-header correct-header">
                       <span class="status-icon">✓</span>
                       <span class="status-title">Chính xác!</span>
+                      @if (currentWordType(); as wt) {
+                        <app-pos-tag [type]="wt" mode="full" [showQuestionHint]="true"></app-pos-tag>
+                      }
                     </div>
                     @if (feedbackDetail()?.explanation; as exp) {
                       <p class="sheet-sub">{{ exp }}</p>
@@ -79,6 +83,9 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
                     <div class="sheet-header wrong-header">
                       <span class="status-icon">✕</span>
                       <span class="status-title">Chưa chính xác · Đáp án đúng: {{ feedbackDetail()?.correctText }}</span>
+                      @if (currentWordType(); as wt) {
+                        <app-pos-tag [type]="wt" mode="full" [showQuestionHint]="true"></app-pos-tag>
+                      }
                     </div>
                     @if (feedbackDetail()?.explanation; as exp) {
                       <p class="sheet-sub">{{ exp }}</p>
@@ -1164,6 +1171,7 @@ export class QuizComponent implements OnInit {
 
   // CÂU HỎI ĐẦU HÀNG ĐỢI HIỆN TẠI
   currentQuestion = computed(() => this.queue()[0] || null);
+  currentWordType = computed(() => this.getWordType(this.currentQuestion()?.word));
 
   // TIẾN ĐỘ ĐƠN ĐIỆU (MONOTONIC): Chỉ tăng khi 1 câu gốc được trả lời đúng
   progressPercent = computed(() => {
@@ -1340,6 +1348,12 @@ export class QuizComponent implements OnInit {
     if (!p) return '';
     const trimmed = p.replace(/^\/+|\/+$/g, '').trim();
     return trimmed ? `/${trimmed}/` : '';
+  }
+
+  getWordType(word?: string | null): string {
+    if (!word) return 'noun';
+    const info = this.state.findVocab(word);
+    return info?.vocab?.wordType || 'noun';
   }
 
   selectOption(idx: number) {

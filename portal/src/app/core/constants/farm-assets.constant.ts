@@ -152,15 +152,7 @@ export const FARM_ASSETS = {
 
   speedFertilizer: `<img src="assets/sprites/items/icon_speed_fertilizer.svg" class="pixel-art tool-pixel-img" alt="Phân bón tăng tốc" width="46" height="46" style="image-rendering: pixelated; object-fit: contain; display: block;" />`,
 
-  harvestBasket: `
-    <svg viewBox="0 0 60 60" width="46" height="46">
-      <path d="M16 28 C16 10 44 10 44 28" fill="none" stroke="#634525" stroke-width="3.5" stroke-linecap="round"/>
-      <path d="M10 26 H50 L44 50 H16 Z" fill="#B3804D" stroke="#57381A" stroke-width="2.5"/>
-      <line x1="13" y1="32" x2="47" y2="32" stroke="#8A5A2B" stroke-width="2"/>
-      <line x1="15" y1="38" x2="45" y2="38" stroke="#8A5A2B" stroke-width="2"/>
-      <line x1="17" y1="44" x2="43" y2="44" stroke="#8A5A2B" stroke-width="2"/>
-    </svg>
-  `,
+  harvestBasket: `<img src="assets/sprites/items/icon_harvest_basket.svg" class="pixel-art tool-pixel-img" alt="Thu hoạch" width="46" height="46" style="image-rendering: pixelated; object-fit: contain; display: block;" />`,
 
   // Sketch Cối xay gió
   windmillSketch: `

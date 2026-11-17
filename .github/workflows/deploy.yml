@@ -35,7 +35,9 @@ jobs:
         run: npm --prefix portal ci
 
       - name: Build
-        run: npm --prefix portal run build -- --base-href=/learningLanguage/
+        run: |
+          npm --prefix portal run build -- --base-href=/learningLanguage/
+          cp portal/dist/language-farm-portal/browser/index.html portal/dist/language-farm-portal/browser/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

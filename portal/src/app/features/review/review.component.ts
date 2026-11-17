@@ -8,6 +8,7 @@ import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.
 import { VocabularyDto } from '../../core/services/farm-api.service';
 import { ReviewPlannerComponent } from './review-planner.component';
 import { ProgressDashboardComponent } from './progress-dashboard.component';
+import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
 
 interface ReviewQuizQuestion {
   vocabId: number;
@@ -23,7 +24,7 @@ interface ReviewQuizQuestion {
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReviewPlannerComponent, ProgressDashboardComponent],
+  imports: [CommonModule, RouterLink, ReviewPlannerComponent, ProgressDashboardComponent, PosTagBadgeComponent],
   template: `
     <div class="review-screen">
 
@@ -99,7 +100,7 @@ interface ReviewQuizQuestion {
             <div class="vintage-card quiz-card">
               <div class="card-top-tag">
                 <span class="tag-badge">⚡ Active Recall</span>
-                <span class="tag-type">[{{ q.type || 'Từ vựng' }}]</span>
+                <app-pos-tag [type]="q.type" mode="compact"></app-pos-tag>
               </div>
 
               <!-- Thẻ từ vựng câu hỏi -->

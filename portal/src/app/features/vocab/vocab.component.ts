@@ -4,11 +4,12 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { GameStateService } from '../../core/services/game-state.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
+import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
 
 @Component({
   selector: 'app-vocab',
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, PosTagBadgeComponent],
   template: `
     <div class="vocab-screen">
       <!-- Header điều hướng: < Danh sách bài học | Tiêu đề chủ đề | < 1/24 > -->
@@ -46,6 +47,10 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
               <span class="ipa-string">{{ currentWord.ipa }}</span>
               <button class="speaker-pill" (click)="state.speak(currentWord.word)" title="Nghe phát âm">🔊</button>
             </div>
+            <!-- Thẻ loại từ thân thiện cho người mới bắt đầu -->
+            <div class="pos-badge-hero-row" style="margin-top: 8px;">
+              <app-pos-tag [type]="currentWord.type" mode="full" [showQuestionHint]="true"></app-pos-tag>
+            </div>
           </div>
           <div class="botanical-art-box" [innerHTML]="assets.botanicalFlower | safeHtml"></div>
         </div>
@@ -54,7 +59,9 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         <div class="vocab-details-table">
           <div class="table-row">
             <div class="col-label">Loại từ</div>
-            <div class="col-value">{{ currentWord.type }}</div>
+            <div class="col-value">
+              <app-pos-tag [type]="currentWord.type" mode="full" [showQuestionHint]="true"></app-pos-tag>
+            </div>
           </div>
 
           <div class="table-row">
@@ -119,6 +126,38 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
           </span>
           <span class="cta-arrow">Bắt đầu ›</span>
         </a>
+      </div>
+
+      <!-- Danh sách từ trong chủ đề (Vocabulary List View với app-pos-tag compact) -->
+      <div class="vintage-card vocab-list-card">
+        <div class="list-card-header">
+          <span class="list-title">Danh sách từ trong bài ({{ displayWords.length }} từ)</span>
+          <span class="learned-count-pill">{{ learnedInLessonCount() }}/{{ displayWords.length }} Đã thuộc</span>
+        </div>
+        <div class="vocab-table-wrap">
+          <table class="vocab-table">
+            <tbody>
+              @for (w of displayWords; track w.word; let idx = $index) {
+                <tr class="vocab-row" [class.active-row]="idx === currentIndex()" (click)="selectWordIndex(idx)">
+                  <td class="col-idx">#{{ idx + 1 }}</td>
+                  <td class="col-word">
+                    <strong class="row-word">{{ w.word }}</strong>
+                    <span class="row-ipa">{{ w.ipa }}</span>
+                  </td>
+                  <td class="col-pos">
+                    <app-pos-tag [type]="w.type" mode="compact"></app-pos-tag>
+                  </td>
+                  <td class="col-meaning">{{ w.meaning }}</td>
+                  <td class="col-status">
+                    @if (state.learnedWords().includes(w.word)) {
+                      <span class="badge-done" title="Đã thuộc">✓</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   `,
@@ -411,6 +450,97 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
     }
 
     /* ================= RESPONSIVE MOBILE (< 480px) ================= */
+    /* VOCAB LIST CARD */
+    .vocab-list-card {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--border, #D9C8B5);
+      border-radius: var(--radius-md, 12px);
+      background: #FFFDF9;
+    }
+    .list-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #EFE6D9;
+    }
+    .list-title {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--navy, #263847);
+    }
+    .learned-count-pill {
+      font-size: 11px;
+      font-weight: 600;
+      color: #78815D;
+      background: #EAE6DB;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .vocab-table-wrap {
+      overflow-x: auto;
+    }
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .vocab-row {
+      cursor: pointer;
+      border-bottom: 1px solid #F0E8DC;
+      transition: background 0.12s ease;
+    }
+    .vocab-row:hover {
+      background: #F9F5EC;
+    }
+    .vocab-row.active-row {
+      background: #F3ECE0;
+      border-left: 3px solid #78815D;
+    }
+    .vocab-row td {
+      padding: 8px 6px;
+      vertical-align: middle;
+    }
+    .col-idx {
+      width: 28px;
+      color: #9C8E80;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .col-word {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 90px;
+    }
+    .row-word {
+      color: var(--navy, #263847);
+      font-size: 13.5px;
+    }
+    .row-ipa {
+      font-size: 11px;
+      color: var(--ink-muted);
+    }
+    .col-pos {
+      min-width: 110px;
+    }
+    .col-meaning {
+      color: #384553;
+      font-size: 12.5px;
+    }
+    .col-status {
+      width: 24px;
+      text-align: right;
+    }
+    .badge-done {
+      color: #557A3C;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
     @media (max-width: 480px) {
       .vocab-screen {
         padding-bottom: 20px;
@@ -574,6 +704,18 @@ export class VocabComponent implements OnInit {
   prevWord() {
     if (this.currentIndex() > 0) {
       this.currentIndex.update(i => i - 1);
+    }
+  }
+
+  learnedInLessonCount = computed(() => {
+    const words = this.displayWords;
+    const learned = this.state.learnedWords();
+    return words.filter(w => learned.includes(w.word)).length;
+  });
+
+  selectWordIndex(idx: number) {
+    if (idx >= 0 && idx < this.displayWords.length) {
+      this.currentIndex.set(idx);
     }
   }
 

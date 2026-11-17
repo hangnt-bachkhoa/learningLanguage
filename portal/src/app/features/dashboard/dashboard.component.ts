@@ -33,7 +33,9 @@ import { DailyQuestsWidgetComponent } from './daily-quests-widget.component';
           <div class="book-emboss-border">
             <div class="book-title-main">Vocabulary</div>
             <div class="book-sub">Learning Planner</div>
-            <div class="book-emblem">📖</div>
+            <div class="book-emblem">
+              <img src="assets/icons/icon_vocabulary.svg" class="pixel-art" width="28" height="28" alt="Vocabulary" />
+            </div>
           </div>
         </a>
 
@@ -42,7 +44,9 @@ import { DailyQuestsWidgetComponent } from './daily-quests-widget.component';
           <div class="book-emboss-border">
             <div class="book-title-main">Grammar</div>
             <div class="book-sub">Learning Planner</div>
-            <div class="book-emblem">🏛️</div>
+            <div class="book-emblem">
+              <img src="assets/icons/icon_grammar.svg" class="pixel-art" width="28" height="28" alt="Grammar" />
+            </div>
           </div>
         </a>
 
@@ -51,7 +55,9 @@ import { DailyQuestsWidgetComponent } from './daily-quests-widget.component';
           <div class="book-emboss-border">
             <div class="book-title-main">Listening</div>
             <div class="book-sub">Practice Planner</div>
-            <div class="book-emblem">🎧</div>
+            <div class="book-emblem">
+              <img src="assets/icons/icon_practice.svg" class="pixel-art" width="28" height="28" alt="Listening" />
+            </div>
           </div>
         </a>
       </div>

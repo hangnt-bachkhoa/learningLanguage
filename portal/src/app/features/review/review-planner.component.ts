@@ -1,14 +1,15 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../core/services/game-state.service';
 import { UserVocabReview, ReviewStage, DailyCohortRow } from '../../core/models/game.models';
 import { formatVnDate, formatShortVnDate } from '../../core/utils/ebbinghaus.util';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
+import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
 
 @Component({
   selector: 'app-review-planner',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PosTagBadgeComponent],
   template: `
     <div class="review-planner-container">
       <!-- 1. TOP SUMMARY BAR (Thanh tổng quan điều phối) -->
@@ -87,14 +88,14 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
                 @for (cohort of state.dailyCohorts(); track cohort.learnedDate) {
                   <tr>
                     <td class="col-no">#{{ cohort.index }}</td>
-                    <td class="col-date">
+                    <td class="col-date clickable" (click)="toggleCohortExpand(cohort.learnedDate)" title="Bấm để xem danh sách từ và loại từ">
                       <span class="date-main">{{ formatDate(cohort.learnedDate) }}</span>
                       @if (cohort.learnedDate === state.todayVn()) {
                         <span class="today-tag">Hôm nay</span>
                       }
                     </td>
-                    <td class="col-count">
-                      <span class="count-bubble">{{ cohort.count }} từ</span>
+                    <td class="col-count clickable" (click)="toggleCohortExpand(cohort.learnedDate)" title="Bấm để xem danh sách từ và loại từ">
+                      <span class="count-bubble">{{ cohort.count }} từ ▾</span>
                     </td>
 
                     <!-- Cột 1: Lần đầu (Luôn hoàn thành khi vừa học) -->
@@ -174,6 +175,25 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
                       }
                     </td>
                   </tr>
+
+                  <!-- Chi tiết danh sách từ vựng trong ngày học kèm thẻ loại từ compact -->
+                  @if (expandedCohortDate() === cohort.learnedDate) {
+                    <tr class="cohort-words-subrow">
+                      <td colspan="7">
+                        <div class="cohort-words-box">
+                          <div class="subrow-title">Từ vựng học ngày {{ formatDate(cohort.learnedDate) }}:</div>
+                          <div class="cohort-words-grid">
+                            @for (w of cohort.words; track w.vocabId) {
+                              <div class="cohort-word-chip">
+                                <span class="chip-word">{{ w.word }}</span>
+                                <app-pos-tag [type]="getWordType(w.word)" mode="compact"></app-pos-tag>
+                              </div>
+                            }
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  }
                 }
               </tbody>
             </table>
@@ -577,6 +597,46 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
         text-align: center;
         justify-content: center;
       }
+      .clickable {
+        cursor: pointer;
+      }
+      .clickable:hover {
+        text-decoration: underline;
+      }
+      .cohort-words-subrow td {
+        background: #FAF7F0;
+        padding: 12px 14px;
+        border-bottom: 2px solid #EAE3D5;
+      }
+      .cohort-words-box {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .subrow-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--navy, #263847);
+      }
+      .cohort-words-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .cohort-word-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #FFFDF9;
+        border: 1px solid #D9C8B5;
+        border-radius: 8px;
+        padding: 4px 8px;
+        font-size: 12.5px;
+      }
+      .chip-word {
+        font-weight: 700;
+        color: var(--navy, #263847);
+      }
       .table-wrapper-card {
         padding: 14px 12px;
       }
@@ -588,7 +648,19 @@ export class ReviewPlannerComponent {
   assets = FARM_ASSETS;
   Math = Math;
 
+  expandedCohortDate = signal<string | null>(null);
+
   startSession = output<UserVocabReview[]>();
+
+  toggleCohortExpand(dateStr: string) {
+    this.expandedCohortDate.update(curr => curr === dateStr ? null : dateStr);
+  }
+
+  getWordType(word?: string): string {
+    if (!word) return 'noun';
+    const info = this.state.findVocab(word);
+    return info?.vocab?.wordType || 'noun';
+  }
 
   formatDate(dateStr: string): string {
     return formatVnDate(dateStr);
