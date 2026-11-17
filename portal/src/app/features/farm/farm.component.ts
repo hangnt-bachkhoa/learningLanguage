@@ -423,11 +423,11 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
               <div class="catalog-icon" [innerHTML]="crop.icon | safeHtml"></div>
               <div class="catalog-body">
                 <div class="catalog-header">
-                  <div class="title-tier-group">
-                    <h4 class="catalog-name">{{ crop.nameVi }}</h4>
+                  <h4 class="catalog-name">{{ crop.nameVi }}</h4>
+                  <div class="catalog-header-badges">
                     <span class="tier-badge tier-{{ lockInfo.tier }}">{{ lockInfo.tierName }}</span>
+                    <span class="catalog-badge">{{ crop.growthTime }}</span>
                   </div>
-                  <span class="catalog-badge">{{ crop.growthTime }}</span>
                 </div>
                 <p class="catalog-desc">{{ crop.desc }}</p>
 
@@ -1420,7 +1420,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
     }
     .crop-catalog-card {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 16px;
       padding: 14px 16px;
     }
@@ -1429,10 +1429,46 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       border: 1px dashed #CBBBA2;
       opacity: 0.88;
     }
-    .title-tier-group {
+    .catalog-icon {
+      width: 56px;
+      height: 56px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .catalog-icon img, .catalog-icon svg {
+      max-width: 48px;
+      max-height: 48px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      margin: 0 auto;
+      display: block;
+    }
+    .catalog-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .catalog-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+    .catalog-name {
+      font-family: var(--font-serif);
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0;
+      line-height: 1.2;
+    }
+    .catalog-header-badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
     }
     .tier-badge {
       font-size: 10px;
@@ -1478,29 +1514,6 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       background: #FBECEC;
       color: #8F2232;
       border: 1px solid #ECC4C8;
-    }
-    .catalog-icon {
-      width: 56px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .catalog-body {
-      flex: 1;
-    }
-    .catalog-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
-    }
-    .catalog-name {
-      font-family: var(--font-serif);
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--navy);
     }
     .catalog-badge {
       font-size: 11px;
@@ -1650,13 +1663,25 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       }
       .crop-catalog-card {
         flex-direction: column;
-        align-items: flex-start;
-        padding: 12px;
-        gap: 10px;
+        align-items: center;
+        text-align: left;
+        padding: 14px 12px;
+        gap: 8px;
       }
       .catalog-icon {
-        width: 48px;
-        height: 48px;
+        width: 52px;
+        height: 52px;
+        align-self: center;
+        margin: 0 auto 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .catalog-body {
+        width: 100%;
+      }
+      .catalog-header {
+        align-items: flex-start;
       }
     }
 
