@@ -94,11 +94,6 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                 </button>
               </div>
             }
-
-            <!-- Thẻ loại từ thân thiện cho người mới bắt đầu -->
-            <div class="pos-badge-hero-row" [class.non-latin-centered]="isNonLatin()">
-              <app-pos-tag [type]="currentWord.type" mode="full" [showQuestionHint]="true"></app-pos-tag>
-            </div>
           </div>
           <div class="botanical-art-box" [class.botanical-corner]="isNonLatin()" [innerHTML]="assets.botanicalFlower | safeHtml"></div>
         </div>
@@ -381,12 +376,6 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       gap: 8px;
       margin-top: 4px;
       margin-bottom: 10px;
-    }
-    .pos-badge-hero-row.non-latin-centered {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 4px;
     }
     .botanical-art-box.botanical-corner {
       position: absolute;
