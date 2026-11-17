@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Language Farm</string>
+    <string name="title_activity_main">Language Farm</string>
+    <string name="package_name">com.languagefarm.app</string>
+    <string name="custom_url_scheme">com.languagefarm.app</string>
+</resources>

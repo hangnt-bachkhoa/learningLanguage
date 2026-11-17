@@ -5,7 +5,10 @@
     "ng": "ng",
     "start": "ng serve --port 4200 --proxy-config proxy.conf.json",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "cap:sync": "cap sync android",
+    "cap:open": "cap open android",
+    "build:android": "ng build && cap sync android"
   },
   "private": true,
   "dependencies": {
@@ -17,6 +20,7 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "@capacitor/core": "^8.6.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -25,6 +29,8 @@
     "@angular-devkit/build-angular": "^19.0.0",
     "@angular/cli": "^19.0.0",
     "@angular/compiler-cli": "^19.0.0",
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/cli": "^8.6.2",
     "typescript": "~5.6.2"
   }
 }
