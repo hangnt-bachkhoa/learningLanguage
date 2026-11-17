@@ -13,7 +13,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       <div class="topbar-left">
         <!-- NÚT ĐÓNG / MỞ THANH ĐIỀU HƯỚNG (COLLAPSE / EXPAND) -->
         <button class="nav-toggle-btn" (click)="state.toggleSidebar()" title="Đóng / Mở menu điều hướng">
-          <span class="toggle-icon">☰</span>
+          <app-pixel-icon name="icon_menu" [size]="16"></app-pixel-icon>
         </button>
 
         <h1 class="page-title">
@@ -25,7 +25,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       </div>
       <div class="topbar-right">
         <a routerLink="/guide" class="guide-btn" title="Hướng dẫn sử dụng English Farm">
-          <app-pixel-icon name="icon_books_stack" [size]="15"></app-pixel-icon>
+          <app-pixel-icon name="icon_book_open" [size]="14"></app-pixel-icon>
           <span class="guide-text hide-mobile">Hướng dẫn</span>
         </a>
         <div class="stat-pill level-pill" title="Cấp độ hiện tại">Lv.{{ state.level() }}</div>

@@ -15,7 +15,9 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
             <app-pixel-icon name="icon_cart" [size]="18"></app-pixel-icon>
             <span>Giỏ hàng nông trại</span>
           </h3>
-          <button class="close-btn" (click)="close.emit()">✕</button>
+          <button class="close-btn" (click)="close.emit()">
+            <app-pixel-icon name="icon_cross" [size]="14"></app-pixel-icon>
+          </button>
         </div>
 
         <div class="modal-body">

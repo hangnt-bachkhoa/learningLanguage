@@ -22,15 +22,21 @@ interface LevelGroup {
       <!-- HERO SUMMARY BANNER -->
       <section class="hero-banner">
         <div class="hero-text-wrap">
-          <div class="hero-eyebrow">📖 Sổ tay Ngữ pháp TOEIC</div>
+          <div class="hero-eyebrow" style="display:inline-flex; align-items:center; gap:6px;">
+            <app-pixel-icon name="icon_books_stack" [size]="15"></app-pixel-icon>
+            <span>Sổ tay Ngữ pháp TOEIC</span>
+          </div>
           <h1 class="hero-title">13 Chuyên Đề Trọng Điểm</h1>
-          <p class="hero-sub">Học công thức & bẫy Part 5 theo nhóm cấp độ, sau đó làm Quiz để nhận XP và Xu.</p>
+          <p class="hero-sub">Học công thức &amp; bẫy Part 5 theo nhóm cấp độ, sau đó làm Quiz để nhận XP và Xu.</p>
         </div>
 
         <div class="hero-progress-wrap">
           <div class="hero-progress-header">
             <span>{{ studiedCount() }}/13 đã học</span>
-            <span>{{ totalStarsClaimed() }}/39 ★</span>
+            <span style="display:inline-flex; align-items:center; gap:4px;">
+              <span>{{ totalStarsClaimed() }}/39</span>
+              <app-pixel-icon name="icon_star" [size]="13"></app-pixel-icon>
+            </span>
           </div>
           <div class="progress-track">
             <div class="progress-fill" [style.width.%]="progressPercent()"></div>
@@ -57,7 +63,7 @@ interface LevelGroup {
         </nav>
 
         <div class="search-box">
-          <span class="search-icon">🔍</span>
+          <span class="search-icon"><app-pixel-icon name="icon_search" [size]="14"></app-pixel-icon></span>
           <input
             type="text"
             placeholder="Tìm chuyên đề ngữ pháp..."
@@ -70,12 +76,12 @@ interface LevelGroup {
       <!-- DANH SÁCH CHUYÊN ĐỀ THEO NHÓM CẤP ĐỘ (Fix orphan card #13) -->
       @if (grammarService.isLoading()) {
         <div class="loading-card">
-          <span class="pulse-icon">⏳</span>
+          <app-pixel-icon name="icon_retry" [size]="24"></app-pixel-icon>
           <p>Đang tải sổ tay ngữ pháp TOEIC...</p>
         </div>
       } @else if (levelGroups().length === 0) {
         <div class="empty-card">
-          <span class="empty-icon">🍃</span>
+          <app-pixel-icon name="icon_sprout_action" [size]="32"></app-pixel-icon>
           <p>Không tìm thấy chuyên đề phù hợp với từ khóa "{{ searchQuery() }}".</p>
           <button type="button" class="btn btn-secondary btn-sm" (click)="searchQuery.set(''); selectedLevel.set('ALL')">
             Xóa bộ lọc
@@ -110,12 +116,21 @@ interface LevelGroup {
                   <footer class="topic-footer">
                     <div class="topic-meta-left">
                       <div class="stars-row" title="Sao đạt được qua bài kiểm tra">
-                        <span class="star" [class.filled]="(topic.bestStars || 0) >= 1">★</span>
-                        <span class="star" [class.filled]="(topic.bestStars || 0) >= 2">★</span>
-                        <span class="star" [class.filled]="(topic.bestStars || 0) >= 3">★</span>
+                        <span class="star">
+                          <app-pixel-icon [name]="(topic.bestStars || 0) >= 1 ? 'icon_star' : 'icon_star_empty'" [size]="13"></app-pixel-icon>
+                        </span>
+                        <span class="star">
+                          <app-pixel-icon [name]="(topic.bestStars || 0) >= 2 ? 'icon_star' : 'icon_star_empty'" [size]="13"></app-pixel-icon>
+                        </span>
+                        <span class="star">
+                          <app-pixel-icon [name]="(topic.bestStars || 0) >= 3 ? 'icon_star' : 'icon_star_empty'" [size]="13"></app-pixel-icon>
+                        </span>
                       </div>
                       <span class="status-tag" [class.studied]="topic.isStudied">
-                        {{ topic.isStudied ? '✓ Đã học' : 'Chưa học' }}
+                        @if (topic.isStudied) {
+                          <app-pixel-icon name="icon_check" [size]="11"></app-pixel-icon>
+                        }
+                        <span>{{ topic.isStudied ? 'Đã học' : 'Chưa học' }}</span>
                       </span>
                     </div>
 

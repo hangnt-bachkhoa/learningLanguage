@@ -55,19 +55,19 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
           <div class="funnel-metrics-grid">
             <div class="metric-card metric-unlearned">
               <span class="metric-value">{{ funnelStats().unlearned }}</span>
-              <span class="metric-label">⚪ Chưa học</span>
+              <span class="metric-label"><span class="dot-indicator dot-unlearned"></span> Chưa học</span>
             </div>
             <div class="metric-card metric-review">
               <span class="metric-value">{{ funnelStats().inReview }}</span>
-              <span class="metric-label">🟡 Đang ôn (0-3)</span>
+              <span class="metric-label"><span class="dot-indicator dot-review"></span> Đang ôn (0-3)</span>
             </div>
             <div class="metric-card metric-due">
               <span class="metric-value">{{ funnelStats().dueToday }}</span>
-              <span class="metric-label">🔴 Đến hạn hôm nay</span>
+              <span class="metric-label"><span class="dot-indicator dot-due"></span> Đến hạn hôm nay</span>
             </div>
             <div class="metric-card metric-mastered">
               <span class="metric-value">{{ funnelStats().mastered }}</span>
-              <span class="metric-label">🟢 Thuộc lòng (D14)</span>
+              <span class="metric-label"><span class="dot-indicator dot-mastered"></span> Thuộc lòng (D14)</span>
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                 <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
                 <span>Điểm sao tích lũy:</span>
               </span>
-              <strong class="star-count">{{ academicStats().vocabStars }}/156 ★</strong>
+              <strong class="star-count">{{ academicStats().vocabStars }}/156</strong>
             </div>
           </div>
 
@@ -122,7 +122,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                 <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
                 <span>Điểm sao ngữ pháp:</span>
               </span>
-              <strong class="star-count">{{ academicStats().grammarStars }}/39 ★</strong>
+              <strong class="star-count">{{ academicStats().grammarStars }}/39</strong>
             </div>
           </div>
         </div>
@@ -152,7 +152,15 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
           <div class="daily-tasks-list">
             @for (task of dailyQuest.quests(); track task.id) {
               <div class="task-row" [class.task-done]="task.status === 'COMPLETED_UNCLAIMED' || task.status === 'CLAIMED'">
-                <span class="task-checkbox">{{ task.status === 'CLAIMED' ? '✓' : (task.status === 'COMPLETED_UNCLAIMED' ? '★' : '○') }}</span>
+                <span class="task-checkbox">
+                  @if (task.status === 'CLAIMED') {
+                    <app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon>
+                  } @else if (task.status === 'COMPLETED_UNCLAIMED') {
+                    <app-pixel-icon name="icon_star" [size]="12"></app-pixel-icon>
+                  } @else {
+                    <span class="dot-empty">○</span>
+                  }
+                </span>
                 <span class="task-name">{{ task.titleVi }}</span>
                 <span class="task-progress">{{ task.currentCount }}/{{ task.targetCount }}</span>
               </div>
@@ -335,7 +343,20 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       font-size: 11px;
       font-weight: 600;
       color: var(--ink-muted, #5A6D7C);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
+    .dot-indicator {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-unlearned { background: #B0B9C1; }
+    .dot-review { background: #D99B26; }
+    .dot-due { background: #A65E65; }
+    .dot-mastered { background: #78815D; }
 
     /* CARD 2: CURRICULUM MASTERY */
     .mastery-item {

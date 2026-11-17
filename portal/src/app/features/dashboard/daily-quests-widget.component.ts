@@ -121,8 +121,9 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   Nhận thưởng
                 </button>
               } @else {
-                <span class="badge-claimed">
-                  ✓ Đã nhận
+                <span class="badge-claimed" style="display:inline-flex; align-items:center; gap:4px;">
+                  <app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon>
+                  <span>Đã nhận</span>
                 </span>
               }
             </div>

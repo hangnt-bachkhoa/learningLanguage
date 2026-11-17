@@ -5,16 +5,17 @@ import { GrammarService } from '../../core/services/grammar.service';
 import { GrammarTopic } from '../../core/constants/default-grammar-topics.constant';
 import { GameStateService } from '../../core/services/game-state.service';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-grammar-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, PosTagBadgeComponent],
+  imports: [CommonModule, RouterLink, PosTagBadgeComponent, PixelIconComponent],
   template: `
     <div class="grammar-detail-page">
       @if (!topic()) {
         <div class="empty-detail-card">
-          <span class="icon">🍃</span>
+          <span class="icon"><app-pixel-icon name="icon_sprout_action" [size]="32"></app-pixel-icon></span>
           <h2>Không tìm thấy chuyên đề ngữ pháp</h2>
           <p>Mã chuyên đề không tồn tại trong hệ thống.</p>
           <a routerLink="/grammar" class="btn btn-secondary btn-sm">Về sổ tay Ngữ pháp</a>
@@ -45,13 +46,22 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
 
             <div class="status-stars-bar">
               <span class="status-pill" [class.studied]="topic()?.isStudied">
-                {{ topic()?.isStudied ? '✓ Đã đánh dấu học' : 'Chưa đánh dấu học' }}
+                @if (topic()?.isStudied) {
+                  <app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon>
+                }
+                <span>{{ topic()?.isStudied ? 'Đã đánh dấu học' : 'Chưa đánh dấu học' }}</span>
               </span>
               <div class="record-stars" title="Kỷ lục sao làm bài kiểm tra">
                 <span class="record-label">Kỷ lục: </span>
-                <span class="star" [class.filled]="(topic()?.bestStars || 0) >= 1">★</span>
-                <span class="star" [class.filled]="(topic()?.bestStars || 0) >= 2">★</span>
-                <span class="star" [class.filled]="(topic()?.bestStars || 0) >= 3">★</span>
+                <span class="star">
+                  <app-pixel-icon [name]="(topic()?.bestStars || 0) >= 1 ? 'icon_star' : 'icon_star_empty'" [size]="13"></app-pixel-icon>
+                </span>
+                <span class="star">
+                  <app-pixel-icon [name]="(topic()?.bestStars || 0) >= 2 ? 'icon_star' : 'icon_star_empty'" [size]="13"></app-pixel-icon>
+                </span>
+                <span class="star">
+                  <app-pixel-icon [name]="(topic()?.bestStars || 0) >= 3 ? 'icon_star' : 'icon_star_empty'" [size]="13"></app-pixel-icon>
+                </span>
               </div>
             </div>
           </div>
@@ -63,14 +73,20 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
               class="filter-chip"
               [class.active]="detailTab() === 'theory'"
               (click)="detailTab.set('theory')">
-              📐 Công thức & Bẫy
+              <span style="display:inline-flex; align-items:center; gap:5px;">
+                <app-pixel-icon name="icon_ruler" [size]="14"></app-pixel-icon>
+                <span>Công thức &amp; Bẫy</span>
+              </span>
             </button>
             <button
               type="button"
               class="filter-chip"
               [class.active]="detailTab() === 'examples'"
               (click)="detailTab.set('examples')">
-              💡 Ví dụ song ngữ
+              <span style="display:inline-flex; align-items:center; gap:5px;">
+                <app-pixel-icon name="icon_lightbulb" [size]="14"></app-pixel-icon>
+                <span>Ví dụ song ngữ</span>
+              </span>
             </button>
           </nav>
 
@@ -78,7 +94,12 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
           <div class="tab-pane theory-pane" [class.tab-hidden]="detailTab() !== 'theory'">
             <!-- CÔNG THỨC CỐT LÕI -->
             <section class="content-section">
-              <h3 class="section-title">📐 Công thức cốt lõi & Quy tắc</h3>
+              <h3 class="section-title">
+                <span style="display:inline-flex; align-items:center; gap:6px;">
+                  <app-pixel-icon name="icon_ruler" [size]="16"></app-pixel-icon>
+                  <span>Công thức cốt lõi &amp; Quy tắc</span>
+                </span>
+              </h3>
               <div class="rules-list">
                 @for (rule of topic()?.rules; track rule; let idx = $index) {
                   <div class="rule-item">
@@ -91,11 +112,18 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
 
             <!-- BẪY TOEIC PART 5 -->
             <section class="content-section">
-              <h3 class="section-title trap-title">⚠️ Bẫy TOEIC Part 5 thường gặp</h3>
+              <h3 class="section-title trap-title">
+                <span style="display:inline-flex; align-items:center; gap:6px;">
+                  <app-pixel-icon name="icon_warning" [size]="16"></app-pixel-icon>
+                  <span>Bẫy TOEIC Part 5 thường gặp</span>
+                </span>
+              </h3>
               <div class="traps-list">
                 @for (trap of topic()?.traps; track trap) {
                   <div class="trap-item">
-                    <span class="trap-icon">✕</span>
+                    <span class="trap-icon">
+                      <app-pixel-icon name="icon_cross" [size]="12"></app-pixel-icon>
+                    </span>
                     <div class="trap-text">{{ trap }}</div>
                   </div>
                 }
@@ -106,7 +134,12 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
           <!-- KHỐI 3: VÍ DỤ MINH HỌA SONG NGỮ -->
           <div class="tab-pane examples-pane" [class.tab-hidden]="detailTab() !== 'examples'">
             <section class="content-section">
-              <h3 class="section-title">💡 Ví dụ minh họa song ngữ</h3>
+              <h3 class="section-title">
+                <span style="display:inline-flex; align-items:center; gap:6px;">
+                  <app-pixel-icon name="icon_lightbulb" [size]="16"></app-pixel-icon>
+                  <span>Ví dụ minh họa song ngữ</span>
+                </span>
+              </h3>
               <div class="examples-list">
                 @for (ex of topic()?.examples; track ex.en) {
                   <div class="example-item">
@@ -119,7 +152,7 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
                       class="speak-btn"
                       (click)="state.speak(ex.en)"
                       title="Bấm để nghe phát âm tiếng Anh">
-                      🔊
+                      <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
                     </button>
                   </div>
                 }
@@ -134,7 +167,12 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
               class="btn btn-secondary action-btn-study"
               [disabled]="topic()?.isStudied"
               (click)="markAsStudied()">
-              {{ topic()?.isStudied ? '✓ Đã hoàn tất' : 'Đã học (0 XP)' }}
+              <span style="display:inline-flex; align-items:center; gap:6px;">
+                @if (topic()?.isStudied) {
+                  <app-pixel-icon name="icon_check" [size]="14"></app-pixel-icon>
+                }
+                <span>{{ topic()?.isStudied ? 'Đã hoàn tất' : 'Đã học (0 XP)' }}</span>
+              </span>
             </button>
 
             <a

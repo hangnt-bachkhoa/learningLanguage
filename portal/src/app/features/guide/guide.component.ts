@@ -81,7 +81,13 @@ interface GuideSection {
                   </p>
                   <div class="step-reward-pill">
                     <span>Phần thưởng:</span>
-                    <strong>+1 💧 Nước · +1 🪴 Phân · +Xu &amp; XP</strong>
+                    <strong style="display:inline-flex; align-items:center; gap:6px;">
+                      <span style="display:inline-flex; align-items:center; gap:2px;"><app-pixel-icon name="icon_dew_drop" [size]="13"></app-pixel-icon> +1 Nước</span>
+                      <span>·</span>
+                      <span style="display:inline-flex; align-items:center; gap:2px;"><app-pixel-icon name="icon_plant_pot" [size]="13"></app-pixel-icon> +1 Phân</span>
+                      <span>·</span>
+                      <span>+Xu &amp; XP</span>
+                    </strong>
                   </div>
                 </div>
               </div>
@@ -111,8 +117,9 @@ interface GuideSection {
                   <p class="step-desc">
                     <strong>Bắt buộc:</strong> Cây cần được Tưới nước để bắt đầu đếm ngược thời gian lớn. Bón thêm Phân bón cơ bản sẽ giúp rút ngắn thời gian sinh trưởng tới 50%!
                   </p>
-                  <div class="step-tip-box">
-                    💡 <em>Quy tắc Chăm sóc: Mỗi khi học 1 bài mới hoặc hoàn thành 1 lượt ôn tập ngắt quãng, bạn sẽ nhận đủ 1 lượt tưới nước cho cây mới trồng.</em>
+                  <div class="step-tip-box" style="display:flex; align-items:flex-start; gap:6px;">
+                    <app-pixel-icon name="icon_lightbulb" [size]="13"></app-pixel-icon>
+                    <em>Quy tắc Chăm sóc: Mỗi khi học 1 bài mới hoặc hoàn thành 1 lượt ôn tập ngắt quãng, bạn sẽ nhận đủ 1 lượt tưới nước cho cây mới trồng.</em>
                   </div>
                 </div>
               </div>
@@ -196,14 +203,17 @@ interface GuideSection {
               <div class="stage-row">
                 <div class="stage-col-badge stage-d14">D14</div>
                 <div class="stage-col-content">
-                  <div class="stage-name">Sau 14 Ngày — Thành Thạo Vĩnh Viễn ⭐</div>
+                  <div class="stage-name" style="display:inline-flex; align-items:center; gap:6px;">
+                    <span>Sau 14 Ngày — Thành Thạo Vĩnh Viễn</span>
+                    <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
+                  </div>
                   <div class="stage-sub">Từ vựng đã ghi dấu vào tiềm thức dài hạn, sẵn sàng cho phản xạ giao tiếp tự nhiên.</div>
                 </div>
               </div>
             </div>
 
             <div class="info-alert-box alert-rose">
-              <span class="alert-icon">🔒</span>
+              <span class="alert-icon"><app-pixel-icon name="icon_padlock" [size]="16"></app-pixel-icon></span>
               <div class="alert-text">
                 <strong>Chống Tick Ảo &amp; Tự Động Hóa:</strong> Bạn không thể bấm hoàn thành thủ công. Hệ thống chỉ thăng hạng chu kỳ khi bạn làm đúng bài Quiz ôn tập tại ngày chỉ định. Trả lời sai sẽ giữ nguyên hoặc yêu cầu ôn lại để đảm bảo chất lượng nhớ thực chất!
               </div>
@@ -383,7 +393,7 @@ interface GuideSection {
 
             <div class="drop-rates-grid">
               <div class="rate-card">
-                <div class="rate-icon">🪴</div>
+                <div class="rate-icon"><app-pixel-icon name="icon_plant_pot" [size]="26"></app-pixel-icon></div>
                 <div class="rate-info">
                   <h4 class="rate-title">Phân Bón Vi Sinh</h4>
                   <div class="rate-percent">Tỉ lệ rơi: <strong>5.0%</strong> / bài thi</div>
@@ -392,7 +402,7 @@ interface GuideSection {
               </div>
 
               <div class="rate-card">
-                <div class="rate-icon">🥕</div>
+                <div class="rate-icon"><app-pixel-icon name="icon_carrot" [size]="26"></app-pixel-icon></div>
                 <div class="rate-info">
                   <h4 class="rate-title">Hạt Giống Hiếm</h4>
                   <div class="rate-percent">Tỉ lệ rơi: <strong>1.0%</strong> / bài thi</div>
@@ -402,7 +412,7 @@ interface GuideSection {
             </div>
 
             <div class="info-alert-box alert-olive">
-              <span class="alert-icon">🎲</span>
+              <span class="alert-icon"><app-pixel-icon name="icon_dice" [size]="16"></app-pixel-icon></span>
               <div class="alert-text">
                 <strong>Chống Cày Cuốc Quá Mức (Daily Roll Cap):</strong> Mỗi ngày bạn được quay tối đa <strong>10 lượt may mắn</strong> khi làm Quiz. Khi đã đạt 10/10 lượt, bạn vẫn nhận đủ Xu và XP bình thường, giúp bạn cân đối thời gian học tập lành mạnh.
               </div>

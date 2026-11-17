@@ -109,13 +109,13 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 
                     <!-- Cột 1: Lần đầu (Luôn hoàn thành khi vừa học) -->
                     <td class="col-cell">
-                      <span class="status-circle done" title="Đã học lần đầu">✓</span>
+                      <span class="status-circle done" title="Đã học lần đầu"><app-pixel-icon name="icon_check" [size]="10"></app-pixel-icon></span>
                     </td>
 
                     <!-- Cột 2: Day 1 -->
                     <td class="col-cell">
                       @if (cohort.day1Status === 'done') {
-                        <span class="status-circle done" title="Đã vượt qua bài kiểm tra Day 1">✓</span>
+                        <span class="status-circle done" title="Đã vượt qua bài kiểm tra Day 1"><app-pixel-icon name="icon_check" [size]="10"></app-pixel-icon></span>
                       } @else if (cohort.day1Status === 'due') {
                         <button
                           class="due-pill-btn"
@@ -133,7 +133,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                     <!-- Cột 3: Day 3 -->
                     <td class="col-cell">
                       @if (cohort.day3Status === 'done') {
-                        <span class="status-circle done" title="Đã vượt qua bài kiểm tra Day 3">✓</span>
+                        <span class="status-circle done" title="Đã vượt qua bài kiểm tra Day 3"><app-pixel-icon name="icon_check" [size]="10"></app-pixel-icon></span>
                       } @else if (cohort.day3Status === 'due') {
                         <button
                           class="due-pill-btn"
@@ -151,7 +151,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                     <!-- Cột 4: Day 7 -->
                     <td class="col-cell">
                       @if (cohort.day7Status === 'done') {
-                        <span class="status-circle done" title="Đã vượt qua bài kiểm tra Day 7">✓</span>
+                        <span class="status-circle done" title="Đã vượt qua bài kiểm tra Day 7"><app-pixel-icon name="icon_check" [size]="10"></app-pixel-icon></span>
                       } @else if (cohort.day7Status === 'due') {
                         <button
                           class="due-pill-btn"
@@ -214,7 +214,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         <!-- Ghi chú nguyên lý Ebbinghaus -->
         <div class="table-footer-legend">
           <div class="legend-item">
-            <span class="legend-dot done">✓</span>
+            <span class="legend-dot done"><app-pixel-icon name="icon_check" [size]="9"></app-pixel-icon></span>
             <span>Đã vượt qua Quiz ôn tập</span>
           </div>
           <div class="legend-item">

@@ -120,7 +120,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   </button>
                 </div>
                 @if (eligibleForFertilizer().length === 0) {
-                  <span class="trade-warn-hint">⚠️ Cần ít nhất 3 củ/quả cùng loại để đổi.</span>
+                  <span class="trade-warn-hint" style="display:inline-flex; align-items:center; gap:4px;">
+                    <app-pixel-icon name="icon_warning" [size]="12"></app-pixel-icon>
+                    <span>Cần ít nhất 3 củ/quả cùng loại để đổi.</span>
+                  </span>
                 }
               </div>
 
@@ -152,7 +155,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   </button>
                 </div>
                 @if (eligibleForWater().length === 0) {
-                  <span class="trade-warn-hint">⚠️ Cần ít nhất 2 củ/quả cùng loại để đổi.</span>
+                  <span class="trade-warn-hint" style="display:inline-flex; align-items:center; gap:4px;">
+                    <app-pixel-icon name="icon_warning" [size]="12"></app-pixel-icon>
+                    <span>Cần ít nhất 2 củ/quả cùng loại để đổi.</span>
+                  </span>
                 }
               </div>
             </div>

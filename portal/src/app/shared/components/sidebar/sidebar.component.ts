@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { GameStateService } from '../../../core/services/game-state.service';
+import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, PixelIconComponent],
   template: `
     <!-- MÀN PHỦ TỐI KHI MỞ MENU TRÊN MOBILE (BẤM VÀO ĐỂ ĐÓNG) -->
     @if (state.isMobileSidebarOpen()) {
@@ -27,7 +28,9 @@ import { GameStateService } from '../../../core/services/game-state.service';
           </span>
           <span class="drawer-brand-name">English Farm</span>
         </a>
-        <button class="drawer-close-btn" (click)="state.closeMobileSidebar()" title="Đóng menu">✕</button>
+        <button class="drawer-close-btn" (click)="state.closeMobileSidebar()" title="Đóng menu">
+          <app-pixel-icon name="icon_cross" [size]="14"></app-pixel-icon>
+        </button>
       </div>
 
       <!-- Danh sách Navigation ĐẦY ĐỦ -->

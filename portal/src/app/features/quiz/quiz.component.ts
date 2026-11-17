@@ -49,12 +49,12 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 
         @if (isLoading()) {
           <div class="vintage-card state-card">
-            <span class="pulse-icon">⏳</span>
+            <app-pixel-icon name="icon_retry" [size]="24"></app-pixel-icon>
             <p>Đang chuẩn bị 10 câu hỏi có trọng số thông minh...</p>
           </div>
         } @else if (queue().length === 0 && !isSubmitting()) {
           <div class="vintage-card state-card">
-            <span class="empty-icon">🍃</span>
+            <app-pixel-icon name="icon_sprout_action" [size]="32"></app-pixel-icon>
             <p>Chủ đề này chưa có câu hỏi kiểm tra.</p>
             <a routerLink="/lessons" class="btn btn-secondary">Về danh sách bài học</a>
           </div>
@@ -66,13 +66,13 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                 <!-- HUY HIỆU DẠNG CÂU HỎI -->
                 <div class="question-type-badge">
                   @if (q.questionType === 'context') {
-                    <span>📝 Ngữ cảnh TOEIC</span>
+                    <span style="display:inline-flex; align-items:center; gap:5px;"><app-pixel-icon name="icon_scroll" [size]="14"></app-pixel-icon> Ngữ cảnh TOEIC</span>
                   } @else if (q.questionType === 'listening') {
-                    <span>🎧 Nghe & Chọn từ</span>
+                    <span style="display:inline-flex; align-items:center; gap:5px;"><app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon> Nghe &amp; Chọn từ</span>
                   } @else if (isViToEn(q)) {
-                    <span>🇻🇳 ➔ 🇬🇧 Chọn từ tiếng Anh</span>
+                    <span style="display:inline-flex; align-items:center; gap:5px;"><app-pixel-icon name="icon_target" [size]="14"></app-pixel-icon> Chọn từ tiếng Anh</span>
                   } @else {
-                    <span>📖 Nghĩa của từ</span>
+                    <span style="display:inline-flex; align-items:center; gap:5px;"><app-pixel-icon name="icon_book_open" [size]="14"></app-pixel-icon> Nghĩa của từ</span>
                   }
                 </div>
 
@@ -87,7 +87,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                     <!-- Dạng 3: LISTENING - Ẩn hoàn toàn chữ và phiên âm, chỉ để lại nút nghe âm thanh -->
                     <div class="listening-action-box">
                       <button class="speaker-large-btn" (click)="state.speak(q.word || '')" title="Bấm để nghe phát âm">
-                        <span class="speaker-icon">🔊</span>
+                        <app-pixel-icon name="icon_speaker" [size]="18"></app-pixel-icon>
                         <span class="speaker-label">Nghe phát âm</span>
                       </button>
                     </div>
@@ -108,7 +108,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                           <span class="word-phonetic">{{ cleanPhonetic(q.phonetic) }}</span>
                         }
                         <button class="speaker-mini-btn" (click)="state.speak(q.word || '')" title="Nghe âm thanh">
-                          🔊
+                          <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
                         </button>
                       </div>
                     </div>
@@ -152,7 +152,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                         @if (feedbackState() === 'correct') {
                           <div class="feedback-header correct-header">
                             <div class="header-left-title">
-                              <span class="status-icon">✓</span>
+                              <span class="status-icon"><app-pixel-icon name="icon_check" [size]="14"></app-pixel-icon></span>
                               <span class="status-title">Chính xác!</span>
                             </div>
                             @if (currentWordType(); as wt) {
@@ -169,7 +169,9 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                                     <span class="vocab-phonetic">{{ vInfo.phonetic }}</span>
                                   }
                                   @if (vInfo.word) {
-                                    <button type="button" class="btn-audio-mini" (click)="state.speak(vInfo.word)" title="Nghe phát âm">🔊</button>
+                                    <button type="button" class="btn-audio-mini" (click)="state.speak(vInfo.word)" title="Nghe phát âm">
+                                      <app-pixel-icon name="icon_speaker" [size]="12"></app-pixel-icon>
+                                    </button>
                                   }
                                 </div>
                                 @if (vInfo.meaningVi) {
@@ -188,7 +190,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                         } @else {
                           <div class="feedback-header wrong-header">
                             <div class="header-left-title">
-                              <span class="status-icon">✕</span>
+                              <span class="status-icon"><app-pixel-icon name="icon_cross" [size]="14"></app-pixel-icon></span>
                               <span class="status-title">Chưa chính xác</span>
                             </div>
                             @if (currentWordType(); as wt) {
@@ -212,7 +214,9 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                                     <span class="vocab-phonetic">{{ vInfo.phonetic }}</span>
                                   }
                                   @if (vInfo.word) {
-                                    <button type="button" class="btn-audio-mini" (click)="state.speak(vInfo.word)" title="Nghe phát âm">🔊</button>
+                                    <button type="button" class="btn-audio-mini" (click)="state.speak(vInfo.word)" title="Nghe phát âm">
+                                      <app-pixel-icon name="icon_speaker" [size]="12"></app-pixel-icon>
+                                    </button>
                                   }
                                 </div>
                                 @if (vInfo.meaningVi) {
@@ -335,7 +339,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                 </div>
               } @else {
                 <div class="max-reward-notice">
-                  <span class="notice-icon">🎖️</span>
+                  <span class="notice-icon"><app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon></span>
                   <span>Đã nhận tối đa (Kỷ lục cũ: {{ result()?.bestStarsClaimed }}★) · Không lặp lại Xu & XP khi ôn tập</span>
                 </div>
               }
@@ -346,7 +350,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
               <div class="reward-heading">Phần thưởng Nông trại may mắn</div>
               @if ((result()?.rewardFertilizer || 0) > 0 || result()?.bonusSeedName) {
                 <div class="lucky-drop-banner">
-                  <span class="lucky-badge">🌿 RƠI PHẦN THƯỞNG MAY MẮN!</span>
+                  <span class="lucky-badge" style="display:inline-flex; align-items:center; gap:6px;">
+                    <app-pixel-icon name="icon_sprout_action" [size]="14"></app-pixel-icon>
+                    <span>RƠI PHẦN THƯỞNG MAY MẮN!</span>
+                  </span>
                 </div>
                 <div class="rewards-grid">
                   @if (result()?.bonusSeedName; as seedName) {

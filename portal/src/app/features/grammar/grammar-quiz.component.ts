@@ -25,8 +25,9 @@ interface QueueItem {
         <article class="quiz-card">
           <!-- TOP HEADER: THOÁT & TIẾN ĐỘ -->
           <div class="quiz-top-bar">
-            <a [routerLink]="['/grammar', topic()?.code]" class="btn btn-secondary btn-sm exit-btn">
-              ✕ Thoát
+            <a [routerLink]="['/grammar', topic()?.code]" class="btn btn-secondary btn-sm exit-btn" style="display:inline-flex; align-items:center; gap:5px;">
+              <app-pixel-icon name="icon_cross" [size]="12"></app-pixel-icon>
+              <span>Thoát</span>
             </a>
             <span class="score-status">Đã đúng: {{ masteredUids().size }}/{{ totalInitial() }}</span>
           </div>
@@ -37,7 +38,7 @@ interface QueueItem {
 
           @if (queue().length === 0) {
             <div class="empty-quiz-state">
-              <span class="empty-icon">🍃</span>
+              <span class="empty-icon"><app-pixel-icon name="icon_sprout_action" [size]="32"></app-pixel-icon></span>
               <p>Không có câu hỏi kiểm tra cho chuyên đề này.</p>
               <a routerLink="/grammar" class="btn btn-secondary btn-sm">Về sổ tay Ngữ pháp</a>
             </div>
@@ -46,11 +47,20 @@ interface QueueItem {
               <!-- NỘI DUNG CÂU HỎI -->
               <div class="question-main">
                 <div class="badges-row">
-                  <span class="tag-pill source-pill">
-                    {{ qItem.sourceType === 'DYNAMIC_VOCAB' ? '🌱 Ngữ pháp thực chiến TOEIC' : '📜 Trọng điểm Part 5' }}
+                  <span class="tag-pill source-pill" style="display:inline-flex; align-items:center; gap:4px;">
+                    @if (qItem.sourceType === 'DYNAMIC_VOCAB') {
+                      <app-pixel-icon name="icon_sprout_action" [size]="13"></app-pixel-icon>
+                      <span>Ngữ pháp thực chiến TOEIC</span>
+                    } @else {
+                      <app-pixel-icon name="icon_scroll" [size]="13"></app-pixel-icon>
+                      <span>Trọng điểm Part 5</span>
+                    }
                   </span>
                   @if (qItem.isRetry) {
-                    <span class="tag-pill retry-pill">↻ Làm lại câu chưa đúng</span>
+                    <span class="tag-pill retry-pill" style="display:inline-flex; align-items:center; gap:4px;">
+                      <app-pixel-icon name="icon_retry" [size]="12"></app-pixel-icon>
+                      <span>Làm lại câu chưa đúng</span>
+                    </span>
                   }
                 </div>
 
@@ -71,9 +81,9 @@ interface QueueItem {
                         <strong>{{ ['A', 'B', 'C', 'D'][idx] }}.</strong> {{ opt }}
                       </span>
                       @if (feedbackState() !== 'none' && idx === qItem.question.correctIndex) {
-                        <span class="opt-status-icon ok">✓</span>
+                        <span class="opt-status-icon ok"><app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon></span>
                       } @else if (feedbackState() === 'wrong' && selectedOptionIdx() === idx) {
-                        <span class="opt-status-icon err">✕</span>
+                        <span class="opt-status-icon err"><app-pixel-icon name="icon_cross" [size]="12"></app-pixel-icon></span>
                       }
                     </button>
                   }
@@ -93,11 +103,15 @@ interface QueueItem {
                 } @else {
                   <div class="feedback-sheet" [class.ok]="feedbackState() === 'correct'" [class.err]="feedbackState() === 'wrong'">
                     <div class="feedback-body">
-                      <div class="feedback-headline">
-                        {{ feedbackState() === 'correct' ? '✓ Chính xác!' : '✕ Chưa chính xác · Câu này sẽ được đẩy về cuối bài' }}
+                      <div class="feedback-headline" style="display:inline-flex; align-items:center; gap:6px;">
+                        <app-pixel-icon [name]="feedbackState() === 'correct' ? 'icon_check' : 'icon_cross'" [size]="15"></app-pixel-icon>
+                        <span>{{ feedbackState() === 'correct' ? 'Chính xác!' : 'Chưa chính xác · Câu này sẽ được đẩy về cuối bài' }}</span>
                       </div>
                       @if (currentExplanation(); as exp) {
-                        <div class="feedback-explanation">💡 <strong>Giải thích:</strong> {{ exp }}</div>
+                        <div class="feedback-explanation" style="display:flex; align-items:flex-start; gap:6px;">
+                          <app-pixel-icon name="icon_lightbulb" [size]="14"></app-pixel-icon>
+                          <span><strong>Giải thích:</strong> {{ exp }}</span>
+                        </div>
                       }
                     </div>
                     <button
@@ -118,21 +132,27 @@ interface QueueItem {
         <!-- MÀN HÌNH TỔNG KẾT & NHẬN THƯỞNG 3 SAO -->
         <main class="results-screen">
           <article class="results-card">
-            <div class="laurel-icon">🌿</div>
+            <div class="laurel-icon"><app-pixel-icon name="icon_trophy" [size]="32"></app-pixel-icon></div>
 
             <div class="stars-display-row">
-              <span class="star-item" [class.active-star]="(result()?.stars || 1) >= 1">★</span>
-              <span class="star-item star-mid" [class.active-star]="(result()?.stars || 1) >= 2">★</span>
-              <span class="star-item" [class.active-star]="(result()?.stars || 1) >= 3">★</span>
+              <span class="star-item">
+                <app-pixel-icon [name]="(result()?.stars || 1) >= 1 ? 'icon_star' : 'icon_star_empty'" [size]="28"></app-pixel-icon>
+              </span>
+              <span class="star-item star-mid">
+                <app-pixel-icon [name]="(result()?.stars || 1) >= 2 ? 'icon_star' : 'icon_star_empty'" [size]="32"></app-pixel-icon>
+              </span>
+              <span class="star-item">
+                <app-pixel-icon [name]="(result()?.stars || 1) >= 3 ? 'icon_star' : 'icon_star_empty'" [size]="28"></app-pixel-icon>
+              </span>
             </div>
 
             <h1 class="result-title">
               @if ((result()?.stars || 1) === 3) {
-                Xuất sắc! Đạt hạng 3 Sao (★★★)
+                Xuất sắc! Đạt hạng 3 Sao
               } @else if ((result()?.stars || 1) === 2) {
-                Khá tốt! Đạt hạng 2 Sao (★★☆)
+                Khá tốt! Đạt hạng 2 Sao
               } @else {
-                Hoàn thành! Đạt hạng 1 Sao (★☆☆)
+                Hoàn thành! Đạt hạng 1 Sao
               }
             </h1>
 
@@ -160,7 +180,10 @@ interface QueueItem {
               </div>
               <div class="summary-divider"></div>
               <div class="summary-col">
-                <span class="col-value">{{ result()?.stars || 1 }} ★</span>
+                <span class="col-value" style="display:inline-flex; align-items:center; gap:4px;">
+                  <span>{{ result()?.stars || 1 }}</span>
+                  <app-pixel-icon name="icon_star" [size]="13"></app-pixel-icon>
+                </span>
                 <span class="col-label">Xếp hạng</span>
               </div>
             </div>
@@ -186,22 +209,26 @@ interface QueueItem {
                   }
                 </div>
               } @else {
-                <div class="max-reward-notice">
-                  <span>🎖️ Đã nhận tối đa ở các lần thi trước (Kỷ lục: {{ result()?.bestStarsClaimed }}★) · Không lặp lại Xu & XP khi làm lại</span>
+                <div class="max-reward-notice" style="display:inline-flex; align-items:center; gap:8px;">
+                  <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
+                  <span>Đã nhận tối đa ở các lần thi trước (Kỷ lục: {{ result()?.bestStarsClaimed }}★) · Không lặp lại Xu &amp; XP khi làm lại</span>
                 </div>
               }
             </div>
 
             <!-- NÚT ĐIỀU HƯỚNG TIẾP THEO -->
             <div class="actions-stack">
-              <button type="button" class="btn btn-primary action-nav-btn" (click)="retakeQuiz()">
-                🔄 Luyện tập lại bài này
+              <button type="button" class="btn btn-primary action-nav-btn" (click)="retakeQuiz()" style="display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+                <app-pixel-icon name="icon_retry" [size]="16"></app-pixel-icon>
+                <span>Luyện tập lại bài này</span>
               </button>
-              <a [routerLink]="['/grammar', topic()?.code]" class="btn btn-secondary action-nav-btn">
-                📖 Ôn lại lý thuyết chuyên đề
+              <a [routerLink]="['/grammar', topic()?.code]" class="btn btn-secondary action-nav-btn" style="display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+                <app-pixel-icon name="icon_book_open" [size]="16"></app-pixel-icon>
+                <span>Ôn lại lý thuyết chuyên đề</span>
               </a>
-              <a routerLink="/grammar" class="btn btn-secondary action-nav-btn">
-                📜 Về Sổ tay Ngữ pháp TOEIC
+              <a routerLink="/grammar" class="btn btn-secondary action-nav-btn" style="display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+                <app-pixel-icon name="icon_books_stack" [size]="16"></app-pixel-icon>
+                <span>Về Sổ tay Ngữ pháp TOEIC</span>
               </a>
             </div>
           </article>

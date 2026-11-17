@@ -26,7 +26,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 
         <div class="header-stats">
           <span class="stat-badge">
-            <span class="badge-icon">📖</span>
+            <span class="badge-icon"><app-pixel-icon name="icon_book_open" [size]="14"></app-pixel-icon></span>
             <span>{{ unlockedCount() }}/{{ allLessons().length }} Đã mở</span>
           </span>
         </div>
@@ -46,7 +46,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         </div>
 
         <div class="search-box">
-          <span class="search-icon">🔍</span>
+          <span class="search-icon"><app-pixel-icon name="icon_search" [size]="14"></app-pixel-icon></span>
           <input
             type="text"
             [(ngModel)]="searchQuery"
@@ -84,13 +84,15 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
             <div class="unlock-info-row">
               @if (lesson.isUnlocked) {
                 <div class="status-badge status-unlocked">
-                  <span class="check-icon">✓</span>
+                  <span class="check-icon"><app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon></span>
                   <span>Đã mở khóa</span>
                 </div>
                 @if ((lesson.bestStarsClaimed || 0) > 0) {
                   <div class="stars-badge" title="Kỷ lục kiểm tra: {{ lesson.bestStarsClaimed }} Sao">
                     @for (s of [1, 2, 3]; track s) {
-                      <span class="star-icon" [class.earned]="s <= (lesson.bestStarsClaimed || 0)">★</span>
+                      <span class="star-icon">
+                        <app-pixel-icon [name]="s <= (lesson.bestStarsClaimed || 0) ? 'icon_star' : 'icon_star_empty'" [size]="13"></app-pixel-icon>
+                      </span>
                     }
                   </div>
                 }
@@ -144,7 +146,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
           </div>
         } @empty {
           <div class="empty-state">
-            <span class="empty-icon">🍃</span>
+            <span class="empty-icon"><app-pixel-icon name="icon_sprout_action" [size]="32"></app-pixel-icon></span>
             <p>Không tìm thấy chủ đề phù hợp với "{{ searchQuery }}".</p>
           </div>
         }

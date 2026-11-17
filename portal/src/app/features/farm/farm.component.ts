@@ -30,16 +30,17 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 
         <!-- Thanh công cụ Lưu trữ / Sao lưu / Khôi phục dữ liệu Web App -->
         <div class="storage-bar">
-          <span class="storage-label">💾 Dữ liệu máy:</span>
+          <span class="storage-label">Dữ liệu máy:</span>
           <button class="storage-btn" (click)="state.exportBackupJson()" title="Tải file english-farm-backup.json về máy">
-            ⬇ Xuất sao lưu
+            Xuất sao lưu
           </button>
           <label class="storage-btn storage-upload-btn" title="Chọn file .json đã sao lưu trước đó">
-            ⬆ Nạp sao lưu
+            Nạp sao lưu
             <input type="file" accept=".json" (change)="onFileImport($event)" style="display:none;" />
           </label>
-          <button class="storage-btn storage-reset" (click)="confirmReset()" title="Xóa dữ liệu để chơi lại từ đầu">
-            🔄 Đặt lại
+          <button class="storage-btn storage-reset" (click)="confirmReset()" title="Xóa dữ liệu để chơi lại từ đầu" style="display:inline-flex; align-items:center; gap:4px;">
+            <app-pixel-icon name="icon_retry" [size]="12"></app-pixel-icon>
+            <span>Đặt lại</span>
           </button>
         </div>
       </div>
@@ -212,7 +213,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         @if (state.selectedTool() === 'plant') {
           <div class="seed-picker-strip">
             <div class="picker-header">
-              <span class="picker-label">🌱 Chọn loại hạt muốn gieo:</span>
+              <span class="picker-label" style="display:inline-flex; align-items:center; gap:5px;">
+                <app-pixel-icon name="icon_sprout_action" [size]="14"></app-pixel-icon>
+                <span>Chọn loại hạt muốn gieo:</span>
+              </span>
               <span class="picker-sub">Hạt khóa cần đủ XP và mở chủ đề tương ứng</span>
             </div>
             <div class="seed-options-grid">
@@ -272,7 +276,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                 <!-- Trạng thái mở khóa & Yêu cầu -->
                 <div class="catalog-lock-status">
                   @if (isUnlocked) {
-                    <span class="lock-status-pill unlocked">✅ Đã mở khóa</span>
+                    <span class="lock-status-pill unlocked" style="display:inline-flex; align-items:center; gap:4px;">
+                      <app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon>
+                      <span>Đã mở khóa</span>
+                    </span>
                   } @else {
                     <span class="lock-status-pill locked">
                       <app-pixel-icon name="icon_padlock" [size]="14"></app-pixel-icon> Cần Lv.{{ lockInfo.requiredLevel }}
@@ -301,7 +308,9 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         <div class="vintage-card unlock-plot-modal">
           <div class="modal-header">
             <h3 class="modal-title"><app-pixel-icon name="icon_padlock" [size]="18"></app-pixel-icon> Mở Khóa Ô Đất #{{ (selectedLockedPlotIndex() || 0) + 1 }}</h3>
-            <button class="modal-close-btn" (click)="selectedLockedPlotIndex.set(null)">✕</button>
+            <button class="modal-close-btn" (click)="selectedLockedPlotIndex.set(null)">
+              <app-pixel-icon name="icon_cross" [size]="14"></app-pixel-icon>
+            </button>
           </div>
           <p class="modal-desc">Chọn 1 trong 2 phương thức để mở rộng diện tích canh tác:</p>
 

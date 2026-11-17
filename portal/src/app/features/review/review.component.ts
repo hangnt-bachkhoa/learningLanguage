@@ -49,7 +49,10 @@ interface ReviewQuizQuestion {
               class="v-tab"
               [class.active]="activeMainTab() === 'planner'"
               (click)="activeMainTab.set('planner')">
-              🌿 Lịch Ôn Tập (Ebbinghaus)
+              <span style="display:inline-flex; align-items:center; gap:6px;">
+                <app-pixel-icon name="icon_memory_brain" [size]="14"></app-pixel-icon>
+                <span>Lịch Ôn Tập (Ebbinghaus)</span>
+              </span>
               @if (state.dueTodayCount() > 0) {
                 <span class="due-badge">{{ state.dueTodayCount() }}</span>
               }
@@ -58,7 +61,10 @@ interface ReviewQuizQuestion {
               class="v-tab"
               [class.active]="activeMainTab() === 'analytics'"
               (click)="activeMainTab.set('analytics')">
-              📊 Thống Kê Tiến Độ
+              <span style="display:inline-flex; align-items:center; gap:6px;">
+                <app-pixel-icon name="icon_books_stack" [size]="14"></app-pixel-icon>
+                <span>Thống Kê Tiến Độ</span>
+              </span>
             </button>
           </div>
         </div>
@@ -112,7 +118,9 @@ interface ReviewQuizQuestion {
                 <h2 class="prompt-word">{{ q.word }}</h2>
                 <div class="prompt-phonetic-row">
                   <span class="phonetic-text">{{ q.ipa }}</span>
-                  <button class="speak-btn" (click)="state.speak(q.word)" title="Phát âm">🔊</button>
+                  <button class="speak-btn" (click)="state.speak(q.word)" title="Phát âm">
+                    <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
+                  </button>
                 </div>
                 <div class="clue-box">
                   <div class="clue-label">Ngữ cảnh ứng dụng:</div>
@@ -145,10 +153,10 @@ interface ReviewQuizQuestion {
                 <div class="feedback-tray" [class.is-correct]="feedbackState() === 'correct'" [class.is-wrong]="feedbackState() === 'wrong'">
                   <div class="feedback-message">
                     @if (feedbackState() === 'correct') {
-                      <span class="fb-icon">✓</span>
+                      <span class="fb-icon"><app-pixel-icon name="icon_check" [size]="14"></app-pixel-icon></span>
                       <span class="fb-text">Chính xác! Bạn đã ghi nhớ từ này.</span>
                     } @else {
-                      <span class="fb-icon">💡</span>
+                      <span class="fb-icon"><app-pixel-icon name="icon_lightbulb" [size]="14"></app-pixel-icon></span>
                       <span class="fb-text">Đáp án đúng: <strong>{{ q.meaningVi }}</strong> (Từ sẽ được xếp ôn lại ở cuối phiên)</span>
                     }
                   </div>
@@ -174,7 +182,9 @@ interface ReviewQuizQuestion {
         @let res = summaryResult();
         <div class="summary-container">
           <div class="vintage-card summary-card-final">
-            <div class="laurel-wreath">🌿 👑 🌿</div>
+            <div class="laurel-wreath" style="display:flex; justify-content:center; margin-bottom: 8px;">
+              <app-pixel-icon name="icon_trophy" [size]="36"></app-pixel-icon>
+            </div>
             <h2 class="final-title">Phiên Ôn Tập Hoàn Tất!</h2>
             <p class="final-sub">
               Tất cả <strong>{{ res?.totalQuestions || 0 }} từ vựng</strong> trong phiên đã được kiểm tra và cập nhật tiến trình Ebbinghaus.
@@ -222,8 +232,9 @@ interface ReviewQuizQuestion {
               <button class="btn btn-primary" (click)="viewMode.set('main')">
                 <span>Về Lịch Ôn Tập</span>
               </button>
-              <a routerLink="/farm" class="btn btn-secondary">
-                <span>Về Nông Trại Trồng Cây 🌾</span>
+              <a routerLink="/farm" class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:6px;">
+                <span>Về Nông Trại Trồng Cây</span>
+                <app-pixel-icon name="icon_sprout_action" [size]="16"></app-pixel-icon>
               </a>
             </div>
           </div>

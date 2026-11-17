@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, input, computed, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
 export type PosMode = 'full' | 'compact';
 
@@ -79,7 +80,7 @@ export function normalizePosKey(raw: string | undefined | null): string {
 @Component({
   selector: 'app-pos-tag',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PixelIconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="pos-tag-wrap">
@@ -100,7 +101,8 @@ export function normalizePosKey(raw: string | undefined | null): string {
       </button>
       @if (showQuestionHint() && hintOpen()) {
         <div class="pos-helper-popover" [style.borderColor]="meta().border" [style.color]="meta().text">
-          💡 {{ meta().helperQuestion }}
+          <app-pixel-icon name="icon_lightbulb" [size]="12"></app-pixel-icon>
+          <span>{{ meta().helperQuestion }}</span>
         </div>
       }
     </div>

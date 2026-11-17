@@ -41,12 +41,14 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
             <div class="word-status-tag-row">
               <h1 class="word-text">{{ currentWord.word }}</h1>
               @if (state.learnedWords().includes(currentWord.word)) {
-                <span class="word-learned-badge">✅ Đã thuộc</span>
+                <span class="word-learned-badge">Đã thuộc</span>
               }
             </div>
             <div class="ipa-audio-row">
               <span class="ipa-string">{{ currentWord.ipa }}</span>
-              <button class="speaker-pill" (click)="state.speak(currentWord.word)" title="Nghe phát âm">🔊</button>
+              <button class="speaker-pill" (click)="state.speak(currentWord.word)" title="Nghe phát âm">
+                <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
+              </button>
             </div>
             <!-- Thẻ loại từ thân thiện cho người mới bắt đầu -->
             <div class="pos-badge-hero-row" style="margin-top: 8px;">
@@ -112,7 +114,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
           class="btn btn-primary learned-btn"
           [class.already-learned]="state.learnedWords().includes(currentWord.word)"
           (click)="markLearned()">
-          <span>✓</span>
+          <app-pixel-icon name="icon_check" [size]="14"></app-pixel-icon>
           <span>{{ currentIndex() === displayWords.length - 1 ? 'Đã học (Xong)' : 'Đã học · Từ tiếp ›' }}</span>
         </button>
       </div>
@@ -121,10 +123,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       <div class="quiz-cta-banner">
         <a [routerLink]="['/quiz']" [queryParams]="{ lessonId: state.activeLessonId() }" class="quiz-cta-link">
           <span class="cta-left">
-            <span class="cta-icon">🎯</span>
+            <span class="cta-icon"><app-pixel-icon name="icon_target" [size]="18"></app-pixel-icon></span>
             <span class="cta-text">
               <strong>Kiểm tra từ vựng chủ đề này</strong>
-              <small>Làm bài Quiz nhận thưởng Hạt giống, Nước & Xu</small>
+              <small>Làm bài Quiz nhận thưởng Hạt giống, Nước &amp; Xu</small>
             </span>
           </span>
           <span class="cta-arrow">Bắt đầu ›</span>
@@ -153,7 +155,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   <td class="col-meaning">{{ w.meaning }}</td>
                   <td class="col-status">
                     @if (state.learnedWords().includes(w.word)) {
-                      <span class="badge-done" title="Đã thuộc">✓</span>
+                      <span class="badge-done" title="Đã thuộc"><app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon></span>
                     }
                   </td>
                 </tr>
