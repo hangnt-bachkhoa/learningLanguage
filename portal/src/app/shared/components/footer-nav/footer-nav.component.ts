@@ -1,15 +1,16 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 import { GameStateService } from '../../../core/services/game-state.service';
 import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-footer-nav',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, PixelIconComponent],
+  imports: [CommonModule, RouterLink, PixelIconComponent],
   template: `
-    <!-- 1. WEB EDITORIAL ARCHIVAL FOOTER (Hiển thị chân trang phong cách tạp chí cổ điển) -->
+    <!-- 1. WEB EDITORIAL ARCHIVAL FOOTER (Hiển thị chân trang phong cách tạp chí cổ điển trên Desktop) -->
     <footer class="web-archival-footer">
       <div class="footer-grid">
         <!-- Cột 1: Thương hiệu & Giới thiệu -->
@@ -89,82 +90,97 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         </div>
         <div class="drawer-grid">
           @if (state.activeLang() === 'ja') {
-            <a routerLink="/grammar" class="drawer-tile" (click)="isDrawerOpen.set(false)" routerLinkActive="active">
+            <a routerLink="/grammar" class="drawer-tile" (click)="isDrawerOpen.set(false)" [class.active]="isGrammarActive()">
               <app-pixel-icon name="icon_scroll" [size]="18"></app-pixel-icon>
               <span>Ngữ pháp</span>
             </a>
           } @else {
-            <a routerLink="/kana" class="drawer-tile" (click)="isDrawerOpen.set(false)" routerLinkActive="active">
-              <app-pixel-icon name="icon_book_open" [size]="18"></app-pixel-icon>
-              <span>Bảng chữ cái Kana</span>
+            <a routerLink="/kana" class="drawer-tile" (click)="isDrawerOpen.set(false)" [class.active]="isKanaActive()">
+              <app-pixel-icon name="icon_target" [size]="18"></app-pixel-icon>
+              <span>Chữ cái Kana</span>
             </a>
           }
 
-          <a routerLink="/inventory" class="drawer-tile" (click)="isDrawerOpen.set(false)" routerLinkActive="active">
+          <a routerLink="/inventory" class="drawer-tile" (click)="isDrawerOpen.set(false)" [class.active]="currentUrl().startsWith('/inventory')">
             <app-pixel-icon name="icon_harvest_basket" [size]="18"></app-pixel-icon>
             <span>Kho đồ</span>
           </a>
 
-          <a routerLink="/progress" class="drawer-tile" (click)="isDrawerOpen.set(false)" routerLinkActive="active">
+          <a routerLink="/review" class="drawer-tile" (click)="isDrawerOpen.set(false)" [class.active]="currentUrl().startsWith('/review') || currentUrl().startsWith('/progress')">
             <app-pixel-icon name="icon_trophy" [size]="18"></app-pixel-icon>
-            <span>Tiến độ</span>
+            <span>Tiến độ &amp; Ôn tập</span>
           </a>
 
-          <a routerLink="/review" class="drawer-tile" (click)="isDrawerOpen.set(false)" routerLinkActive="active">
-            <app-pixel-icon name="icon_retry" [size]="18"></app-pixel-icon>
-            <span>Luyện tập</span>
+          <a routerLink="/guide" class="drawer-tile" (click)="isDrawerOpen.set(false)" [class.active]="currentUrl().startsWith('/guide') || currentUrl().startsWith('/help')">
+            <app-pixel-icon name="icon_book_open" [size]="18"></app-pixel-icon>
+            <span>Hướng dẫn</span>
           </a>
+        </div>
+
+        <div class="drawer-backup-box">
+          <span class="drawer-backup-title">Sao lưu dữ liệu cá nhân</span>
+          <div class="drawer-backup-btns">
+            <button type="button" class="drawer-backup-btn" (click)="state.exportBackupJson()">
+              <app-pixel-icon name="icon_scroll" [size]="14"></app-pixel-icon>
+              <span>Xuất bản sao lưu JSON</span>
+            </button>
+            <button type="button" class="drawer-backup-btn" (click)="fileInputDrawer.click()">
+              <app-pixel-icon name="icon_tools" [size]="14"></app-pixel-icon>
+              <span>Khôi phục từ file JSON</span>
+            </button>
+            <input #fileInputDrawer type="file" accept=".json" style="display:none" (change)="onFileSelected($event)" />
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 3. MOBILE BOTTOM NAVIGATION DOCK (Navy Vintage Dock phong cách cổ điển) -->
+    <!-- 3. MOBILE BOTTOM NAVIGATION DOCK (Navy Vintage Dock - Trang chủ ở vị trí giữa) -->
     <nav class="mobile-footer-dock style-navy" aria-label="Điều hướng đáy di động">
-      <!-- 1. Trang chủ -->
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="dock-tab" title="Trang chủ">
-        <app-pixel-icon name="icon_wheat_sheaf" [size]="18"></app-pixel-icon>
-        <span class="dock-label">Trang chủ</span>
-      </a>
-
-      <!-- 2. Từ vựng -->
-      <a routerLink="/lessons" routerLinkActive="active" class="dock-tab" title="Từ vựng">
-        <app-pixel-icon name="icon_book_open" [size]="18"></app-pixel-icon>
+      <!-- 1. Từ vựng (Active khi ở /lessons, /vocab, /quiz) -->
+      <a routerLink="/lessons" class="dock-tab" [class.active]="isVocabActive()" title="Từ vựng">
+        <app-pixel-icon name="icon_books_stack" [size]="18"></app-pixel-icon>
         <span class="dock-label">Từ vựng</span>
       </a>
 
-      <!-- 3. Nông trại (Center Raised Farm Button) -->
-      <a routerLink="/farm" routerLinkActive="active" class="dock-tab center-farm" title="Nông trại">
+      <!-- 2. Nông trại (Có chấm thông báo khi cây chín) -->
+      <a routerLink="/farm" class="dock-tab" [class.active]="isFarmActive()" title="Nông trại">
         @if (hasReadyPlots()) {
           <span class="dock-dot" title="Có nông sản chín sẵn sàng thu hoạch!"></span>
         }
-        <app-pixel-icon name="icon_sprout_action" [size]="20"></app-pixel-icon>
+        <app-pixel-icon name="icon_sprout_action" [size]="19"></app-pixel-icon>
         <span class="dock-label">Nông trại</span>
+      </a>
+
+      <!-- 3. TRANG CHỦ (Vị trí giữa - Center Raised Button) -->
+      <a routerLink="/" class="dock-tab center-tab" [class.active]="isHomeActive()" title="Trang chủ">
+        <app-pixel-icon name="icon_home" [size]="20"></app-pixel-icon>
+        <span class="dock-label">Trang chủ</span>
       </a>
 
       <!-- 4. Kana (nếu Tiếng Nhật) hoặc Ngữ pháp (nếu Tiếng Anh) -->
       @if (state.activeLang() === 'ja') {
-        <a routerLink="/kana" routerLinkActive="active" class="dock-tab" title="Bảng chữ cái Kana">
+        <a routerLink="/kana" class="dock-tab" [class.active]="isKanaActive()" title="Bảng chữ cái Kana">
           <app-pixel-icon name="icon_target" [size]="18"></app-pixel-icon>
           <span class="dock-label">Kana あア</span>
         </a>
       } @else {
-        <a routerLink="/grammar" routerLinkActive="active" class="dock-tab" title="Ngữ pháp">
+        <a routerLink="/grammar" class="dock-tab" [class.active]="isGrammarActive()" title="Ngữ pháp">
           <app-pixel-icon name="icon_scroll" [size]="18"></app-pixel-icon>
           <span class="dock-label">Ngữ pháp</span>
         </a>
       }
 
       <!-- 5. Cửa hàng -->
-      <a routerLink="/shop" routerLinkActive="active" class="dock-tab" title="Cửa hàng">
+      <a routerLink="/shop" class="dock-tab" [class.active]="isShopActive()" title="Cửa hàng">
         <app-pixel-icon name="icon_cart" [size]="18"></app-pixel-icon>
         <span class="dock-label">Cửa hàng</span>
       </a>
 
-      <!-- 6. Thêm (More) Drawer Trigger -->
+      <!-- 6. Thêm (More Drawer Trigger) -->
       <button
         type="button"
         class="dock-tab more-tab"
-        [class.active]="isDrawerOpen() || isMoreRouteActive()"
+        [class.active]="isMoreActive()"
         (click)="toggleDrawer()"
         title="Danh mục mở rộng">
         <app-pixel-icon name="icon_menu" [size]="18"></app-pixel-icon>
@@ -296,7 +312,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     .mobile-footer-dock.style-navy {
       background: #1C2B36;
       border-top: 1.5px solid rgba(232, 215, 168, 0.28);
-      padding: 6px 4px 8px;
+      padding: 5px 4px 7px;
       box-shadow: 0 -4px 18px rgba(20, 32, 44, 0.35);
     }
 
@@ -309,21 +325,22 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       gap: 3px;
       padding: 5px 6px;
       border-radius: 10px;
-      min-width: 50px;
+      min-width: 48px;
       text-decoration: none;
       color: rgba(248, 244, 235, 0.72);
       transition: all 0.15s ease;
       background: transparent;
       border: none;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
     .dock-tab:hover {
       color: #FFFDF9;
     }
     .dock-tab.active {
-      background: rgba(166, 94, 101, 0.9);
-      color: #FFFDF9;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+      background: rgba(166, 94, 101, 0.95);
+      color: #FFFDF9 !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
     }
 
     .dock-label {
@@ -337,25 +354,33 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       color: #FFFDF9;
     }
 
-    /* Center Raised Farm Action Button */
-    .dock-tab.center-farm {
-      transform: translateY(-8px);
-      background: #78815D;
+    /* Center Raised Button (Trang chủ ở vị trí giữa) */
+    .dock-tab.center-tab {
+      transform: translateY(-7px);
+      background: #233442;
+      color: rgba(248, 244, 235, 0.85);
+      border: 1.5px solid rgba(232, 215, 168, 0.45);
+      border-radius: 14px;
+      padding: 6px 10px;
+      min-width: 52px;
+      box-shadow: 0 4px 12px rgba(20, 32, 44, 0.35);
+    }
+    .dock-tab.center-tab:hover {
+      background: #2D4152;
+      color: #FFFDF9;
+      border-color: rgba(232, 215, 168, 0.7);
+    }
+    .dock-tab.center-tab.active {
+      background: #A65E65;
       color: #FFFDF9 !important;
       border: 2px solid #E8D7A8;
-      border-radius: 14px;
-      padding: 6px 11px;
-      box-shadow: 0 5px 12px rgba(28, 43, 54, 0.3);
-    }
-    .dock-tab.center-farm.active {
-      background: #A65E65;
-      border-color: #FFFDF9;
+      box-shadow: 0 6px 16px rgba(166, 94, 101, 0.5), 0 0 10px rgba(232, 215, 168, 0.35);
     }
 
     .dock-dot {
       position: absolute;
       top: 3px;
-      right: 7px;
+      right: 6px;
       width: 7px;
       height: 7px;
       border-radius: 50%;
@@ -438,6 +463,44 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         color: var(--rose);
       }
     }
+    .drawer-backup-box {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .drawer-backup-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .drawer-backup-btns {
+      display: flex;
+      gap: 8px;
+    }
+    .drawer-backup-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--bg-paper);
+      color: var(--navy);
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      transition: background 0.15s ease;
+      &:hover {
+        background: #EAE2D2;
+      }
+    }
 
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -467,19 +530,71 @@ export class FooterNavComponent {
   readonly state = inject(GameStateService);
   private readonly router = inject(Router);
 
+  readonly currentUrl = signal<string>(this.router.url);
   readonly isDrawerOpen = signal<boolean>(false);
 
   readonly hasReadyPlots = computed(() => {
     return this.state.plots().some(p => p.status === 'ready');
   });
 
-  toggleDrawer() {
-    this.isDrawerOpen.update(v => !v);
+  readonly isHomeActive = computed(() => {
+    const u = this.currentUrl();
+    return u === '/' || u === '' || u.startsWith('/dashboard') || u.startsWith('/?');
+  });
+
+  readonly isVocabActive = computed(() => {
+    const u = this.currentUrl();
+    return (
+      u.startsWith('/lessons') ||
+      u.startsWith('/vocab') ||
+      u.startsWith('/quiz') ||
+      u.startsWith('/vocabulary')
+    );
+  });
+
+  readonly isFarmActive = computed(() => {
+    const u = this.currentUrl();
+    return u.startsWith('/farm');
+  });
+
+  readonly isKanaActive = computed(() => {
+    const u = this.currentUrl();
+    return u.startsWith('/kana');
+  });
+
+  readonly isGrammarActive = computed(() => {
+    const u = this.currentUrl();
+    return u.startsWith('/grammar');
+  });
+
+  readonly isShopActive = computed(() => {
+    const u = this.currentUrl();
+    return u.startsWith('/shop');
+  });
+
+  readonly isMoreActive = computed(() => {
+    const u = this.currentUrl();
+    return (
+      this.isDrawerOpen() ||
+      u.startsWith('/inventory') ||
+      u.startsWith('/progress') ||
+      u.startsWith('/review') ||
+      u.startsWith('/guide') ||
+      u.startsWith('/help')
+    );
+  });
+
+  constructor() {
+    this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(e => {
+        this.currentUrl.set(e.urlAfterRedirects || e.url);
+        this.isDrawerOpen.set(false);
+      });
   }
 
-  isMoreRouteActive(): boolean {
-    const url = this.router.url;
-    return url.includes('/inventory') || url.includes('/progress') || url.includes('/review');
+  toggleDrawer() {
+    this.isDrawerOpen.update(v => !v);
   }
 
   closeDrawer(event: MouseEvent) {

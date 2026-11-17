@@ -1,13 +1,13 @@
 import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { GameStateService } from '../../../core/services/game-state.service';
 import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, PixelIconComponent],
+  imports: [CommonModule, RouterLink, PixelIconComponent],
   template: `
     <!-- MÀN PHỦ TỐI KHI MỞ MENU TRÊN MOBILE (BẤM VÀO ĐỂ ĐÓNG) -->
     @if (state.isMobileSidebarOpen()) {
@@ -38,8 +38,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         @for (item of navItems(); track item.path) {
           <a
             [routerLink]="item.path"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: item.exact}"
+            [class.active]="isItemActive(item)"
             class="nav-tab-btn"
             (click)="state.closeMobileSidebar()"
             [title]="item.label">
@@ -306,6 +305,35 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 })
 export class SidebarComponent {
   state = inject(GameStateService);
+  private router = inject(Router);
+
+  isItemActive(item: { path: string; exact?: boolean }): boolean {
+    const url = this.router.url;
+    if (item.path === '/') {
+      return url === '/' || url === '' || url.startsWith('/dashboard') || url.startsWith('/?');
+    }
+    if (item.path === '/lessons') {
+      return (
+        url.startsWith('/lessons') ||
+        url.startsWith('/vocab') ||
+        url.startsWith('/quiz') ||
+        url.startsWith('/vocabulary')
+      );
+    }
+    if (item.path === '/grammar') {
+      return url.startsWith('/grammar');
+    }
+    if (item.path === '/kana') {
+      return url.startsWith('/kana');
+    }
+    if (item.path === '/review') {
+      return url.startsWith('/review') || url.startsWith('/progress');
+    }
+    if (item.path === '/guide') {
+      return url.startsWith('/guide') || url.startsWith('/help');
+    }
+    return item.exact ? url === item.path : url.startsWith(item.path);
+  }
 
   readonly navItems = computed(() => {
     const isJa = this.state.activeLang() === 'ja';
