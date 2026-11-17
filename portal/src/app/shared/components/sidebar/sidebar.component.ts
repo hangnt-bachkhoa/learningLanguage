@@ -26,11 +26,75 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
           <span class="brand-sprout">
             <img src="assets/icons/language_farm_logo.svg" alt="Language Farm" class="brand-logo-img pixel-art" />
           </span>
-          <span class="drawer-brand-name">{{ state.activeLang() === 'ja' ? 'Japanese Farm' : 'English Farm' }}</span>
+          <span class="drawer-brand-name">Language Farm</span>
         </a>
         <button class="drawer-close-btn" (click)="state.closeMobileSidebar()" title="Đóng menu">
           <app-pixel-icon name="icon_cross" [size]="14"></app-pixel-icon>
         </button>
+      </div>
+
+      <!-- CHUYỂN ĐỔI NGÔN NGỮ NHANH TRÊN DESKTOP (Thanh 82px) -->
+      <div class="desktop-lang-switcher" title="Chuyển đổi ngôn ngữ học tập">
+        <button
+          type="button"
+          class="desktop-lang-chip"
+          [class.active]="state.activeLang() === 'en'"
+          (click)="switchLang('en')"
+          [title]="'Tiếng Anh · Cấp độ ' + getEnLevel()">
+          🇬🇧
+        </button>
+        <button
+          type="button"
+          class="desktop-lang-chip"
+          [class.active]="state.activeLang() === 'ja'"
+          (click)="switchLang('ja')"
+          [title]="'Tiếng Nhật · Cấp độ ' + getJaLevel()">
+          🇯🇵
+        </button>
+      </div>
+
+      <!-- HỒ SƠ NGÔN NGỮ & TIẾN ĐỘ LEVEL TRÊN DRAWER MOBILE (Được đưa từ Header vào Nav bar) -->
+      <div class="sidebar-profile-card">
+        <div class="profile-header">
+          <span class="profile-title">Hồ sơ ngôn ngữ</span>
+          <span class="profile-streak" title="Chuỗi ngày học liên tục">🔥 {{ state.studyStreak() }} ngày</span>
+        </div>
+
+        <!-- Hai nút chọn ngôn ngữ độc lập -->
+        <div class="lang-switch-group">
+          <button
+            type="button"
+            class="lang-chip-btn"
+            [class.active]="state.activeLang() === 'en'"
+            (click)="switchLang('en')">
+            <span class="chip-flag">🇬🇧</span>
+            <span class="chip-label">Tiếng Anh</span>
+            <span class="chip-lv">Lv.{{ getEnLevel() }}</span>
+          </button>
+
+          <button
+            type="button"
+            class="lang-chip-btn"
+            [class.active]="state.activeLang() === 'ja'"
+            (click)="switchLang('ja')">
+            <span class="chip-flag">🇯🇵</span>
+            <span class="chip-label">Tiếng Nhật</span>
+            <span class="chip-lv">Lv.{{ getJaLevel() }}</span>
+          </button>
+        </div>
+
+        <!-- Tiến độ XP của ngôn ngữ đang chọn -->
+        <div class="active-progression-bar-box">
+          <div class="progression-text">
+            <span class="prog-level font-serif">
+              Lv.{{ state.level() }} · {{ state.activeLang() === 'en' ? 'TOEIC Farm' : 'JLPT N5 Farm' }}
+            </span>
+            <span class="prog-xp">{{ state.currentXp() }}/{{ state.xpRequired() }} XP</span>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill" [style.width.%]="xpPercent()"></div>
+          </div>
+        </div>
       </div>
 
       <!-- Danh sách Navigation ĐẦY ĐỦ -->
@@ -54,7 +118,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       </nav>
 
       <!-- Cấp độ người chơi ở đáy -->
-      <div class="nav-bottom-avatar" title="Cấp độ người chơi">
+      <div class="nav-bottom-avatar" [title]="'Cấp độ hiện tại: Lv.' + state.level() + ' (' + state.currentXp() + '/' + state.xpRequired() + ' XP)'">
         <span class="level-indicator">Lv.{{ state.level() }}</span>
       </div>
     </aside>
@@ -88,6 +152,10 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       bottom: 0;
       z-index: 160;
       border-right: 1px solid rgba(255, 255, 255, 0.08);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(232, 215, 168, 0.2) transparent;
       transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), width 0.25s ease;
     }
 
@@ -116,7 +184,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       justify-content: center;
       font-size: 22px;
       text-decoration: none;
-      gap: 8px;
+      gap: 10px;
     }
     .drawer-brand-name {
       display: none;
@@ -143,6 +211,157 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     }
     .drawer-close-btn:hover {
       background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* CHUYỂN ĐỔI NGÔN NGỮ MINI TRÊN DESKTOP */
+    .desktop-lang-switcher {
+      display: flex;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(232, 215, 168, 0.2);
+      border-radius: 20px;
+      padding: 3px;
+      margin-bottom: 12px;
+    }
+    .desktop-lang-chip {
+      background: transparent;
+      border: none;
+      font-size: 15px;
+      padding: 3px 5px;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    .desktop-lang-chip:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    .desktop-lang-chip.active {
+      opacity: 1;
+      background: rgba(232, 215, 168, 0.25);
+      box-shadow: 0 0 4px rgba(232, 215, 168, 0.5);
+    }
+
+    /* HỒ SƠ NGÔN NGỮ TRÊN MOBILE DRAWER */
+    .sidebar-profile-card {
+      display: none; /* Mặc định ẩn trên desktop rail */
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(232, 215, 168, 0.2);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .profile-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-weight: 700;
+      color: rgba(232, 215, 168, 0.85);
+    }
+    .profile-streak {
+      font-size: 11px;
+      font-weight: 700;
+      color: #FFB347;
+      background: rgba(255, 179, 71, 0.15);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+    .lang-switch-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .lang-chip-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 6px 8px;
+      color: rgba(248, 244, 235, 0.8);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .lang-chip-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(232, 215, 168, 0.4);
+    }
+    .lang-chip-btn.active {
+      background: rgba(232, 215, 168, 0.2);
+      border-color: #D6A847;
+      color: #FFFDF9;
+      font-weight: 700;
+      box-shadow: 0 0 6px rgba(214, 168, 71, 0.3);
+    }
+    .chip-flag {
+      font-size: 14px;
+      line-height: 1;
+    }
+    .chip-label {
+      flex: 1;
+      text-align: left;
+      font-size: 11.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .chip-lv {
+      font-size: 10px;
+      background: #78815D;
+      color: #FFFDF9;
+      padding: 1px 5px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .lang-chip-btn.active .chip-lv {
+      background: #8C6B4F;
+    }
+    .active-progression-bar-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .progression-text {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: rgba(248, 244, 235, 0.85);
+    }
+    .prog-level {
+      font-weight: 700;
+      color: #E8D7A8;
+    }
+    .prog-xp {
+      font-size: 10.5px;
+      opacity: 0.8;
+    }
+    .prog-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #D6A847 0%, #E8D7A8 100%);
+      border-radius: 999px;
+      transition: width 0.3s ease;
     }
 
     .nav-items-stack {
@@ -219,18 +438,19 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       box-shadow: 0 0 6px var(--gold-pixel);
     }
     .nav-bottom-avatar {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: rgba(232, 215, 168, 0.2);
+      background: rgba(232, 215, 168, 0.15);
       border: 1.5px solid var(--gold);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      margin-top: 10px;
     }
     .level-indicator {
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 800;
       color: var(--gold);
     }
@@ -238,9 +458,9 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     /* ================= RESPONSIVE MOBILE & TABLET (<= 768px): OFF-CANVAS DRAWER ================= */
     @media (max-width: 768px) {
       .left-nav-bar {
-        width: 240px;
+        width: 260px;
         align-items: stretch;
-        padding: 16px 12px;
+        padding: 16px 14px;
         transform: translateX(-100%); /* MẶC ĐỊNH ĐÓNG KÍN, HOÀN TOÀN KHÔNG CHE NỘI DUNG */
         box-shadow: none;
         z-index: 200;
@@ -251,8 +471,8 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       }
       .sidebar-top-section {
         justify-content: space-between;
-        margin-bottom: 18px;
-        padding: 0 4px;
+        margin-bottom: 14px;
+        padding: 0 2px;
       }
       .nav-brand {
         width: auto;
@@ -265,6 +485,13 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       }
       .drawer-close-btn {
         display: flex;
+      }
+      .desktop-lang-switcher {
+        display: none; /* Ẩn nút mini trên mobile, dùng sidebar-profile-card */
+      }
+      .sidebar-profile-card {
+        display: flex;
+        flex-direction: column;
       }
       .nav-items-stack {
         gap: 6px;
@@ -295,10 +522,10 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         width: 100%;
         border-radius: 10px;
         height: 38px;
-        margin-top: 10px;
+        margin-top: 14px;
       }
       .level-indicator {
-        font-size: 12.5px;
+        font-size: 13px;
       }
     }
   `]
@@ -359,5 +586,24 @@ export class SidebarComponent {
 
   hasReadyPlots(): boolean {
     return this.state.plots().some(p => p.status === 'ready');
+  }
+
+  getEnLevel(): number {
+    return this.state.activeLang() === 'en' ? this.state.level() : this.state.getOtherLanguageLevel();
+  }
+
+  getJaLevel(): number {
+    return this.state.activeLang() === 'ja' ? this.state.level() : this.state.getOtherLanguageLevel();
+  }
+
+  xpPercent(): number {
+    const req = this.state.xpRequired() || 100;
+    return Math.min(100, Math.max(0, Math.round((this.state.currentXp() / req) * 100)));
+  }
+
+  switchLang(lang: 'en' | 'ja') {
+    if (this.state.activeLang() !== lang) {
+      this.state.setLanguage(lang);
+    }
   }
 }

@@ -1,13 +1,12 @@
 import { Component, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { GameStateService } from '../../../core/services/game-state.service';
 import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, PixelIconComponent],
+  imports: [CommonModule, PixelIconComponent],
   template: `
     <header class="topbar">
       <div class="topbar-left">
@@ -24,35 +23,25 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         </h1>
       </div>
       <div class="topbar-right">
-        <!-- NÚT CHUYỂN ĐỔI NGÔN NGỮ KÈM HUY HIỆU LEVEL RIÊNG (Isolated Language Profile) -->
-        <button
-          type="button"
-          class="lang-switch-btn"
-          [title]="state.activeLang() === 'en'
-            ? 'Đang học: Tiếng Anh (Lv.' + state.level() + ') · Bấm để đổi sang Tiếng Nhật (Lv.' + state.getOtherLanguageLevel() + ')'
-            : 'Đang học: Tiếng Nhật (Lv.' + state.level() + ') · Bấm để đổi sang Tiếng Anh (Lv.' + state.getOtherLanguageLevel() + ')'"
-          (click)="toggleLanguage()">
-          <span class="lang-flag">{{ state.activeLang() === 'en' ? '🇬🇧' : '🇯🇵' }}</span>
-          <span class="lang-name-full hide-mobile">{{ state.activeLang() === 'en' ? 'Tiếng Anh' : 'Tiếng Nhật' }}</span>
-          <span class="lang-code show-mobile">{{ state.activeLang() === 'en' ? 'EN' : 'JA' }}</span>
-          <span class="lang-level-badge">Lv.{{ state.level() }}</span>
-        </button>
-
-        <a routerLink="/guide" class="guide-btn" title="Hướng dẫn sử dụng">
-          <app-pixel-icon name="icon_book_open" [size]="14"></app-pixel-icon>
-          <span class="guide-text hide-mobile">Hướng dẫn</span>
-        </a>
-        <div class="stat-pill level-pill" title="Cấp độ hiện tại">Lv.{{ state.level() }}</div>
-        <div class="stat-pill" title="Tiến độ thăng cấp: {{ state.currentXp() }}/{{ state.xpRequired() }} XP (Tối đa 1000 XP)">
-          <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
-          <span>{{ state.currentXp() }}/{{ state.xpRequired() }}</span>
-          <span class="hide-mobile"> XP</span>
+        <!-- DUY NHẤT 1 TRẠNG THÁI LEVEL TRÊN HEADER (Ngôn ngữ và Level chi tiết đã đưa vào Navigation Bar) -->
+        <div class="stat-pill level-pill" title="Cấp độ ngôn ngữ hiện tại ({{ state.activeLang() === 'en' ? 'Tiếng Anh' : 'Tiếng Nhật' }})">
+          Lv.{{ state.level() }}
         </div>
-        <div class="stat-pill gold">
+
+        <!-- TIẾN ĐỘ XP (Hiện trên Desktop/Tablet, ẩn trên Mobile để Header luôn thoáng) -->
+        <div class="stat-pill xp-pill hide-mobile" title="Tiến độ thăng cấp: {{ state.currentXp() }}/{{ state.xpRequired() }} XP (Tối đa 1000 XP)">
+          <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
+          <span>{{ state.currentXp() }}/{{ state.xpRequired() }} XP</span>
+        </div>
+
+        <!-- SỐ XU VÀNG -->
+        <div class="stat-pill gold" title="Số Xu hiện có">
           <app-pixel-icon name="icon_coin" [size]="14"></app-pixel-icon>
           <span>{{ state.coins() }}</span>
           <span class="hide-mobile"> Xu</span>
         </div>
+
+        <!-- NÚT GIỎ HÀNG -->
         <button class="cart-btn" (click)="openCart.emit()" title="Mở giỏ hàng">
           <app-pixel-icon name="icon_cart" [size]="16"></app-pixel-icon>
           <span class="cart-text hide-mobile">Giỏ hàng</span>
@@ -89,6 +78,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       display: flex;
       align-items: center;
       gap: 12px;
+      flex-shrink: 0;
     }
     .nav-toggle-btn {
       width: 38px;
@@ -110,9 +100,6 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       border-color: var(--navy);
       transform: scale(1.03);
     }
-    .toggle-icon {
-      line-height: 1;
-    }
     .page-title {
       font-family: var(--font-serif);
       font-size: 19px;
@@ -122,6 +109,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       align-items: center;
       gap: 8px;
       margin: 0;
+      white-space: nowrap;
     }
     .title-logo {
       display: flex;
@@ -139,67 +127,14 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-shrink: 0;
     }
-    .guide-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: var(--radius-sm);
-      background: #F4EFE6;
-      border: 1px solid #D9C8B5;
-      font-weight: 600;
-      font-size: 12.5px;
-      color: #554A3E;
-      text-decoration: none !important;
-      transition: background 0.15s, color 0.15s;
-    }
-    .guide-btn:hover {
-      background: #EAE2D2;
-      color: var(--navy);
-    }
-    .lang-switch-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      height: 32px;
-      padding: 0 10px 0 8px;
-      border-radius: 999px;
+    .level-pill {
+      font-weight: 800;
       background: #FFFDF9;
-      border: 1.5px solid var(--border, #D9C8B5);
-      color: var(--navy, #263847);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(38, 56, 71, 0.06);
-      transition: all 0.2s;
-    }
-    .lang-switch-btn:hover {
-      background: #F4EFE6;
-      border-color: #8C6B4F;
-      transform: translateY(-1px);
-    }
-    .lang-flag {
-      font-size: 15px;
-      line-height: 1;
-    }
-    .lang-name-full {
-      font-weight: 700;
       color: var(--navy);
-    }
-    .lang-code {
-      display: none;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    .lang-level-badge {
-      background: #78815D;
-      color: #FFFDF9;
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 1px 6px;
-      border-radius: 999px;
-      line-height: 1.25;
+      border: 1.5px solid #8C6B4F;
+      letter-spacing: 0.3px;
     }
     .cart-btn {
       display: inline-flex;
@@ -229,39 +164,19 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     @media (max-width: 600px) {
       .topbar {
         height: 52px;
-        padding: 0 10px;
+        padding: 0 12px;
       }
       .page-title {
-        font-size: 15.5px;
+        font-size: 16px;
       }
       .hide-mobile {
         display: none !important;
       }
-      .lang-name-full {
-        display: none !important;
-      }
-      .lang-code.show-mobile {
-        display: inline !important;
-      }
-      .lang-switch-btn {
-        padding: 0 6px 0 5px;
-        height: 29px;
-        gap: 3px;
-        font-size: 11px;
-      }
-      .lang-level-badge {
-        font-size: 9.5px;
-        padding: 1px 4px;
-      }
       .topbar-right {
-        gap: 5px;
+        gap: 6px;
       }
       .stat-pill {
-        padding: 3.5px 7px;
-        font-size: 11px;
-      }
-      .guide-btn {
-        padding: 4px 7px;
+        padding: 3.5px 8px;
         font-size: 11.5px;
       }
       .cart-btn {
@@ -280,30 +195,22 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       .nav-toggle-btn {
         width: 34px;
         height: 34px;
-        font-size: 17px;
       }
       .page-title {
-        font-size: 14px;
+        font-size: 15px;
       }
       .page-title .title-text {
-        max-width: 95px;
-        overflow: hidden;
-        text-overflow: ellipsis;
         white-space: nowrap;
       }
       .topbar-right {
         gap: 4px;
       }
       .stat-pill {
-        padding: 3px 5px;
-        font-size: 10px;
-      }
-      .guide-btn {
         padding: 3px 6px;
         font-size: 11px;
       }
       .cart-btn {
-        padding: 3px 6px;
+        padding: 3px 7px;
         font-size: 12px;
       }
     }
@@ -313,11 +220,6 @@ export class TopbarComponent {
   state = inject(GameStateService);
   openCart = output<void>();
 
-  get title(): string {
-    return this.state.activeLang() === 'ja' ? 'Japanese Farm' : 'English Farm';
-  }
-
-  toggleLanguage() {
-    this.state.setLanguage(this.state.activeLang() === 'en' ? 'ja' : 'en');
-  }
+  // Đồng bộ tên ứng dụng sang Language Farm trên toàn hệ thống
+  readonly title = 'Language Farm';
 }

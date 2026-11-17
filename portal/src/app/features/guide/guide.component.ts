@@ -26,9 +26,9 @@ interface GuideSection {
         <div class="header-content">
           <div class="header-badge">
             <app-pixel-icon name="icon_books_stack" [size]="16"></app-pixel-icon>
-            <span>CẨM NANG NÔNG DÂN HỌC TIẾNG ANH</span>
+            <span>CẨM NANG NÔNG DÂN HỌC NGOẠI NGỮ</span>
           </div>
-          <h1 class="guide-title font-serif">Hướng Dẫn Sử Dụng English Farm</h1>
+          <h1 class="guide-title font-serif">Hướng Dẫn Sử Dụng Language Farm</h1>
           <p class="guide-subtitle">
             Khám phá trọn vẹn quy trình học ngoại ngữ kết hợp canh tác nông trại sinh thái tự nhiên.
           </p>
@@ -164,7 +164,7 @@ interface GuideSection {
             </div>
 
             <p class="card-intro">
-              Não bộ con người quên tới 75% thông tin mới học chỉ sau 48 giờ nếu không được ôn ngắt quãng. English Farm áp dụng chu kỳ 5 mốc Ebbinghaus khoa học để đưa từ vựng vào trí nhớ vĩnh viễn.
+              Não bộ con người quên tới 75% thông tin mới học chỉ sau 48 giờ nếu không được ôn ngắt quãng. Language Farm áp dụng chu kỳ 5 mốc Ebbinghaus khoa học để đưa từ vựng vào trí nhớ vĩnh viễn.
             </p>
 
             <div class="ebbinghaus-timeline">
@@ -315,7 +315,7 @@ interface GuideSection {
             </div>
 
             <p class="card-intro">
-              Người mới học tiếng Anh thường thấy bối rối trước các ký hiệu viết tắt như (n), (v), (adj), (adv). English Farm thiết kế lại toàn bộ thẻ loại từ theo màu sắc cổ điển kèm câu hỏi trợ giúp để bạn nhận diện tức thì:
+              Người mới học thường thấy bối rối trước các ký hiệu viết tắt như (n), (v), (adj), (adv). Language Farm thiết kế lại toàn bộ thẻ loại từ theo màu sắc cổ điển kèm câu hỏi trợ giúp để bạn nhận diện tức thì:
             </p>
 
             <div class="pos-showcase-grid">

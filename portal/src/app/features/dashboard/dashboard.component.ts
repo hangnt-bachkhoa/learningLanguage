@@ -73,7 +73,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
             <app-pixel-icon name="icon_books_stack" [size]="20"></app-pixel-icon>
           </div>
           <div class="guide-banner-text">
-            <div class="guide-banner-title">Cẩm nang Nông dân English Farm</div>
+            <div class="guide-banner-title">Cẩm nang Nông dân Language Farm</div>
             <div class="guide-banner-sub">Xem vòng lặp Farm, Lịch Ebbinghaus và cơ chế nhiệm vụ</div>
           </div>
         </div>

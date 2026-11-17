@@ -19,7 +19,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
             <span class="footer-brand-logo">
               <img src="assets/icons/language_farm_logo.svg" alt="Language Farm" class="pixel-art" width="22" height="22" />
             </span>
-            <strong class="footer-brand-title font-serif">{{ state.activeLang() === 'ja' ? 'Japanese Farm' : 'Language Farm' }}</strong>
+            <strong class="footer-brand-title font-serif">Language Farm</strong>
           </div>
           <p class="footer-brand-desc">
             Sổ tay học ngoại ngữ cổ điển kết hợp nông trại Pixel-Art. Học từ vựng, vượt Quiz 3 Sao và chăm sóc khu vườn mỗi ngày.

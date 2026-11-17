@@ -53,7 +53,7 @@ export function formatShortVnDate(dateStr: string): string {
 }
 
 /**
- * Core Spaced Repetition engine for English Farm.
+ * Core Spaced Repetition engine for Language Farm.
  * If passed on first try:
  *   Stage 0 -> 1 (D1), nextReviewDate = +2 days (for Day 3)
  *   Stage 1 -> 2 (D3), nextReviewDate = +4 days (for Day 7)
