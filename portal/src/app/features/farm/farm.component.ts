@@ -1909,6 +1909,16 @@ export class FarmComponent implements OnInit {
   }
 
   getPlotCountdown(plot: FarmPlot): PlotCountdownResult {
+    const status = (plot.status || '').toLowerCase();
+    if (status === 'locked') {
+      return {
+        isReady: false,
+        progress: 0,
+        label: 'Khóa',
+        remainingSeconds: 0,
+        status: 'locked'
+      };
+    }
     const cropConfig = CROP_CATALOG.find(c => c.id === plot.crop);
     const growthMinutes = cropConfig?.growthMinutes || 5;
     return computePlotCountdown(

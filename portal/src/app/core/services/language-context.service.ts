@@ -32,6 +32,7 @@ export interface GlobalProfileState {
   globalStreak: number;
   lastStudyDate?: string;
   totalCropsHarvestedAllTime: number;
+  unlockedPlotCount?: number; // Số lượng ô đất mở khóa đồng bộ trên toàn bộ nông trại (4..9)
   achievements: {
     multilingualNovice?: boolean; // Mở khóa khi đạt Level 5 ở cả Tiếng Anh và Tiếng Nhật
     masterHarvester?: boolean;   // Thu hoạch 500+ nông sản trên toàn bộ các khu vườn
@@ -484,6 +485,7 @@ export class LanguageContextService {
             globalStreak: typeof parsed.globalStreak === 'number' ? parsed.globalStreak : 1,
             lastStudyDate: parsed.lastStudyDate || '',
             totalCropsHarvestedAllTime: parsed.totalCropsHarvestedAllTime || 0,
+            unlockedPlotCount: typeof parsed.unlockedPlotCount === 'number' ? Math.max(4, Math.min(9, parsed.unlockedPlotCount)) : 4,
             achievements: parsed.achievements || {}
           };
         }
@@ -501,8 +503,28 @@ export class LanguageContextService {
       activeLang: legacyActiveLang,
       globalStreak: 1,
       totalCropsHarvestedAllTime: 0,
+      unlockedPlotCount: 4,
       achievements: {}
     };
+  }
+
+  getUnlockedPlotCount(): number {
+    return this.globalProfile().unlockedPlotCount || 4;
+  }
+
+  setUnlockedPlotCount(count: number) {
+    const clamped = Math.max(4, Math.min(9, count));
+    this.updateGlobalProfile(p => ({
+      ...p,
+      unlockedPlotCount: Math.max(p.unlockedPlotCount || 4, clamped)
+    }));
+  }
+
+  resetUnlockedPlotCount() {
+    this.updateGlobalProfile(p => ({
+      ...p,
+      unlockedPlotCount: 4
+    }));
   }
 
   updateGlobalProfile(updater: (prev: GlobalProfileState) => GlobalProfileState) {

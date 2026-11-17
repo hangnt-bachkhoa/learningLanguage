@@ -21,7 +21,7 @@ import {
   canUnlockTarget
 } from './quiz-engine.service';
 
-import { LanguageContextService, LanguageWorkspaceState } from './language-context.service';
+import { LanguageContextService, LanguageWorkspaceState, createDefaultPlots } from './language-context.service';
 
 export { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
 export { xpRequiredForLevel, applyXpWithReset, canUnlockTarget } from './quiz-engine.service';
@@ -61,7 +61,7 @@ export function getPlotUnlockRequirement(plotIndex: number): PlotUnlockRequireme
         index: 7,
         coinPrice: 120,
         minLevel: 5,
-        requiredCrops: [{ cropId: 'apple', qty: 2, cropNameVi: 'Táo' }]
+        requiredCrops: [{ cropId: 'orange', qty: 2, cropNameVi: 'Cam sành' }]
       };
     case 8: // Plot #9
       return {
@@ -554,12 +554,61 @@ export class GameStateService {
     this.currentXp.set(ws.currentXp || 0);
     this.coins.set(typeof ws.coins === 'number' ? ws.coins : 100);
     if (Array.isArray(ws.plots) && ws.plots.length > 0) {
-      const migratedPlots = ws.plots.map((p: FarmPlot) => {
-        if (p.crop === 'sunflower') return { ...p, crop: 'pumpkin' };
-        if (p.crop === 'tulip') return { ...p, crop: 'wheat' };
-        if (p.crop === 'rose') return { ...p, crop: 'blueberry' };
-        if (p.crop === 'kiwi') return { ...p, crop: 'watermelon' };
-        return p;
+      // 1. Kiểm tra các ô thực tế đang có cây trồng để bảo toàn cây cho người chơi
+      let maxActivePlotIndex = 3; // Mặc định 4 ô đầu (#1 - #4) luôn mở
+      ws.plots.forEach((p: FarmPlot, idx: number) => {
+        if (p.crop && p.status !== 'empty' && p.status !== 'locked') {
+          if (idx > maxActivePlotIndex) maxActivePlotIndex = idx;
+        }
+      });
+
+      // 2. Lấy số lượng ô đất đã mở khóa từ GlobalProfile (đồng bộ giữa các ngôn ngữ)
+      const currentGlobalUnlocked = this.langContext.getUnlockedPlotCount();
+      const effectiveUnlockedCount = Math.max(currentGlobalUnlocked, maxActivePlotIndex + 1);
+      if (effectiveUnlockedCount !== currentGlobalUnlocked) {
+        this.langContext.setUnlockedPlotCount(effectiveUnlockedCount);
+      }
+
+      const migratedPlots = ws.plots.map((p: FarmPlot, idx: number) => {
+        let crop = p.crop;
+        if (crop === 'sunflower') crop = 'pumpkin';
+        if (crop === 'tulip') crop = 'wheat';
+        if (crop === 'rose') crop = 'blueberry';
+        if (crop === 'kiwi') crop = 'watermelon';
+
+        const updated: FarmPlot = { ...p, crop, index: idx };
+
+        // Ô #1 - #4: Luôn mở sẵn
+        if (idx < 4) {
+          if (updated.status === 'locked') {
+            updated.status = 'empty';
+          }
+          return updated;
+        }
+
+        // Ô đang có cây: Luôn giữ nguyên trạng thái mở
+        if (updated.crop && updated.status !== 'empty' && updated.status !== 'locked') {
+          return updated;
+        }
+
+        // Ô #5 - #9: Nếu nằm trong phạm vi effectiveUnlockedCount thì mở ('empty'), ngược lại thì KHÓA ('locked')
+        if (idx < effectiveUnlockedCount) {
+          if (updated.status === 'locked') {
+            updated.status = 'empty';
+          }
+        } else {
+          updated.status = 'locked';
+          updated.isWatered = false;
+          updated.isFertilized = false;
+          updated.growthProgress = 0;
+          delete updated.crop;
+          delete updated.plantedAt;
+          delete updated.plantedAtUtc;
+          delete updated.growthStartedAtUtc;
+          delete updated.harvestableAtUtc;
+        }
+
+        return updated;
       });
       this.plots.set(migratedPlots);
       this.recalculatePlotStates();
@@ -755,17 +804,8 @@ export class GameStateService {
     this.xp.set(30);
     this.coins.set(125);
     this.level.set(1);
-    this.plots.set([
-      { id: 1, index: 0, status: 'empty', isWatered: false, growthProgress: 0 },
-      { id: 2, index: 1, status: 'empty', isWatered: false, growthProgress: 0 },
-      { id: 3, index: 2, status: 'empty', isWatered: false, growthProgress: 0 },
-      { id: 4, index: 3, status: 'empty', isWatered: false, growthProgress: 0 },
-      { id: 5, index: 4, status: 'empty', isWatered: false, growthProgress: 0 },
-      { id: 6, index: 5, status: 'empty', isWatered: false, growthProgress: 0 },
-      { id: 7, index: 6, status: 'empty', isWatered: false, growthProgress: 0 },
-      { id: 8, index: 7, status: 'empty', isWatered: false, growthProgress: 0 },
-      { id: 9, index: 8, status: 'empty', isWatered: false, growthProgress: 0 }
-    ]);
+    this.langContext.resetUnlockedPlotCount();
+    this.plots.set(createDefaultPlots());
     this.inventory.set({
       seeds: {
         carrot: 5, potato: 3, corn: 3, tomato: 0, strawberry: 0,
@@ -943,6 +983,12 @@ export class GameStateService {
     const plot = this.plots()[plotIndex];
     if (!plot || plot.status !== 'locked') return false;
 
+    // Phải mở khóa tuần tự (Ô trước đó phải mở rồi)
+    if (plotIndex > 4 && this.plots()[plotIndex - 1]?.status === 'locked') {
+      this.showToast(`Bạn cần mở khóa ô đất #${plotIndex} trước!`);
+      return false;
+    }
+
     const req = getPlotUnlockRequirement(plotIndex);
     if (this.coins() < req.coinPrice) {
       this.showToast(`Bạn cần ${req.coinPrice} Xu (hiện có: ${this.coins()} Xu) để mở ô đất này!`);
@@ -951,6 +997,7 @@ export class GameStateService {
 
     this.coins.update(c => c - req.coinPrice);
     this.plots.update(list => list.map((p, i) => i === plotIndex ? { ...p, status: 'empty' } : p));
+    this.langContext.setUnlockedPlotCount(plotIndex + 1);
     this.showToast(`🎉 Đã mở khóa ô đất #${plotIndex + 1} bằng ${req.coinPrice} Xu!`);
     this.saveToStorage();
     return true;
@@ -959,6 +1006,12 @@ export class GameStateService {
   unlockPlotWithCrops(plotIndex: number): boolean {
     const plot = this.plots()[plotIndex];
     if (!plot || plot.status !== 'locked') return false;
+
+    // Phải mở khóa tuần tự (Ô trước đó phải mở rồi)
+    if (plotIndex > 4 && this.plots()[plotIndex - 1]?.status === 'locked') {
+      this.showToast(`Bạn cần mở khóa ô đất #${plotIndex} trước!`);
+      return false;
+    }
 
     const req = getPlotUnlockRequirement(plotIndex);
     if (this.level() < req.minLevel) {
@@ -984,6 +1037,7 @@ export class GameStateService {
     });
 
     this.plots.update(list => list.map((p, i) => i === plotIndex ? { ...p, status: 'empty' } : p));
+    this.langContext.setUnlockedPlotCount(plotIndex + 1);
     this.showToast(`🎉 Đã mở khóa ô đất #${plotIndex + 1} bằng nông sản thành công!`);
     this.saveToStorage();
     return true;
