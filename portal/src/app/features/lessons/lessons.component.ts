@@ -618,11 +618,7 @@ export class LessonsComponent {
     }
 
     const list = this.state.lessons();
-    if (list && list.length > 0) {
-      return list;
-    }
-    // Fallback data nếu offline
-    return [
+    const sourceList = (list && list.length > 0) ? list : [
       { id: 1, title: 'Fruits & Vegetables', languageCode: 'en', levelTag: 'Pre-A1', orderIndex: 1, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null },
       { id: 4, title: 'Văn phòng (Office)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 3, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null },
       { id: 5, title: 'Nhân sự (Human Resources)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 4, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null },
@@ -630,6 +626,17 @@ export class LessonsComponent {
       { id: 7, title: 'Tài chính (Finance)', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 6, isUnlocked: true, requiredCropId: null, requiredCropQty: 0, requiredCropName: null },
       { id: 8, title: 'Marketing & Quảng cáo', languageCode: 'en', levelTag: 'TOEIC 450', orderIndex: 7, isUnlocked: false, requiredCropId: 1, requiredCropQty: 2, requiredCropName: 'Cà rốt' }
     ] as LessonDto[];
+
+    const progressMap = this.state.userLessonProgress();
+    return sourceList.map(l => {
+      const p = progressMap[l.id];
+      const best = Math.max(p?.bestStarsClaimed ?? 0, l.bestStarsClaimed ?? 0);
+      return {
+        ...l,
+        bestStarsClaimed: best,
+        isUnlocked: l.isUnlocked || best > 0
+      };
+    });
   });
 
   unlockedCount = computed(() => {

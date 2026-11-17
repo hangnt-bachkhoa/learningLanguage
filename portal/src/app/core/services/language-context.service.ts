@@ -74,6 +74,7 @@ export class LanguageContextService {
   private readonly GLOBAL_PROFILE_KEY = 'language_farm_global_profile_v1';
 
   private saveTimer: any = null;
+  private pendingWorkspaceToSave: { lang: LangCode; ws: LanguageWorkspaceState } | null = null;
 
   // 1. Trạng thái Toàn cục (Global Profile dùng chung)
   readonly globalProfile = signal<GlobalProfileState>(this.loadGlobalProfile());
@@ -380,11 +381,18 @@ export class LanguageContextService {
    */
   debouncedSaveWorkspace(lang: LangCode, ws: LanguageWorkspaceState) {
     if (typeof localStorage === 'undefined') return;
+    this.pendingWorkspaceToSave = { lang, ws };
+    if (lang === this.activeLang()) {
+      this.currentWorkspace.set({ ...ws, langCode: lang });
+    }
     if (this.saveTimer) {
       clearTimeout(this.saveTimer);
     }
     this.saveTimer = setTimeout(() => {
-      this.saveWorkspaceImmediately(lang, ws);
+      if (this.pendingWorkspaceToSave) {
+        this.saveWorkspaceImmediately(this.pendingWorkspaceToSave.lang, this.pendingWorkspaceToSave.ws);
+        this.pendingWorkspaceToSave = null;
+      }
       this.saveTimer = null;
     }, 300);
   }
@@ -402,6 +410,11 @@ export class LanguageContextService {
 
       const key = `${this.WORKSPACE_PREFIX}${lang}${this.WORKSPACE_VERSION}`;
       localStorage.setItem(key, JSON.stringify(cleanWs));
+
+      // Cập nhật signal currentWorkspace đồng bộ tức thì
+      if (lang === this.activeLang()) {
+        this.currentWorkspace.set(cleanWs);
+      }
     } catch (err) {
       console.error(`Storage Safety Error khi lưu workspace ${lang}:`, err);
     }
@@ -412,7 +425,12 @@ export class LanguageContextService {
       clearTimeout(this.saveTimer);
       this.saveTimer = null;
     }
-    this.saveWorkspaceImmediately(this.activeLang(), this.currentWorkspace());
+    if (this.pendingWorkspaceToSave) {
+      this.saveWorkspaceImmediately(this.pendingWorkspaceToSave.lang, this.pendingWorkspaceToSave.ws);
+      this.pendingWorkspaceToSave = null;
+    } else {
+      this.saveWorkspaceImmediately(this.activeLang(), this.currentWorkspace());
+    }
   }
 
   /**

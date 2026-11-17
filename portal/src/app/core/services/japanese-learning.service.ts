@@ -120,6 +120,7 @@ export class JapaneseLearningService {
     if (this.langContext.activeLang() === 'ja') {
       this.gameState.topicStars.set(this.topicProgress());
       this.gameState.saveToStorage();
+      this.langContext.saveWorkspaceImmediately('ja', this.gameState.serializeCurrentWorkspace());
     }
   }
 
@@ -132,7 +133,19 @@ export class JapaneseLearningService {
           this.wordStats.set(ws.wordStats as any);
         }
         if (ws.topicStars && Object.keys(ws.topicStars).length > 0) {
-          this.topicProgress.set(ws.topicStars);
+          this.topicProgress.update(prev => {
+            const merged = { ...prev };
+            for (const [k, v] of Object.entries(ws.topicStars!)) {
+              const prevItem = merged[k];
+              const prevStars = prevItem?.bestStarsClaimed || 0;
+              const nextStars = v?.bestStarsClaimed || 0;
+              merged[k] = {
+                unlocked: Boolean(prevItem?.unlocked || v?.unlocked),
+                bestStarsClaimed: Math.max(prevStars, nextStars) as (0 | 1 | 2 | 3)
+              };
+            }
+            return merged;
+          });
         }
         if (ws.masteredKana && ws.masteredKana.length > 0) {
           this.masteredKana.set(ws.masteredKana);
@@ -225,6 +238,7 @@ export class JapaneseLearningService {
         }
         this.gameState.userWordStats.set(this.wordStats() as any);
         this.gameState.saveToStorage();
+      this.langContext.saveWorkspaceImmediately('ja', this.gameState.serializeCurrentWorkspace());
       }
     }
 
@@ -252,6 +266,7 @@ export class JapaneseLearningService {
       }
       this.gameState.userWordStats.set(this.wordStats() as any);
       this.gameState.saveToStorage();
+      this.langContext.saveWorkspaceImmediately('ja', this.gameState.serializeCurrentWorkspace());
     }
 
     return nowBookmarked;
@@ -274,6 +289,7 @@ export class JapaneseLearningService {
     if (this.langContext.activeLang() === 'ja') {
       this.gameState.userWordStats.set(this.wordStats() as any);
       this.gameState.saveToStorage();
+      this.langContext.saveWorkspaceImmediately('ja', this.gameState.serializeCurrentWorkspace());
     }
   }
 
@@ -343,6 +359,7 @@ export class JapaneseLearningService {
         }
       }));
       this.gameState.saveToStorage();
+      this.langContext.saveWorkspaceImmediately('ja', this.gameState.serializeCurrentWorkspace());
     }
 
     return { coinsAwarded, xpAwarded, isNewRecord, unlockedNext };
@@ -364,6 +381,7 @@ export class JapaneseLearningService {
     if (this.langContext.activeLang() === 'ja') {
       this.gameState.masteredKana.set(this.masteredKana());
       this.gameState.saveToStorage();
+      this.langContext.saveWorkspaceImmediately('ja', this.gameState.serializeCurrentWorkspace());
     }
 
     return nowMastered;

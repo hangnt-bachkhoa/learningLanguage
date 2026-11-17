@@ -593,6 +593,21 @@ export class GameStateService {
     this.bookmarkedWords.set(ws.bookmarkedWords || []);
     this.userWordStats.set(ws.wordStats || {});
     this.userLessonProgress.set(ws.lessonProgress || {});
+    if (ws.lessonProgress) {
+      const progMap = ws.lessonProgress;
+      this.lessons.update(list => list.map(l => {
+        const p = progMap[l.id];
+        if (p) {
+          const best = Math.max(p.bestStarsClaimed ?? 0, l.bestStarsClaimed ?? 0);
+          return {
+            ...l,
+            bestStarsClaimed: best,
+            isUnlocked: l.isUnlocked || best > 0
+          };
+        }
+        return l;
+      }));
+    }
     this.topicStars.set(ws.topicStars || (ws.langCode === 'ja' ? { ja_n5_01: { unlocked: true, bestStarsClaimed: 0 } } : {}));
     this.masteredKana.set(ws.masteredKana || []);
     if (ws.rewardState) {
@@ -1560,6 +1575,7 @@ export class GameStateService {
     }
 
     this.saveToStorage();
+    this.langContext.saveWorkspaceImmediately(this.activeLang(), this.serializeCurrentWorkspace());
 
     const lesson = this.lessons().find(l => l.id === lessonId);
     return {

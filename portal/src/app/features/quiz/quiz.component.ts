@@ -1589,7 +1589,9 @@ export class QuizComponent implements OnInit {
           this.sessionId.set(session.sessionId);
           this.lessonTitle.set(session.lessonTitle);
           this.requiredCropName.set(session.requiredCropName || 'Nông sản');
-          this.bestStarsClaimed.set(session.bestStarsClaimed || 0);
+          const savedProgress = this.state.userLessonProgress()[lessonId];
+          const bestStars = Math.max(savedProgress?.bestStarsClaimed || 0, session.bestStarsClaimed || 0);
+          this.bestStarsClaimed.set(bestStars);
 
           const list = session.questions;
           this.queue.set([...list]);
@@ -1845,7 +1847,12 @@ export class QuizComponent implements OnInit {
     // Nếu có Backend API, đồng thời gửi lên server để đồng bộ
     this.farmApi.submitQuizSession(payload).subscribe({
       next: (res) => {
-        this.result.set(res);
+        const mergedRes: QuizSubmitResultDto = {
+          ...res,
+          bestStarsClaimed: Math.max(res.bestStarsClaimed || 0, localResult.bestStarsClaimed || 0),
+          stars: Math.max(res.stars || 0, localResult.stars || 0)
+        };
+        this.result.set(mergedRes);
         this.isSubmitting.set(false);
         this.isFinished.set(true);
         this.state.refreshProfile();
