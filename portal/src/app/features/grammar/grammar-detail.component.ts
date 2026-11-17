@@ -4,13 +4,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GrammarService } from '../../core/services/grammar.service';
 import { GrammarTopic } from '../../core/constants/default-grammar-topics.constant';
 import { GameStateService } from '../../core/services/game-state.service';
-import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
 import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-grammar-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, PosTagBadgeComponent, PixelIconComponent],
+  imports: [CommonModule, RouterLink, PixelIconComponent],
   template: `
     <div class="grammar-detail-page">
       @if (!topic()) {
@@ -34,11 +33,8 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
           </div>
 
           <div class="topic-meta-header">
-            <div class="order-num-row" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;">
+            <div class="order-num-row" style="margin-bottom: 6px;">
               <span class="order-num">Chuyên đề #{{ (topic()?.orderIndex || 0) < 10 ? '0' + topic()?.orderIndex : topic()?.orderIndex }}</span>
-              @if (topic()?.titleEn; as tEn) {
-                <app-pos-tag [type]="tEn" mode="full" [showQuestionHint]="true"></app-pos-tag>
-              }
             </div>
             <h1 class="topic-title-en">{{ topic()?.titleEn }}</h1>
             <h2 class="topic-title-vi">{{ topic()?.titleVi }}</h2>
