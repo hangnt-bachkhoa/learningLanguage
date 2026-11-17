@@ -57,7 +57,10 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       <div class="sidebar-profile-card">
         <div class="profile-header">
           <span class="profile-title">Hồ sơ ngôn ngữ</span>
-          <span class="profile-streak" title="Chuỗi ngày học liên tục">🔥 {{ state.studyStreak() }} ngày</span>
+          <span class="profile-streak" title="Chuỗi ngày học liên tục">
+            <app-pixel-icon name="icon_flame" [size]="13"></app-pixel-icon>
+            <span>{{ state.studyStreak() }} ngày</span>
+          </span>
         </div>
 
         <!-- Danh sách ngôn ngữ độc lập dạng stack hàng ngang đầy đủ, không bị co ép cắt chữ -->
@@ -269,10 +272,14 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       color: rgba(232, 215, 168, 0.85);
     }
     .profile-streak {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       font-size: 11px;
       font-weight: 700;
       color: #FFB347;
       background: rgba(255, 179, 71, 0.15);
+      border: 1px solid rgba(255, 179, 71, 0.35);
       padding: 2px 7px;
       border-radius: 999px;
     }

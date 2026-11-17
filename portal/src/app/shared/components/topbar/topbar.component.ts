@@ -23,9 +23,17 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         </h1>
       </div>
       <div class="topbar-right">
-        <!-- DUY NHẤT 1 TRẠNG THÁI LEVEL TRÊN HEADER (Ngôn ngữ và Level chi tiết đã đưa vào Navigation Bar) -->
-        <div class="stat-pill level-pill" title="Cấp độ ngôn ngữ hiện tại ({{ state.activeLang() === 'en' ? 'Tiếng Anh' : 'Tiếng Nhật' }})">
-          Lv.{{ state.level() }}
+        <!-- BIỂU TƯỢNG CỜ NGÔN NGỮ HIỆN TẠI (ĐỒNG BỘ VỚI HỒ SƠ NGÔN NGỮ) -->
+        <div class="stat-pill lang-pill" [title]="'Hồ sơ đang học: ' + (state.activeLang() === 'en' ? 'Tiếng Anh (TOEIC)' : 'Tiếng Nhật (JLPT N5)')">
+          <span class="flag-icon">{{ state.activeLang() === 'en' ? '🇬🇧' : '🇯🇵' }}</span>
+          <span class="hide-mobile">{{ state.activeLang() === 'en' ? 'EN' : 'JA' }}</span>
+        </div>
+
+        <!-- BIỂU TƯỢNG CHUỖI VÀ SỐ NGÀY CHUỖI TƯƠNG ỨNG (FIRE ICON) -->
+        <div class="stat-pill streak-pill" [title]="'Chuỗi học tập liên tục: ' + state.studyStreak() + ' ngày'">
+          <app-pixel-icon name="icon_flame" [size]="14"></app-pixel-icon>
+          <span>{{ state.studyStreak() }}</span>
+          <span class="hide-mobile"> ngày</span>
         </div>
 
         <!-- TIẾN ĐỘ XP (Hiện trên Desktop/Tablet, ẩn trên Mobile để Header luôn thoáng) -->
@@ -129,12 +137,30 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       gap: 8px;
       flex-shrink: 0;
     }
-    .level-pill {
-      font-weight: 800;
+    .lang-pill {
+      font-weight: 700;
       background: #FFFDF9;
       color: var(--navy);
-      border: 1.5px solid #8C6B4F;
-      letter-spacing: 0.3px;
+      border: 1.5px solid var(--border-strong);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .flag-icon {
+      font-size: 14px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+    }
+    .streak-pill {
+      font-weight: 700;
+      background: #FFF7ED;
+      color: #C05621;
+      border: 1.5px solid #FBD38D;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      letter-spacing: 0.2px;
     }
     .cart-btn {
       display: inline-flex;
