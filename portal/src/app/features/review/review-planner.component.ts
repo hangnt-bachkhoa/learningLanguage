@@ -54,7 +54,7 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
         <div class="table-card-header">
           <div class="header-text-group">
             <span class="leaf-icon">🌿</span>
-            <h4 class="table-card-title">Chu Kỳ Ôn Tập Theo Từng Ngày Học (Cohorts)</h4>
+            <h4 class="table-card-title">Chu kỳ ôn tập</h4>
           </div>
           <span class="total-cohorts-badge">{{ state.dailyCohorts().length }} ngày học</span>
         </div>
