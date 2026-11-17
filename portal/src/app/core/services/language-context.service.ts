@@ -2,7 +2,7 @@ import { Injectable, signal, computed } from '@angular/core';
 import { FarmPlot, UserInventory, PlannerBook, UserVocabReview } from '../models/game.models';
 import { UserWordStat, UserLessonProgress, UserRewardState } from './quiz-engine.service';
 
-export type LangCode = 'en' | 'ja';
+export type LangCode = 'en' | 'ja' | string;
 
 export interface LanguageWorkspaceState {
   langCode: LangCode;
@@ -254,11 +254,18 @@ export class LanguageContextService {
       try {
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object') {
-          return {
+          const ws: LanguageWorkspaceState = {
             ...this.createDefaultWorkspace(lang),
             ...parsed,
             langCode: lang
           };
+
+          // Hỗ trợ khôi phục tiến độ legacy Tiếng Nhật nếu trước đó lưu ở key riêng
+          if (lang === 'ja') {
+            this.mergeLegacyJapaneseIfMissing(ws);
+          }
+
+          return ws;
         }
       } catch (e) {
         console.error(`Lỗi nạp workspace ${lang}:`, e);
@@ -276,6 +283,62 @@ export class LanguageContextService {
     const def = this.createDefaultWorkspace(lang);
     this.saveWorkspaceImmediately(lang, def);
     return def;
+  }
+
+  /**
+   * Hợp nhất dữ liệu Tiếng Nhật từ các key legacy (_ja_v1) nếu workspace chưa có
+   */
+  private mergeLegacyJapaneseIfMissing(ws: LanguageWorkspaceState) {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      if (!ws.topicStars || Object.keys(ws.topicStars).length <= 2) {
+        const rawStars = localStorage.getItem('language_farm_topic_stars_ja_v1');
+        if (rawStars) {
+          const parsed = JSON.parse(rawStars);
+          if (parsed && Object.keys(parsed).length) {
+            ws.topicStars = { ...ws.topicStars, ...parsed };
+          }
+        }
+      }
+
+      if (!ws.wordStats || Object.keys(ws.wordStats).length === 0) {
+        const rawStats = localStorage.getItem('language_farm_vocab_progress_ja_v1');
+        if (rawStats) {
+          const parsed = JSON.parse(rawStats);
+          if (parsed && Object.keys(parsed).length) {
+            ws.wordStats = { ...ws.wordStats, ...parsed };
+          }
+        }
+      }
+
+      if (!ws.learnedWords || ws.learnedWords.length === 0) {
+        if (ws.wordStats) {
+          ws.learnedWords = Object.entries(ws.wordStats)
+            .filter(([_, s]: any) => s && s.learned)
+            .map(([id]) => id);
+        }
+      }
+
+      if (!ws.masteredKana || ws.masteredKana.length === 0) {
+        const rawKana = localStorage.getItem('language_farm_kana_mastery_ja_v1');
+        if (rawKana) {
+          const parsed = JSON.parse(rawKana);
+          if (Array.isArray(parsed) && parsed.length) {
+            ws.masteredKana = parsed;
+          }
+        }
+      }
+
+      if (!ws.ebbinghausReviews || (Array.isArray(ws.ebbinghausReviews) ? ws.ebbinghausReviews.length === 0 : Object.keys(ws.ebbinghausReviews).length === 0)) {
+        const rawRevs = localStorage.getItem('language_farm_ebbinghaus_ja_v1');
+        if (rawRevs) {
+          const parsed = JSON.parse(rawRevs);
+          if (Array.isArray(parsed) && parsed.length) {
+            ws.ebbinghausReviews = parsed;
+          }
+        }
+      }
+    } catch {}
   }
 
   /**
@@ -458,9 +521,19 @@ export class LanguageContextService {
 
       try {
         const def = this.createDefaultWorkspace('ja');
+        const parsedStats = rawWordStats ? JSON.parse(rawWordStats) : {};
+        const learnedWords = Object.entries(parsedStats)
+          .filter(([_, s]: any) => s && s.learned)
+          .map(([id]) => id);
+        const bookmarkedWords = Object.entries(parsedStats)
+          .filter(([_, s]: any) => s && s.bookmarked)
+          .map(([id]) => id);
+
         return {
           ...def,
-          wordStats: rawWordStats ? JSON.parse(rawWordStats) : {},
+          learnedWords,
+          bookmarkedWords,
+          wordStats: parsedStats,
           topicStars: rawTopicStars ? JSON.parse(rawTopicStars) : def.topicStars,
           masteredKana: rawKana ? JSON.parse(rawKana) : [],
           ebbinghausReviews: rawReviews ? JSON.parse(rawReviews) : []

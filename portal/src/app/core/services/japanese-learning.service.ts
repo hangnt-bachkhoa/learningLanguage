@@ -117,9 +117,36 @@ export class JapaneseLearningService {
         unlocked: true
       }
     }));
+    if (this.langContext.activeLang() === 'ja') {
+      this.gameState.topicStars.set(this.topicProgress());
+      this.gameState.saveToStorage();
+    }
   }
 
   constructor() {
+    // 1. Tự động đồng bộ từ LanguageContext khi chuyển đổi sang Workspace Tiếng Nhật
+    effect(() => {
+      const ws = this.langContext.currentWorkspace();
+      if (ws.langCode === 'ja') {
+        if (ws.wordStats && Object.keys(ws.wordStats).length > 0) {
+          this.wordStats.set(ws.wordStats as any);
+        }
+        if (ws.topicStars && Object.keys(ws.topicStars).length > 0) {
+          this.topicProgress.set(ws.topicStars);
+        }
+        if (ws.masteredKana && ws.masteredKana.length > 0) {
+          this.masteredKana.set(ws.masteredKana);
+        }
+        if (ws.ebbinghausReviews) {
+          const revs = Array.isArray(ws.ebbinghausReviews) ? ws.ebbinghausReviews : Object.values(ws.ebbinghausReviews);
+          if (revs.length > 0) {
+            this.ebbinghausReviews.set(revs);
+          }
+        }
+      }
+    });
+
+    // 2. Lưu kép vào legacy keys để bảo đảm tương thích ngược
     effect(() => this.saveJson(this.WORD_STAT_KEY, this.wordStats()));
     effect(() => this.saveJson(this.TOPIC_STAR_KEY, this.topicProgress()));
     effect(() => this.saveJson(this.KANA_KEY, this.masteredKana()));
@@ -168,6 +195,37 @@ export class JapaneseLearningService {
           return list.filter(r => r.vocabId !== vocabId);
         }
       });
+
+      // Đồng bộ trực tiếp vào GameStateService cho toàn app
+      if (this.langContext.activeLang() === 'ja') {
+        const idStr = String(vocabId);
+        if (nowLearned) {
+          this.gameState.learnedWords.update(list => list.includes(idStr) ? list : [...list, idStr]);
+          const newRev: UserVocabReview = {
+            vocabId,
+            word: item.scriptPrimary,
+            topicId: item.topicId,
+            learnedDate: todayStr,
+            stage: 0,
+            nextReviewDate: nextDayStr,
+            lastReviewedDate: todayStr,
+            d1Done: false,
+            d3Done: false,
+            d7Done: false,
+            d14Done: false
+          };
+          this.gameState.userVocabReviews.update(m => ({ ...m, [vocabId]: newRev }));
+        } else {
+          this.gameState.learnedWords.update(list => list.filter(w => w !== idStr));
+          this.gameState.userVocabReviews.update(m => {
+            const next = { ...m };
+            delete next[vocabId];
+            return next;
+          });
+        }
+        this.gameState.userWordStats.set(this.wordStats() as any);
+        this.gameState.saveToStorage();
+      }
     }
 
     return nowLearned;
@@ -184,6 +242,18 @@ export class JapaneseLearningService {
         [vocabId]: { ...prev, bookmarked: nowBookmarked, lastSeenAt: new Date().toISOString() }
       };
     });
+
+    if (this.langContext.activeLang() === 'ja') {
+      const idStr = String(vocabId);
+      if (nowBookmarked) {
+        this.gameState.bookmarkedWords.update(l => l.includes(idStr) ? l : [...l, idStr]);
+      } else {
+        this.gameState.bookmarkedWords.update(l => l.filter(w => w !== idStr));
+      }
+      this.gameState.userWordStats.set(this.wordStats() as any);
+      this.gameState.saveToStorage();
+    }
+
     return nowBookmarked;
   }
 
@@ -200,6 +270,11 @@ export class JapaneseLearningService {
         }
       };
     });
+
+    if (this.langContext.activeLang() === 'ja') {
+      this.gameState.userWordStats.set(this.wordStats() as any);
+      this.gameState.saveToStorage();
+    }
   }
 
   // Hoàn tất bài thi Quiz chủ đề Tiếng Nhật -> Lưu sao & cộng thưởng nông trại chung
@@ -256,6 +331,20 @@ export class JapaneseLearningService {
       }
     }));
 
+    if (this.langContext.activeLang() === 'ja') {
+      this.gameState.topicStars.set(this.topicProgress());
+      this.gameState.userLessonProgress.update(map => ({
+        ...map,
+        [topicCode]: {
+          userId: 1,
+          lessonId: Number(topicCode.replace(/\D/g, '')) || 1000,
+          bestScorePercent: 100,
+          bestStarsClaimed: Math.max(oldStars, stars)
+        }
+      }));
+      this.gameState.saveToStorage();
+    }
+
     return { coinsAwarded, xpAwarded, isNewRecord, unlockedNext };
   }
 
@@ -271,6 +360,12 @@ export class JapaneseLearningService {
         return [...list, kanaId];
       }
     });
+
+    if (this.langContext.activeLang() === 'ja') {
+      this.gameState.masteredKana.set(this.masteredKana());
+      this.gameState.saveToStorage();
+    }
+
     return nowMastered;
   }
 

@@ -735,7 +735,7 @@ export class ReviewComponent {
 
     // Build questions for each due word
     const questions: ReviewQuizQuestion[] = [];
-    const allVocabs = Object.values(DEFAULT_VOCABULARIES).flat();
+    const allVocabs = this.state.getAllVocabsForActiveLanguage();
 
     for (const item of dueWords) {
       // Find vocabulary details

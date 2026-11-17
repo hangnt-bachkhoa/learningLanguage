@@ -5,6 +5,7 @@ import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryIte
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
 import { DEFAULT_LESSONS } from '../constants/default-lessons.constant';
+import N5_SEED from '../../../assets/data/jlpt_n5_vocab_seed.json';
 import { computePlotCountdown, PlotCountdownResult } from '../utils/growth-countdown.util';
 import { getTodayVnDate, addDays, processReviewQuizCompletion, buildDailyCohorts } from '../utils/ebbinghaus.util';
 import {
@@ -318,6 +319,11 @@ export class GameStateService {
 
   // Tiến độ sao bài học (UserLessonProgress: bestStarsClaimed 0..3, bestScorePercent)
   userLessonProgress = signal<Record<number, UserLessonProgress>>({});
+  topicStars = signal<Record<string, { unlocked: boolean; bestStarsClaimed: 0 | 1 | 2 | 3 }>>({
+    ja_n5_01: { unlocked: true, bestStarsClaimed: 0 },
+    ja_n5_02: { unlocked: true, bestStarsClaimed: 0 }
+  });
+  masteredKana = signal<string[]>([]);
 
   // Trạng thái quay thưởng may mắn & bảo hiểm (UserRewardState: Pity counter & Daily cap)
   userRewardState = signal<UserRewardState>({
@@ -553,7 +559,9 @@ export class GameStateService {
       rewardState: this.userRewardState(),
       ebbinghausReviews: this.userVocabReviews(),
       dailyReviewRewardsClaimed: this.dailyReviewRewardsClaimed(),
-      lastReviewRewardDate: this.lastReviewRewardDate()
+      lastReviewRewardDate: this.lastReviewRewardDate(),
+      masteredKana: this.masteredKana(),
+      topicStars: this.topicStars()
     };
   }
 
@@ -585,10 +593,24 @@ export class GameStateService {
     this.bookmarkedWords.set(ws.bookmarkedWords || []);
     this.userWordStats.set(ws.wordStats || {});
     this.userLessonProgress.set(ws.lessonProgress || {});
+    this.topicStars.set(ws.topicStars || (ws.langCode === 'ja' ? { ja_n5_01: { unlocked: true, bestStarsClaimed: 0 } } : {}));
+    this.masteredKana.set(ws.masteredKana || []);
     if (ws.rewardState) {
       this.userRewardState.set(ws.rewardState);
     }
-    this.userVocabReviews.set((ws.ebbinghausReviews as any) || {});
+    if (ws.ebbinghausReviews) {
+      if (Array.isArray(ws.ebbinghausReviews)) {
+        const dict: Record<number, UserVocabReview> = {};
+        ws.ebbinghausReviews.forEach((r: any) => {
+          if (r && r.vocabId) dict[r.vocabId] = r;
+        });
+        this.userVocabReviews.set(dict);
+      } else {
+        this.userVocabReviews.set(ws.ebbinghausReviews);
+      }
+    } else {
+      this.userVocabReviews.set({});
+    }
     this.dailyReviewRewardsClaimed.set(ws.dailyReviewRewardsClaimed || 0);
     this.lastReviewRewardDate.set(ws.lastReviewRewardDate || '');
   }
@@ -1179,7 +1201,45 @@ export class GameStateService {
     });
   }
 
+  findJapaneseVocab(wordOrId: string | number): { vocab: VocabularyDto; topicId: string } | null {
+    const isNum = typeof wordOrId === 'number';
+    const numId = isNum ? wordOrId : Number(wordOrId);
+    const text = typeof wordOrId === 'string' ? wordOrId.trim() : '';
+
+    for (const topic of N5_SEED.topics) {
+      const found = topic.words.find((w: any) => {
+        if (!isNaN(numId) && w.id === numId) return true;
+        if (text && (w.scriptPrimary === text || w.readingSub === text || w.romaji?.toLowerCase() === text.toLowerCase())) return true;
+        return false;
+      });
+      if (found) {
+        return {
+          vocab: {
+            id: found.id,
+            lessonId: Number(topic.code.replace(/\D/g, '')) || 1,
+            word: found.scriptPrimary,
+            phonetic: found.readingSub ? `[${found.readingSub}]` : `[${found.romaji}]`,
+            meaningVi: found.meaningVi,
+            wordType: found.wordType,
+            exampleEn: found.readingSub ? `${found.scriptPrimary} (${found.readingSub})` : found.scriptPrimary,
+            exampleVi: found.meaningVi,
+            audioUrl: found.scriptPrimary
+          } as any,
+          topicId: topic.code
+        };
+      }
+    }
+    return null;
+  }
+
   findVocab(wordOrId: string | number): { vocab: VocabularyDto; topicId: string } | null {
+    // 1. Nếu đang ở mode Tiếng Nhật hoặc wordOrId nằm trong dải N5 (1000..2000)
+    if (this.activeLang() === 'ja' || (typeof wordOrId === 'number' && wordOrId >= 1000 && wordOrId <= 2000)) {
+      const jaFound = this.findJapaneseVocab(wordOrId);
+      if (jaFound) return jaFound;
+    }
+
+    // 2. Tra cứu từ vựng Tiếng Anh TOEIC
     const map = this.vocabulariesByLesson();
     for (const [topicId, list] of Object.entries(map)) {
       if (typeof wordOrId === 'number') {
@@ -1191,7 +1251,25 @@ export class GameStateService {
         if (found) return { vocab: found, topicId };
       }
     }
-    return null;
+
+    // 3. Fallback tra cứu trong bộ Tiếng Nhật nếu Tiếng Anh không có
+    return this.findJapaneseVocab(wordOrId);
+  }
+
+  getAllVocabsForActiveLanguage(): VocabularyDto[] {
+    if (this.activeLang() === 'ja') {
+      return (N5_SEED.topics as any[]).flatMap(t => t.words.map((w: any) => ({
+        id: w.id,
+        lessonId: Number(t.code.replace(/\D/g, '')) || 1,
+        word: w.scriptPrimary,
+        phonetic: w.readingSub ? `[${w.readingSub}]` : `[${w.romaji}]`,
+        meaningVi: w.meaningVi,
+        wordType: w.wordType,
+        exampleEn: w.readingSub ? `${w.scriptPrimary} (${w.readingSub})` : w.scriptPrimary,
+        exampleVi: w.meaningVi
+      } as unknown as VocabularyDto)));
+    }
+    return Object.values(DEFAULT_VOCABULARIES).flat();
   }
 
   recordDailyTaskActivity(type: 'vocab' | 'quiz' | 'care', amount: number = 1) {
