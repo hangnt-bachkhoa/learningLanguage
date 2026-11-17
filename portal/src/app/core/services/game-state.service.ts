@@ -1949,6 +1949,5 @@ export class GameStateService {
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
     }
-    this.showToast(`🔊 Phát âm: "${text}"`);
   }
 }
