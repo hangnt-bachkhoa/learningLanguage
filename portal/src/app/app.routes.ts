@@ -14,6 +14,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/lessons/lessons.component').then(m => m.LessonsComponent)
   },
   {
+    path: 'vocabulary',
+    redirectTo: 'lessons',
+    pathMatch: 'full'
+  },
+  {
     path: 'vocab',
     loadComponent: () => import('./features/vocab/vocab.component').then(m => m.VocabComponent)
   },

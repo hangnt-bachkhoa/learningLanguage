@@ -323,26 +323,31 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
               }
 
               <!-- THÔNG SỐ PITY COUNTER & DAILY ROLL CAP CHỐNG XUI & CHỐNG CÀY -->
-              <div class="drop-pity-footer">
-                <span>🎲 Lượt may mắn hôm nay: <strong>{{ result()?.dailyBonusRollsUsed ?? state.userRewardState().dailyBonusRollsUsed }}/10</strong></span>
-                <span>·</span>
-                <span>Bảo hiểm Hạt: <strong>{{ result()?.pitySeedMisses ?? state.userRewardState().pitySeedMisses }}/26</strong></span>
-                <span>·</span>
-                <span>Bảo hiểm Phân bón: <strong>{{ result()?.pityFertilizerMisses ?? state.userRewardState().pityFertilizerMisses }}/20</strong></span>
+              <div class="pity-bar">
+                <span class="pity-pill">Lượt may mắn: <strong>{{ result()?.dailyBonusRollsUsed ?? state.userRewardState().dailyBonusRollsUsed }}/10</strong></span>
+                <span class="pity-pill">Bảo hiểm Hạt: <strong>{{ pitySeed() }}/26</strong></span>
+                <span class="pity-pill">Bảo hiểm Phân bón: <strong>{{ pityFert() }}/20</strong></span>
               </div>
             </div>
 
             <!-- CÁC NÚT ĐIỀU HƯỚNG TIẾP THEO -->
-            <div class="actions-stack">
-              <a routerLink="/farm" class="btn btn-primary go-farm-btn">
-                🌱 Về Nông trại gieo hạt & tưới cây
+            <div class="result-actions">
+              <a routerLink="/farm" class="vf-btn vf-btn-primary">
+                <app-pixel-icon name="icon_sprout_action" [size]="18" />
+                <span>Về Nông trại gieo hạt &amp; tưới cây</span>
               </a>
-              <button class="btn btn-secondary retake-btn" (click)="retakeQuiz()">
-                🔄 Luyện tập lại bài này
-              </button>
-              <a routerLink="/lessons" class="btn btn-outline back-lessons-btn">
-                📚 Danh sách các chủ đề khác
-              </a>
+
+              <div class="result-secondary-row">
+                <button type="button" class="vf-btn vf-btn-secondary" (click)="retryQuiz()">
+                  <app-pixel-icon name="icon_retry" [size]="18" />
+                  <span>Luyện tập lại bài này</span>
+                </button>
+
+                <a routerLink="/lessons" class="vf-btn vf-btn-tertiary">
+                  <app-pixel-icon name="icon_books_stack" [size]="18" />
+                  <span>Danh sách chủ đề khác</span>
+                </a>
+              </div>
             </div>
           </div>
         </main>
@@ -1072,36 +1077,87 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       font-style: italic;
     }
 
-    .drop-pity-footer {
+    .pity-bar {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      font-size: 11.5px;
-      color: #7D7565;
-      margin-top: 12px;
+      margin: 14px 0 20px;
       flex-wrap: wrap;
     }
 
-    /* ACTIONS STACK */
-    .actions-stack {
+    .pity-pill {
+      font-size: 12px;
+      color: #7D7565;
+      background: #F4EFE6;
+      border: 1px solid #D9C8B5;
+      padding: 4px 10px;
+      border-radius: 999px;
+
+      strong {
+        color: var(--navy, #263847);
+      }
+    }
+
+    .result-actions {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      width: 100%;
     }
 
-    .go-farm-btn {
-      padding: 13px;
-      font-size: 15px;
-      font-weight: 700;
+    .result-secondary-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .vf-btn {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
       border-radius: 12px;
-    }
-
-    .retake-btn, .back-lessons-btn {
-      padding: 12px;
-      font-size: 14.5px;
+      font-size: 13.5px;
       font-weight: 600;
-      border-radius: 12px;
+      text-decoration: none !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: transform 0.12s ease, background 0.15s ease;
+
+      &:hover {
+        text-decoration: none !important;
+      }
+
+      &:active { transform: scale(0.985); }
+    }
+
+    .vf-btn-primary {
+      background: #A65E65;
+      color: #FFFDF9 !important;
+      border: 1.5px solid #8F4D53;
+      &:hover { background: #8F4D53; }
+    }
+
+    .vf-btn-secondary {
+      background: #F4EFE3;
+      color: #263847 !important;
+      border: 1.5px solid #C2AD95;
+      &:hover { background: #EAE2D2; }
+    }
+
+    .vf-btn-tertiary {
+      background: #FFFDF9;
+      color: #4A5435 !important;
+      border: 1.5px solid #BAC4A4;
+      &:hover { background: #E9ECE1; }
     }
 
     .state-card {
@@ -1236,6 +1292,10 @@ export class QuizComponent implements OnInit {
   // CÂU HỎI ĐẦU HÀNG ĐỢI HIỆN TẠI
   currentQuestion = computed(() => this.queue()[0] || null);
   currentWordType = computed(() => this.getWordType(this.currentQuestion()?.word));
+
+  // Bảo hiểm Hạt & Phân bón
+  pitySeed = computed(() => this.result()?.pitySeedMisses ?? this.state.userRewardState().pitySeedMisses);
+  pityFert = computed(() => this.result()?.pityFertilizerMisses ?? this.state.userRewardState().pityFertilizerMisses);
 
   // TIẾN ĐỘ ĐƠN ĐIỆU (MONOTONIC): Chỉ tăng khi 1 câu gốc được trả lời đúng
   progressPercent = computed(() => {
@@ -1534,5 +1594,9 @@ export class QuizComponent implements OnInit {
 
   retakeQuiz() {
     this.loadQuizSession(this.lessonId());
+  }
+
+  retryQuiz() {
+    this.retakeQuiz();
   }
 }
