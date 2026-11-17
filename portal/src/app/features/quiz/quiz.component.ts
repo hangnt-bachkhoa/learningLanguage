@@ -8,6 +8,7 @@ import { FarmApiService, QuizQuestionDto, QuizSubmitResultDto, QuizSessionDto } 
 import { getDefaultQuizSession } from '../../core/constants/default-quiz-questions.constant';
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.constant';
+import { CROP_CATALOG } from '../../core/constants/crop-catalog.constant';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
 import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
@@ -158,6 +159,29 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                               <app-pos-tag [type]="wt" mode="full" [showQuestionHint]="true"></app-pos-tag>
                             }
                           </div>
+
+                          @if (currentVocabFeedback(); as vInfo) {
+                            @if (vInfo.word || vInfo.meaningVi) {
+                              <div class="feedback-vocab-strip strip-correct">
+                                <div class="vocab-term-group">
+                                  <strong class="vocab-word">{{ vInfo.word }}</strong>
+                                  @if (vInfo.phonetic) {
+                                    <span class="vocab-phonetic">{{ vInfo.phonetic }}</span>
+                                  }
+                                  @if (vInfo.word) {
+                                    <button type="button" class="btn-audio-mini" (click)="state.speak(vInfo.word)" title="Nghe phát âm">🔊</button>
+                                  }
+                                </div>
+                                @if (vInfo.meaningVi) {
+                                  <div class="vocab-meaning-badge badge-correct">
+                                    <span class="meaning-label">Nghĩa:</span>
+                                    <span class="meaning-text">{{ vInfo.meaningVi }}</span>
+                                  </div>
+                                }
+                              </div>
+                            }
+                          }
+
                           @if (feedbackDetail()?.explanation; as exp) {
                             <p class="feedback-sub">{{ exp }}</p>
                           }
@@ -171,12 +195,36 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                               <app-pos-tag [type]="wt" mode="full" [showQuestionHint]="true"></app-pos-tag>
                             }
                           </div>
+
                           @if (feedbackDetail()?.correctText; as ct) {
                             <div class="correct-answer-reveal">
                               <span class="reveal-label">Đáp án đúng:</span>
                               <strong class="reveal-text">{{ ct }}</strong>
                             </div>
                           }
+
+                          @if (currentVocabFeedback(); as vInfo) {
+                            @if (vInfo.word || vInfo.meaningVi) {
+                              <div class="feedback-vocab-strip strip-wrong">
+                                <div class="vocab-term-group">
+                                  <strong class="vocab-word">{{ vInfo.word }}</strong>
+                                  @if (vInfo.phonetic) {
+                                    <span class="vocab-phonetic">{{ vInfo.phonetic }}</span>
+                                  }
+                                  @if (vInfo.word) {
+                                    <button type="button" class="btn-audio-mini" (click)="state.speak(vInfo.word)" title="Nghe phát âm">🔊</button>
+                                  }
+                                </div>
+                                @if (vInfo.meaningVi) {
+                                  <div class="vocab-meaning-badge badge-wrong">
+                                    <span class="meaning-label">Nghĩa:</span>
+                                    <span class="meaning-text">{{ vInfo.meaningVi }}</span>
+                                  </div>
+                                }
+                              </div>
+                            }
+                          }
+
                           @if (feedbackDetail()?.explanation; as exp) {
                             <p class="feedback-sub">{{ exp }}</p>
                           }
@@ -303,7 +351,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                 <div class="rewards-grid">
                   @if (result()?.bonusSeedName; as seedName) {
                     <div class="reward-item-box drop-highlight">
-                      <div class="reward-svg" [innerHTML]="assets.seedBag | safeHtml"></div>
+                      <div class="reward-svg" [innerHTML]="getBonusSeedPacketSvg(result()?.bonusSeedId, seedName) | safeHtml"></div>
                       <span class="reward-title">Hạt {{ seedName }}</span>
                       <span class="reward-qty">+1</span>
                     </div>
@@ -809,6 +857,106 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       color: #8C3E44;
     }
 
+    /* VOCABULARY WORD & MEANING STRIP IN FEEDBACK TRAY */
+    .feedback-vocab-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 7px 11px;
+      border-radius: 9px;
+      margin: 2px 0;
+    }
+
+    .strip-correct {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #BFDBB6;
+    }
+
+    .strip-wrong {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid #F2CAD0;
+    }
+
+    .vocab-term-group {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .vocab-word {
+      font-family: var(--font-serif);
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.2px;
+    }
+
+    .vocab-phonetic {
+      font-size: 12px;
+      color: #6B7B88;
+      font-family: monospace;
+    }
+
+    .btn-audio-mini {
+      background: transparent;
+      border: none;
+      padding: 1px 4px;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: background 0.15s ease;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.06);
+      }
+    }
+
+    .vocab-meaning-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 12.5px;
+    }
+
+    .badge-correct {
+      background: #EAF3E7;
+      border: 1px solid #A3C79B;
+      color: #2F5419;
+
+      .meaning-label {
+        font-size: 11px;
+        color: #556B4D;
+        font-weight: 600;
+      }
+      .meaning-text {
+        font-weight: 800;
+      }
+    }
+
+    .badge-wrong {
+      background: #FDF2F3;
+      border: 1px solid #E8BAC0;
+      color: #8C2C35;
+
+      .meaning-label {
+        font-size: 11px;
+        color: #8A4F55;
+        font-weight: 600;
+      }
+      .meaning-text {
+        font-weight: 800;
+      }
+    }
+
     .feedback-sub {
       font-size: 13.5px;
       line-height: 1.45;
@@ -1293,6 +1441,29 @@ export class QuizComponent implements OnInit {
   currentQuestion = computed(() => this.queue()[0] || null);
   currentWordType = computed(() => this.getWordType(this.currentQuestion()?.word));
 
+  // TỪ VỰNG & NGHĨA CHO KHỐI THÔNG BÁO (FEEDBACK TRAY)
+  currentVocabFeedback = computed(() => {
+    const q = this.currentQuestion();
+    if (!q) return null;
+    const word = q.word || '';
+    const found = word ? this.state.findVocab(word)?.vocab : null;
+
+    let meaningVi = found?.meaningVi || '';
+    if (!meaningVi && q.correctOptionIndex !== undefined) {
+      if (q.format === 'EN_TO_VI' || q.questionType === 'meaning') {
+        meaningVi = q.options[q.correctOptionIndex] || '';
+      }
+    }
+
+    return {
+      word: word || found?.word || '',
+      phonetic: q.phonetic || found?.phonetic || '',
+      meaningVi: meaningVi,
+      exampleEn: q.exampleEn || found?.exampleEn || '',
+      exampleVi: q.exampleVi || found?.exampleVi || ''
+    };
+  });
+
   // Bảo hiểm Hạt & Phân bón
   pitySeed = computed(() => this.result()?.pitySeedMisses ?? this.state.userRewardState().pitySeedMisses);
   pityFert = computed(() => this.result()?.pityFertilizerMisses ?? this.state.userRewardState().pityFertilizerMisses);
@@ -1598,5 +1769,32 @@ export class QuizComponent implements OnInit {
 
   retryQuiz() {
     this.retakeQuiz();
+  }
+
+  getBonusSeedPacketSvg(seedId?: string | null, seedName?: string | null): string {
+    let cropId = (seedId || '').toLowerCase().trim();
+    if (!cropId && seedName) {
+      const found = CROP_CATALOG.find(c =>
+        c.nameVi.toLowerCase() === seedName.toLowerCase() ||
+        c.seedNameVi.toLowerCase().includes(seedName.toLowerCase()) ||
+        c.id.toLowerCase() === seedName.toLowerCase()
+      );
+      if (found) cropId = found.id;
+    }
+    if (!cropId) cropId = 'cucumber';
+
+    // Aliases
+    if (cropId === 'sunflower') cropId = 'pumpkin';
+    if (cropId === 'rose') cropId = 'blueberry';
+    if (cropId === 'tulip') cropId = 'wheat';
+    if (cropId === 'kiwi') cropId = 'watermelon';
+    if (cropId === 'grape') cropId = 'grapes';
+
+    return `<div class="kraft-seed-packet pixel-art" style="position: relative; width: 28px; height: 30px; background: #C49A71; border: 1.5px solid #3B2D24; border-radius: 3px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.12); margin: 0 auto;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; height: 5px; background: #B5885C; border-bottom: 1px dashed #8C6339;"></div>
+      <div style="width: 18px; height: 18px; background: #FFFDF8; border: 1px solid #A8815B; border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-top: 3px;">
+        <img src="assets/farm-assets/crops/${cropId}.png" class="pixel-art" width="14" height="14" style="display: block; image-rendering: pixelated; object-fit: contain;" alt="${cropId}" />
+      </div>
+    </div>`;
   }
 }
