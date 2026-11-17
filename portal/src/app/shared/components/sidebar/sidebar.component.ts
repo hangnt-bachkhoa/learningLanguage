@@ -60,7 +60,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
           <span class="profile-streak" title="Chuỗi ngày học liên tục">🔥 {{ state.studyStreak() }} ngày</span>
         </div>
 
-        <!-- Hai nút chọn ngôn ngữ độc lập -->
+        <!-- Danh sách ngôn ngữ độc lập dạng stack hàng ngang đầy đủ, không bị co ép cắt chữ -->
         <div class="lang-switch-group">
           <button
             type="button"
@@ -68,7 +68,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
             [class.active]="state.activeLang() === 'en'"
             (click)="switchLang('en')">
             <span class="chip-flag">🇬🇧</span>
-            <span class="chip-label">Tiếng Anh</span>
+            <span class="chip-label">Tiếng Anh (TOEIC)</span>
             <span class="chip-lv">Lv.{{ getEnLevel() }}</span>
           </button>
 
@@ -78,7 +78,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
             [class.active]="state.activeLang() === 'ja'"
             (click)="switchLang('ja')">
             <span class="chip-flag">🇯🇵</span>
-            <span class="chip-label">Tiếng Nhật</span>
+            <span class="chip-label">Tiếng Nhật (JLPT N5)</span>
             <span class="chip-lv">Lv.{{ getJaLevel() }}</span>
           </button>
         </div>
@@ -277,57 +277,62 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       border-radius: 999px;
     }
     .lang-switch-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 12px;
     }
     .lang-chip-btn {
       display: flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(0, 0, 0, 0.2);
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.24);
       border: 1.5px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      padding: 6px 8px;
-      color: rgba(248, 244, 235, 0.8);
-      font-size: 12px;
+      border-radius: 9px;
+      padding: 8px 10px;
+      color: rgba(248, 244, 235, 0.85);
+      font-size: 13px;
       cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
       transition: all 0.18s ease;
     }
     .lang-chip-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-color: rgba(232, 215, 168, 0.4);
     }
     .lang-chip-btn.active {
-      background: rgba(232, 215, 168, 0.2);
+      background: rgba(232, 215, 168, 0.18);
       border-color: #D6A847;
       color: #FFFDF9;
       font-weight: 700;
-      box-shadow: 0 0 6px rgba(214, 168, 71, 0.3);
+      box-shadow: 0 0 8px rgba(214, 168, 71, 0.25);
     }
     .chip-flag {
-      font-size: 14px;
+      font-size: 17px;
       line-height: 1;
+      flex-shrink: 0;
     }
     .chip-label {
       flex: 1;
       text-align: left;
-      font-size: 11.5px;
+      font-size: 12.5px;
+      font-weight: 600;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
     .chip-lv {
-      font-size: 10px;
+      font-size: 10.5px;
       background: #78815D;
       color: #FFFDF9;
-      padding: 1px 5px;
+      padding: 2px 7px;
       border-radius: 999px;
       font-weight: 700;
+      margin-left: auto;
+      flex-shrink: 0;
     }
     .lang-chip-btn.active .chip-lv {
       background: #8C6B4F;
+      border: 1px solid #D6A847;
     }
     .active-progression-bar-box {
       display: flex;
@@ -458,7 +463,8 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     /* ================= RESPONSIVE MOBILE & TABLET (<= 768px): OFF-CANVAS DRAWER ================= */
     @media (max-width: 768px) {
       .left-nav-bar {
-        width: 260px;
+        width: min(290px, 86vw);
+        max-width: 320px;
         align-items: stretch;
         padding: 16px 14px;
         transform: translateX(-100%); /* MẶC ĐỊNH ĐÓNG KÍN, HOÀN TOÀN KHÔNG CHE NỘI DUNG */
@@ -519,13 +525,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         margin-left: auto;
       }
       .nav-bottom-avatar {
-        width: 100%;
-        border-radius: 10px;
-        height: 38px;
-        margin-top: 14px;
-      }
-      .level-indicator {
-        font-size: 13px;
+        display: none !important; /* Đã có trạng thái Level ở thẻ hồ sơ đầu drawer, tránh lặp lại ở đáy */
       }
     }
   `]
