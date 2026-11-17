@@ -120,9 +120,13 @@ export interface ReviewSchedule {
   day14Done: boolean;
 }
 
+export type ToastType = 'success' | 'warning' | 'error' | 'info';
+
 export interface ToastMessage {
   id: number;
   text: string;
+  type?: ToastType;
+  count?: number;
 }
 
 export type ReviewStage = 0 | 1 | 2 | 3 | 4; // 0: First, 1: D1, 2: D3, 3: D7, 4: D14 (Mastered)

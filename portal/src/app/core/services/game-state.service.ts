@@ -1,6 +1,6 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { Subject } from 'rxjs';
-import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessage, ShopItem, UserVocabReview, ReviewStage, DailyCohortRow, QuestEventType } from '../models/game.models';
+import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessage, ToastType, ShopItem, UserVocabReview, ReviewStage, DailyCohortRow, QuestEventType } from '../models/game.models';
 import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryItemDto, QuizSubmitResultDto } from './farm-api.service';
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
@@ -413,12 +413,123 @@ export class GameStateService {
     });
   }
 
-  showToast(text: string) {
-    const id = Date.now();
-    this.toasts.update(list => [...list, { id, text }]);
-    setTimeout(() => {
-      this.toasts.update(list => list.filter(t => t.id !== id));
-    }, 3200);
+  private toastTimers = new Map<number, any>();
+
+  showToast(text: string, type?: ToastType) {
+    if (!text) return;
+
+    const resolvedType: ToastType = type || this.detectToastType(text);
+    const cleanText = text.trim();
+
+    // 1. Chống Spam & Trùng lặp (Deduplication)
+    // Nếu cùng 1 thông báo đang hiển thị -> Không sinh bubble mới, chỉ tăng count và reset timer
+    const currentList = this.toasts();
+    const existingIndex = currentList.findIndex(t => t.text.trim() === cleanText);
+
+    if (existingIndex >= 0) {
+      const existing = currentList[existingIndex];
+      const updatedCount = (existing.count || 1) + 1;
+
+      this.toasts.update(list => list.map((t, idx) =>
+        idx === existingIndex
+          ? { ...t, count: updatedCount, type: resolvedType }
+          : t
+      ));
+
+      this.scheduleToastDismiss(existing.id, 2800);
+      return;
+    }
+
+    // 2. Giới hạn tối đa thông báo hiển thị cùng lúc (Tối đa 2 thông báo để không che màn hình)
+    const id = Date.now() + Math.floor(Math.random() * 100);
+    const newToast: ToastMessage = {
+      id,
+      text: cleanText,
+      type: resolvedType,
+      count: 1
+    };
+
+    this.toasts.update(list => {
+      const trimmed = list.slice(-1); // Giữ tối đa 1 thông báo trước đó
+      return [...trimmed, newToast];
+    });
+
+    this.scheduleToastDismiss(id, 3200);
+  }
+
+  private scheduleToastDismiss(id: number, durationMs: number) {
+    if (this.toastTimers.has(id)) {
+      clearTimeout(this.toastTimers.get(id));
+    }
+    const timer = setTimeout(() => {
+      this.dismissToast(id);
+      this.toastTimers.delete(id);
+    }, durationMs);
+    this.toastTimers.set(id, timer);
+  }
+
+  dismissToast(id: number) {
+    this.toasts.update(list => list.filter(t => t.id !== id));
+    if (this.toastTimers.has(id)) {
+      clearTimeout(this.toastTimers.get(id));
+      this.toastTimers.delete(id);
+    }
+  }
+
+  private detectToastType(text: string): ToastType {
+    const lower = text.toLowerCase();
+
+    // Warning: Các lỗi thao tác canh tác & điều kiện chưa thỏa
+    if (
+      lower.includes('đã được tưới') ||
+      lower.includes('đã được bón') ||
+      lower.includes('hết nước') ||
+      lower.includes('hết phân') ||
+      lower.includes('không đủ') ||
+      lower.includes('chưa có') ||
+      lower.includes('chưa thể') ||
+      lower.includes('chưa chín') ||
+      lower.includes('đang bị khóa') ||
+      lower.includes('đang khóa') ||
+      lower.includes('cần ít nhất') ||
+      lower.includes('cần đạt level') ||
+      lower.includes('cần ') ||
+      lower.includes('chỉ dùng cho') ||
+      lower.includes('ô đất không trống') ||
+      lower.includes('chưa đến hạn') ||
+      lower.includes('⚠️') ||
+      lower.includes('🔒')
+    ) {
+      return 'warning';
+    }
+
+    // Error: Các lỗi file, hệ thống
+    if (
+      lower.includes('❌') ||
+      lower.includes('lỗi') ||
+      lower.includes('thất bại') ||
+      lower.includes('không hợp lệ') ||
+      lower.includes('hết hạn')
+    ) {
+      return 'error';
+    }
+
+    // Success: Thành công, nhận thưởng
+    if (
+      lower.includes('🎉') ||
+      lower.includes('✅') ||
+      lower.includes('✓') ||
+      lower.includes('✨') ||
+      lower.includes('thành công') ||
+      lower.includes('chúc mừng') ||
+      lower.includes('nhận được') ||
+      lower.includes('mở khóa thành công') ||
+      lower.includes('thu hoạch')
+    ) {
+      return 'success';
+    }
+
+    return 'info';
   }
 
   // =========================================================================
