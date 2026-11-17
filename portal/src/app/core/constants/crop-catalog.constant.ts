@@ -1,5 +1,6 @@
 import { CropCatalog } from '../models/game.models';
 import { FARM_ASSETS } from './farm-assets.constant';
+import { PIXEL_UI_ICONS } from './pixel-ui-icons.constant';
 
 export function kraftSeedPacket(cropIdOrEmblem: string): string {
   const trimmed = (cropIdOrEmblem || '').trim();
@@ -465,22 +466,15 @@ export const SPRITES: Record<string, string> = {
   seed: kraftSeedPacket('carrot'),
   seeds_on_soil: FARM_ASSETS.seedsOnSoil,
   sprout: FARM_ASSETS.sprout,
-  padlock: FARM_ASSETS.lockedPadlock,
+  padlock: PIXEL_UI_ICONS['icon_padlock'],
   water: FARM_ASSETS.wateringCan,
   fertilizer: FARM_ASSETS.fertilizerSack,
   speed_fertilizer: FARM_ASSETS.speedFertilizer,
-  basket: FARM_ASSETS.harvestBasket,
-  lamp: `<svg width="44" height="44" viewBox="0 0 16 16" class="pixel-art">
-    <rect x="5" y="2" width="6" height="12" fill="#263847"/>
-    <rect x="6" y="4" width="4" height="4" fill="#F5D97E"/>
-    <rect x="7" y="8" width="2" height="4" fill="#465C6E"/>
-  </svg>`,
-  bundle: `<svg width="44" height="44" viewBox="0 0 16 16" class="pixel-art">
-    <rect x="2" y="4" width="12" height="10" fill="#3B2D24"/>
-    <rect x="3" y="5" width="10" height="8" fill="#B57A4E"/>
-    <rect x="3" y="5" width="10" height="2" fill="#D19564"/>
-    <rect x="7" y="7" width="2" height="2" fill="#E4B43C"/>
-  </svg>`
+  basket: PIXEL_UI_ICONS['icon_harvest_basket'],
+  lamp: PIXEL_UI_ICONS['decor_lamp'],
+  fence: PIXEL_UI_ICONS['decor_fence'],
+  scarecrow: PIXEL_UI_ICONS['decor_scarecrow'],
+  bundle: PIXEL_UI_ICONS['icon_harvest_basket']
 };
 
 CROP_CATALOG.forEach(c => {

@@ -1,11 +1,12 @@
 import { Component, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../../core/services/game-state.service';
+import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PixelIconComponent],
   template: `
     <header class="topbar">
       <div class="topbar-left">
@@ -24,11 +25,17 @@ import { GameStateService } from '../../../core/services/game-state.service';
       <div class="topbar-right">
         <div class="stat-pill level-pill" title="Cấp độ hiện tại">Lv.{{ state.level() }}</div>
         <div class="stat-pill" title="Tiến độ thăng cấp: {{ state.currentXp() }}/{{ state.xpRequired() }} XP (Tối đa 1000 XP)">
-          ★ {{ state.currentXp() }}/{{ state.xpRequired() }}<span class="hide-mobile"> XP</span>
+          <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
+          <span>{{ state.currentXp() }}/{{ state.xpRequired() }}</span>
+          <span class="hide-mobile"> XP</span>
         </div>
-        <div class="stat-pill gold">🪙 {{ state.coins() }}<span class="hide-mobile"> Xu</span></div>
+        <div class="stat-pill gold">
+          <app-pixel-icon name="icon_coin" [size]="14"></app-pixel-icon>
+          <span>{{ state.coins() }}</span>
+          <span class="hide-mobile"> Xu</span>
+        </div>
         <button class="cart-btn" (click)="openCart.emit()" title="Mở giỏ hàng">
-          <span>🛒</span>
+          <app-pixel-icon name="icon_cart" [size]="16"></app-pixel-icon>
           <span class="cart-text hide-mobile">Giỏ hàng</span>
           @if (state.cartCount() > 0) {
             <span class="cart-badge">{{ state.cartCount() }}</span>

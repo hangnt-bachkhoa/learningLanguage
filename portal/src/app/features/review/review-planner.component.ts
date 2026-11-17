@@ -5,18 +5,19 @@ import { UserVocabReview, ReviewStage, DailyCohortRow } from '../../core/models/
 import { formatVnDate, formatShortVnDate } from '../../core/utils/ebbinghaus.util';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-review-planner',
   standalone: true,
-  imports: [CommonModule, PosTagBadgeComponent],
+  imports: [CommonModule, PosTagBadgeComponent, PixelIconComponent],
   template: `
     <div class="review-planner-container">
       <!-- 1. TOP SUMMARY BAR (Thanh tổng quan điều phối) -->
       <div class="vintage-card summary-card">
         <div class="summary-header">
           <div class="summary-left">
-            <span class="bell-glyph">🔔</span>
+            <span class="bell-glyph"><app-pixel-icon name="icon_bolt" [size]="18"></app-pixel-icon></span>
             <div>
               <h3 class="summary-title">Lịch Ôn Tập Ngắt Quãng (Ebbinghaus)</h3>
               <p class="summary-sub">
@@ -27,7 +28,12 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
 
           <!-- Lượt nhận Nước & Phân bón hôm nay (Cap: 5 lần/ngày) -->
           <div class="reward-quota-pill" title="Mỗi phiên ôn tập hoàn tất thưởng +1 Nước +1 Phân bón (Tối đa 5 lượt/ngày)">
-            <span class="quota-label">💧+🌿 Thưởng hôm nay:</span>
+            <span class="quota-label" style="display:inline-flex; align-items:center; gap:4px;">
+              <app-pixel-icon name="icon_dew_drop" [size]="13"></app-pixel-icon>
+              <span>+</span>
+              <app-pixel-icon name="icon_leaf_badge" [size]="13"></app-pixel-icon>
+              <span>Thưởng hôm nay:</span>
+            </span>
             <span class="quota-val">{{ state.dailyReviewRewardsClaimed() }}/5 lượt</span>
           </div>
         </div>
@@ -37,7 +43,10 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
             class="btn btn-primary start-all-btn"
             [disabled]="state.dueTodayCount() === 0"
             (click)="reviewAllDue()">
-            <span>⚡ Ôn tập tất cả từ đến hạn ({{ Math.min(10, state.dueTodayCount()) }}/{{ state.dueTodayCount() }} từ)</span>
+            <span style="display:inline-flex; align-items:center; gap:6px;">
+              <app-pixel-icon name="icon_bolt" [size]="14"></app-pixel-icon>
+              <span>Ôn tập tất cả từ đến hạn ({{ Math.min(10, state.dueTodayCount()) }}/{{ state.dueTodayCount() }} từ)</span>
+            </span>
           </button>
           <div class="care-perk-hint">
             <img src="assets/farm-assets/tools/watering_can.png" class="mini-tool-icon pixel-sprite" alt="Nước" />
@@ -54,7 +63,7 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
       <div class="vintage-card table-wrapper-card">
         <div class="table-card-header">
           <div class="header-text-group">
-            <span class="leaf-icon">🌿</span>
+            <span class="leaf-icon"><app-pixel-icon name="icon_leaf_badge" [size]="16"></app-pixel-icon></span>
             <h4 class="table-card-title">Chu kỳ ôn tập</h4>
           </div>
           <span class="total-cohorts-badge">{{ state.dailyCohorts().length }} ngày học</span>
@@ -62,7 +71,7 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
 
         @if (state.dailyCohorts().length === 0) {
           <div class="empty-cohorts-box">
-            <div class="empty-icon">📖</div>
+            <div class="empty-icon"><img src="assets/icons/icon_vocabulary.svg" width="32" height="32" class="pixel-art" /></div>
             <p class="empty-title">Chưa có từ vựng nào trong danh sách ôn tập</p>
             <p class="empty-desc">
               Khi bạn học từ vựng trong mục <strong>Từ vựng</strong> và bấm <em>"Đã học"</em>, từ sẽ tự động được xếp vào chu kỳ Ebbinghaus 5 giai đoạn tại đây!
@@ -112,11 +121,11 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
                           class="due-pill-btn"
                           (click)="reviewCohortStage(cohort.learnedDate, 1)"
                           title="Bấm để làm bài kiểm tra Day 1">
-                          ⚡ Ôn ngay ({{ cohort.day1DueCount }})
+                          <app-pixel-icon name="icon_bolt" [size]="12"></app-pixel-icon> Ôn ngay ({{ cohort.day1DueCount }})
                         </button>
                       } @else {
                         <span class="lock-badge" title="Chưa đến hạn">
-                          🔒 {{ cohort.day1NextDate ? formatShortDate(cohort.day1NextDate) : '--' }}
+                          <app-pixel-icon name="icon_padlock" [size]="12"></app-pixel-icon> {{ cohort.day1NextDate ? formatShortDate(cohort.day1NextDate) : '--' }}
                         </span>
                       }
                     </td>
@@ -130,11 +139,11 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
                           class="due-pill-btn"
                           (click)="reviewCohortStage(cohort.learnedDate, 2)"
                           title="Bấm để làm bài kiểm tra Day 3">
-                          ⚡ Ôn ngay ({{ cohort.day3DueCount }})
+                          <app-pixel-icon name="icon_bolt" [size]="12"></app-pixel-icon> Ôn ngay ({{ cohort.day3DueCount }})
                         </button>
                       } @else {
                         <span class="lock-badge" title="Chưa đến hạn">
-                          🔒 {{ cohort.day3NextDate ? formatShortDate(cohort.day3NextDate) : '--' }}
+                          <app-pixel-icon name="icon_padlock" [size]="12"></app-pixel-icon> {{ cohort.day3NextDate ? formatShortDate(cohort.day3NextDate) : '--' }}
                         </span>
                       }
                     </td>
@@ -148,11 +157,11 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
                           class="due-pill-btn"
                           (click)="reviewCohortStage(cohort.learnedDate, 3)"
                           title="Bấm để làm bài kiểm tra Day 7">
-                          ⚡ Ôn ngay ({{ cohort.day7DueCount }})
+                          <app-pixel-icon name="icon_bolt" [size]="12"></app-pixel-icon> Ôn ngay ({{ cohort.day7DueCount }})
                         </button>
                       } @else {
                         <span class="lock-badge" title="Chưa đến hạn">
-                          🔒 {{ cohort.day7NextDate ? formatShortDate(cohort.day7NextDate) : '--' }}
+                          <app-pixel-icon name="icon_padlock" [size]="12"></app-pixel-icon> {{ cohort.day7NextDate ? formatShortDate(cohort.day7NextDate) : '--' }}
                         </span>
                       }
                     </td>
@@ -160,17 +169,19 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
                     <!-- Cột 5: Day 14 (Thuộc lòng) -->
                     <td class="col-cell">
                       @if (cohort.day14Status === 'done') {
-                        <span class="status-circle done mastered" title="Đã thuộc lòng vĩnh viễn (Mastered)">👑</span>
+                        <span class="status-circle done mastered" title="Đã thuộc lòng vĩnh viễn (Mastered)">
+                          <app-pixel-icon name="icon_trophy" [size]="13"></app-pixel-icon>
+                        </span>
                       } @else if (cohort.day14Status === 'due') {
                         <button
                           class="due-pill-btn gold"
                           (click)="reviewCohortStage(cohort.learnedDate, 4)"
                           title="Bấm để hoàn tất mốc Thuộc Lòng Day 14">
-                          👑 Ôn ngay ({{ cohort.day14DueCount }})
+                          <app-pixel-icon name="icon_trophy" [size]="13"></app-pixel-icon> Ôn ngay ({{ cohort.day14DueCount }})
                         </button>
                       } @else {
                         <span class="lock-badge" title="Chưa đến hạn">
-                          🔒 {{ cohort.day14NextDate ? formatShortDate(cohort.day14NextDate) : '--' }}
+                          <app-pixel-icon name="icon_padlock" [size]="12"></app-pixel-icon> {{ cohort.day14NextDate ? formatShortDate(cohort.day14NextDate) : '--' }}
                         </span>
                       }
                     </td>
@@ -207,15 +218,15 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
             <span>Đã vượt qua Quiz ôn tập</span>
           </div>
           <div class="legend-item">
-            <span class="legend-dot due">⚡</span>
+            <span class="legend-dot due"><app-pixel-icon name="icon_bolt" [size]="11"></app-pixel-icon></span>
             <span>Đến hạn hôm nay (Bấm để ôn)</span>
           </div>
           <div class="legend-item">
-            <span class="legend-dot lock">🔒</span>
+            <span class="legend-dot lock"><app-pixel-icon name="icon_padlock" [size]="11"></app-pixel-icon></span>
             <span>Đang trong khoảng cách ngắt quãng</span>
           </div>
           <div class="legend-item">
-            <span class="legend-dot crown">👑</span>
+            <span class="legend-dot crown"><app-pixel-icon name="icon_trophy" [size]="11"></app-pixel-icon></span>
             <span>Đã thuộc lòng vĩnh viễn</span>
           </div>
         </div>

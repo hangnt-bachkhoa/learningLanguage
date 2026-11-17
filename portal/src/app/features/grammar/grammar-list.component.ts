@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { GrammarService } from '../../core/services/grammar.service';
 import { GrammarTopic } from '../../core/constants/default-grammar-topics.constant';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 interface LevelGroup {
   level: string;
@@ -15,7 +16,7 @@ interface LevelGroup {
 @Component({
   selector: 'app-grammar-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, PixelIconComponent],
   template: `
     <div class="grammar-catalog-page">
       <!-- HERO SUMMARY BANNER -->
@@ -34,8 +35,9 @@ interface LevelGroup {
           <div class="progress-track">
             <div class="progress-fill" [style.width.%]="progressPercent()"></div>
           </div>
-          <button type="button" class="btn btn-primary btn-sm btn-random" (click)="startRandomQuiz()">
-            ⚡ Ôn tập ngẫu nhiên
+          <button type="button" class="btn btn-primary btn-sm btn-random" (click)="startRandomQuiz()" style="display:inline-flex; align-items:center; gap:6px;">
+            <app-pixel-icon name="icon_bolt" [size]="14"></app-pixel-icon>
+            <span>Ôn tập ngẫu nhiên</span>
           </button>
         </div>
       </section>

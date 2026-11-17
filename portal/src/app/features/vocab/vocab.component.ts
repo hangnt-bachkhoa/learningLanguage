@@ -5,11 +5,12 @@ import { GameStateService } from '../../core/services/game-state.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-vocab',
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe, PosTagBadgeComponent],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, PosTagBadgeComponent, PixelIconComponent],
   template: `
     <div class="vocab-screen">
       <!-- Header điều hướng: < Danh sách bài học | Tiêu đề chủ đề | < 1/24 > -->
@@ -21,7 +22,7 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
 
         <!-- Tiêu đề chủ đề bài học đang chọn -->
         <div class="current-lesson-pill" title="Chủ đề đang học">
-          <span class="lesson-leaf">🍃</span>
+          <span class="lesson-leaf"><app-pixel-icon name="icon_leaf_badge" [size]="14"></app-pixel-icon></span>
           <span class="lesson-name">{{ currentLessonTitle() }}</span>
         </div>
 
@@ -101,7 +102,9 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
           class="btn btn-secondary bookmark-btn"
           [class.bookmarked]="state.bookmarkedWords().includes(currentWord.word)"
           (click)="toggleBookmark()">
-          <span class="bookmark-icon">{{ state.bookmarkedWords().includes(currentWord.word) ? '⭐' : '🔖' }}</span>
+          <span class="bookmark-icon">
+            <app-pixel-icon [name]="state.bookmarkedWords().includes(currentWord.word) ? 'icon_star' : 'icon_star_empty'" [size]="14"></app-pixel-icon>
+          </span>
           <span>{{ state.bookmarkedWords().includes(currentWord.word) ? 'Đã đánh dấu' : 'Đánh dấu' }}</span>
         </button>
 

@@ -6,11 +6,12 @@ import { DailyQuestService } from '../../core/services/daily-quest.service';
 import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.constant';
 import { CROP_CATALOG } from '../../core/constants/crop-catalog.constant';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-progress-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PixelIconComponent],
   template: `
     <div class="progress-dashboard-container">
       <!-- 2-COLUMN VINTAGE ANALYTICS GRID -->
@@ -21,7 +22,7 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
         <!-- ======================================================== -->
         <div class="vintage-card analytics-card funnel-card">
           <div class="card-title-bar">
-            <span class="card-icon">🧠</span>
+            <span class="card-icon"><app-pixel-icon name="icon_memory_brain" [size]="20"></app-pixel-icon></span>
             <div class="card-title-text">
               <h3 class="card-title">Phễu Ghi Nhớ Từ Vựng</h3>
               <p class="card-sub">Chu kỳ củng cố trí nhớ dài hạn Ebbinghaus</p>
@@ -76,7 +77,7 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
         <!-- ======================================================== -->
         <div class="vintage-card analytics-card curriculum-card">
           <div class="card-title-bar">
-            <span class="card-icon">📚</span>
+            <span class="card-icon"><img src="assets/icons/icon_vocabulary.svg" width="20" height="20" class="pixel-art" /></span>
             <div class="card-title-text">
               <h3 class="card-title">Tiến Độ Học Thuật</h3>
               <p class="card-sub">52 Chủ đề TOEIC & 13 Chuyên đề Ngữ pháp</p>
@@ -86,14 +87,20 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
           <!-- Nhóm 1: Từ vựng TOEIC -->
           <div class="mastery-item">
             <div class="mastery-header">
-              <span class="mastery-name">📖 Từ vựng TOEIC (450–900)</span>
+              <span class="mastery-name" style="display:inline-flex; align-items:center; gap:6px;">
+                <img src="assets/icons/icon_vocabulary.svg" width="16" height="16" class="pixel-art" />
+                <span>Từ vựng TOEIC (450–900)</span>
+              </span>
               <span class="mastery-stat">{{ academicStats().unlockedTopics }}/52 chủ đề</span>
             </div>
             <div class="progress-bar-wrap">
               <div class="progress-fill vocab-fill" [style.width.%]="academicStats().topicPercent"></div>
             </div>
             <div class="stars-subline">
-              <span>⭐ Điểm sao tích lũy:</span>
+              <span style="display:inline-flex; align-items:center; gap:4px;">
+                <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
+                <span>Điểm sao tích lũy:</span>
+              </span>
               <strong class="star-count">{{ academicStats().vocabStars }}/156 ★</strong>
             </div>
           </div>
@@ -101,14 +108,20 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
           <!-- Nhóm 2: Ngữ pháp cốt lõi -->
           <div class="mastery-item">
             <div class="mastery-header">
-              <span class="mastery-name">✍️ Ngữ pháp trọng điểm</span>
+              <span class="mastery-name" style="display:inline-flex; align-items:center; gap:6px;">
+                <img src="assets/icons/icon_grammar.svg" width="16" height="16" class="pixel-art" />
+                <span>Ngữ pháp trọng điểm</span>
+              </span>
               <span class="mastery-stat">{{ academicStats().studiedGrammar }}/13 chuyên đề</span>
             </div>
             <div class="progress-bar-wrap">
               <div class="progress-fill grammar-fill" [style.width.%]="academicStats().grammarPercent"></div>
             </div>
             <div class="stars-subline">
-              <span>⭐ Điểm sao ngữ pháp:</span>
+              <span style="display:inline-flex; align-items:center; gap:4px;">
+                <app-pixel-icon name="icon_star" [size]="14"></app-pixel-icon>
+                <span>Điểm sao ngữ pháp:</span>
+              </span>
               <strong class="star-count">{{ academicStats().grammarStars }}/39 ★</strong>
             </div>
           </div>
@@ -119,7 +132,7 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
         <!-- ======================================================== -->
         <div class="vintage-card analytics-card tasks-card">
           <div class="card-title-bar">
-            <span class="card-icon">🔥</span>
+            <span class="card-icon"><app-pixel-icon name="icon_flame" [size]="20"></app-pixel-icon></span>
             <div class="card-title-text">
               <h3 class="card-title">Chuỗi Học & Nhiệm Vụ Hôm Nay</h3>
               <p class="card-sub">Giữ vững thói quen mỗi ngày để nhận quà</p>
@@ -128,7 +141,7 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 
           <!-- Streak Badge -->
           <div class="streak-banner">
-            <span class="flame-emoji">🔥</span>
+            <span class="flame-emoji"><app-pixel-icon name="icon_flame" [size]="22"></app-pixel-icon></span>
             <div>
               <div class="streak-title">Chuỗi học tập: <strong>{{ dailyQuest.currentStreak() }} ngày liên tiếp</strong></div>
               <div class="streak-hint">Làm mới sau: {{ dailyQuest.countdownToMidnight() }} · Mở rương 3/3 khi hoàn thành đủ!</div>
@@ -152,7 +165,7 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
         <!-- ======================================================== -->
         <div class="vintage-card analytics-card farm-card">
           <div class="card-title-bar">
-            <span class="card-icon">🌾</span>
+            <span class="card-icon"><app-pixel-icon name="icon_wheat_sheaf" [size]="20"></app-pixel-icon></span>
             <div class="card-title-text">
               <h3 class="card-title">Thống Kê Nông Trại</h3>
               <p class="card-sub">Cấp bậc, Giống cây & Nông sản thu hoạch</p>
@@ -172,7 +185,10 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 
           <!-- Giống cây mở khóa -->
           <div class="unlocked-seeds-row">
-            <span>🌱 Giống hạt giống đã mở:</span>
+            <span style="display:inline-flex; align-items:center; gap:4px;">
+              <app-pixel-icon name="icon_leaf_badge" [size]="14"></app-pixel-icon>
+              <span>Giống hạt giống đã mở:</span>
+            </span>
             <strong>{{ state.getUnlockedSeedIds().length }} / 18 giống cây</strong>
           </div>
 

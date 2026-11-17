@@ -9,6 +9,7 @@ import { VocabularyDto } from '../../core/services/farm-api.service';
 import { ReviewPlannerComponent } from './review-planner.component';
 import { ProgressDashboardComponent } from './progress-dashboard.component';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 interface ReviewQuizQuestion {
   vocabId: number;
@@ -24,7 +25,7 @@ interface ReviewQuizQuestion {
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReviewPlannerComponent, ProgressDashboardComponent, PosTagBadgeComponent],
+  imports: [CommonModule, RouterLink, ReviewPlannerComponent, ProgressDashboardComponent, PosTagBadgeComponent, PixelIconComponent],
   template: `
     <div class="review-screen">
 
@@ -99,7 +100,10 @@ interface ReviewQuizQuestion {
             <!-- Active Recall Quiz Card -->
             <div class="vintage-card quiz-card">
               <div class="card-top-tag">
-                <span class="tag-badge">⚡ Active Recall</span>
+                <span class="tag-badge" style="display:inline-flex; align-items:center; gap:4px;">
+                  <app-pixel-icon name="icon_bolt" [size]="12"></app-pixel-icon>
+                  <span>Active Recall</span>
+                </span>
                 <app-pos-tag [type]="q.type" mode="compact"></app-pos-tag>
               </div>
 
@@ -141,7 +145,7 @@ interface ReviewQuizQuestion {
                 <div class="feedback-tray" [class.is-correct]="feedbackState() === 'correct'" [class.is-wrong]="feedbackState() === 'wrong'">
                   <div class="feedback-message">
                     @if (feedbackState() === 'correct') {
-                      <span class="fb-icon">🎉</span>
+                      <span class="fb-icon">✓</span>
                       <span class="fb-text">Chính xác! Bạn đã ghi nhớ từ này.</span>
                     } @else {
                       <span class="fb-icon">💡</span>
@@ -149,7 +153,12 @@ interface ReviewQuizQuestion {
                     }
                   </div>
                   <button class="btn btn-primary next-btn" (click)="nextQuestion()">
-                    <span>{{ sessionQueue().length > 1 ? 'Câu tiếp theo →' : 'Xem kết quả ✨' }}</span>
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <span>{{ sessionQueue().length > 1 ? 'Câu tiếp theo →' : 'Xem kết quả' }}</span>
+                      @if (sessionQueue().length <= 1) {
+                        <app-pixel-icon name="icon_sparkle" [size]="14"></app-pixel-icon>
+                      }
+                    </span>
                   </button>
                 </div>
               }

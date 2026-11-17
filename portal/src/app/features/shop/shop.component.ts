@@ -4,17 +4,18 @@ import { GameStateService } from '../../core/services/game-state.service';
 import { CROP_CATALOG, SPRITES } from '../../core/constants/crop-catalog.constant';
 import { ShopItem } from '../../core/models/game.models';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [CommonModule, SafeHtmlPipe],
+  imports: [CommonModule, SafeHtmlPipe, PixelIconComponent],
   template: `
     <div class="shop-page">
       <div class="card-header">
         <div>
           <h2 class="serif-title" style="font-size:22px;">Cửa Hàng Nông Trại (General Store)</h2>
-          <span style="font-size:12px;color:var(--ink-muted);">Dùng Xu 🪙 tích lũy từ việc học và thu hoạch để mua vật phẩm</span>
+          <span style="font-size:12px;color:var(--ink-muted);">Dùng Xu <app-pixel-icon name="icon_coin" [size]="14"></app-pixel-icon> tích lũy từ việc học và thu hoạch để mua vật phẩm</span>
         </div>
         <div class="category-tabs">
           <button class="cat-tab" [class.active]="selectedCat() === 'all'" (click)="selectedCat.set('all')">Tất cả</button>
@@ -22,7 +23,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
           <button class="cat-tab" [class.active]="selectedCat() === 'care'" (click)="selectedCat.set('care')">Chăm sóc</button>
           <button class="cat-tab" [class.active]="selectedCat() === 'decor'" (click)="selectedCat.set('decor')">Trang trí</button>
           <button class="cat-tab" [class.active]="selectedCat() === 'bundle'" (click)="selectedCat.set('bundle')">Gói Combo</button>
-          <button class="cat-tab market-tab" [class.active]="selectedCat() === 'market'" (click)="selectedCat.set('market')">🌾 Chợ Nông Sản</button>
+          <button class="cat-tab market-tab" [class.active]="selectedCat() === 'market'" (click)="selectedCat.set('market')"><app-pixel-icon name="icon_wheat_sheaf" [size]="14"></app-pixel-icon> Chợ Nông Sản</button>
         </div>
       </div>
 
@@ -32,7 +33,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
           <!-- 1. BÁN NÔNG SẢN LẤY XU -->
           <div class="vintage-card market-section">
             <div class="section-title-row">
-              <span class="section-emoji">🪙</span>
+              <span class="section-emoji"><app-pixel-icon name="icon_coin" [size]="20"></app-pixel-icon></span>
               <div>
                 <h3 class="section-heading">Thu Mua Nông Sản (Bán Lấy Xu Vàng)</h3>
                 <p class="section-sub">Bán các loại củ quả, hoa trái thu hoạch để tích lũy Xu mua sắm vật phẩm và mở rộng ô đất.</p>
@@ -51,7 +52,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
                     </span>
                     <div>
                       <h4 class="crop-sell-name">{{ crop.nameVi }}</h4>
-                      <span class="crop-sell-price">🪙 +{{ unitPrice }} Xu / củ, quả</span>
+                      <span class="crop-sell-price"><app-pixel-icon name="icon_coin" [size]="14"></app-pixel-icon> +{{ unitPrice }} Xu / củ, quả</span>
                     </div>
                   </div>
 
@@ -83,7 +84,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
           <!-- 2. TRẠM TRAO ĐỔI VẬT TƯ NÔNG NGHIỆP (3 CROPS -> 1 FERTILIZER / 2 CROPS -> 2 WATER) -->
           <div class="vintage-card market-section">
             <div class="section-title-row">
-              <span class="section-emoji">⚡</span>
+              <span class="section-emoji"><app-pixel-icon name="icon_bolt" [size]="20"></app-pixel-icon></span>
               <div>
                 <h3 class="section-heading">Trạm Trao Đổi Vật Tư (Tái Tạo Mùa Vụ)</h3>
                 <p class="section-sub">Đổi nông sản dư thừa lấy Phân bón vi sinh (thúc chín tức thì) hoặc Nước tưới cây.</p>
@@ -93,9 +94,9 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
             <div class="exchange-cards-row">
               <!-- ĐỔI 3 NÔNG SẢN -> 1 PHÂN BÓN -->
               <div class="vintage-card trade-recipe-card">
-                <div class="recipe-badge">⚡ Công thức VIP</div>
+                <div class="recipe-badge"><app-pixel-icon name="icon_bolt" [size]="13"></app-pixel-icon> Công thức VIP</div>
                 <div class="recipe-visual">
-                  <span class="recipe-icon">🧺 x3 Nông sản</span>
+                  <span class="recipe-icon"><app-pixel-icon name="icon_harvest_basket" [size]="16"></app-pixel-icon> x3 Nông sản</span>
                   <span class="recipe-arrow">➔</span>
                   <span class="recipe-icon">
                     <img src="assets/farm-assets/tools/fertilizer.png" width="24" height="24" class="pixel-art" style="vertical-align: middle; margin-right: 4px; display: inline-block;" />
@@ -125,9 +126,9 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 
               <!-- ĐỔI 2 NÔNG SẢN -> 2 NƯỚC TƯỚI -->
               <div class="vintage-card trade-recipe-card">
-                <div class="recipe-badge blue">💧 Công thức thường</div>
+                <div class="recipe-badge blue"><app-pixel-icon name="icon_dew_drop" [size]="13"></app-pixel-icon> Công thức thường</div>
                 <div class="recipe-visual">
-                  <span class="recipe-icon">🧺 x2 Nông sản</span>
+                  <span class="recipe-icon"><app-pixel-icon name="icon_harvest_basket" [size]="16"></app-pixel-icon> x2 Nông sản</span>
                   <span class="recipe-arrow">➔</span>
                   <span class="recipe-icon">
                     <img src="assets/farm-assets/tools/watering_can.png" width="24" height="24" class="pixel-art" style="vertical-align: middle; margin-right: 4px; display: inline-block;" />
@@ -168,7 +169,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
             <!-- Huy hiệu trạng thái -->
             @if (isLocked) {
               <div class="prod-badge lock-badge">
-                🔒 {{ lockInfo?.tierName }}
+                <app-pixel-icon name="icon_padlock" [size]="13"></app-pixel-icon> {{ lockInfo?.tierName }}
               </div>
             } @else {
               <div class="prod-badge">{{ prod.duration }}</div>
@@ -181,7 +182,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
             <!-- Điều kiện mở khóa nếu bị khóa -->
             @if (isLocked) {
               <div class="prod-lock-hint">
-                <span class="lock-req-icon">🔒</span>
+                <span class="lock-req-icon"><app-pixel-icon name="icon_padlock" [size]="13"></app-pixel-icon></span>
                 <span class="lock-req-text">
                   Cần Lv.{{ lockInfo?.requiredLevel }}
                   @if (lockInfo?.requiredLessonTitle) {
@@ -194,13 +195,13 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
             }
 
             <div class="prod-footer">
-              <span class="price-tag">🪙 {{ prod.price }} Xu</span>
+              <span class="price-tag"><app-pixel-icon name="icon_coin" [size]="14"></app-pixel-icon> {{ prod.price }} Xu</span>
               @if (isLocked) {
                 <button
                   class="btn btn-sm btn-locked"
-                  (click)="state.showToast('🔒 Hạt giống này đang khóa! ' + (lockInfo?.missingReasons?.join(' & ') || ''))"
+                  (click)="state.showToast('Hạt giống này đang khóa! ' + (lockInfo?.missingReasons?.join(' & ') || ''))"
                   title="Chưa đủ điều kiện mua">
-                  🔒 Chưa mở
+                  <app-pixel-icon name="icon_padlock" [size]="13"></app-pixel-icon> Chưa mở
                 </button>
               } @else {
                 <button class="btn btn-primary btn-sm" (click)="state.addToCart(prod)">+ Thêm vào giỏ</button>
@@ -791,7 +792,7 @@ export class ShopComponent {
       cat: 'decor',
       name: 'Hàng rào gỗ mộc (Wooden Fence)',
       price: 60,
-      sprite: 'bundle',
+      sprite: 'fence',
       duration: 'Vĩnh viễn',
       usage: 'Hàng rào gỗ thông vintage bảo vệ và làm đẹp khu vườn.',
       desc: 'Thiết kế mộc mạc kiểu trang trại tự nhiên Bắc Âu.'
@@ -801,7 +802,7 @@ export class ShopComponent {
       cat: 'decor',
       name: 'Bù nhìn rơm nông trại (Scarecrow)',
       price: 100,
-      sprite: 'lamp',
+      sprite: 'scarecrow',
       duration: 'Vĩnh viễn',
       usage: 'Biểu tượng của vụ mùa bội thu, xua chim chóc khỏi luống đất.',
       desc: 'Bù nhìn rơm thủ công phong cách Naturalist mộc mạc.'

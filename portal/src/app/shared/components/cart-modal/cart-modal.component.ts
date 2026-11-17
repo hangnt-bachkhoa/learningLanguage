@@ -1,16 +1,20 @@
 import { Component, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../../core/services/game-state.service';
+import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-cart-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PixelIconComponent],
   template: `
     <div class="modal-backdrop open" (click)="close.emit()">
       <div class="modal-box" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <h3 class="serif-title" style="font-size:18px;">🛒 Giỏ hàng nông trại</h3>
+          <h3 class="serif-title" style="font-size:18px; display:flex; align-items:center; gap:8px;">
+            <app-pixel-icon name="icon_cart" [size]="18"></app-pixel-icon>
+            <span>Giỏ hàng nông trại</span>
+          </h3>
           <button class="close-btn" (click)="close.emit()">✕</button>
         </div>
 
@@ -25,17 +29,24 @@ import { GameStateService } from '../../../core/services/game-state.service';
                 <div class="cart-row">
                   <div class="cart-name">
                     <div>{{ item.item.name }}</div>
-                    <small style="color:var(--ink-muted);">🪙 {{ item.item.price }} Xu x {{ item.qty }}</small>
+                    <small style="color:var(--ink-muted); display:inline-flex; align-items:center; gap:4px;">
+                      <app-pixel-icon name="icon_coin" [size]="12"></app-pixel-icon>
+                      <span>{{ item.item.price }} Xu x {{ item.qty }}</span>
+                    </small>
                   </div>
-                  <div class="cart-price">
-                    🪙 {{ item.item.price * item.qty }} Xu
+                  <div class="cart-price" style="display:inline-flex; align-items:center; gap:4px;">
+                    <app-pixel-icon name="icon_coin" [size]="13"></app-pixel-icon>
+                    <span>{{ item.item.price * item.qty }} Xu</span>
                   </div>
                 </div>
               }
             </div>
             <div class="cart-summary">
               <span>Tổng thanh toán:</span>
-              <strong style="color:var(--gold-dark);font-size:16px;">🪙 {{ state.cartTotal() }} Xu</strong>
+              <strong style="color:var(--gold-dark);font-size:16px; display:inline-flex; align-items:center; gap:4px;">
+                <app-pixel-icon name="icon_coin" [size]="15"></app-pixel-icon>
+                <span>{{ state.cartTotal() }} Xu</span>
+              </strong>
             </div>
           }
         </div>

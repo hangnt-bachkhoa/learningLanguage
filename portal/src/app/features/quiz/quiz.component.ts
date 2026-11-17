@@ -9,11 +9,12 @@ import { getDefaultQuizSession } from '../../core/constants/default-quiz-questio
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.constant';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-quiz',
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe, PosTagBadgeComponent],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, PosTagBadgeComponent, PixelIconComponent],
   template: `
     <div class="quiz-screen">
       <!-- ======================================================== -->
@@ -39,7 +40,7 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
           <div class="dew-drops-row" [title]="dewDropsTooltip()">
             @for (drop of dewDropsState(); track $index) {
               <span class="dew-drop" [class.dew-active]="drop" [class.dew-lost]="!drop">
-                💧
+                <app-pixel-icon [name]="drop ? 'icon_dew_drop' : 'icon_dew_drop_empty'" [size]="18"></app-pixel-icon>
               </span>
             }
           </div>
@@ -215,12 +216,18 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
         <main class="results-screen">
           <div class="vintage-card results-card">
             <!-- VÒNG NGUYỆT QUẾ VÀ HUY HIỆU SAO -->
-            <div class="laurel-wreath">🌿</div>
+            <div class="laurel-wreath"><app-pixel-icon name="icon_leaf_badge" [size]="28"></app-pixel-icon></div>
             
             <div class="stars-display-row">
-              <span class="star-item" [class.active-star]="(result()?.stars || 1) >= 1">⭐</span>
-              <span class="star-item star-mid" [class.active-star]="(result()?.stars || 1) >= 2">⭐</span>
-              <span class="star-item" [class.active-star]="(result()?.stars || 1) >= 3">⭐</span>
+              <span class="star-item" [class.active-star]="(result()?.stars || 1) >= 1">
+                <app-pixel-icon [name]="(result()?.stars || 1) >= 1 ? 'icon_star' : 'icon_star_empty'" [size]="28"></app-pixel-icon>
+              </span>
+              <span class="star-item star-mid" [class.active-star]="(result()?.stars || 1) >= 2">
+                <app-pixel-icon [name]="(result()?.stars || 1) >= 2 ? 'icon_star' : 'icon_star_empty'" [size]="34"></app-pixel-icon>
+              </span>
+              <span class="star-item" [class.active-star]="(result()?.stars || 1) >= 3">
+                <app-pixel-icon [name]="(result()?.stars || 1) >= 3 ? 'icon_star' : 'icon_star_empty'" [size]="28"></app-pixel-icon>
+              </span>
             </div>
 
             <h1 class="result-title">
@@ -239,8 +246,9 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
 
             <!-- KỶ LỤC MỚI BADGE -->
             @if (result()?.isNewRecord) {
-              <div class="new-record-pill">
-                🏆 KỶ LỤC MỚI VỀ SAO
+              <div class="new-record-pill" style="display:inline-flex; align-items:center; gap:6px;">
+                <app-pixel-icon name="icon_trophy" [size]="16"></app-pixel-icon>
+                <span>KỶ LỤC MỚI VỀ SAO</span>
               </div>
             }
 
@@ -252,7 +260,10 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
               </div>
               <div class="summary-divider"></div>
               <div class="summary-col">
-                <span class="col-value">{{ dewDropsRemaining() }} 💧</span>
+                <span class="col-value" style="display:inline-flex; align-items:center; gap:4px;">
+                  <span>{{ dewDropsRemaining() }}</span>
+                  <app-pixel-icon name="icon_dew_drop" [size]="14"></app-pixel-icon>
+                </span>
                 <span class="col-label">Giọt sương còn</span>
               </div>
               <div class="summary-divider"></div>
@@ -269,14 +280,14 @@ import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-
                 <div class="rewards-grid">
                   @if ((result()?.rewardCoins || 0) > 0) {
                     <div class="reward-item-box">
-                      <span class="reward-emoji">🪙</span>
+                      <span class="reward-emoji"><app-pixel-icon name="icon_coin" [size]="20"></app-pixel-icon></span>
                       <span class="reward-title">Xu vàng</span>
                       <span class="reward-qty">+{{ result()?.rewardCoins }}</span>
                     </div>
                   }
                   @if ((result()?.rewardXp || 0) > 0) {
                     <div class="reward-item-box">
-                      <span class="reward-emoji">✨</span>
+                      <span class="reward-emoji"><app-pixel-icon name="icon_sparkle" [size]="20"></app-pixel-icon></span>
                       <span class="reward-title">Điểm XP</span>
                       <span class="reward-qty">+{{ result()?.rewardXp }}</span>
                     </div>
@@ -1200,9 +1211,9 @@ export class QuizComponent implements OnInit {
 
   dewDropsTooltip = computed(() => {
     const d = this.dewDropsRemaining();
-    if (d === 5) return '5 Giọt sương: Hạng 3 Sao ⭐⭐⭐ (Hoàn hảo)';
-    if (d >= 3) return `${d} Giọt sương: Hạng 2 Sao ⭐⭐ (Khá tốt)`;
-    return `${d} Giọt sương: Hạng 1 Sao ⭐ (Cần nỗ lực sửa sai)`;
+    if (d === 5) return '5 Giọt sương: Hạng 3 Sao ★★★ (Hoàn hảo)';
+    if (d >= 3) return `${d} Giọt sương: Hạng 2 Sao ★★ (Khá tốt)`;
+    return `${d} Giọt sương: Hạng 1 Sao ★ (Cần nỗ lực sửa sai)`;
   });
 
   ngOnInit() {

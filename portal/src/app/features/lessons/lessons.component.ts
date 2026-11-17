@@ -4,11 +4,12 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { GameStateService } from '../../core/services/game-state.service';
 import { LessonDto } from '../../core/services/farm-api.service';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-lessons',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, PixelIconComponent],
   template: `
     <div class="lessons-screen">
       <!-- Header điều hướng -->
@@ -96,7 +97,7 @@ import { LessonDto } from '../../core/services/farm-api.service';
               } @else {
                 @let check = state.canUnlockLesson(lesson.id);
                 <div class="status-badge status-locked">
-                  <span class="lock-icon">🔒</span>
+                  <span class="lock-icon"><app-pixel-icon name="icon_padlock" [size]="12"></app-pixel-icon></span>
                   <span>
                     Lv.{{ check.req.minLevel }}
                     @for (c of check.req.requiredCrops; track c.cropId) {
@@ -112,17 +113,26 @@ import { LessonDto } from '../../core/services/farm-api.service';
               @if (lesson.isUnlocked) {
                 <div class="dual-actions-row">
                   <button class="btn btn-learn" (click)="goToLesson(lesson)" title="Lật thẻ học từ vựng">
-                    <span>📖 Học từ</span>
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <img src="assets/icons/icon_vocabulary.svg" width="14" height="14" class="pixel-art" />
+                      <span>Học từ</span>
+                    </span>
                   </button>
                   <button class="btn btn-quiz" (click)="goToQuiz(lesson)" title="Làm bài kiểm tra nhận thưởng">
-                    <span>✍️ Kiểm tra</span>
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <img src="assets/icons/icon_grammar.svg" width="14" height="14" class="pixel-art" />
+                      <span>Kiểm tra</span>
+                    </span>
                   </button>
                 </div>
               } @else {
                 @let check = state.canUnlockLesson(lesson.id);
                 @if (check.canUnlock) {
                   <button class="btn btn-unlock-now" (click)="state.unlockLessonWithCrops(lesson.id)">
-                    <span>🔓 Mở khóa ngay (Đủ Level & Nông sản)</span>
+                    <span style="display:inline-flex; align-items:center; gap:4px;">
+                      <app-pixel-icon name="icon_padlock" [size]="14"></app-pixel-icon>
+                      <span>Mở khóa ngay (Đủ Level & Nông sản)</span>
+                    </span>
                   </button>
                 } @else {
                   <div class="crop-hint">

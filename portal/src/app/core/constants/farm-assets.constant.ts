@@ -138,10 +138,10 @@ export const FARM_ASSETS = {
 
   // 3. BỐN NÚT CÔNG CỤ CANH TÁC
   seedBag: `
-    <div class="kraft-seed-packet pixel-art" style="position: relative; width: 28px; height: 30px; background: #C49A71; border: 1.5px solid #3B2D24; border-radius: 3px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.12);">
+    <div class="kraft-seed-packet pixel-art" style="position: relative; width: 26px; height: 28px; background: #C49A71; border: 1.5px solid #3B2D24; border-radius: 3px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.12); margin: 0 auto;">
       <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #B5885C; border-bottom: 1px dashed #8C6339;"></div>
-      <div style="width: 18px; height: 18px; background: #FFFDF8; border: 1px solid #A8815B; border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-top: 3px;">
-        <img src="assets/farm-assets/crops/carrot.png" class="pixel-art" width="14" height="14" style="display: block; image-rendering: pixelated; object-fit: contain;" alt="Hạt giống" />
+      <div style="width: 16px; height: 16px; background: #FFFDF8; border: 1px solid #A8815B; border-radius: 2px; display: flex; align-items: center; justify-content: center; margin-top: 3px;">
+        <img src="assets/farm-assets/crops/carrot.png" class="pixel-art" width="12" height="12" style="display: block; image-rendering: pixelated; object-fit: contain;" alt="Hạt giống" />
       </div>
     </div>
   `,

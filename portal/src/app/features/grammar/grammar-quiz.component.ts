@@ -5,6 +5,7 @@ import { GrammarService, GrammarQuizSubmitResult } from '../../core/services/gra
 import { GrammarTopic, GrammarQuestion } from '../../core/constants/default-grammar-topics.constant';
 import { GameStateService } from '../../core/services/game-state.service';
 import { GrammarQuizGeneratorService, CandidateVocabWord } from '../../core/services/grammar-quiz-generator.service';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 interface QueueItem {
   uid: number;
@@ -17,7 +18,7 @@ interface QueueItem {
 @Component({
   selector: 'app-grammar-quiz',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PixelIconComponent],
   template: `
     <div class="grammar-quiz-screen">
       @if (!isFinished()) {
@@ -140,8 +141,9 @@ interface QueueItem {
             </p>
 
             @if (result()?.isNewRecord) {
-              <div class="new-record-tag">
-                🏆 KỶ LỤC MỚI VỀ SAO
+              <div class="new-record-tag" style="display:inline-flex; align-items:center; gap:6px;">
+                <app-pixel-icon name="icon_trophy" [size]="16"></app-pixel-icon>
+                <span>KỶ LỤC MỚI VỀ SAO</span>
               </div>
             }
 
@@ -170,14 +172,14 @@ interface QueueItem {
                 <div class="rewards-grid">
                   @if ((result()?.rewardCoins || 0) > 0) {
                     <div class="reward-box">
-                      <span class="reward-emoji">🪙</span>
+                      <span class="reward-emoji"><app-pixel-icon name="icon_coin" [size]="20"></app-pixel-icon></span>
                       <span class="reward-title">Xu vàng</span>
                       <span class="reward-qty">+{{ result()?.rewardCoins }}</span>
                     </div>
                   }
                   @if ((result()?.rewardXp || 0) > 0) {
                     <div class="reward-box">
-                      <span class="reward-emoji">✨</span>
+                      <span class="reward-emoji"><app-pixel-icon name="icon_sparkle" [size]="20"></app-pixel-icon></span>
                       <span class="reward-title">Điểm XP</span>
                       <span class="reward-qty">+{{ result()?.rewardXp }}</span>
                     </div>

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DailyQuestService } from '../../core/services/daily-quest.service';
 import { DailyQuestItem } from '../../core/models/game.models';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-daily-quests-widget',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PixelIconComponent],
   template: `
     <div class="vintage-card quests-card">
       <!-- Card Header -->
@@ -15,7 +16,7 @@ import { DailyQuestItem } from '../../core/models/game.models';
         <div class="header-left">
           <span class="header-title">Nhiệm vụ hôm nay</span>
           <span class="streak-pill" title="Chuỗi ngày học liên tục">
-            <span class="fire-icon">🔥</span>
+            <span class="fire-icon"><app-pixel-icon name="icon_flame" [size]="14"></app-pixel-icon></span>
             <span>Streak {{ questService.currentStreak() }} ngày</span>
           </span>
         </div>
@@ -30,20 +31,23 @@ import { DailyQuestItem } from '../../core/models/game.models';
         <div class="chest-info">
           <div class="chest-left">
             <span class="chest-title">Rương Hoàn Thành Ngày</span>
-            <span class="chest-sub">Hoàn thành 3/3 nhiệm vụ để mở rương (+25 Xu, +1 Streak 🔥, cơ hội nhận Phân bón tăng tốc)</span>
+            <span class="chest-sub">Hoàn thành 3/3 nhiệm vụ để mở rương (+25 Xu, +1 Streak, cơ hội nhận Phân bón tăng tốc)</span>
           </div>
           <div class="chest-action">
             @if (questService.chestClaimed()) {
               <div class="chest-claimed-badge">
-                <span>✓ Đã mở rương</span>
+                <app-pixel-icon name="chest_open" [size]="16"></app-pixel-icon>
+                <span>Đã mở rương</span>
               </div>
             } @else if (questService.isChestAvailable()) {
               <button class="btn-claim-chest" (click)="questService.claimDailyChest()">
-                🎁 Mở thưởng 3/3
+                <app-pixel-icon name="chest_open" [size]="18"></app-pixel-icon>
+                <span>Mở thưởng 3/3</span>
               </button>
             } @else {
               <div class="chest-locked-pill">
-                <span>🎁 {{ questService.completedCount() }}/3</span>
+                <app-pixel-icon name="chest_closed" [size]="15"></app-pixel-icon>
+                <span>{{ questService.completedCount() }}/3</span>
               </div>
             }
           </div>
@@ -89,17 +93,17 @@ import { DailyQuestItem } from '../../core/models/game.models';
                 <div class="reward-pills">
                   @if (q.rewards.water) {
                     <span class="reward-pill pill-water" title="Nước tưới kích hoạt cây">
-                      💧 ×{{ q.rewards.water }}
+                      <app-pixel-icon name="icon_dew_drop" [size]="13"></app-pixel-icon> ×{{ q.rewards.water }}
                     </span>
                   }
                   @if (q.rewards.baseFertilizer) {
                     <span class="reward-pill pill-fert" title="Phân bón cơ bản kích hoạt cây">
-                      🌾 ×{{ q.rewards.baseFertilizer }}
+                      <app-pixel-icon name="icon_wheat_sheaf" [size]="13"></app-pixel-icon> ×{{ q.rewards.baseFertilizer }}
                     </span>
                   }
                   @if (q.rewards.randomTierSeed) {
                     <span class="reward-pill pill-seed" title="Túi hạt giống">
-                      🌱 ×{{ q.rewards.randomTierSeed }} Hạt giống
+                      <app-pixel-icon name="icon_leaf_badge" [size]="13"></app-pixel-icon> ×{{ q.rewards.randomTierSeed }} Hạt giống
                     </span>
                   }
                 </div>

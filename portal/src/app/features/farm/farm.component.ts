@@ -8,11 +8,12 @@ import { CROP_CATALOG } from '../../core/constants/crop-catalog.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { FarmPlot } from '../../core/models/game.models';
 import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/growth-countdown.util';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-farm',
   standalone: true,
-  imports: [CommonModule, SafeHtmlPipe],
+  imports: [CommonModule, SafeHtmlPipe, PixelIconComponent],
   template: `
     <div class="farm-screen">
       <!-- Header với 2 Tab điều hướng: Vườn của tôi | Cây trồng -->
@@ -86,9 +87,13 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                   </div>
                 } @else if (status === 'seeded') {
                   @if (plot.isWatered && !plot.isFertilized) {
-                    <span class="care-badge care-watered" title="Đã tưới nước - Cần bón phân lót">💧</span>
+                    <span class="care-badge care-watered" title="Đã tưới nước - Cần bón phân lót">
+                      <app-pixel-icon name="icon_dew_drop" [size]="14"></app-pixel-icon>
+                    </span>
                   } @else if (!plot.isWatered && plot.isFertilized) {
-                    <span class="care-badge care-fertilized" title="Đã bón phân lót - Cần tưới nước">🌿</span>
+                    <span class="care-badge care-fertilized" title="Đã bón phân lót - Cần tưới nước">
+                      <app-pixel-icon name="icon_leaf_badge" [size]="14"></app-pixel-icon>
+                    </span>
                   }
                 } @else if (status === 'ready' && plot.crop) {
                   <div class="mature-overlay">
@@ -100,7 +105,9 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                       height="48"
                     />
                   </div>
-                  <span class="ready-sparkle">✨</span>
+                  <span class="ready-sparkle">
+                    <app-pixel-icon name="icon_sparkle" [size]="16"></app-pixel-icon>
+                  </span>
                 }
 
                 <!-- 3. Nhãn phân biệt tên & icon cây trồng rõ ràng cho từng loại -->
@@ -223,7 +230,7 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                     @if (isUnlocked) {
                       <img [src]="'assets/farm-assets/crops/' + s.id + '.png'" class="seed-picker-thumb pixel-art" [alt]="s.name" />
                     } @else {
-                      <span class="seed-lock-glyph">🔒</span>
+                      <span class="seed-lock-glyph"><app-pixel-icon name="icon_padlock" [size]="14"></app-pixel-icon></span>
                     }
                   </span>
                   <div class="seed-meta">
@@ -268,7 +275,7 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                     <span class="lock-status-pill unlocked">✅ Đã mở khóa</span>
                   } @else {
                     <span class="lock-status-pill locked">
-                      🔒 Cần Lv.{{ lockInfo.requiredLevel }}
+                      <app-pixel-icon name="icon_padlock" [size]="14"></app-pixel-icon> Cần Lv.{{ lockInfo.requiredLevel }}
                       @if (lockInfo.requiredLessonTitle) {
                         & Mở bài "{{ lockInfo.requiredLessonTitle }}"
                       }
@@ -277,8 +284,8 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
                 </div>
 
                 <div class="catalog-meta">
-                  <span class="meta-tag gold">🪙 Bán: +{{ crop.coins }} Xu</span>
-                  <span class="meta-tag olive">★ Thưởng: +{{ crop.xp }} XP</span>
+                  <span class="meta-tag gold"><app-pixel-icon name="icon_coin" [size]="14"></app-pixel-icon> Bán: +{{ crop.coins }} Xu</span>
+                  <span class="meta-tag olive"><app-pixel-icon name="icon_star" [size]="13"></app-pixel-icon> Thưởng: +{{ crop.xp }} XP</span>
                   <span class="meta-tag">Kho: {{ state.inventory().seeds[crop.id] || 0 }} túi hạt</span>
                 </div>
               </div>
@@ -293,7 +300,7 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
         <div class="unlock-plot-backdrop" (click)="selectedLockedPlotIndex.set(null)"></div>
         <div class="vintage-card unlock-plot-modal">
           <div class="modal-header">
-            <h3 class="modal-title">🔓 Mở Khóa Ô Đất #{{ (selectedLockedPlotIndex() || 0) + 1 }}</h3>
+            <h3 class="modal-title"><app-pixel-icon name="icon_padlock" [size]="18"></app-pixel-icon> Mở Khóa Ô Đất #{{ (selectedLockedPlotIndex() || 0) + 1 }}</h3>
             <button class="modal-close-btn" (click)="selectedLockedPlotIndex.set(null)">✕</button>
           </div>
           <p class="modal-desc">Chọn 1 trong 2 phương thức để mở rộng diện tích canh tác:</p>
@@ -303,7 +310,7 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
             <div class="unlock-option-card">
               <div class="option-info">
                 <span class="option-badge coin-badge">Cách 1: Tiền tệ</span>
-                <h4 class="option-name">🪙 {{ req?.coinPrice }} Xu</h4>
+                <h4 class="option-name"><app-pixel-icon name="icon_coin" [size]="16"></app-pixel-icon> {{ req?.coinPrice }} Xu</h4>
                 <p class="option-hint">Hiện có: {{ state.coins() }} Xu</p>
               </div>
               <button
@@ -1346,7 +1353,7 @@ export class FarmComponent implements OnInit {
       return {
         name: cat?.nameVi || 'Nông sản chín',
         status: 'Sẵn sàng thu hoạch!',
-        time: 'Thu hoạch ngay ✨',
+        time: 'Thu hoạch ngay',
         icon: this.getPlantSprite(readyPlot)
       };
     }
@@ -1358,7 +1365,7 @@ export class FarmComponent implements OnInit {
       return {
         name: cat?.nameVi || 'Cây non',
         status: 'Đang lớn tươi tốt (Đủ Nước & Phân)',
-        time: `⏱️ ${cd.label} (${cd.progress}%)`,
+        time: `${cd.label} (${cd.progress}%)`,
         icon: this.getPlantSprite(growingPlot)
       };
     }
@@ -1387,21 +1394,10 @@ export class FarmComponent implements OnInit {
   selectTool(tool: 'plant' | 'water' | 'fertilize' | 'speed_fertilizer' | 'harvest') {
     this.state.selectedTool.set(tool);
     if (tool === 'harvest') {
-      this.state.showToast('🧺 Chọn ô cây chín để thu hoạch');
+      this.state.showToast('Chọn ô cây chín để thu hoạch');
     } else if (tool === 'speed_fertilizer') {
-      this.state.showToast('⚡ Chọn ô cây đang lớn để giảm ngay 5 phút');
+      this.state.showToast('Chọn ô cây đang lớn để giảm ngay 5 phút');
     }
-  }
-
-  getCropIcon(cropKey?: string): string {
-    const icons: Record<string, string> = {
-      carrot: '🥕', potato: '🥔', corn: '🌽', tomato: '🍅',
-      strawberry: '🍓', pumpkin: '🎃', sunflower: '🎃',
-      wheat: '🌾', tulip: '🌾', blueberry: '🫐', rose: '🫐',
-      mango: '🥭', watermelon: '🍉', kiwi: '🍉', lemon: '🍋',
-      apple: '🍎', cherry: '🍒'
-    };
-    return (cropKey && icons[cropKey.toLowerCase()]) || '🌱';
   }
 
   getCropName(cropKey?: string): string {
@@ -1540,7 +1536,7 @@ export class FarmComponent implements OnInit {
   onSelectSeed(seedId: string, isUnlocked: boolean, lockInfo: any) {
     if (!isUnlocked) {
       const reason = lockInfo?.missingReasons?.length ? lockInfo.missingReasons.join(' & ') : `Cần Cấp độ ${lockInfo.requiredLevel}`;
-      this.state.showToast(`🔒 Hạt giống này đang khóa! ${reason}`);
+      this.state.showToast(`Hạt giống này đang khóa! ${reason}`);
       return;
     }
     this.state.selectedSeed.set(seedId);

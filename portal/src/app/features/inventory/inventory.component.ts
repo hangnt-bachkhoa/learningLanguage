@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../core/services/game-state.service';
 import { CROP_CATALOG, SPRITES } from '../../core/constants/crop-catalog.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
+import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CommonModule, SafeHtmlPipe],
+  imports: [CommonModule, SafeHtmlPipe, PixelIconComponent],
   template: `
     <div class="inventory-page">
       <div class="card-header">
@@ -19,7 +20,10 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 
       <!-- Harvested Crops -->
       <div class="vintage-card section-card">
-        <h3 class="card-title" style="margin-bottom:14px;">🧺 Nông Sản Thu Hoạch</h3>
+        <h3 class="card-title" style="margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+          <app-pixel-icon name="icon_harvest_basket" [size]="20"></app-pixel-icon>
+          <span>Nông Sản Thu Hoạch</span>
+        </h3>
         <div class="items-grid">
           @for (k of objectKeys(state.inventory().harvested); track k) {
             @if (isKnownCrop(k)) {
@@ -35,7 +39,10 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 
       <!-- Seeds -->
       <div class="vintage-card section-card" style="margin-top:16px;">
-        <h3 class="card-title" style="margin-bottom:14px;">🌱 Hạt Giống</h3>
+        <h3 class="card-title" style="margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+          <app-pixel-icon name="icon_leaf_badge" [size]="20"></app-pixel-icon>
+          <span>Hạt Giống</span>
+        </h3>
         <div class="items-grid">
           @for (k of objectKeys(state.inventory().seeds); track k) {
             @if (isKnownCrop(k)) {
@@ -51,7 +58,10 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 
       <!-- Care Supplies -->
       <div class="vintage-card section-card" style="margin-top:16px;">
-        <h3 class="card-title" style="margin-bottom:14px;">🛠️ Dụng Cụ & Vật Phẩm Chăm Sóc</h3>
+        <h3 class="card-title" style="margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+          <app-pixel-icon name="icon_tools" [size]="20"></app-pixel-icon>
+          <span>Dụng Cụ & Vật Phẩm Chăm Sóc</span>
+        </h3>
         <div class="items-grid">
           <div class="inv-slot">
             <div class="slot-sprite" [innerHTML]="getSprite('water') | safeHtml"></div>
