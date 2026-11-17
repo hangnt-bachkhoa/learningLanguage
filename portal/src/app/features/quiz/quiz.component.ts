@@ -58,58 +58,6 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
             <a routerLink="/lessons" class="btn btn-secondary">Về danh sách bài học</a>
           </div>
         } @else {
-          <!-- ======================================================== -->
-          <!-- THÔNG BÁO BANNER PHÍA TRÊN NỘI DUNG KIỂM TRA (TOP BANNER) -->
-          <!-- CHIỀU RỘNG BẰNG NỘI DUNG CONTENT BÊN DƯỚI                -->
-          <!-- ======================================================== -->
-          @if (feedbackState() !== 'none') {
-            <div
-              class="feedback-banner"
-              [class.sheet-correct]="feedbackState() === 'correct'"
-              [class.sheet-wrong]="feedbackState() === 'wrong'">
-              <div class="sheet-content">
-                <div class="sheet-info">
-                  @if (feedbackState() === 'correct') {
-                    <div class="sheet-header correct-header">
-                      <span class="status-icon">✓</span>
-                      <span class="status-title">Chính xác!</span>
-                      @if (currentWordType(); as wt) {
-                        <app-pos-tag [type]="wt" mode="full" [showQuestionHint]="true"></app-pos-tag>
-                      }
-                    </div>
-                    @if (feedbackDetail()?.explanation; as exp) {
-                      <p class="sheet-sub">{{ exp }}</p>
-                    }
-                  } @else {
-                    <div class="sheet-header wrong-header">
-                      <span class="status-icon">✕</span>
-                      <span class="status-title">Chưa chính xác · Đáp án đúng: {{ feedbackDetail()?.correctText }}</span>
-                      @if (currentWordType(); as wt) {
-                        <app-pos-tag [type]="wt" mode="full" [showQuestionHint]="true"></app-pos-tag>
-                      }
-                    </div>
-                    @if (feedbackDetail()?.explanation; as exp) {
-                      <p class="sheet-sub">{{ exp }}</p>
-                    }
-                  }
-                </div>
-
-                <!-- NÚT TIẾP TỤC ĐỂ CHUYỂN HÀNG ĐỢI (Algorithm 3) -->
-                <button
-                  class="btn sheet-action-btn"
-                  [class.btn-success]="feedbackState() === 'correct'"
-                  [class.btn-danger]="feedbackState() === 'wrong'"
-                  (click)="continueQueue()">
-                  @if (feedbackState() === 'correct') {
-                    {{ queue().length === 1 ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
-                  } @else {
-                    Đã hiểu ›
-                  }
-                </button>
-              </div>
-            </div>
-          }
-
           @if (currentQuestion(); as q) {
             <!-- THẺ CÂU HỎI PHẲNG (2D FLAT NATURALIST) -->
             <main class="question-container">
@@ -173,7 +121,9 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                     <button
                       type="button"
                       class="option-flat-btn"
-                      [class.selected]="selectedOptionIdx() === idx"
+                      [class.selected]="selectedOptionIdx() === idx && feedbackState() === 'none'"
+                      [class.correct]="feedbackState() !== 'none' && idx === q.correctOptionIndex"
+                      [class.wrong]="feedbackState() === 'wrong' && selectedOptionIdx() === idx"
                       [disabled]="feedbackState() !== 'none'"
                       (click)="selectOption(idx)">
                       <span class="option-idx">{{ ['A', 'B', 'C', 'D'][idx] }}</span>
@@ -182,7 +132,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   }
                 </div>
 
-                <!-- NÚT HÀNH ĐỘNG DƯỚI CÙNG -->
+                <!-- NÚT HÀNH ĐỘNG DƯỚI CÙNG & KHỐI THÔNG BÁO FEEDBACK (THAY THẾ VỊ TRÍ NÚT TIẾP TỤC) -->
                 <div class="check-action-bar">
                   @if (feedbackState() === 'none') {
                     <button
@@ -192,17 +142,59 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                       Kiểm tra đáp án
                     </button>
                   } @else {
-                    <button
-                      class="btn check-btn"
-                      [class.btn-success]="feedbackState() === 'correct'"
-                      [class.btn-danger]="feedbackState() === 'wrong'"
-                      (click)="continueQueue()">
-                      @if (feedbackState() === 'correct') {
-                        {{ queue().length === 1 ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
-                      } @else {
-                        Đã hiểu ›
-                      }
-                    </button>
+                    <div
+                      class="feedback-tray"
+                      [class.sheet-correct]="feedbackState() === 'correct'"
+                      [class.sheet-wrong]="feedbackState() === 'wrong'">
+                      
+                      <div class="feedback-info">
+                        @if (feedbackState() === 'correct') {
+                          <div class="feedback-header correct-header">
+                            <div class="header-left-title">
+                              <span class="status-icon">✓</span>
+                              <span class="status-title">Chính xác!</span>
+                            </div>
+                            @if (currentWordType(); as wt) {
+                              <app-pos-tag [type]="wt" mode="full" [showQuestionHint]="true"></app-pos-tag>
+                            }
+                          </div>
+                          @if (feedbackDetail()?.explanation; as exp) {
+                            <p class="feedback-sub">{{ exp }}</p>
+                          }
+                        } @else {
+                          <div class="feedback-header wrong-header">
+                            <div class="header-left-title">
+                              <span class="status-icon">✕</span>
+                              <span class="status-title">Chưa chính xác</span>
+                            </div>
+                            @if (currentWordType(); as wt) {
+                              <app-pos-tag [type]="wt" mode="full" [showQuestionHint]="true"></app-pos-tag>
+                            }
+                          </div>
+                          @if (feedbackDetail()?.correctText; as ct) {
+                            <div class="correct-answer-reveal">
+                              <span class="reveal-label">Đáp án đúng:</span>
+                              <strong class="reveal-text">{{ ct }}</strong>
+                            </div>
+                          }
+                          @if (feedbackDetail()?.explanation; as exp) {
+                            <p class="feedback-sub">{{ exp }}</p>
+                          }
+                        }
+                      </div>
+
+                      <button
+                        class="btn feedback-action-btn"
+                        [class.btn-success]="feedbackState() === 'correct'"
+                        [class.btn-danger]="feedbackState() === 'wrong'"
+                        (click)="continueQueue()">
+                        @if (feedbackState() === 'correct') {
+                          {{ queue().length === 1 ? 'Hoàn thành bài thi ›' : 'Tiếp tục ›' }}
+                        } @else {
+                          Đã hiểu ›
+                        }
+                      </button>
+                    </div>
                   }
                 </div>
               </div>
@@ -654,6 +646,30 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       box-shadow: 0 0 0 1px #4E6B4E;
     }
 
+    .option-flat-btn.correct {
+      border-color: #5B8254;
+      background: #E7F3E6;
+      font-weight: 700;
+      box-shadow: 0 0 0 1.5px #5B8254;
+    }
+
+    .option-flat-btn.correct .option-idx {
+      background: #5B8254;
+      color: #FFF;
+    }
+
+    .option-flat-btn.wrong {
+      border-color: #C05850;
+      background: #FCEBEA;
+      font-weight: 700;
+      box-shadow: 0 0 0 1.5px #C05850;
+    }
+
+    .option-flat-btn.wrong .option-idx {
+      background: #C05850;
+      color: #FFF;
+    }
+
     .option-flat-btn:disabled {
       cursor: default;
     }
@@ -682,9 +698,9 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       line-height: 1.4;
     }
 
-    /* NÚT KIỂM TRA */
+    /* NÚT KIỂM TRA & KHỐI THÔNG BÁO DƯỚI CÙNG */
     .check-action-bar {
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .check-btn {
@@ -695,21 +711,23 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       border-radius: 12px;
     }
 
-    /* ================= THÔNG BÁO BANNER PHÍA TRÊN NỘI DUNG ================= */
-    .feedback-banner {
+    /* ================= KHỐI THÔNG BÁO FEEDBACK DƯỚI CÙNG ================= */
+    .feedback-tray {
       width: 100%;
-      margin-bottom: 14px;
-      padding: 14px 18px;
-      border-radius: 16px;
-      box-shadow: 0 3px 12px rgba(44, 53, 64, 0.05);
-      animation: slideDown 0.25s ease-out;
+      padding: 14px 16px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(44, 53, 64, 0.06);
+      animation: fadeIn 0.2s ease-out;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    @keyframes slideDown {
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateY(4px);
       }
       to {
         opacity: 1;
@@ -727,70 +745,90 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       border: 1.5px solid #A65E65;
     }
 
-    .sheet-content {
+    .feedback-info {
       width: 100%;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .sheet-info {
-      flex: 1;
-    }
-
-    .sheet-header {
+    .feedback-header {
       display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .header-left-title {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 15.5px;
+      font-size: 16px;
       font-weight: 700;
-      margin-bottom: 3px;
     }
 
-    .correct-header {
+    .correct-header .header-left-title {
       color: #3B5B3B;
     }
 
-    .wrong-header {
+    .wrong-header .header-left-title {
       color: #8C3E44;
     }
 
     .status-icon {
-      font-size: 19px;
+      font-size: 18px;
+      line-height: 1;
     }
 
     .correct-answer-reveal {
-      font-size: 14px;
-      margin-bottom: 3px;
-      color: #3C443D;
+      font-size: 13.5px;
+      color: #4A3E39;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      padding: 4px 10px;
+      margin-top: 2px;
     }
 
     .reveal-label {
       font-weight: 600;
-      margin-right: 6px;
+      color: #6E2E35;
     }
 
     .reveal-text {
       font-weight: 800;
-      color: #2E6830;
+      color: #8C3E44;
     }
 
-    .sheet-sub {
-      font-size: 13px;
+    .feedback-sub {
+      font-size: 13.5px;
+      line-height: 1.45;
       color: var(--ink-muted);
-      margin: 0;
+      margin: 2px 0 0;
     }
 
-    .sheet-action-btn {
-      padding: 10px 20px;
-      font-size: 14.5px;
+    .feedback-action-btn {
+      width: 100%;
+      padding: 13px;
+      font-size: 15.5px;
       font-weight: 700;
-      border-radius: 10px;
+      border-radius: 12px;
       white-space: nowrap;
       cursor: pointer;
       border: none;
-      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      transition: all 0.15s ease;
+    }
+
+    .feedback-action-btn:active {
+      transform: translateY(1px);
     }
 
     .btn-success {
@@ -1120,15 +1158,30 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         gap: 8px;
         border-radius: 10px;
       }
-      .sheet-content {
-        flex-direction: column;
-        align-items: stretch;
+      .feedback-tray {
+        padding: 12px 14px;
         gap: 10px;
+        border-radius: 12px;
       }
-      .sheet-action-btn {
-        width: 100%;
-        text-align: center;
-        padding: 9px 12px;
+      .feedback-header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .header-left-title {
+        font-size: 15px;
+      }
+      .feedback-sub {
+        font-size: 12.5px;
+      }
+      .correct-answer-reveal {
+        font-size: 12.5px;
+        padding: 3px 8px;
+      }
+      .feedback-action-btn {
+        padding: 11px;
+        font-size: 14.5px;
+        border-radius: 10px;
       }
       .results-card {
         padding: 20px 14px;
