@@ -10,74 +10,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
   standalone: true,
   imports: [CommonModule, RouterLink, PixelIconComponent],
   template: `
-    <!-- 1. WEB EDITORIAL ARCHIVAL FOOTER (Hiển thị chân trang phong cách tạp chí cổ điển trên Desktop) -->
-    <footer class="web-archival-footer">
-      <div class="footer-grid">
-        <!-- Cột 1: Thương hiệu & Giới thiệu -->
-        <div class="footer-col brand-col">
-          <div class="footer-brand-header">
-            <span class="footer-brand-logo">
-              <img src="assets/icons/language_farm_logo.svg" alt="Language Farm" class="pixel-art" width="22" height="22" />
-            </span>
-            <strong class="footer-brand-title font-serif">Language Farm</strong>
-          </div>
-          <p class="footer-brand-desc">
-            Sổ tay học ngoại ngữ cổ điển kết hợp nông trại Pixel-Art. Học từ vựng, vượt Quiz 3 Sao và chăm sóc khu vườn mỗi ngày.
-          </p>
-        </div>
-
-        <!-- Cột 2: Danh mục Học tập -->
-        <div class="footer-col">
-          <div class="footer-col-title">Học tập</div>
-          <div class="footer-links">
-            <a routerLink="/lessons" class="footer-link">Từ vựng trọng điểm</a>
-            <a routerLink="/grammar" class="footer-link">13 Chuyên đề Ngữ pháp</a>
-            @if (state.activeLang() === 'ja') {
-              <a routerLink="/kana" class="footer-link">Bảng chữ cái Kana (N5)</a>
-            }
-            <a routerLink="/review" class="footer-link">Luyện tập &amp; Ôn Ebbinghaus</a>
-          </div>
-        </div>
-
-        <!-- Cột 3: Nông trại & Kinh tế -->
-        <div class="footer-col">
-          <div class="footer-col-title">Nông trại &amp; Kinh tế</div>
-          <div class="footer-links">
-            <a routerLink="/farm" class="footer-link">Vườn của tôi (3×3)</a>
-            <a routerLink="/shop" class="footer-link">Cửa hàng Hạt giống</a>
-            <a routerLink="/inventory" class="footer-link">Kho đồ &amp; Phân bón</a>
-            <a routerLink="/progress" class="footer-link">Thống kê Tiến độ</a>
-          </div>
-        </div>
-
-        <!-- Cột 4: Sao lưu & Phục hồi dữ liệu LocalStorage -->
-        <div class="footer-col">
-          <div class="footer-col-title">Dữ liệu LocalStorage</div>
-          <p class="footer-col-desc">Sao lưu hoặc khôi phục tiến độ học &amp; nông trại giữa điện thoại và máy tính:</p>
-          <div class="backup-actions-wrap">
-            <button type="button" class="chip-backup-btn" (click)="state.exportBackupJson()">
-              <app-pixel-icon name="icon_scroll" [size]="12"></app-pixel-icon>
-              <span>Xuất JSON</span>
-            </button>
-            <button type="button" class="chip-backup-btn" (click)="fileInput.click()">
-              <app-pixel-icon name="icon_tools" [size]="12"></app-pixel-icon>
-              <span>Nhập JSON</span>
-            </button>
-            <input #fileInput type="file" accept=".json" style="display:none" (change)="onFileSelected($event)" />
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom-row">
-        <span>© 2026 Language Farm · Vintage Botanical &amp; Pixel-Art Edition</span>
-        <span class="streak-pill">
-          <app-pixel-icon name="icon_flame" [size]="14"></app-pixel-icon>
-          <span>Streak: <strong>{{ state.studyStreak() }} ngày</strong> · Đã lưu tự động vào thiết bị</span>
-        </span>
-      </div>
-    </footer>
-
-    <!-- 2. EXPANDABLE "MORE" DRAWER SHEET (Ngăn kéo mở rộng trên Mobile) -->
+    <!-- 1. EXPANDABLE "MORE" DRAWER SHEET (Ngăn kéo mở rộng trên Mobile) -->
     <div
       class="more-drawer-backdrop"
       [class.open]="isDrawerOpen()"
@@ -189,112 +122,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     </nav>
   `,
   styles: [`
-    /* ================= 1. WEB ARCHIVAL FOOTER ================= */
-    .web-archival-footer {
-      background: var(--bg-card);
-      border-top: 1.5px solid var(--border-strong);
-      padding: 32px 24px 20px;
-      margin-top: 48px;
-      color: var(--ink);
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
-      gap: 24px;
-      padding-bottom: 24px;
-      border-bottom: 1px dashed var(--border);
-    }
-    .footer-brand-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-    .footer-brand-title {
-      font-size: 19px;
-      color: var(--navy);
-      font-weight: 700;
-    }
-    .footer-brand-desc,
-    .footer-col-desc {
-      font-size: 12.5px;
-      line-height: 1.55;
-      color: var(--ink-muted);
-    }
-    .footer-col-title {
-      font-size: 11.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--olive);
-      margin-bottom: 12px;
-    }
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .footer-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ink-muted);
-      text-decoration: none;
-      transition: color 0.15s ease, transform 0.1s ease;
-      &:hover {
-        color: var(--rose);
-        transform: translateX(2px);
-      }
-    }
-    .backup-actions-wrap {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    .chip-backup-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid var(--border-strong);
-      background: var(--bg-paper);
-      color: var(--navy);
-      cursor: pointer;
-      transition: all 0.15s ease;
-      &:hover {
-        background: #EAE2D2;
-        border-color: var(--navy);
-      }
-    }
-    .footer-bottom-row {
-      padding-top: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--ink-muted);
-    }
-    .streak-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #FDF4E7;
-      border: 1px solid #E8C252;
-      padding: 3px 10px;
-      border-radius: 999px;
-      color: #7A5B17;
-      font-weight: 600;
-    }
-
-    /* ================= 2. MOBILE BOTTOM NAVIGATION DOCK ================= */
+    /* ================= 1. MOBILE BOTTOM NAVIGATION DOCK ================= */
     .mobile-footer-dock {
       display: none; /* Chỉ hiện trên Mobile & Tablet (<= 768px) */
       position: fixed;
@@ -495,15 +323,8 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
     /* ================= RESPONSIVE ================= */
     @media (max-width: 768px) {
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
       .mobile-footer-dock {
         display: flex;
-      }
-      .web-archival-footer {
-        padding-bottom: 74px; /* Tránh bị che bởi Bottom Dock */
       }
     }
   `]
