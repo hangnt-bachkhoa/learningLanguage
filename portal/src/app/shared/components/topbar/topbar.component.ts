@@ -24,7 +24,17 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         </h1>
       </div>
       <div class="topbar-right">
-        <a routerLink="/guide" class="guide-btn" title="Hướng dẫn sử dụng English Farm">
+        <!-- NÚT CHUYỂN ĐỔI NGÔN NGỮ (🇬🇧 EN / 🇯🇵 JA) -->
+        <button
+          type="button"
+          class="lang-switch-btn"
+          [title]="state.activeLang() === 'en' ? 'Đang học: Tiếng Anh (TOEIC) · Bấm để đổi sang Tiếng Nhật N5' : 'Đang học: Tiếng Nhật (JLPT N5) · Bấm để đổi sang Tiếng Anh TOEIC'"
+          (click)="toggleLanguage()">
+          <span class="lang-flag">{{ state.activeLang() === 'en' ? '🇬🇧' : '🇯🇵' }}</span>
+          <span class="lang-code">{{ state.activeLang() === 'en' ? 'EN' : 'JA' }}</span>
+        </button>
+
+        <a routerLink="/guide" class="guide-btn" title="Hướng dẫn sử dụng">
           <app-pixel-icon name="icon_book_open" [size]="14"></app-pixel-icon>
           <span class="guide-text hide-mobile">Hướng dẫn</span>
         </a>
@@ -144,6 +154,34 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       background: #EAE2D2;
       color: var(--navy);
     }
+    .lang-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 32px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #FFFDF9;
+      border: 1.5px solid var(--border, #D9C8B5);
+      color: var(--navy, #263847);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(38, 56, 71, 0.06);
+      transition: all 0.2s;
+    }
+    .lang-switch-btn:hover {
+      background: #F4EFE6;
+      border-color: #8C6B4F;
+      transform: translateY(-1px);
+    }
+    .lang-flag {
+      font-size: 14px;
+      line-height: 1;
+    }
+    .lang-code {
+      letter-spacing: 0.5px;
+    }
     .cart-btn {
       display: inline-flex;
       align-items: center;
@@ -241,6 +279,10 @@ export class TopbarComponent {
   openCart = output<void>();
 
   get title(): string {
-    return 'English Farm';
+    return this.state.activeLang() === 'ja' ? 'Japanese Farm' : 'English Farm';
+  }
+
+  toggleLanguage() {
+    this.state.setLanguage(this.state.activeLang() === 'en' ? 'ja' : 'en');
   }
 }

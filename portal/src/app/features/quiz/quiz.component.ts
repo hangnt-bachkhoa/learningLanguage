@@ -2,6 +2,7 @@ import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { GameStateService } from '../../core/services/game-state.service';
+import { JapaneseLearningService } from '../../core/services/japanese-learning.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { FarmApiService, QuizQuestionDto, QuizSubmitResultDto, QuizSessionDto } from '../../core/services/farm-api.service';
@@ -1410,6 +1411,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 })
 export class QuizComponent implements OnInit {
   state = inject(GameStateService);
+  jaService = inject(JapaneseLearningService);
   quizEngine = inject(QuizEngineService);
   assets = FARM_ASSETS;
   private route = inject(ActivatedRoute);
@@ -1418,6 +1420,8 @@ export class QuizComponent implements OnInit {
 
   // Trạng thái bài kiểm tra
   lessonId = signal<number>(1);
+  jaTopicCode = signal<string>('ja_n5_01');
+  isJa = computed(() => this.state.activeLang() === 'ja');
   lessonTitle = signal<string>('Kiểm tra từ vựng');
   sessionId = signal<string | null>(null);
   bestStarsClaimed = signal<number>(0);
@@ -1509,10 +1513,58 @@ export class QuizComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
+      const topicCode = params['topicCode'];
+      if (topicCode || this.state.activeLang() === 'ja') {
+        const code = topicCode || this.jaService.activeTopicCode() || 'ja_n5_01';
+        this.jaTopicCode.set(code);
+        this.loadJapaneseQuizSession(code);
+        return;
+      }
       const lid = params['lessonId'] ? Number(params['lessonId']) : 1;
       this.lessonId.set(lid);
       this.loadQuizSession(lid);
     });
+  }
+
+  loadJapaneseQuizSession(topicCode: string) {
+    this.isLoading.set(true);
+    this.isFinished.set(false);
+    this.queue.set([]);
+    this.firstTryResults.clear();
+    this.masteredIds.set(new Set());
+    this.totalTriesCount.set(0);
+    this.selectedOptionIdx.set(null);
+    this.feedbackState.set('none');
+
+    const topic = this.jaService.topics().find(t => t.code === topicCode) || this.jaService.topics()[0];
+    this.lessonTitle.set(topic.titleVi);
+    const prog = this.jaService.topicProgress()[topicCode];
+    this.bestStarsClaimed.set(prog?.bestStarsClaimed || 0);
+    this.sessionId.set(`local_ja_quiz_${topicCode}_${Date.now()}`);
+
+    const jaQs = this.jaService.generateN5QuizSession(topicCode, 10);
+    const mapped: QuizQuestionDto[] = jaQs.map(q => ({
+      id: q.vocabId,
+      lessonId: 1000,
+      prompt: q.prompt,
+      word: q.scriptPrimary || q.audioText,
+      phonetic: q.readingSub ? `/${q.readingSub}/` : null,
+      questionType: 'meaning',
+      format: 'EN_TO_VI',
+      exampleVi: q.explanationVi,
+      options: q.options,
+      correctOptionIndex: q.correctIndex,
+      vocabFeedback: {
+        word: q.scriptPrimary || q.audioText,
+        phonetic: q.readingSub ? `【${q.readingSub}】` : undefined,
+        meaningVi: q.meaningVi || '',
+        wordType: q.wordType || 'noun'
+      }
+    }));
+
+    this.queue.set(mapped);
+    this.totalInitial.set(mapped.length);
+    this.isLoading.set(false);
   }
 
   loadQuizSession(lessonId: number) {
@@ -1652,10 +1704,10 @@ export class QuizComponent implements OnInit {
     return trimmed ? `/${trimmed}/` : '';
   }
 
-  getWordType(word?: string | null): string {
-    if (!word) return 'noun';
+  getWordType(word?: string | null): string | null {
+    if (!word) return null;
     const info = this.state.findVocab(word);
-    return info?.vocab?.wordType || 'noun';
+    return info?.vocab?.wordType || null;
   }
 
   selectOption(idx: number) {
@@ -1736,6 +1788,43 @@ export class QuizComponent implements OnInit {
   submitFinalQuiz() {
     this.isSubmitting.set(true);
 
+    if (this.state.activeLang() === 'ja') {
+      const drops = this.dewDropsRemaining();
+      const stars = (drops === 5 ? 3 : drops >= 3 ? 2 : 1) as 1 | 2 | 3;
+      const jaRes = this.jaService.completeTopicQuiz(this.jaTopicCode(), stars);
+
+      this.firstTryResults.forEach((val, vocabId) => {
+        this.jaService.recordQuizAttempt(vocabId, val);
+      });
+
+      const correctCount = [...this.firstTryResults.values()].filter(Boolean).length;
+      const total = this.totalInitial();
+      const percent = Math.round((correctCount / total) * 100);
+
+      const submitResult: QuizSubmitResultDto = {
+        lessonId: 1000,
+        scorePercent: percent,
+        stars,
+        correctAnswers: correctCount,
+        isPassed: stars >= 1,
+        rewardGranted: jaRes.coinsAwarded > 0 || jaRes.xpAwarded > 0,
+        rewardCoins: jaRes.coinsAwarded,
+        rewardXp: jaRes.xpAwarded,
+        isNewRecord: jaRes.isNewRecord,
+        firstTryCorrectCount: correctCount,
+        totalQuestions: total,
+        message: stars === 3
+          ? 'Xuất sắc! Bạn đạt hạng 3 Sao bài thi Tiếng Nhật N5!'
+          : (stars === 2 ? 'Khá tốt! Đạt hạng 2 Sao bài thi N5!' : 'Hoàn thành bài kiểm tra N5!'),
+        bestStarsClaimed: this.jaService.topicProgress()[this.jaTopicCode()]?.bestStarsClaimed || stars
+      };
+
+      this.result.set(submitResult);
+      this.isSubmitting.set(false);
+      this.isFinished.set(true);
+      return;
+    }
+
     const firstTryMap: Record<number, boolean> = {};
     this.firstTryResults.forEach((val, key) => {
       // Chuẩn hóa ID từ vựng
@@ -1771,6 +1860,10 @@ export class QuizComponent implements OnInit {
   }
 
   retakeQuiz() {
+    if (this.state.activeLang() === 'ja') {
+      this.loadJapaneseQuizSession(this.jaTopicCode());
+      return;
+    }
     this.loadQuizSession(this.lessonId());
   }
 
@@ -1781,10 +1874,12 @@ export class QuizComponent implements OnInit {
   getBonusSeedPacketSvg(seedId?: string | null, seedName?: string | null): string {
     let cropId = (seedId || '').toLowerCase().trim();
     if (!cropId && seedName) {
+      const clean = seedName.replace(/^hạt\s*(giống)?\s*/i, '').trim().toLowerCase();
       const found = CROP_CATALOG.find(c =>
-        c.nameVi.toLowerCase() === seedName.toLowerCase() ||
-        c.seedNameVi.toLowerCase().includes(seedName.toLowerCase()) ||
-        c.id.toLowerCase() === seedName.toLowerCase()
+        c.nameVi.toLowerCase() === clean ||
+        clean.includes(c.nameVi.toLowerCase()) ||
+        c.seedNameVi.toLowerCase().includes(clean) ||
+        c.id.toLowerCase() === clean
       );
       if (found) cropId = found.id;
     }

@@ -94,7 +94,28 @@ export class GameStateService {
   private readonly REVIEW_STORAGE_KEY = 'english_farm_vocab_reviews_v1';
   private readonly REVIEW_DAILY_REWARDS_KEY = 'english_farm_review_daily_rewards_v1';
   private readonly STUDY_STATS_KEY = 'english_farm_study_stats_v1';
+  private readonly ACTIVE_LANG_KEY = 'language_farm_active_lang_v1';
   private api = inject(FarmApiService);
+
+  // Quản lý ngôn ngữ học tập (English TOEIC | Japanese JLPT N5)
+  readonly activeLang = signal<'en' | 'ja'>(this.loadActiveLang());
+
+  private loadActiveLang(): 'en' | 'ja' {
+    try {
+      const v = localStorage.getItem(this.ACTIVE_LANG_KEY);
+      return v === 'ja' ? 'ja' : 'en';
+    } catch {
+      return 'en';
+    }
+  }
+
+  setLanguage(lang: 'en' | 'ja') {
+    this.activeLang.set(lang);
+    try {
+      localStorage.setItem(this.ACTIVE_LANG_KEY, lang);
+    } catch {}
+    this.showToast(lang === 'ja' ? '🇯🇵 Đã chuyển sang Tiếng Nhật JLPT N5!' : '🇬🇧 Đã chuyển sang Tiếng Anh TOEIC!');
+  }
 
   // Trạng thái kết nối Backend
   isApiConnected = signal<boolean>(false);
@@ -155,6 +176,12 @@ export class GameStateService {
     this.currentXp.set(res.currentXp);
     if (res.leveledUp) {
       this.showToast(`🎉 CHÚC MỪNG! Bạn đã thăng cấp Level ${res.level}!`);
+    }
+  }
+
+  addCoins(gainedCoins: number) {
+    if (gainedCoins > 0) {
+      this.coins.update(c => c + gainedCoins);
     }
   }
 
@@ -1941,11 +1968,12 @@ export class GameStateService {
     return true;
   }
 
-  speak(text: string) {
+  speak(text: string, forceLang?: string) {
     if ('speechSynthesis' in window) {
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'en-US';
-      u.rate = 0.9;
+      const isJa = forceLang === 'ja-JP' || (this.activeLang() === 'ja' && forceLang !== 'en-US');
+      u.lang = isJa ? 'ja-JP' : (forceLang || 'en-US');
+      u.rate = isJa ? 0.85 : 0.9;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
     }

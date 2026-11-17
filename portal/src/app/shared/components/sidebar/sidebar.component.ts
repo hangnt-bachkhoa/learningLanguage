@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { GameStateService } from '../../../core/services/game-state.service';
@@ -26,7 +26,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
           <span class="brand-sprout">
             <img src="assets/icons/language_farm_logo.svg" alt="Language Farm" class="brand-logo-img pixel-art" />
           </span>
-          <span class="drawer-brand-name">English Farm</span>
+          <span class="drawer-brand-name">{{ state.activeLang() === 'ja' ? 'Japanese Farm' : 'English Farm' }}</span>
         </a>
         <button class="drawer-close-btn" (click)="state.closeMobileSidebar()" title="Đóng menu">
           <app-pixel-icon name="icon_cross" [size]="14"></app-pixel-icon>
@@ -35,7 +35,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 
       <!-- Danh sách Navigation ĐẦY ĐỦ -->
       <nav class="nav-items-stack">
-        @for (item of navItems; track item.path) {
+        @for (item of navItems(); track item.path) {
           <a
             [routerLink]="item.path"
             routerLinkActive="active"
@@ -307,17 +307,27 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
 export class SidebarComponent {
   state = inject(GameStateService);
 
-  navItems = [
-    { path: '/', label: 'Trang chủ', icon: 'assets/icons/icon_home.svg', exact: true },
-    { path: '/lessons', label: 'Từ vựng', icon: 'assets/icons/icon_vocabulary.svg', exact: false },
-    { path: '/grammar', label: 'Ngữ pháp', icon: 'assets/icons/icon_grammar.svg', exact: false },
-    { path: '/farm', label: 'Nông trại', icon: 'assets/icons/icon_farm.svg', exact: false },
-    { path: '/shop', label: 'Cửa hàng', icon: 'assets/icons/icon_shop.svg', exact: false },
-    { path: '/inventory', label: 'Kho đồ', icon: 'assets/icons/icon_inventory.svg', exact: false },
-    { path: '/review', label: 'Tiến độ', icon: 'assets/icons/icon_progress.svg', exact: false },
-    { path: '/quiz', label: 'Luyện tập', icon: 'assets/icons/icon_practice.svg', exact: false },
-    { path: '/guide', label: 'Hướng dẫn', icon: 'assets/icons/icon_guide.svg', exact: false }
-  ];
+  readonly navItems = computed(() => {
+    const isJa = this.state.activeLang() === 'ja';
+    const items = [
+      { path: '/', label: 'Trang chủ', icon: 'assets/icons/icon_home.svg', exact: true },
+      { path: '/lessons', label: isJa ? 'Từ vựng N5' : 'Từ vựng', icon: 'assets/icons/icon_vocabulary.svg', exact: false },
+    ];
+    if (isJa) {
+      items.push({ path: '/kana', label: 'Bảng chữ Kana', icon: 'assets/icons/icon_practice.svg', exact: false });
+    } else {
+      items.push({ path: '/grammar', label: 'Ngữ pháp', icon: 'assets/icons/icon_grammar.svg', exact: false });
+    }
+    items.push(
+      { path: '/farm', label: 'Nông trại', icon: 'assets/icons/icon_farm.svg', exact: false },
+      { path: '/shop', label: 'Cửa hàng', icon: 'assets/icons/icon_shop.svg', exact: false },
+      { path: '/inventory', label: 'Kho đồ', icon: 'assets/icons/icon_inventory.svg', exact: false },
+      { path: '/review', label: 'Tiến độ', icon: 'assets/icons/icon_progress.svg', exact: false },
+      { path: '/quiz', label: 'Luyện tập', icon: 'assets/icons/icon_practice.svg', exact: false },
+      { path: '/guide', label: 'Hướng dẫn', icon: 'assets/icons/icon_guide.svg', exact: false }
+    );
+    return items;
+  });
 
   hasReadyPlots(): boolean {
     return this.state.plots().some(p => p.status === 'ready');

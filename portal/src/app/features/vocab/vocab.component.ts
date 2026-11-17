@@ -2,6 +2,7 @@ import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { GameStateService } from '../../core/services/game-state.service';
+import { JapaneseLearningService } from '../../core/services/japanese-learning.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
@@ -39,17 +40,61 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         <div class="word-hero-row">
           <div class="word-hero-left">
             <div class="word-status-tag-row">
-              <h1 class="word-text">{{ currentWord.word }}</h1>
-              @if (state.learnedWords().includes(currentWord.word)) {
-                <span class="word-learned-badge">Đã thuộc</span>
+              <h1 class="word-text" [class.ja-word-text]="isJa()">
+                @if (isJa() && currentWord.readingSub && jaService.showFurigana()) {
+                  <ruby class="ja-ruby">
+                    {{ currentWord.word }}
+                    <rt class="ja-rt">{{ currentWord.readingSub }}</rt>
+                  </ruby>
+                } @else {
+                  {{ currentWord.word }}
+                }
+              </h1>
+              @if (isWordLearned()) {
+                <span class="word-learned-badge">
+                  <app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon>
+                  <span>Đã thuộc</span>
+                </span>
               }
             </div>
             <div class="ipa-audio-row">
-              <span class="ipa-string">{{ currentWord.ipa }}</span>
-              <button class="speaker-pill" (click)="state.speak(currentWord.word)" title="Nghe phát âm">
+              <span class="ipa-string">
+                @if (isJa()) {
+                  @if (jaService.showRomaji()) {
+                    <span class="ja-romaji-pill">[{{ currentWord.romaji }}]</span>
+                  }
+                  @if (!currentWord.readingSub) {
+                    <span class="ja-sub-kana">(Kana)</span>
+                  }
+                } @else {
+                  {{ currentWord.ipa }}
+                }
+              </span>
+              <button class="speaker-pill" (click)="speakWord()" title="Nghe phát âm">
                 <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
               </button>
             </div>
+
+            <!-- Toggles 3 tầng cho Tiếng Nhật N5 -->
+            @if (isJa()) {
+              <div class="ja-toggles-row" style="display:flex; gap:6px; margin-top:8px;">
+                <button
+                  type="button"
+                  class="ja-toggle-chip"
+                  [class.active]="jaService.showFurigana()"
+                  (click)="toggleFurigana()">
+                  Furigana: {{ jaService.showFurigana() ? 'BẬT' : 'TẮT' }}
+                </button>
+                <button
+                  type="button"
+                  class="ja-toggle-chip"
+                  [class.active]="jaService.showRomaji()"
+                  (click)="toggleRomaji()">
+                  Romaji: {{ jaService.showRomaji() ? 'BẬT' : 'TẮT' }}
+                </button>
+              </div>
+            }
+
             <!-- Thẻ loại từ thân thiện cho người mới bắt đầu -->
             <div class="pos-badge-hero-row" style="margin-top: 8px;">
               <app-pos-tag [type]="currentWord.type" mode="full" [showQuestionHint]="true"></app-pos-tag>
@@ -102,17 +147,17 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       <div class="vocab-footer-actions">
         <button
           class="btn btn-secondary bookmark-btn"
-          [class.bookmarked]="state.bookmarkedWords().includes(currentWord.word)"
+          [class.bookmarked]="isWordBookmarked()"
           (click)="toggleBookmark()">
           <span class="bookmark-icon">
-            <app-pixel-icon [name]="state.bookmarkedWords().includes(currentWord.word) ? 'icon_star' : 'icon_star_empty'" [size]="14"></app-pixel-icon>
+            <app-pixel-icon [name]="isWordBookmarked() ? 'icon_star' : 'icon_star_empty'" [size]="14"></app-pixel-icon>
           </span>
-          <span>{{ state.bookmarkedWords().includes(currentWord.word) ? 'Đã đánh dấu' : 'Đánh dấu' }}</span>
+          <span>{{ isWordBookmarked() ? 'Đã đánh dấu' : 'Đánh dấu' }}</span>
         </button>
 
         <button
           class="btn btn-primary learned-btn"
-          [class.already-learned]="state.learnedWords().includes(currentWord.word)"
+          [class.already-learned]="isWordLearned()"
           (click)="markLearned()">
           <app-pixel-icon name="icon_check" [size]="14"></app-pixel-icon>
           <span>{{ currentIndex() === displayWords.length - 1 ? 'Đã học (Xong)' : 'Đã học · Từ tiếp ›' }}</span>
@@ -121,7 +166,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 
       <!-- Banner luyện tập kiểm tra chủ đề này -->
       <div class="quiz-cta-banner">
-        <a [routerLink]="['/quiz']" [queryParams]="{ lessonId: state.activeLessonId() }" class="quiz-cta-link">
+        <a [routerLink]="['/quiz']" [queryParams]="isJa() ? { topicCode: jaService.activeTopicCode() } : { lessonId: state.activeLessonId() }" class="quiz-cta-link">
           <span class="cta-left">
             <span class="cta-icon"><app-pixel-icon name="icon_target" [size]="18"></app-pixel-icon></span>
             <span class="cta-text">
@@ -154,7 +199,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   </td>
                   <td class="col-meaning">{{ w.meaning }}</td>
                   <td class="col-status">
-                    @if (state.learnedWords().includes(w.word)) {
+                    @if (isListWordLearned(w)) {
                       <span class="badge-done" title="Đã thuộc"><app-pixel-icon name="icon_check" [size]="12"></app-pixel-icon></span>
                     }
                   </td>
@@ -266,6 +311,44 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       line-height: 1.1;
       margin-bottom: 4px;
     }
+    .word-text.ja-word-text {
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+      font-size: 38px;
+    }
+    .ja-ruby {
+      ruby-align: center;
+    }
+    .ja-rt {
+      font-size: 14px;
+      font-weight: 600;
+      color: #8C6B4F;
+      letter-spacing: 0.5px;
+    }
+    .ja-romaji-pill {
+      font-weight: 700;
+      color: #8C6B4F;
+      font-size: 15px;
+    }
+    .ja-sub-kana {
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+    .ja-toggle-chip {
+      background: #EAE2D2;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ja-toggle-chip.active {
+      background: #78815D;
+      color: #FFFDF9;
+      border-color: #78815D;
+    }
     .ipa-audio-row {
       display: flex;
       align-items: center;
@@ -277,12 +360,19 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       color: var(--ink-muted);
     }
     .speaker-pill {
-      font-size: 15px;
-      padding: 2px 6px;
-      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      border-radius: 6px;
       cursor: pointer;
       background: #EAE2D2;
       border: 1px solid var(--border);
+      transition: background 0.15s ease, transform 0.1s ease;
+      &:hover { background: #DFCDBB; }
+      &:active { transform: scale(0.92); }
     }
     .botanical-art-box {
       width: 48px;
@@ -371,6 +461,9 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       background: #EDF7E8;
       color: #2F631E;
       border: 1px solid #C4E3B5;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
     .bookmark-btn {
       background: #EAE2D2;
@@ -416,10 +509,11 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
       background: #EAE2D2;
       border: 1.5px dashed var(--border-strong);
       border-radius: 14px;
-      padding: 12px 16px;
+      padding: 12px 14px;
       text-decoration: none;
       transition: all 0.2s;
     }
@@ -430,28 +524,44 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
     .cta-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
     }
     .cta-icon {
-      font-size: 24px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .cta-text {
       display: flex;
       flex-direction: column;
+      gap: 2px;
+      min-width: 0;
     }
     .cta-text strong {
-      font-size: 14px;
+      font-size: 13.5px;
       color: var(--navy);
+      line-height: 1.3;
     }
     .cta-text small {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--ink-muted);
+      line-height: 1.3;
+      white-space: normal;
     }
     .cta-arrow {
       font-size: 13px;
       font-weight: 700;
       color: var(--rose);
       white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      background: rgba(166, 94, 101, 0.1);
+      border-radius: 8px;
     }
 
     /* ================= RESPONSIVE MOBILE (< 480px) ================= */
@@ -612,13 +722,22 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 })
 export class VocabComponent implements OnInit {
   state = inject(GameStateService);
+  jaService = inject(JapaneseLearningService);
   route = inject(ActivatedRoute);
   assets = FARM_ASSETS;
 
   currentIndex = signal<number>(0);
+  isJa = computed(() => this.state.activeLang() === 'ja');
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
+      const topicCode = params.get('topicCode');
+      if (topicCode) {
+        this.jaService.activeTopicCode.set(topicCode);
+        this.currentIndex.set(0);
+        return;
+      }
+
       const lessonIdStr = params.get('lessonId');
       if (lessonIdStr) {
         const id = parseInt(lessonIdStr, 10);
@@ -633,6 +752,9 @@ export class VocabComponent implements OnInit {
   }
 
   currentLessonTitle = computed(() => {
+    if (this.isJa()) {
+      return this.jaService.activeTopic().titleVi;
+    }
     const activeId = this.state.activeLessonId();
     const found = this.state.lessons().find(l => l.id === activeId);
     return found ? found.title : 'Từ vựng bài học';
@@ -655,29 +777,39 @@ export class VocabComponent implements OnInit {
         }
       ],
       synonyms: 'pleasant, lovely',
-      antonyms: 'boring, unpleasant'
-    },
-    {
-      word: 'harvest',
-      ipa: "/'hɑːr.vɪst/",
-      type: 'noun / verb (danh từ / động từ)',
-      meaning: 'mùa thu hoạch, gặt hái nông sản',
-      examples: [
-        {
-          en: 'Farmers are busy with the autumn <strong>harvest</strong>.',
-          vi: 'Nông dân đang bận rộn với mùa gặt mùa thu.'
-        }
-      ],
-      synonyms: 'gather, crop, yield',
-      antonyms: 'plant, sow'
+      antonyms: '-'
     }
   ];
 
   get displayWords() {
+    if (this.isJa()) {
+      const topic = this.jaService.activeTopic();
+      return topic.words.map(w => ({
+        id: w.id,
+        word: w.scriptPrimary,
+        readingSub: w.readingSub,
+        romaji: w.romaji,
+        ipa: w.readingSub ? `${w.readingSub} [${w.romaji}]` : `[${w.romaji}]`,
+        type: w.wordType,
+        meaning: w.meaningVi,
+        examples: [
+          {
+            en: `Cách đọc: <strong>${w.readingSub || w.scriptPrimary}</strong> (${w.romaji})`,
+            vi: `Nghĩa tiếng Việt: ${w.meaningVi}`
+          }
+        ],
+        synonyms: 'JLPT N5 Vocabulary',
+        antonyms: '-'
+      }));
+    }
+
     const apiVocabs = this.state.activeVocabularies();
     if (apiVocabs && apiVocabs.length > 0) {
       return apiVocabs.map(v => ({
+        id: v.id,
         word: v.word,
+        readingSub: '',
+        romaji: '',
         ipa: v.phonetic || v.ipaUs || '',
         type: v.wordType || 'noun',
         meaning: v.meaningVi,
@@ -691,13 +823,13 @@ export class VocabComponent implements OnInit {
         antonyms: '-'
       }));
     }
-    return this.fallbackWords;
+    return this.fallbackWords.map(w => ({ ...w, id: 0, readingSub: '', romaji: '' }));
   }
 
   get currentWord() {
     const list = this.displayWords;
     const idx = Math.min(this.currentIndex(), Math.max(0, list.length - 1));
-    return list[idx] || this.fallbackWords[0];
+    return list[idx] || this.displayWords[0];
   }
 
   nextWord() {
@@ -712,11 +844,46 @@ export class VocabComponent implements OnInit {
     }
   }
 
+  isWordLearned(): boolean {
+    if (this.isJa()) {
+      const cur = this.currentWord;
+      return cur.id ? !!this.jaService.wordStats()[cur.id]?.learned : false;
+    }
+    return this.state.learnedWords().includes(this.currentWord.word);
+  }
+
+  isWordBookmarked(): boolean {
+    if (this.isJa()) {
+      const cur = this.currentWord;
+      return cur.id ? !!this.jaService.wordStats()[cur.id]?.bookmarked : false;
+    }
+    return this.state.bookmarkedWords().includes(this.currentWord.word);
+  }
+
+  isListWordLearned(w: any): boolean {
+    if (this.isJa()) {
+      return w.id ? !!this.jaService.wordStats()[w.id]?.learned : false;
+    }
+    return this.state.learnedWords().includes(w.word);
+  }
+
   learnedInLessonCount = computed(() => {
     const words = this.displayWords;
+    if (this.isJa()) {
+      const stats = this.jaService.wordStats();
+      return words.filter(w => w.id && stats[w.id]?.learned).length;
+    }
     const learned = this.state.learnedWords();
     return words.filter(w => learned.includes(w.word)).length;
   });
+
+  toggleFurigana() {
+    this.jaService.showFurigana.update(v => !v);
+  }
+
+  toggleRomaji() {
+    this.jaService.showRomaji.update(v => !v);
+  }
 
   selectWordIndex(idx: number) {
     if (idx >= 0 && idx < this.displayWords.length) {
@@ -725,15 +892,45 @@ export class VocabComponent implements OnInit {
   }
 
   toggleBookmark() {
+    if (this.isJa()) {
+      const cur = this.currentWord;
+      if (cur.id) {
+        const isB = this.jaService.toggleBookmark(cur.id);
+        this.state.showToast(isB ? '⭐ Đã đánh dấu từ vựng!' : 'Đã bỏ đánh dấu.');
+      }
+      return;
+    }
     this.state.toggleBookmark(this.currentWord.word);
   }
 
   markLearned() {
+    if (this.isJa()) {
+      const cur = this.currentWord;
+      if (cur.id) {
+        this.jaService.toggleWordLearned(cur.id);
+      }
+      if (this.currentIndex() < this.displayWords.length - 1) {
+        this.nextWord();
+      } else {
+        this.state.showToast('🎉 Bạn đã xem hết từ vựng N5! Hãy bấm "Luyện tập" để làm bài kiểm tra và nhận thưởng.');
+      }
+      return;
+    }
+
     this.state.markWordLearned(this.currentWord.word, false);
     if (this.currentIndex() < this.displayWords.length - 1) {
       this.nextWord();
     } else {
       this.state.showToast('🎉 Bạn đã xem hết từ vựng! Hãy bấm "Luyện tập" để làm bài kiểm tra và nhận thưởng.');
     }
+  }
+
+  speakWord() {
+    if (this.isJa()) {
+      const cur = this.currentWord;
+      this.state.speak(cur.readingSub || cur.word, 'ja-JP');
+      return;
+    }
+    this.state.speak(this.currentWord.word, 'en-US');
   }
 }

@@ -64,11 +64,38 @@ const POS_DICTIONARY: Record<string, PosMeta> = {
     helperQuestion: 'Dùng để xưng hô: Tôi, bạn, họ, của tôi...',
     bg: '#E6E9EE', border: '#263847', text: '#263847',
     svgRects: '<rect x="5" y="3" width="6" height="5" fill="#263847"/><rect x="3" y="9" width="10" height="5" fill="#344B5E"/>'
+  },
+  adj_i: {
+    key: 'adj_i',
+    compactLabel: 'Tính từ -い',
+    fullLabel: 'Tính từ đuôi い · Chỉ tính chất',
+    helperQuestion: 'Giữ nguyên い khi ghép trước Danh từ (vd: 新しい車)',
+    bg: '#FBF5E2', border: '#C99B32', text: '#6B4E0E',
+    svgRects: '<rect x="3" y="3" width="10" height="10" fill="#C99B32"/><rect x="5" y="5" width="6" height="6" fill="#FFFDF9"/><rect x="7" y="7" width="2" height="2" fill="#6B4E0E"/>'
+  },
+  adj_na: {
+    key: 'adj_na',
+    compactLabel: 'Tính từ -な',
+    fullLabel: 'Tính từ đuôi な · Chỉ tính chất',
+    helperQuestion: 'Phải thêm な khi đứng trước Danh từ (vd: 静かな町)',
+    bg: '#F9E8DC', border: '#C87A4B', text: '#6B3818',
+    svgRects: '<rect x="4" y="3" width="8" height="10" fill="#C87A4B"/><rect x="6" y="5" width="4" height="6" fill="#FFFDF9"/><rect x="7" y="7" width="2" height="2" fill="#6B3818"/>'
+  },
+  adv_expr: {
+    key: 'adv_expr',
+    compactLabel: 'Phó từ / Từ nối',
+    fullLabel: 'Phó từ & Từ nối · Mức độ, giao tiếp',
+    helperQuestion: 'Bổ nghĩa mức độ hoặc dùng để hỏi/chuyển ý',
+    bg: '#E3EEF5', border: '#4B7FA3', text: '#224760',
+    svgRects: '<rect x="2" y="6" width="12" height="4" fill="#4B7FA3"/><rect x="5" y="3" width="6" height="10" fill="#224760"/><rect x="7" y="5" width="2" height="6" fill="#FFFDF9"/>'
   }
 };
 
 export function normalizePosKey(raw: string | undefined | null): string {
   const s = (raw || '').toLowerCase().trim();
+  if (s === 'adj_i' || s.includes('đuôi い') || s.includes('tính từ -い') || s.includes('adj-i') || s.includes('i-adj')) return 'adj_i';
+  if (s === 'adj_na' || s.includes('đuôi な') || s.includes('tính từ -な') || s.includes('adj-na') || s.includes('na-adj')) return 'adj_na';
+  if (s === 'adv_expr' || s.includes('phó từ') || s.includes('từ nối') || s.includes('giao tiếp') || s.includes('adv_expr')) return 'adv_expr';
   if (s.startsWith('v') || s.includes('động')) return 'verb';
   if (s.startsWith('adj') || s.includes('tính')) return 'adj';
   if (s.startsWith('adv') || s.includes('trạng')) return 'adv';

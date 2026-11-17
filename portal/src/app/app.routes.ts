@@ -23,6 +23,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/vocab/vocab.component').then(m => m.VocabComponent)
   },
   {
+    path: 'kana',
+    loadComponent: () => import('./features/japanese/kana-board.component').then(m => m.KanaBoardComponent)
+  },
+  {
     path: 'grammar',
     loadComponent: () => import('./features/grammar/grammar-list.component').then(m => m.GrammarListComponent)
   },

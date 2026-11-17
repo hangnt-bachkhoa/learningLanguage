@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { GameStateService } from '../../core/services/game-state.service';
+import { JapaneseLearningService } from '../../core/services/japanese-learning.service';
 import { LessonDto } from '../../core/services/farm-api.service';
 import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 
@@ -20,8 +21,10 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         </a>
 
         <div class="header-center">
-          <h1 class="page-title">Thư viện bài học</h1>
-          <p class="page-subtitle">50+ Chủ đề từ vựng TOEIC thông dụng · Tích lũy nông sản để mở khóa</p>
+          <h1 class="page-title">{{ isJa() ? 'Từ vựng JLPT N5' : 'Thư viện bài học' }}</h1>
+          <p class="page-subtitle">
+            {{ isJa() ? '26 Chủ đề từ vựng JLPT N5 chuẩn hóa (601 từ vựng) · Mở khóa theo tiến trình học tập' : '50+ Chủ đề từ vựng TOEIC thông dụng · Tích lũy nông sản để mở khóa' }}
+          </p>
         </div>
 
         <div class="header-stats">
@@ -35,7 +38,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       <!-- Thanh lọc & tìm kiếm -->
       <div class="filter-bar">
         <div class="level-pills">
-          @for (tab of levelTabs; track tab.key) {
+          @for (tab of levelTabs(); track tab.key) {
             <button
               class="pill-btn"
               [class.active]="selectedTab() === tab.key"
@@ -50,7 +53,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
           <input
             type="text"
             [(ngModel)]="searchQuery"
-            placeholder="Tìm kiếm chủ đề (Office, HR, Finance...)"
+            [placeholder]="isJa() ? 'Tìm kiếm chủ đề N5 (Danh từ, Động từ...)' : 'Tìm kiếm chủ đề (Office, HR, Finance...)'"
             class="search-input"
           />
           @if (searchQuery) {
@@ -115,14 +118,14 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
               @if (lesson.isUnlocked) {
                 <div class="dual-actions-row">
                   <button class="btn btn-learn" (click)="goToLesson(lesson)" title="Lật thẻ học từ vựng">
-                    <span style="display:inline-flex; align-items:center; gap:4px;">
-                      <img src="assets/icons/icon_vocabulary.svg" width="14" height="14" class="pixel-art" />
+                    <span style="display:inline-flex; align-items:center; gap:5px;">
+                      <app-pixel-icon name="icon_book_open" [size]="14"></app-pixel-icon>
                       <span>Học từ</span>
                     </span>
                   </button>
                   <button class="btn btn-quiz" (click)="goToQuiz(lesson)" title="Làm bài kiểm tra nhận thưởng">
-                    <span style="display:inline-flex; align-items:center; gap:4px;">
-                      <img src="assets/icons/icon_grammar.svg" width="14" height="14" class="pixel-art" />
+                    <span style="display:inline-flex; align-items:center; gap:5px;">
+                      <app-pixel-icon name="icon_scroll" [size]="14"></app-pixel-icon>
                       <span>Kiểm tra</span>
                     </span>
                   </button>
@@ -548,19 +551,58 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 })
 export class LessonsComponent {
   state = inject(GameStateService);
+  jaService = inject(JapaneseLearningService);
   router = inject(Router);
 
   searchQuery = '';
   selectedTab = signal<string>('all');
 
-  levelTabs = [
-    { key: 'all', label: 'Tất cả' },
-    { key: 'TOEIC 450', label: 'TOEIC 450' },
-    { key: 'TOEIC 650', label: 'TOEIC 650' },
-    { key: 'TOEIC 800', label: 'TOEIC 800' }
-  ];
+  isJa = computed(() => this.state.activeLang() === 'ja');
+
+  levelTabs = computed(() => {
+    if (this.isJa()) {
+      return [
+        { key: 'all', label: 'Tất cả (26)' },
+        { key: 'noun', label: 'Danh từ' },
+        { key: 'verb', label: 'Động từ' },
+        { key: 'adj_i', label: 'Tính từ -い' },
+        { key: 'adj_na', label: 'Tính từ -な' },
+        { key: 'adv_expr', label: 'Phó từ & Giao tiếp' }
+      ];
+    }
+    return [
+      { key: 'all', label: 'Tất cả' },
+      { key: 'TOEIC 450', label: 'TOEIC 450' },
+      { key: 'TOEIC 650', label: 'TOEIC 650' },
+      { key: 'TOEIC 800', label: 'TOEIC 800' }
+    ];
+  });
 
   allLessons = computed(() => {
+    if (this.isJa()) {
+      const jaProgress = this.jaService.topicProgress();
+      return this.jaService.topics().map(t => {
+        const prog = jaProgress[t.code];
+        const isUnlocked = prog ? prog.unlocked : (t.orderIndex <= 2);
+        const bestStarsClaimed = prog ? prog.bestStarsClaimed : 0;
+        return {
+          id: t.orderIndex,
+          title: t.titleVi,
+          languageCode: 'ja',
+          levelTag: 'JLPT N5',
+          orderIndex: t.orderIndex,
+          isUnlocked,
+          bestStarsClaimed,
+          requiredCropId: null,
+          requiredCropQty: 0,
+          requiredCropName: null,
+          topicCode: t.code,
+          wordCount: t.wordCount,
+          wordTypeGroup: t.wordTypeGroup
+        } as LessonDto & { topicCode?: string; wordCount?: number; wordTypeGroup?: string };
+      });
+    }
+
     const list = this.state.lessons();
     if (list && list.length > 0) {
       return list;
@@ -585,7 +627,13 @@ export class LessonsComponent {
     const query = this.searchQuery.toLowerCase().trim();
 
     return this.allLessons().filter(l => {
-      const matchTab = tab === 'all' || l.levelTag === tab;
+      let matchTab = false;
+      if (this.isJa()) {
+        const wt = (l as any).wordTypeGroup;
+        matchTab = tab === 'all' || wt === tab;
+      } else {
+        matchTab = tab === 'all' || l.levelTag === tab;
+      }
       const matchQuery = !query || l.title.toLowerCase().includes(query) || l.levelTag.toLowerCase().includes(query);
       return matchTab && matchQuery;
     });
@@ -596,17 +644,30 @@ export class LessonsComponent {
   }
 
   getLevelClass(level: string): string {
+    if (this.isJa()) return 'tag-starter';
     if (level.includes('450') || level.includes('Pre-A1')) return 'tag-starter';
     if (level.includes('650')) return 'tag-inter';
     return 'tag-master';
   }
 
   goToLesson(lesson: LessonDto) {
+    if (this.isJa()) {
+      const code = (lesson as any).topicCode || 'ja_n5_01';
+      this.jaService.activeTopicCode.set(code);
+      this.router.navigate(['/vocab'], { queryParams: { topicCode: code } });
+      return;
+    }
     this.state.loadVocabulariesForLesson(lesson.id);
     this.router.navigate(['/vocab'], { queryParams: { lessonId: lesson.id } });
   }
 
   goToQuiz(lesson: LessonDto) {
+    if (this.isJa()) {
+      const code = (lesson as any).topicCode || 'ja_n5_01';
+      this.jaService.activeTopicCode.set(code);
+      this.router.navigate(['/quiz'], { queryParams: { topicCode: code } });
+      return;
+    }
     this.router.navigate(['/quiz'], { queryParams: { lessonId: lesson.id } });
   }
 }

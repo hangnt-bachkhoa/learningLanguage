@@ -1,0 +1,6304 @@
+{
+  "langCode": "ja",
+  "courseTitle": "JLPT N5 Vocabulary & Kana Archive",
+  "totalWords": 601,
+  "totalTopics": 26,
+  "topics": [
+    {
+      "code": "ja_n5_01",
+      "orderIndex": 1,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 1)",
+      "wordCount": 25,
+      "minLevel": 1,
+      "words": [
+        {
+          "id": 1001,
+          "lang": "ja",
+          "scriptPrimary": "朝",
+          "readingSub": "あさ",
+          "romaji": "asa",
+          "meaningVi": "buổi sáng",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1002,
+          "lang": "ja",
+          "scriptPrimary": "朝ご飯",
+          "readingSub": "あさごはん",
+          "romaji": "asagohan",
+          "meaningVi": "bữa ăn sáng",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1003,
+          "lang": "ja",
+          "scriptPrimary": "あさって",
+          "readingSub": "",
+          "romaji": "asatte",
+          "meaningVi": "ngày kia",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1004,
+          "lang": "ja",
+          "scriptPrimary": "足",
+          "readingSub": "あし",
+          "romaji": "ashi",
+          "meaningVi": "chân",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1005,
+          "lang": "ja",
+          "scriptPrimary": "明日",
+          "readingSub": "あした",
+          "romaji": "ashita",
+          "meaningVi": "ngày mai",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1006,
+          "lang": "ja",
+          "scriptPrimary": "これ",
+          "readingSub": "",
+          "romaji": "kore",
+          "meaningVi": "cái này",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1007,
+          "lang": "ja",
+          "scriptPrimary": "それ",
+          "readingSub": "",
+          "romaji": "sore",
+          "meaningVi": "cái đó",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1008,
+          "lang": "ja",
+          "scriptPrimary": "あれ",
+          "readingSub": "",
+          "romaji": "are",
+          "meaningVi": "cái kia",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1009,
+          "lang": "ja",
+          "scriptPrimary": "ここ",
+          "readingSub": "",
+          "romaji": "koko",
+          "meaningVi": "chỗ này",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1010,
+          "lang": "ja",
+          "scriptPrimary": "そこ",
+          "readingSub": "",
+          "romaji": "soko",
+          "meaningVi": "chỗ đó",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1011,
+          "lang": "ja",
+          "scriptPrimary": "あそこ",
+          "readingSub": "",
+          "romaji": "asoko",
+          "meaningVi": "Chỗ kia, đằng kia",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1012,
+          "lang": "ja",
+          "scriptPrimary": "こちら",
+          "readingSub": "",
+          "romaji": "kochira",
+          "meaningVi": "phía này",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1013,
+          "lang": "ja",
+          "scriptPrimary": "そちら",
+          "readingSub": "",
+          "romaji": "sochira",
+          "meaningVi": "phía đó",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1014,
+          "lang": "ja",
+          "scriptPrimary": "あちら",
+          "readingSub": "",
+          "romaji": "achira",
+          "meaningVi": "phía kia",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1015,
+          "lang": "ja",
+          "scriptPrimary": "春",
+          "readingSub": "はる",
+          "romaji": "haru",
+          "meaningVi": "mùa xuân",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1016,
+          "lang": "ja",
+          "scriptPrimary": "夏",
+          "readingSub": "なつ",
+          "romaji": "natsu",
+          "meaningVi": "mùa hạ",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1017,
+          "lang": "ja",
+          "scriptPrimary": "秋",
+          "readingSub": "あき",
+          "romaji": "aki",
+          "meaningVi": "mùa thu",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1018,
+          "lang": "ja",
+          "scriptPrimary": "冬",
+          "readingSub": "ふゆ",
+          "romaji": "fuyu",
+          "meaningVi": "mùa đông",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1019,
+          "lang": "ja",
+          "scriptPrimary": "頭",
+          "readingSub": "あたま",
+          "romaji": "atama",
+          "meaningVi": "đầu",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1020,
+          "lang": "ja",
+          "scriptPrimary": "あなた",
+          "readingSub": "",
+          "romaji": "anata",
+          "meaningVi": "bạn",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1021,
+          "lang": "ja",
+          "scriptPrimary": "兄",
+          "readingSub": "あに",
+          "romaji": "ani",
+          "meaningVi": "Anh trai ( mình)",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1022,
+          "lang": "ja",
+          "scriptPrimary": "姉",
+          "readingSub": "あね",
+          "romaji": "ane",
+          "meaningVi": "Chị gái( mình)",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1023,
+          "lang": "ja",
+          "scriptPrimary": "アパート",
+          "readingSub": "",
+          "romaji": "apaato",
+          "meaningVi": "căn hộ",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1024,
+          "lang": "ja",
+          "scriptPrimary": "雨",
+          "readingSub": "あめ",
+          "romaji": "ame",
+          "meaningVi": "mưa",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        },
+        {
+          "id": 1025,
+          "lang": "ja",
+          "scriptPrimary": "飴",
+          "readingSub": "あめ",
+          "romaji": "ame",
+          "meaningVi": "kẹo ( ngậm)",
+          "wordType": "noun",
+          "topicId": "ja_n5_01"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_02",
+      "orderIndex": 2,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 2)",
+      "wordCount": 25,
+      "minLevel": 1,
+      "words": [
+        {
+          "id": 1026,
+          "lang": "ja",
+          "scriptPrimary": "家",
+          "readingSub": "いえ",
+          "romaji": "ie",
+          "meaningVi": "nhà",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1027,
+          "lang": "ja",
+          "scriptPrimary": "池",
+          "readingSub": "いけ",
+          "romaji": "ike",
+          "meaningVi": "cái ao",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1028,
+          "lang": "ja",
+          "scriptPrimary": "医者",
+          "readingSub": "いしゃ",
+          "romaji": "isha",
+          "meaningVi": "bác sĩ",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1029,
+          "lang": "ja",
+          "scriptPrimary": "椅子",
+          "readingSub": "いす",
+          "romaji": "isu",
+          "meaningVi": "ghế",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1030,
+          "lang": "ja",
+          "scriptPrimary": "一",
+          "readingSub": "いち",
+          "romaji": "ichi",
+          "meaningVi": "một",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1031,
+          "lang": "ja",
+          "scriptPrimary": "一日",
+          "readingSub": "いちにち,ついたち",
+          "romaji": "ichinichi,tsuitachi",
+          "meaningVi": "Một ngày, ngày mồng 1",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1032,
+          "lang": "ja",
+          "scriptPrimary": "二日",
+          "readingSub": "ふつか",
+          "romaji": "futsuka",
+          "meaningVi": "2 ngày, ngày mồng 2",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1033,
+          "lang": "ja",
+          "scriptPrimary": "三日",
+          "readingSub": "みっか",
+          "romaji": "mikka",
+          "meaningVi": "3 ngày, ngày mồng 3",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1034,
+          "lang": "ja",
+          "scriptPrimary": "四日",
+          "readingSub": "よっか",
+          "romaji": "yokka",
+          "meaningVi": "4 ngày, ngày mồng 4",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1035,
+          "lang": "ja",
+          "scriptPrimary": "五日",
+          "readingSub": "いつか",
+          "romaji": "itsuka",
+          "meaningVi": "năm ngày, ngày mồng 5",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1036,
+          "lang": "ja",
+          "scriptPrimary": "六日",
+          "readingSub": "むいか",
+          "romaji": "muika",
+          "meaningVi": "6 ngày, ngày mồng 6",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1037,
+          "lang": "ja",
+          "scriptPrimary": "七日",
+          "readingSub": "なのか",
+          "romaji": "nanoka",
+          "meaningVi": "7 ngày, ngày mồng 7",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1038,
+          "lang": "ja",
+          "scriptPrimary": "八日",
+          "readingSub": "ようか",
+          "romaji": "youka",
+          "meaningVi": "8 ngày, ngày mồng 8",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1039,
+          "lang": "ja",
+          "scriptPrimary": "九日",
+          "readingSub": "ここのか",
+          "romaji": "kokonoka",
+          "meaningVi": "9 ngày, ngày mồng 9",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1040,
+          "lang": "ja",
+          "scriptPrimary": "十日",
+          "readingSub": "とおか",
+          "romaji": "tooka",
+          "meaningVi": "10 ngày, ngày mồng 10",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1041,
+          "lang": "ja",
+          "scriptPrimary": "五つ",
+          "readingSub": "いつつ",
+          "romaji": "itsutsu",
+          "meaningVi": "năm cái ( đếm đồ vật nói chung)",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1042,
+          "lang": "ja",
+          "scriptPrimary": "犬",
+          "readingSub": "いぬ",
+          "romaji": "inu",
+          "meaningVi": "con chó",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1043,
+          "lang": "ja",
+          "scriptPrimary": "今",
+          "readingSub": "いま",
+          "romaji": "ima",
+          "meaningVi": "bây giờ",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1044,
+          "lang": "ja",
+          "scriptPrimary": "意味",
+          "readingSub": "いみ",
+          "romaji": "imi",
+          "meaningVi": "ý nghĩa",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1045,
+          "lang": "ja",
+          "scriptPrimary": "妹",
+          "readingSub": "いもうと",
+          "romaji": "imouto",
+          "meaningVi": "em gái ( mình)",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1046,
+          "lang": "ja",
+          "scriptPrimary": "入口",
+          "readingSub": "いりぐち",
+          "romaji": "iriguchi",
+          "meaningVi": "lối vào",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1047,
+          "lang": "ja",
+          "scriptPrimary": "色",
+          "readingSub": "いろ",
+          "romaji": "iro",
+          "meaningVi": "màu",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1048,
+          "lang": "ja",
+          "scriptPrimary": "上",
+          "readingSub": "うえ",
+          "romaji": "ue",
+          "meaningVi": "trên",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1049,
+          "lang": "ja",
+          "scriptPrimary": "後ろ",
+          "readingSub": "うしろ",
+          "romaji": "ushiro",
+          "meaningVi": "đằng sau",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        },
+        {
+          "id": 1050,
+          "lang": "ja",
+          "scriptPrimary": "歌",
+          "readingSub": "うた",
+          "romaji": "uta",
+          "meaningVi": "bài hát",
+          "wordType": "noun",
+          "topicId": "ja_n5_02"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_03",
+      "orderIndex": 3,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 3)",
+      "wordCount": 25,
+      "minLevel": 1,
+      "words": [
+        {
+          "id": 1051,
+          "lang": "ja",
+          "scriptPrimary": "海",
+          "readingSub": "うみ",
+          "romaji": "umi",
+          "meaningVi": "biển",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1052,
+          "lang": "ja",
+          "scriptPrimary": "上着",
+          "readingSub": "うわぎ",
+          "romaji": "uwagi",
+          "meaningVi": "áo khoác",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1053,
+          "lang": "ja",
+          "scriptPrimary": "絵",
+          "readingSub": "え",
+          "romaji": "e",
+          "meaningVi": "bức tranh",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1054,
+          "lang": "ja",
+          "scriptPrimary": "映画",
+          "readingSub": "えいが",
+          "romaji": "eiga",
+          "meaningVi": "phim (điện ảnh)",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1055,
+          "lang": "ja",
+          "scriptPrimary": "映画館",
+          "readingSub": "えいがかん",
+          "romaji": "eigakan",
+          "meaningVi": "rạp chiếu phim",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1056,
+          "lang": "ja",
+          "scriptPrimary": "英語",
+          "readingSub": "えいご",
+          "romaji": "eigo",
+          "meaningVi": "Tiếng Anh",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1057,
+          "lang": "ja",
+          "scriptPrimary": "駅",
+          "readingSub": "えき",
+          "romaji": "eki",
+          "meaningVi": "nhà ga",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1058,
+          "lang": "ja",
+          "scriptPrimary": "エレベーター",
+          "readingSub": "",
+          "romaji": "erebe-ta-",
+          "meaningVi": "thang máy",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1059,
+          "lang": "ja",
+          "scriptPrimary": "鉛筆",
+          "readingSub": "えんぴつ",
+          "romaji": "enpitsu",
+          "meaningVi": "bút chì",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1060,
+          "lang": "ja",
+          "scriptPrimary": "大勢",
+          "readingSub": "おおぜい",
+          "romaji": "oozei",
+          "meaningVi": "Nhiều ( người)",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1061,
+          "lang": "ja",
+          "scriptPrimary": "お母さん",
+          "readingSub": "おかあさん",
+          "romaji": "okaasan",
+          "meaningVi": "Mẹ ( khi nói về mẹ người khác)",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1062,
+          "lang": "ja",
+          "scriptPrimary": "お菓子",
+          "readingSub": "おかし",
+          "romaji": "okashi",
+          "meaningVi": "Bánh, kẹo",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1063,
+          "lang": "ja",
+          "scriptPrimary": "お金",
+          "readingSub": "おかね",
+          "romaji": "okane",
+          "meaningVi": "tiền",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1064,
+          "lang": "ja",
+          "scriptPrimary": "奥さん",
+          "readingSub": "おくさん",
+          "romaji": "okusan",
+          "meaningVi": "vợ ( khi nói về vợ người khác)",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1065,
+          "lang": "ja",
+          "scriptPrimary": "お酒",
+          "readingSub": "おさけ",
+          "romaji": "osake",
+          "meaningVi": "rượu",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1066,
+          "lang": "ja",
+          "scriptPrimary": "お皿",
+          "readingSub": "おさら",
+          "romaji": "osara",
+          "meaningVi": "Cái đĩa",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1067,
+          "lang": "ja",
+          "scriptPrimary": "おじいさん",
+          "readingSub": "",
+          "romaji": "ojiisan",
+          "meaningVi": "ông ( nội, ngoại), ông già",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1068,
+          "lang": "ja",
+          "scriptPrimary": "おじさん",
+          "readingSub": "",
+          "romaji": "ojisan",
+          "meaningVi": "chú, bác ( người đàn ông trung niên)",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1069,
+          "lang": "ja",
+          "scriptPrimary": "お茶",
+          "readingSub": "おちゃ",
+          "romaji": "ocha",
+          "meaningVi": "trà",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1070,
+          "lang": "ja",
+          "scriptPrimary": "お手洗い",
+          "readingSub": "おてあらい",
+          "romaji": "otearai",
+          "meaningVi": "nhà vệ sinh",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1071,
+          "lang": "ja",
+          "scriptPrimary": "お父さん",
+          "readingSub": "おとうさん",
+          "romaji": "otousan",
+          "meaningVi": "bố( dùng để nói về bố người khác)",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1072,
+          "lang": "ja",
+          "scriptPrimary": "弟",
+          "readingSub": "おとうと",
+          "romaji": "otouto",
+          "meaningVi": "em trai ( mình)",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1073,
+          "lang": "ja",
+          "scriptPrimary": "男",
+          "readingSub": "おとこ",
+          "romaji": "otoko",
+          "meaningVi": "nam giới, con trai",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1074,
+          "lang": "ja",
+          "scriptPrimary": "男の子",
+          "readingSub": "おとこのこ",
+          "romaji": "otokonoko",
+          "meaningVi": "bé trai",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        },
+        {
+          "id": 1075,
+          "lang": "ja",
+          "scriptPrimary": "一昨日",
+          "readingSub": "おととい",
+          "romaji": "ototoi",
+          "meaningVi": "hôm kia",
+          "wordType": "noun",
+          "topicId": "ja_n5_03"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_04",
+      "orderIndex": 4,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 4)",
+      "wordCount": 25,
+      "minLevel": 2,
+      "words": [
+        {
+          "id": 1076,
+          "lang": "ja",
+          "scriptPrimary": "一昨年",
+          "readingSub": "おととし",
+          "romaji": "ototoshi",
+          "meaningVi": "Năm kia",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1077,
+          "lang": "ja",
+          "scriptPrimary": "大人",
+          "readingSub": "おとな",
+          "romaji": "otona",
+          "meaningVi": "người lớn",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1078,
+          "lang": "ja",
+          "scriptPrimary": "おなか",
+          "readingSub": "",
+          "romaji": "onaka",
+          "meaningVi": "bụng",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1079,
+          "lang": "ja",
+          "scriptPrimary": "同じ",
+          "readingSub": "おなじ",
+          "romaji": "onaji",
+          "meaningVi": "giống nhau",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1080,
+          "lang": "ja",
+          "scriptPrimary": "お兄さん",
+          "readingSub": "おにいさん",
+          "romaji": "oniisan",
+          "meaningVi": "anh trai( người khác)",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1081,
+          "lang": "ja",
+          "scriptPrimary": "お姉さん",
+          "readingSub": "おねえさん",
+          "romaji": "oneesan",
+          "meaningVi": "chị gái( người khác)",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1082,
+          "lang": "ja",
+          "scriptPrimary": "おばあさん",
+          "readingSub": "",
+          "romaji": "obaasan",
+          "meaningVi": "bà ( nội, ngoại), bà già",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1083,
+          "lang": "ja",
+          "scriptPrimary": "おばさん",
+          "readingSub": "",
+          "romaji": "obasan",
+          "meaningVi": "Cô, dì",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1084,
+          "lang": "ja",
+          "scriptPrimary": "お風呂",
+          "readingSub": "おふろ",
+          "romaji": "ofuro",
+          "meaningVi": "Bồn tắm",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1085,
+          "lang": "ja",
+          "scriptPrimary": "お弁当",
+          "readingSub": "おべんとう",
+          "romaji": "obentou",
+          "meaningVi": "cơm hộp",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1086,
+          "lang": "ja",
+          "scriptPrimary": "おまわりさん",
+          "readingSub": "",
+          "romaji": "omawarisan",
+          "meaningVi": "cảnh sát",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1087,
+          "lang": "ja",
+          "scriptPrimary": "音楽",
+          "readingSub": "おんがく",
+          "romaji": "ongaku",
+          "meaningVi": "âm nhạc",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1088,
+          "lang": "ja",
+          "scriptPrimary": "女の子",
+          "readingSub": "おんなのこ",
+          "romaji": "onnanoko",
+          "meaningVi": "bé gái",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1089,
+          "lang": "ja",
+          "scriptPrimary": "外国",
+          "readingSub": "がいこく",
+          "romaji": "gaikoku",
+          "meaningVi": "nước ngoài",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1090,
+          "lang": "ja",
+          "scriptPrimary": "外国人",
+          "readingSub": "がいこくじん",
+          "romaji": "gaikokujin",
+          "meaningVi": "người nước ngoài",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1091,
+          "lang": "ja",
+          "scriptPrimary": "会社",
+          "readingSub": "かいしゃ",
+          "romaji": "kaisha",
+          "meaningVi": "Công ty",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1092,
+          "lang": "ja",
+          "scriptPrimary": "階段",
+          "readingSub": "かいだん",
+          "romaji": "kaidan",
+          "meaningVi": "Cầu thang",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1093,
+          "lang": "ja",
+          "scriptPrimary": "買い物",
+          "readingSub": "かいもの",
+          "romaji": "kaimono",
+          "meaningVi": "mua sắm",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1094,
+          "lang": "ja",
+          "scriptPrimary": "かぎ",
+          "readingSub": "",
+          "romaji": "kagi",
+          "meaningVi": "chìa khóa",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1095,
+          "lang": "ja",
+          "scriptPrimary": "学生",
+          "readingSub": "がくせい",
+          "romaji": "gakusei",
+          "meaningVi": "học sinh, sinh viên",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1096,
+          "lang": "ja",
+          "scriptPrimary": "傘",
+          "readingSub": "かさ",
+          "romaji": "kasa",
+          "meaningVi": "cái ô",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1097,
+          "lang": "ja",
+          "scriptPrimary": "風",
+          "readingSub": "かぜ",
+          "romaji": "kaze",
+          "meaningVi": "gió",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1098,
+          "lang": "ja",
+          "scriptPrimary": "風邪",
+          "readingSub": "かぜ",
+          "romaji": "kaze",
+          "meaningVi": "cảm, cúm",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1099,
+          "lang": "ja",
+          "scriptPrimary": "家族",
+          "readingSub": "かぞく",
+          "romaji": "kazoku",
+          "meaningVi": "Gia đình",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        },
+        {
+          "id": 1100,
+          "lang": "ja",
+          "scriptPrimary": "方",
+          "readingSub": "かた",
+          "romaji": "kata",
+          "meaningVi": "vị, người ( cách nói lịch sự của 人) , cách (làm việc gì đó)",
+          "wordType": "noun",
+          "topicId": "ja_n5_04"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_05",
+      "orderIndex": 5,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 5)",
+      "wordCount": 25,
+      "minLevel": 2,
+      "words": [
+        {
+          "id": 1101,
+          "lang": "ja",
+          "scriptPrimary": "学校",
+          "readingSub": "がっこう",
+          "romaji": "gakkou",
+          "meaningVi": "trường học",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1102,
+          "lang": "ja",
+          "scriptPrimary": "カップ",
+          "readingSub": "",
+          "romaji": "kappu",
+          "meaningVi": "Cốc ( có tay cầm)",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1103,
+          "lang": "ja",
+          "scriptPrimary": "コップ",
+          "readingSub": "",
+          "romaji": "koppu",
+          "meaningVi": "Cốc ( không quai)",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1104,
+          "lang": "ja",
+          "scriptPrimary": "家庭",
+          "readingSub": "かてい",
+          "romaji": "katei",
+          "meaningVi": "gia đình",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1105,
+          "lang": "ja",
+          "scriptPrimary": "角",
+          "readingSub": "かど",
+          "romaji": "kado",
+          "meaningVi": "góc ( bàn,cua, quẹo)",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1106,
+          "lang": "ja",
+          "scriptPrimary": "かばん",
+          "readingSub": "",
+          "romaji": "kaban",
+          "meaningVi": "cặp, túi sách",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1107,
+          "lang": "ja",
+          "scriptPrimary": "花瓶",
+          "readingSub": "かびん",
+          "romaji": "kabin",
+          "meaningVi": "bình hoa, lọ hoa",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1108,
+          "lang": "ja",
+          "scriptPrimary": "紙",
+          "readingSub": "かみ",
+          "romaji": "kami",
+          "meaningVi": "giấy",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1109,
+          "lang": "ja",
+          "scriptPrimary": "カメラ",
+          "readingSub": "",
+          "romaji": "kamera",
+          "meaningVi": "máy ảnh",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1110,
+          "lang": "ja",
+          "scriptPrimary": "火曜日",
+          "readingSub": "かようび",
+          "romaji": "kayoubi",
+          "meaningVi": "Thứ ba",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1111,
+          "lang": "ja",
+          "scriptPrimary": "カレー",
+          "readingSub": "",
+          "romaji": "kare-",
+          "meaningVi": "Cà ri",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1112,
+          "lang": "ja",
+          "scriptPrimary": "カレンダー",
+          "readingSub": "",
+          "romaji": "karenda-",
+          "meaningVi": "tờ lịch",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1113,
+          "lang": "ja",
+          "scriptPrimary": "川",
+          "readingSub": "かわ",
+          "romaji": "kawa",
+          "meaningVi": "sông",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1114,
+          "lang": "ja",
+          "scriptPrimary": "漢字",
+          "readingSub": "かんじ",
+          "romaji": "kanji",
+          "meaningVi": "chữ hán",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1115,
+          "lang": "ja",
+          "scriptPrimary": "木",
+          "readingSub": "き",
+          "romaji": "ki",
+          "meaningVi": "cây, gỗ",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1116,
+          "lang": "ja",
+          "scriptPrimary": "黄色",
+          "readingSub": "きいろ",
+          "romaji": "kiiro",
+          "meaningVi": "màu vàng",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1117,
+          "lang": "ja",
+          "scriptPrimary": "北",
+          "readingSub": "きた",
+          "romaji": "kita",
+          "meaningVi": "phía Bắc",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1118,
+          "lang": "ja",
+          "scriptPrimary": "ギター",
+          "readingSub": "",
+          "romaji": "gita-",
+          "meaningVi": "Guitar",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1119,
+          "lang": "ja",
+          "scriptPrimary": "喫茶店",
+          "readingSub": "きっさてん",
+          "romaji": "kissaten",
+          "meaningVi": "quán giải khát",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1120,
+          "lang": "ja",
+          "scriptPrimary": "切手",
+          "readingSub": "きって",
+          "romaji": "kitte",
+          "meaningVi": "tem",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1121,
+          "lang": "ja",
+          "scriptPrimary": "切符",
+          "readingSub": "きっぷ",
+          "romaji": "kippu",
+          "meaningVi": "vé (tàu, xe)",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1122,
+          "lang": "ja",
+          "scriptPrimary": "昨日",
+          "readingSub": "きのう",
+          "romaji": "kinou",
+          "meaningVi": "Hôm qua",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1123,
+          "lang": "ja",
+          "scriptPrimary": "牛肉",
+          "readingSub": "ぎゅうにく",
+          "romaji": "gyuuniku",
+          "meaningVi": "thịt bò",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1124,
+          "lang": "ja",
+          "scriptPrimary": "牛乳",
+          "readingSub": "ぎゅうにゅう",
+          "romaji": "gyuunyuu",
+          "meaningVi": "sữa( bò)",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        },
+        {
+          "id": 1125,
+          "lang": "ja",
+          "scriptPrimary": "今日",
+          "readingSub": "きょう",
+          "romaji": "kyou",
+          "meaningVi": "Hôm nay",
+          "wordType": "noun",
+          "topicId": "ja_n5_05"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_06",
+      "orderIndex": 6,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 6)",
+      "wordCount": 25,
+      "minLevel": 2,
+      "words": [
+        {
+          "id": 1126,
+          "lang": "ja",
+          "scriptPrimary": "教室",
+          "readingSub": "きょうしつ",
+          "romaji": "kyoushitsu",
+          "meaningVi": "phòng học, lớp học",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1127,
+          "lang": "ja",
+          "scriptPrimary": "兄弟",
+          "readingSub": "きょうだい",
+          "romaji": "kyoudai",
+          "meaningVi": "anh chị em",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1128,
+          "lang": "ja",
+          "scriptPrimary": "去年",
+          "readingSub": "きょねん",
+          "romaji": "kyonen",
+          "meaningVi": "năm ngoái",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1129,
+          "lang": "ja",
+          "scriptPrimary": "キロ/キログラム",
+          "readingSub": "",
+          "romaji": "kiro/kiroguramu",
+          "meaningVi": "kg",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1130,
+          "lang": "ja",
+          "scriptPrimary": "キロ/キロメートル",
+          "readingSub": "",
+          "romaji": "kiro/kirome-toru",
+          "meaningVi": "km",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1131,
+          "lang": "ja",
+          "scriptPrimary": "銀行",
+          "readingSub": "ぎんこう",
+          "romaji": "ginkou",
+          "meaningVi": "Ngân hàng",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1132,
+          "lang": "ja",
+          "scriptPrimary": "金曜日",
+          "readingSub": "きんようび",
+          "romaji": "kinyoubi",
+          "meaningVi": "Thứ sáu",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1133,
+          "lang": "ja",
+          "scriptPrimary": "薬",
+          "readingSub": "くすり",
+          "romaji": "kusuri",
+          "meaningVi": "thuốc",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1134,
+          "lang": "ja",
+          "scriptPrimary": "果物",
+          "readingSub": "くだもの",
+          "romaji": "kudamono",
+          "meaningVi": "hoa quả, trái cây",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1135,
+          "lang": "ja",
+          "scriptPrimary": "口",
+          "readingSub": "くち",
+          "romaji": "kuchi",
+          "meaningVi": "miệng",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1136,
+          "lang": "ja",
+          "scriptPrimary": "靴",
+          "readingSub": "くつ",
+          "romaji": "kutsu",
+          "meaningVi": "giày dép",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1137,
+          "lang": "ja",
+          "scriptPrimary": "靴下",
+          "readingSub": "くつした",
+          "romaji": "kutsushita",
+          "meaningVi": "cái tất",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1138,
+          "lang": "ja",
+          "scriptPrimary": "国",
+          "readingSub": "くに",
+          "romaji": "kuni",
+          "meaningVi": "đất nước",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1139,
+          "lang": "ja",
+          "scriptPrimary": "曇り",
+          "readingSub": "くもり",
+          "romaji": "kumori",
+          "meaningVi": "có mây, nhiều mây",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1140,
+          "lang": "ja",
+          "scriptPrimary": "クラス",
+          "readingSub": "",
+          "romaji": "kurasu",
+          "meaningVi": "lớp học",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1141,
+          "lang": "ja",
+          "scriptPrimary": "グラム",
+          "readingSub": "",
+          "romaji": "guramu",
+          "meaningVi": "gram",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1142,
+          "lang": "ja",
+          "scriptPrimary": "車",
+          "readingSub": "くるま",
+          "romaji": "kuruma",
+          "meaningVi": "xe hơi, xe",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1143,
+          "lang": "ja",
+          "scriptPrimary": "黒",
+          "readingSub": "くろ",
+          "romaji": "kuro",
+          "meaningVi": "đen, màu đen",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1144,
+          "lang": "ja",
+          "scriptPrimary": "警官",
+          "readingSub": "けいかん",
+          "romaji": "keikan",
+          "meaningVi": "cảnh sát",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1145,
+          "lang": "ja",
+          "scriptPrimary": "今朝",
+          "readingSub": "けさ",
+          "romaji": "kesa",
+          "meaningVi": "sáng nay",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1146,
+          "lang": "ja",
+          "scriptPrimary": "結婚",
+          "readingSub": "けっこん",
+          "romaji": "kekkon",
+          "meaningVi": "kết hôn",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1147,
+          "lang": "ja",
+          "scriptPrimary": "月曜日",
+          "readingSub": "げつようび",
+          "romaji": "getsuyoubi",
+          "meaningVi": "thứ hai",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1148,
+          "lang": "ja",
+          "scriptPrimary": "玄関",
+          "readingSub": "げんかん",
+          "romaji": "genkan",
+          "meaningVi": "lối đi vào",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1149,
+          "lang": "ja",
+          "scriptPrimary": "公園",
+          "readingSub": "こうえん",
+          "romaji": "kouen",
+          "meaningVi": "công viên",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        },
+        {
+          "id": 1150,
+          "lang": "ja",
+          "scriptPrimary": "交差点",
+          "readingSub": "こうさてん",
+          "romaji": "kousaten",
+          "meaningVi": "ngã tư",
+          "wordType": "noun",
+          "topicId": "ja_n5_06"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_07",
+      "orderIndex": 7,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 7)",
+      "wordCount": 25,
+      "minLevel": 3,
+      "words": [
+        {
+          "id": 1151,
+          "lang": "ja",
+          "scriptPrimary": "紅茶",
+          "readingSub": "こうちゃ",
+          "romaji": "koucha",
+          "meaningVi": "trà đen",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1152,
+          "lang": "ja",
+          "scriptPrimary": "交番",
+          "readingSub": "こうばん",
+          "romaji": "kouban",
+          "meaningVi": "bốt, trạm cảnh sát",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1153,
+          "lang": "ja",
+          "scriptPrimary": "声",
+          "readingSub": "こえ",
+          "romaji": "koe",
+          "meaningVi": "tiếng, giọng nói",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1154,
+          "lang": "ja",
+          "scriptPrimary": "コート",
+          "readingSub": "",
+          "romaji": "ko-to",
+          "meaningVi": "áo khoác",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1155,
+          "lang": "ja",
+          "scriptPrimary": "コーヒー",
+          "readingSub": "",
+          "romaji": "ko-hi-",
+          "meaningVi": "cà phê",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1156,
+          "lang": "ja",
+          "scriptPrimary": "午後",
+          "readingSub": "ごご",
+          "romaji": "gogo",
+          "meaningVi": "buổi chiều",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1157,
+          "lang": "ja",
+          "scriptPrimary": "九つ",
+          "readingSub": "ここのつ",
+          "romaji": "kokonotsu",
+          "meaningVi": "9 cái ( vật nói chung)",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1158,
+          "lang": "ja",
+          "scriptPrimary": "午前",
+          "readingSub": "ごぜん",
+          "romaji": "gozen",
+          "meaningVi": "buổi sáng",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1159,
+          "lang": "ja",
+          "scriptPrimary": "こっち",
+          "readingSub": "",
+          "romaji": "kocchi",
+          "meaningVi": "phía này ( cách nói ngắn gọn của こちら）",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1160,
+          "lang": "ja",
+          "scriptPrimary": "今年",
+          "readingSub": "ことし",
+          "romaji": "kotoshi",
+          "meaningVi": "năm nay",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1161,
+          "lang": "ja",
+          "scriptPrimary": "言葉",
+          "readingSub": "ことば",
+          "romaji": "kotoba",
+          "meaningVi": "từ, từ vựng",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1162,
+          "lang": "ja",
+          "scriptPrimary": "子供",
+          "readingSub": "こども",
+          "romaji": "kodomo",
+          "meaningVi": "trẻ em, con cái",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1163,
+          "lang": "ja",
+          "scriptPrimary": "御飯",
+          "readingSub": "ごはん",
+          "romaji": "gohan",
+          "meaningVi": "cơm, bữa ăn",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1164,
+          "lang": "ja",
+          "scriptPrimary": "今月",
+          "readingSub": "こんげつ",
+          "romaji": "kongetsu",
+          "meaningVi": "tháng này",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1165,
+          "lang": "ja",
+          "scriptPrimary": "今週",
+          "readingSub": "こんしゅう",
+          "romaji": "konshuu",
+          "meaningVi": "tuần này",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1166,
+          "lang": "ja",
+          "scriptPrimary": "こんな",
+          "readingSub": "",
+          "romaji": "konna",
+          "meaningVi": "như thế này",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1167,
+          "lang": "ja",
+          "scriptPrimary": "今晩",
+          "readingSub": "こんばん",
+          "romaji": "konban",
+          "meaningVi": "tối nay",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1168,
+          "lang": "ja",
+          "scriptPrimary": "財布",
+          "readingSub": "さいふ",
+          "romaji": "saifu",
+          "meaningVi": "cái ví",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1169,
+          "lang": "ja",
+          "scriptPrimary": "魚",
+          "readingSub": "さかな",
+          "romaji": "sakana",
+          "meaningVi": "cá",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1170,
+          "lang": "ja",
+          "scriptPrimary": "作文",
+          "readingSub": "さくぶん",
+          "romaji": "sakubun",
+          "meaningVi": "làm văn",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1171,
+          "lang": "ja",
+          "scriptPrimary": "雑誌",
+          "readingSub": "ざっし",
+          "romaji": "zasshi",
+          "meaningVi": "tạp chí",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1172,
+          "lang": "ja",
+          "scriptPrimary": "砂糖",
+          "readingSub": "さとう",
+          "romaji": "satou",
+          "meaningVi": "đường",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1173,
+          "lang": "ja",
+          "scriptPrimary": "再来年",
+          "readingSub": "さらいねん",
+          "romaji": "sarainen",
+          "meaningVi": "năm sau nữa",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1174,
+          "lang": "ja",
+          "scriptPrimary": "三",
+          "readingSub": "さん",
+          "romaji": "san",
+          "meaningVi": "ba",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        },
+        {
+          "id": 1175,
+          "lang": "ja",
+          "scriptPrimary": "四",
+          "readingSub": "し / よん",
+          "romaji": "shi / yon",
+          "meaningVi": "bốn",
+          "wordType": "noun",
+          "topicId": "ja_n5_07"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_08",
+      "orderIndex": 8,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 8)",
+      "wordCount": 25,
+      "minLevel": 3,
+      "words": [
+        {
+          "id": 1176,
+          "lang": "ja",
+          "scriptPrimary": "塩",
+          "readingSub": "しお",
+          "romaji": "shio",
+          "meaningVi": "muối",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1177,
+          "lang": "ja",
+          "scriptPrimary": "時間",
+          "readingSub": "じかん",
+          "romaji": "jikan",
+          "meaningVi": "Thời gian",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1178,
+          "lang": "ja",
+          "scriptPrimary": "仕事",
+          "readingSub": "しごと",
+          "romaji": "shigoto",
+          "meaningVi": "công việc",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1179,
+          "lang": "ja",
+          "scriptPrimary": "辞書",
+          "readingSub": "じしょ",
+          "romaji": "jisho",
+          "meaningVi": "từ điển",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1180,
+          "lang": "ja",
+          "scriptPrimary": "下",
+          "readingSub": "した",
+          "romaji": "shita",
+          "meaningVi": "dưới",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1181,
+          "lang": "ja",
+          "scriptPrimary": "七",
+          "readingSub": "しち / なな",
+          "romaji": "shichi / nana",
+          "meaningVi": "bảy",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1182,
+          "lang": "ja",
+          "scriptPrimary": "質問",
+          "readingSub": "しつもん",
+          "romaji": "shitsumon",
+          "meaningVi": "Câu hỏi",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1183,
+          "lang": "ja",
+          "scriptPrimary": "自転車",
+          "readingSub": "じてんしゃ",
+          "romaji": "jitensha",
+          "meaningVi": "xe đạp",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1184,
+          "lang": "ja",
+          "scriptPrimary": "自動車",
+          "readingSub": "じどうしゃ",
+          "romaji": "jidousha",
+          "meaningVi": "ô tô, xe hơi",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1185,
+          "lang": "ja",
+          "scriptPrimary": "自分",
+          "readingSub": "じぶん",
+          "romaji": "jibun",
+          "meaningVi": "bản thân, tự mình",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1186,
+          "lang": "ja",
+          "scriptPrimary": "写真",
+          "readingSub": "しゃしん",
+          "romaji": "shashin",
+          "meaningVi": "ảnh",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1187,
+          "lang": "ja",
+          "scriptPrimary": "シャツ",
+          "readingSub": "",
+          "romaji": "shatsu",
+          "meaningVi": "áo sơ mi",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1188,
+          "lang": "ja",
+          "scriptPrimary": "シャワー",
+          "readingSub": "",
+          "romaji": "shawa-",
+          "meaningVi": "vòi hoa sen",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1189,
+          "lang": "ja",
+          "scriptPrimary": "十",
+          "readingSub": "じゅう",
+          "romaji": "juu",
+          "meaningVi": "mười",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1190,
+          "lang": "ja",
+          "scriptPrimary": "授業",
+          "readingSub": "じゅぎょう",
+          "romaji": "jugyou",
+          "meaningVi": "giờ học",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1191,
+          "lang": "ja",
+          "scriptPrimary": "宿題",
+          "readingSub": "しゅくだい",
+          "romaji": "shukudai",
+          "meaningVi": "bài tập về nhà",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1192,
+          "lang": "ja",
+          "scriptPrimary": "しょうゆ",
+          "readingSub": "",
+          "romaji": "shouyu",
+          "meaningVi": "xì dầu",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1193,
+          "lang": "ja",
+          "scriptPrimary": "食堂",
+          "readingSub": "しょくどう",
+          "romaji": "shokudou",
+          "meaningVi": "phòng ăn, nhà ăn",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1194,
+          "lang": "ja",
+          "scriptPrimary": "新聞",
+          "readingSub": "しんぶん",
+          "romaji": "shinbun",
+          "meaningVi": "báo",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1195,
+          "lang": "ja",
+          "scriptPrimary": "水曜日",
+          "readingSub": "すいようび",
+          "romaji": "suiyoubi",
+          "meaningVi": "Thứ tư",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1196,
+          "lang": "ja",
+          "scriptPrimary": "スカート",
+          "readingSub": "",
+          "romaji": "suka-to",
+          "meaningVi": "váy ngắn",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1197,
+          "lang": "ja",
+          "scriptPrimary": "ストーブ",
+          "readingSub": "",
+          "romaji": "suto-bu",
+          "meaningVi": "lò sưởi",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1198,
+          "lang": "ja",
+          "scriptPrimary": "スプーン",
+          "readingSub": "",
+          "romaji": "supu-n",
+          "meaningVi": "cái thìa",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1199,
+          "lang": "ja",
+          "scriptPrimary": "スポーツ",
+          "readingSub": "",
+          "romaji": "supo-tsu",
+          "meaningVi": "Thể thao",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        },
+        {
+          "id": 1200,
+          "lang": "ja",
+          "scriptPrimary": "ズボン",
+          "readingSub": "",
+          "romaji": "zubon",
+          "meaningVi": "quần",
+          "wordType": "noun",
+          "topicId": "ja_n5_08"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_09",
+      "orderIndex": 9,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 9)",
+      "wordCount": 25,
+      "minLevel": 3,
+      "words": [
+        {
+          "id": 1201,
+          "lang": "ja",
+          "scriptPrimary": "背",
+          "readingSub": "せ",
+          "romaji": "se",
+          "meaningVi": "lưng",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1202,
+          "lang": "ja",
+          "scriptPrimary": "生徒",
+          "readingSub": "せいと",
+          "romaji": "seito",
+          "meaningVi": "học sinh",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1203,
+          "lang": "ja",
+          "scriptPrimary": "セーター",
+          "readingSub": "",
+          "romaji": "se-ta-",
+          "meaningVi": "áo len",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1204,
+          "lang": "ja",
+          "scriptPrimary": "せっけん",
+          "readingSub": "",
+          "romaji": "sekken",
+          "meaningVi": "xà bông",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1205,
+          "lang": "ja",
+          "scriptPrimary": "ゼロ",
+          "readingSub": "",
+          "romaji": "zero",
+          "meaningVi": "số 0",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1206,
+          "lang": "ja",
+          "scriptPrimary": "千",
+          "readingSub": "せん",
+          "romaji": "sen",
+          "meaningVi": "nghìn",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1207,
+          "lang": "ja",
+          "scriptPrimary": "先月",
+          "readingSub": "せんげつ",
+          "romaji": "sengetsu",
+          "meaningVi": "tháng trước",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1208,
+          "lang": "ja",
+          "scriptPrimary": "先週",
+          "readingSub": "せんしゅう",
+          "romaji": "senshuu",
+          "meaningVi": "tuần trước",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1209,
+          "lang": "ja",
+          "scriptPrimary": "先生",
+          "readingSub": "せんせい",
+          "romaji": "sensei",
+          "meaningVi": "giáo viên, bác sĩ",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1210,
+          "lang": "ja",
+          "scriptPrimary": "洗濯",
+          "readingSub": "せんたく",
+          "romaji": "sentaku",
+          "meaningVi": "việc giặt giũ",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1211,
+          "lang": "ja",
+          "scriptPrimary": "掃除",
+          "readingSub": "そうじ",
+          "romaji": "souji",
+          "meaningVi": "dọn dẹp",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1212,
+          "lang": "ja",
+          "scriptPrimary": "そっち",
+          "readingSub": "",
+          "romaji": "socchi",
+          "meaningVi": "phía đó ( thể thông thường của そちら)",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1213,
+          "lang": "ja",
+          "scriptPrimary": "外",
+          "readingSub": "そと",
+          "romaji": "soto",
+          "meaningVi": "ngoài",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1214,
+          "lang": "ja",
+          "scriptPrimary": "そば",
+          "readingSub": "",
+          "romaji": "soba",
+          "meaningVi": "gần, bên cạnh",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1215,
+          "lang": "ja",
+          "scriptPrimary": "空",
+          "readingSub": "そら",
+          "romaji": "sora",
+          "meaningVi": "bầu trời",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1216,
+          "lang": "ja",
+          "scriptPrimary": "大学",
+          "readingSub": "だいがく",
+          "romaji": "daigaku",
+          "meaningVi": "đại học",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1217,
+          "lang": "ja",
+          "scriptPrimary": "大使館",
+          "readingSub": "たいしかん",
+          "romaji": "taishikan",
+          "meaningVi": "Đại sứ quán",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1218,
+          "lang": "ja",
+          "scriptPrimary": "台所",
+          "readingSub": "だいどころ",
+          "romaji": "daidokoro",
+          "meaningVi": "nhà bếp",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1219,
+          "lang": "ja",
+          "scriptPrimary": "タクシー",
+          "readingSub": "",
+          "romaji": "takushi-",
+          "meaningVi": "xe taxi",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1220,
+          "lang": "ja",
+          "scriptPrimary": "建物",
+          "readingSub": "たてもの",
+          "romaji": "tatemono",
+          "meaningVi": "tòa nhà",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1221,
+          "lang": "ja",
+          "scriptPrimary": "食べ物",
+          "readingSub": "たべもの",
+          "romaji": "tabemono",
+          "meaningVi": "đồ ăn",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1222,
+          "lang": "ja",
+          "scriptPrimary": "卵",
+          "readingSub": "たまご",
+          "romaji": "tamago",
+          "meaningVi": "trứng",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1223,
+          "lang": "ja",
+          "scriptPrimary": "誕生日",
+          "readingSub": "たんじょうび",
+          "romaji": "tanjoubi",
+          "meaningVi": "sinh nhật",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1224,
+          "lang": "ja",
+          "scriptPrimary": "地下鉄",
+          "readingSub": "ちかてつ",
+          "romaji": "chikatetsu",
+          "meaningVi": "tàu điện ngầm",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        },
+        {
+          "id": 1225,
+          "lang": "ja",
+          "scriptPrimary": "地図",
+          "readingSub": "ちず",
+          "romaji": "chizu",
+          "meaningVi": "Bản đồ",
+          "wordType": "noun",
+          "topicId": "ja_n5_09"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_10",
+      "orderIndex": 10,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 10)",
+      "wordCount": 25,
+      "minLevel": 4,
+      "words": [
+        {
+          "id": 1226,
+          "lang": "ja",
+          "scriptPrimary": "茶色",
+          "readingSub": "ちゃいろ",
+          "romaji": "chairo",
+          "meaningVi": "màu nâu( màu trà)",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1227,
+          "lang": "ja",
+          "scriptPrimary": "ちゃわん",
+          "readingSub": "",
+          "romaji": "chawan",
+          "meaningVi": "cái bát",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1228,
+          "lang": "ja",
+          "scriptPrimary": "机",
+          "readingSub": "つくえ",
+          "romaji": "tsukue",
+          "meaningVi": "bàn",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1229,
+          "lang": "ja",
+          "scriptPrimary": "手",
+          "readingSub": "て",
+          "romaji": "te",
+          "meaningVi": "tay",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1230,
+          "lang": "ja",
+          "scriptPrimary": "テーブル",
+          "readingSub": "",
+          "romaji": "te-buru",
+          "meaningVi": "cái bàn",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1231,
+          "lang": "ja",
+          "scriptPrimary": "テープレコーダー",
+          "readingSub": "",
+          "romaji": "te-pureko-da-",
+          "meaningVi": "máy ghi âm",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1232,
+          "lang": "ja",
+          "scriptPrimary": "手紙",
+          "readingSub": "てがみ",
+          "romaji": "tegami",
+          "meaningVi": "thư",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1233,
+          "lang": "ja",
+          "scriptPrimary": "出口",
+          "readingSub": "でぐち",
+          "romaji": "deguchi",
+          "meaningVi": "cửa ra, lối ra",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1234,
+          "lang": "ja",
+          "scriptPrimary": "テスト",
+          "readingSub": "",
+          "romaji": "tesuto",
+          "meaningVi": "kiểm tra",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1235,
+          "lang": "ja",
+          "scriptPrimary": "デパート",
+          "readingSub": "",
+          "romaji": "depaato",
+          "meaningVi": "cửa hàng bách hóa",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1236,
+          "lang": "ja",
+          "scriptPrimary": "テレビ",
+          "readingSub": "",
+          "romaji": "terebi",
+          "meaningVi": "Tivi",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1237,
+          "lang": "ja",
+          "scriptPrimary": "天気",
+          "readingSub": "てんき",
+          "romaji": "tenki",
+          "meaningVi": "thời tiết",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1238,
+          "lang": "ja",
+          "scriptPrimary": "電気",
+          "readingSub": "でんき",
+          "romaji": "denki",
+          "meaningVi": "điện, đèn điện",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1239,
+          "lang": "ja",
+          "scriptPrimary": "電車",
+          "readingSub": "でんしゃ",
+          "romaji": "densha",
+          "meaningVi": "tàu điện",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1240,
+          "lang": "ja",
+          "scriptPrimary": "電話",
+          "readingSub": "でんわ",
+          "romaji": "denwa",
+          "meaningVi": "điện thoại",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1241,
+          "lang": "ja",
+          "scriptPrimary": "戸",
+          "readingSub": "と",
+          "romaji": "to",
+          "meaningVi": "Cửa",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1242,
+          "lang": "ja",
+          "scriptPrimary": "ドア",
+          "readingSub": "",
+          "romaji": "doa",
+          "meaningVi": "Cửa",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1243,
+          "lang": "ja",
+          "scriptPrimary": "トイレ",
+          "readingSub": "",
+          "romaji": "toire",
+          "meaningVi": "nhà vệ sinh",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1244,
+          "lang": "ja",
+          "scriptPrimary": "所",
+          "readingSub": "ところ",
+          "romaji": "tokoro",
+          "meaningVi": "nơi, chỗ",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1245,
+          "lang": "ja",
+          "scriptPrimary": "年",
+          "readingSub": "とし",
+          "romaji": "toshi",
+          "meaningVi": "năm",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1246,
+          "lang": "ja",
+          "scriptPrimary": "図書館",
+          "readingSub": "としょかん",
+          "romaji": "toshokan",
+          "meaningVi": "thư viện",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1247,
+          "lang": "ja",
+          "scriptPrimary": "動物",
+          "readingSub": "どうぶつ",
+          "romaji": "doubutsu",
+          "meaningVi": "động vật",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1248,
+          "lang": "ja",
+          "scriptPrimary": "時々",
+          "readingSub": "ときどき",
+          "romaji": "tokidoki",
+          "meaningVi": "thỉnh thoảng",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1249,
+          "lang": "ja",
+          "scriptPrimary": "時計",
+          "readingSub": "とけい",
+          "romaji": "tokei",
+          "meaningVi": "đồng hồ",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        },
+        {
+          "id": 1250,
+          "lang": "ja",
+          "scriptPrimary": "隣",
+          "readingSub": "となり",
+          "romaji": "tonari",
+          "meaningVi": "bên cạnh",
+          "wordType": "noun",
+          "topicId": "ja_n5_10"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_11",
+      "orderIndex": 11,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 11)",
+      "wordCount": 25,
+      "minLevel": 4,
+      "words": [
+        {
+          "id": 1251,
+          "lang": "ja",
+          "scriptPrimary": "友達",
+          "readingSub": "ともだち",
+          "romaji": "tomodachi",
+          "meaningVi": "bạn bè",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1252,
+          "lang": "ja",
+          "scriptPrimary": "土曜日",
+          "readingSub": "どようび",
+          "romaji": "doyoubi",
+          "meaningVi": "Thứ bảy",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1253,
+          "lang": "ja",
+          "scriptPrimary": "鳥",
+          "readingSub": "とり",
+          "romaji": "tori",
+          "meaningVi": "con chim",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1254,
+          "lang": "ja",
+          "scriptPrimary": "とり肉",
+          "readingSub": "とりにく",
+          "romaji": "toriniku",
+          "meaningVi": "thịt gà",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1255,
+          "lang": "ja",
+          "scriptPrimary": "ナイフ",
+          "readingSub": "",
+          "romaji": "naifu",
+          "meaningVi": "dao",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1256,
+          "lang": "ja",
+          "scriptPrimary": "中",
+          "readingSub": "なか",
+          "romaji": "naka",
+          "meaningVi": "trong",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1257,
+          "lang": "ja",
+          "scriptPrimary": "夏休み",
+          "readingSub": "なつやすみ",
+          "romaji": "natsuyasumi",
+          "meaningVi": "kỳ nghỉ hè",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1258,
+          "lang": "ja",
+          "scriptPrimary": "七つ",
+          "readingSub": "ななつ",
+          "romaji": "nanatsu",
+          "meaningVi": "bảy cái ( đếm vật nói chung)",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1259,
+          "lang": "ja",
+          "scriptPrimary": "名前",
+          "readingSub": "なまえ",
+          "romaji": "namae",
+          "meaningVi": "tên",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1260,
+          "lang": "ja",
+          "scriptPrimary": "二",
+          "readingSub": "に",
+          "romaji": "ni",
+          "meaningVi": "hai",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1261,
+          "lang": "ja",
+          "scriptPrimary": "肉",
+          "readingSub": "にく",
+          "romaji": "niku",
+          "meaningVi": "thịt",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1262,
+          "lang": "ja",
+          "scriptPrimary": "西",
+          "readingSub": "にし",
+          "romaji": "nishi",
+          "meaningVi": "phía Tây",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1263,
+          "lang": "ja",
+          "scriptPrimary": "日曜日",
+          "readingSub": "にちようび",
+          "romaji": "nichiyoubi",
+          "meaningVi": "Chủ Nhật",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1264,
+          "lang": "ja",
+          "scriptPrimary": "荷物",
+          "readingSub": "にもつ",
+          "romaji": "nimotsu",
+          "meaningVi": "hành lý, đồ đạc",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1265,
+          "lang": "ja",
+          "scriptPrimary": "ニュース",
+          "readingSub": "",
+          "romaji": "nyu-su",
+          "meaningVi": "tin tức",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1266,
+          "lang": "ja",
+          "scriptPrimary": "庭",
+          "readingSub": "にわ",
+          "romaji": "niwa",
+          "meaningVi": "vườn",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1267,
+          "lang": "ja",
+          "scriptPrimary": "ネクタイ",
+          "readingSub": "",
+          "romaji": "nekutai",
+          "meaningVi": "cà vạt",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1268,
+          "lang": "ja",
+          "scriptPrimary": "猫",
+          "readingSub": "ねこ",
+          "romaji": "neko",
+          "meaningVi": "mèo",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1269,
+          "lang": "ja",
+          "scriptPrimary": "飲み物",
+          "readingSub": "のみもの",
+          "romaji": "nomimono",
+          "meaningVi": "đồ uống",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1270,
+          "lang": "ja",
+          "scriptPrimary": "歯",
+          "readingSub": "は",
+          "romaji": "ha",
+          "meaningVi": "răng",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1271,
+          "lang": "ja",
+          "scriptPrimary": "パーティー",
+          "readingSub": "",
+          "romaji": "paateィ-",
+          "meaningVi": "tiệc",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1272,
+          "lang": "ja",
+          "scriptPrimary": "灰皿",
+          "readingSub": "はいざら",
+          "romaji": "haizara",
+          "meaningVi": "gạt tàn thuốc",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1273,
+          "lang": "ja",
+          "scriptPrimary": "葉書",
+          "readingSub": "はがき",
+          "romaji": "hagaki",
+          "meaningVi": "bưu thiếp",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1274,
+          "lang": "ja",
+          "scriptPrimary": "箱",
+          "readingSub": "はこ",
+          "romaji": "hako",
+          "meaningVi": "cái hộp",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        },
+        {
+          "id": 1275,
+          "lang": "ja",
+          "scriptPrimary": "橋",
+          "readingSub": "はし",
+          "romaji": "hashi",
+          "meaningVi": "cầu",
+          "wordType": "noun",
+          "topicId": "ja_n5_11"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_12",
+      "orderIndex": 12,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 12)",
+      "wordCount": 25,
+      "minLevel": 4,
+      "words": [
+        {
+          "id": 1276,
+          "lang": "ja",
+          "scriptPrimary": "箸",
+          "readingSub": "はし",
+          "romaji": "hashi",
+          "meaningVi": "đũa",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1277,
+          "lang": "ja",
+          "scriptPrimary": "バス",
+          "readingSub": "",
+          "romaji": "basu",
+          "meaningVi": "xe buýt",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1278,
+          "lang": "ja",
+          "scriptPrimary": "バター",
+          "readingSub": "",
+          "romaji": "bata-",
+          "meaningVi": "bơ",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1279,
+          "lang": "ja",
+          "scriptPrimary": "二十歳",
+          "readingSub": "はたち,にじゅっさい",
+          "romaji": "hatachi,nijussai",
+          "meaningVi": "20 tuổi",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1280,
+          "lang": "ja",
+          "scriptPrimary": "八",
+          "readingSub": "はち",
+          "romaji": "hachi",
+          "meaningVi": "tám",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1281,
+          "lang": "ja",
+          "scriptPrimary": "二十日",
+          "readingSub": "はつか",
+          "romaji": "hatsuka",
+          "meaningVi": "ngày 20, 20 ngày",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1282,
+          "lang": "ja",
+          "scriptPrimary": "花",
+          "readingSub": "はな",
+          "romaji": "hana",
+          "meaningVi": "hoa",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1283,
+          "lang": "ja",
+          "scriptPrimary": "鼻",
+          "readingSub": "はな",
+          "romaji": "hana",
+          "meaningVi": "mũi",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1284,
+          "lang": "ja",
+          "scriptPrimary": "話",
+          "readingSub": "はなし",
+          "romaji": "hanashi",
+          "meaningVi": "câu chuyện",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1285,
+          "lang": "ja",
+          "scriptPrimary": "半",
+          "readingSub": "はん",
+          "romaji": "han",
+          "meaningVi": "một nửa",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1286,
+          "lang": "ja",
+          "scriptPrimary": "晩",
+          "readingSub": "ばん",
+          "romaji": "ban",
+          "meaningVi": "buổi tối",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1287,
+          "lang": "ja",
+          "scriptPrimary": "パン",
+          "readingSub": "",
+          "romaji": "pan",
+          "meaningVi": "bánh mì",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1288,
+          "lang": "ja",
+          "scriptPrimary": "ハンカチ",
+          "readingSub": "",
+          "romaji": "hankachi",
+          "meaningVi": "khăn tay",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1289,
+          "lang": "ja",
+          "scriptPrimary": "番号",
+          "readingSub": "ばんごう",
+          "romaji": "bangou",
+          "meaningVi": "số",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1290,
+          "lang": "ja",
+          "scriptPrimary": "晩御飯",
+          "readingSub": "ばんごはん",
+          "romaji": "bangohan",
+          "meaningVi": "bữa ăn tối",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1291,
+          "lang": "ja",
+          "scriptPrimary": "半分",
+          "readingSub": "はんぶん",
+          "romaji": "hanbun",
+          "meaningVi": "một nửa",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1292,
+          "lang": "ja",
+          "scriptPrimary": "東",
+          "readingSub": "ひがし",
+          "romaji": "higashi",
+          "meaningVi": "phía Đông",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1293,
+          "lang": "ja",
+          "scriptPrimary": "飛行機",
+          "readingSub": "ひこうき",
+          "romaji": "hikouki",
+          "meaningVi": "máy bay",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1294,
+          "lang": "ja",
+          "scriptPrimary": "左",
+          "readingSub": "ひだり",
+          "romaji": "hidari",
+          "meaningVi": "phía bên tay trái",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1295,
+          "lang": "ja",
+          "scriptPrimary": "人",
+          "readingSub": "ひと",
+          "romaji": "hito",
+          "meaningVi": "người",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1296,
+          "lang": "ja",
+          "scriptPrimary": "一つ",
+          "readingSub": "ひとつ",
+          "romaji": "hitotsu",
+          "meaningVi": "một cái ( đếm vật nói chung )",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1297,
+          "lang": "ja",
+          "scriptPrimary": "一月",
+          "readingSub": "いちがつ",
+          "romaji": "ichigatsu",
+          "meaningVi": "tháng 1",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1298,
+          "lang": "ja",
+          "scriptPrimary": "一人",
+          "readingSub": "ひとり",
+          "romaji": "hitori",
+          "meaningVi": "một người",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1299,
+          "lang": "ja",
+          "scriptPrimary": "百",
+          "readingSub": "ひゃく",
+          "romaji": "hyaku",
+          "meaningVi": "trăm",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        },
+        {
+          "id": 1300,
+          "lang": "ja",
+          "scriptPrimary": "病院",
+          "readingSub": "びょういん",
+          "romaji": "byouin",
+          "meaningVi": "bệnh viện",
+          "wordType": "noun",
+          "topicId": "ja_n5_12"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_13",
+      "orderIndex": 13,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 13)",
+      "wordCount": 25,
+      "minLevel": 5,
+      "words": [
+        {
+          "id": 1301,
+          "lang": "ja",
+          "scriptPrimary": "病気",
+          "readingSub": "びょうき",
+          "romaji": "byouki",
+          "meaningVi": "bệnh",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1302,
+          "lang": "ja",
+          "scriptPrimary": "昼",
+          "readingSub": "ひる",
+          "romaji": "hiru",
+          "meaningVi": "buổi trưa, ban ngày",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1303,
+          "lang": "ja",
+          "scriptPrimary": "昼ご飯",
+          "readingSub": "ひるごはん",
+          "romaji": "hirugohan",
+          "meaningVi": "ăn trưa",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1304,
+          "lang": "ja",
+          "scriptPrimary": "フィルム",
+          "readingSub": "",
+          "romaji": "fuィrumu",
+          "meaningVi": "cuộn phim",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1305,
+          "lang": "ja",
+          "scriptPrimary": "封筒",
+          "readingSub": "ふうとう",
+          "romaji": "fuutou",
+          "meaningVi": "phong bì",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1306,
+          "lang": "ja",
+          "scriptPrimary": "プール",
+          "readingSub": "",
+          "romaji": "pu-ru",
+          "meaningVi": "hồ bơi",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1307,
+          "lang": "ja",
+          "scriptPrimary": "フォーク",
+          "readingSub": "",
+          "romaji": "fuォ-ku",
+          "meaningVi": "dĩa",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1308,
+          "lang": "ja",
+          "scriptPrimary": "服",
+          "readingSub": "ふく",
+          "romaji": "fuku",
+          "meaningVi": "quần áo",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1309,
+          "lang": "ja",
+          "scriptPrimary": "二つ",
+          "readingSub": "ふたつ",
+          "romaji": "futatsu",
+          "meaningVi": "hai cái ( đếm vật nói chung)",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1310,
+          "lang": "ja",
+          "scriptPrimary": "豚肉",
+          "readingSub": "ぶたにく",
+          "romaji": "butaniku",
+          "meaningVi": "thịt lợn",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1311,
+          "lang": "ja",
+          "scriptPrimary": "二人",
+          "readingSub": "ふたり",
+          "romaji": "futari",
+          "meaningVi": "hai người",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1312,
+          "lang": "ja",
+          "scriptPrimary": "文章",
+          "readingSub": "ぶんしょう",
+          "romaji": "bunshou",
+          "meaningVi": "câu văn, đoạn văn",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1313,
+          "lang": "ja",
+          "scriptPrimary": "ページ",
+          "readingSub": "",
+          "romaji": "pe-ji",
+          "meaningVi": "trang",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1314,
+          "lang": "ja",
+          "scriptPrimary": "ベッド",
+          "readingSub": "",
+          "romaji": "beddo",
+          "meaningVi": "cái giường",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1315,
+          "lang": "ja",
+          "scriptPrimary": "ペット",
+          "readingSub": "",
+          "romaji": "petto",
+          "meaningVi": "thú cưng",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1316,
+          "lang": "ja",
+          "scriptPrimary": "部屋",
+          "readingSub": "へや",
+          "romaji": "heya",
+          "meaningVi": "căn phòng",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1317,
+          "lang": "ja",
+          "scriptPrimary": "辺",
+          "readingSub": "へん",
+          "romaji": "hen",
+          "meaningVi": "khu vực",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1318,
+          "lang": "ja",
+          "scriptPrimary": "ペン",
+          "readingSub": "",
+          "romaji": "pen",
+          "meaningVi": "bút",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1319,
+          "lang": "ja",
+          "scriptPrimary": "帽子",
+          "readingSub": "ぼうし",
+          "romaji": "boushi",
+          "meaningVi": "mũ",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1320,
+          "lang": "ja",
+          "scriptPrimary": "ボールペン",
+          "readingSub": "",
+          "romaji": "bo-rupen",
+          "meaningVi": "bút bi",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1321,
+          "lang": "ja",
+          "scriptPrimary": "ポケット",
+          "readingSub": "",
+          "romaji": "poketto",
+          "meaningVi": "túi ( áo, quần)",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1322,
+          "lang": "ja",
+          "scriptPrimary": "ボタン",
+          "readingSub": "",
+          "romaji": "botan",
+          "meaningVi": "nút",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1323,
+          "lang": "ja",
+          "scriptPrimary": "ホテル",
+          "readingSub": "",
+          "romaji": "hoteru",
+          "meaningVi": "khách sạn",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1324,
+          "lang": "ja",
+          "scriptPrimary": "本",
+          "readingSub": "ほん",
+          "romaji": "hon",
+          "meaningVi": "cuốn sách",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        },
+        {
+          "id": 1325,
+          "lang": "ja",
+          "scriptPrimary": "本棚",
+          "readingSub": "ほんだな",
+          "romaji": "hondana",
+          "meaningVi": "giá sách",
+          "wordType": "noun",
+          "topicId": "ja_n5_13"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_14",
+      "orderIndex": 14,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 14)",
+      "wordCount": 25,
+      "minLevel": 5,
+      "words": [
+        {
+          "id": 1326,
+          "lang": "ja",
+          "scriptPrimary": "本当",
+          "readingSub": "ほんとう",
+          "romaji": "hontou",
+          "meaningVi": "sự thật",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1327,
+          "lang": "ja",
+          "scriptPrimary": "毎朝",
+          "readingSub": "まいあさ",
+          "romaji": "maiasa",
+          "meaningVi": "mỗi buổi sáng",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1328,
+          "lang": "ja",
+          "scriptPrimary": "毎月",
+          "readingSub": "まいげつ/まいつき",
+          "romaji": "maigetsu/maitsuki",
+          "meaningVi": "mỗi tháng",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1329,
+          "lang": "ja",
+          "scriptPrimary": "毎週",
+          "readingSub": "まいしゅう",
+          "romaji": "maishuu",
+          "meaningVi": "mỗi tuần",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1330,
+          "lang": "ja",
+          "scriptPrimary": "毎日",
+          "readingSub": "まいにち",
+          "romaji": "mainichi",
+          "meaningVi": "mỗi ngày",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1331,
+          "lang": "ja",
+          "scriptPrimary": "毎年",
+          "readingSub": "まいねん/まいとし",
+          "romaji": "mainen/maitoshi",
+          "meaningVi": "mỗi năm",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1332,
+          "lang": "ja",
+          "scriptPrimary": "毎晩",
+          "readingSub": "まいばん",
+          "romaji": "maiban",
+          "meaningVi": "mỗi tối",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1333,
+          "lang": "ja",
+          "scriptPrimary": "前",
+          "readingSub": "まえ",
+          "romaji": "mae",
+          "meaningVi": "trước",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1334,
+          "lang": "ja",
+          "scriptPrimary": "町",
+          "readingSub": "まち",
+          "romaji": "machi",
+          "meaningVi": "thị xã, thành phố",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1335,
+          "lang": "ja",
+          "scriptPrimary": "窓",
+          "readingSub": "まど",
+          "romaji": "mado",
+          "meaningVi": "cửa sổ",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1336,
+          "lang": "ja",
+          "scriptPrimary": "万",
+          "readingSub": "まん",
+          "romaji": "man",
+          "meaningVi": "vạn ( mười nghìn)",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1337,
+          "lang": "ja",
+          "scriptPrimary": "万年筆",
+          "readingSub": "まんねんひつ",
+          "romaji": "mannenhitsu",
+          "meaningVi": "bút mực",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1338,
+          "lang": "ja",
+          "scriptPrimary": "右",
+          "readingSub": "みぎ",
+          "romaji": "migi",
+          "meaningVi": "bên phải",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1339,
+          "lang": "ja",
+          "scriptPrimary": "水",
+          "readingSub": "みず",
+          "romaji": "mizu",
+          "meaningVi": "nước",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1340,
+          "lang": "ja",
+          "scriptPrimary": "店",
+          "readingSub": "みせ",
+          "romaji": "mise",
+          "meaningVi": "cửa hàng, cửa tiệm",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1341,
+          "lang": "ja",
+          "scriptPrimary": "道",
+          "readingSub": "みち",
+          "romaji": "michi",
+          "meaningVi": "đường phố",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1342,
+          "lang": "ja",
+          "scriptPrimary": "三つ",
+          "readingSub": "みっつ",
+          "romaji": "mittsu",
+          "meaningVi": "ba cái ( đếm đồ vật nói chung)",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1343,
+          "lang": "ja",
+          "scriptPrimary": "緑",
+          "readingSub": "みどり",
+          "romaji": "midori",
+          "meaningVi": "màu xanh lá cây",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1344,
+          "lang": "ja",
+          "scriptPrimary": "皆さん",
+          "readingSub": "みなさん",
+          "romaji": "minasan",
+          "meaningVi": "tất cả mọi người",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1345,
+          "lang": "ja",
+          "scriptPrimary": "南",
+          "readingSub": "みなみ",
+          "romaji": "minami",
+          "meaningVi": "phía Nam",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1346,
+          "lang": "ja",
+          "scriptPrimary": "耳",
+          "readingSub": "みみ",
+          "romaji": "mimi",
+          "meaningVi": "tai",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1347,
+          "lang": "ja",
+          "scriptPrimary": "みんな",
+          "readingSub": "",
+          "romaji": "minna",
+          "meaningVi": "tất cả",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1348,
+          "lang": "ja",
+          "scriptPrimary": "向こう",
+          "readingSub": "むこう",
+          "romaji": "mukou",
+          "meaningVi": "phía bên kia",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1349,
+          "lang": "ja",
+          "scriptPrimary": "六つ",
+          "readingSub": "むっつ",
+          "romaji": "muttsu",
+          "meaningVi": "sáu cái ( đếm vật nói chung)",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        },
+        {
+          "id": 1350,
+          "lang": "ja",
+          "scriptPrimary": "村",
+          "readingSub": "むら",
+          "romaji": "mura",
+          "meaningVi": "làng",
+          "wordType": "noun",
+          "topicId": "ja_n5_14"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_15",
+      "orderIndex": 15,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 15)",
+      "wordCount": 25,
+      "minLevel": 5,
+      "words": [
+        {
+          "id": 1351,
+          "lang": "ja",
+          "scriptPrimary": "目",
+          "readingSub": "め",
+          "romaji": "me",
+          "meaningVi": "mắt",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1352,
+          "lang": "ja",
+          "scriptPrimary": "メートル",
+          "readingSub": "",
+          "romaji": "me-toru",
+          "meaningVi": "mét",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1353,
+          "lang": "ja",
+          "scriptPrimary": "眼鏡",
+          "readingSub": "めがね",
+          "romaji": "megane",
+          "meaningVi": "kính",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1354,
+          "lang": "ja",
+          "scriptPrimary": "もう一度",
+          "readingSub": "もういちど",
+          "romaji": "mouichido",
+          "meaningVi": "một lần nữa",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1355,
+          "lang": "ja",
+          "scriptPrimary": "木曜日",
+          "readingSub": "もくようび",
+          "romaji": "mokuyoubi",
+          "meaningVi": "Thứ năm",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1356,
+          "lang": "ja",
+          "scriptPrimary": "物",
+          "readingSub": "もの",
+          "romaji": "mono",
+          "meaningVi": "đồ vật",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1357,
+          "lang": "ja",
+          "scriptPrimary": "門",
+          "readingSub": "もん",
+          "romaji": "mon",
+          "meaningVi": "cổng, cửa",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1358,
+          "lang": "ja",
+          "scriptPrimary": "問題",
+          "readingSub": "もんだい",
+          "romaji": "mondai",
+          "meaningVi": "vấn đề",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1359,
+          "lang": "ja",
+          "scriptPrimary": "八百屋",
+          "readingSub": "やおや",
+          "romaji": "yaoya",
+          "meaningVi": "cửa hàng rau",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1360,
+          "lang": "ja",
+          "scriptPrimary": "野菜",
+          "readingSub": "やさい",
+          "romaji": "yasai",
+          "meaningVi": "rau",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1361,
+          "lang": "ja",
+          "scriptPrimary": "休み",
+          "readingSub": "やすみ",
+          "romaji": "yasumi",
+          "meaningVi": "nghỉ, nghỉ ngơi",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1362,
+          "lang": "ja",
+          "scriptPrimary": "八つ",
+          "readingSub": "やっつ",
+          "romaji": "yattsu",
+          "meaningVi": "tám cái( đếm vật nói chung)",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1363,
+          "lang": "ja",
+          "scriptPrimary": "山",
+          "readingSub": "やま",
+          "romaji": "yama",
+          "meaningVi": "núi",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1364,
+          "lang": "ja",
+          "scriptPrimary": "夕方",
+          "readingSub": "ゆうがた",
+          "romaji": "yuugata",
+          "meaningVi": "chiều tối",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1365,
+          "lang": "ja",
+          "scriptPrimary": "夕飯",
+          "readingSub": "ゆうはん",
+          "romaji": "yuuhan",
+          "meaningVi": "bữa ăn tối",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1366,
+          "lang": "ja",
+          "scriptPrimary": "郵便局",
+          "readingSub": "ゆうびんきょく",
+          "romaji": "yuubinkyoku",
+          "meaningVi": "bưu điện",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1367,
+          "lang": "ja",
+          "scriptPrimary": "ゆうべ",
+          "readingSub": "",
+          "romaji": "yuube",
+          "meaningVi": "đêm qua",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1368,
+          "lang": "ja",
+          "scriptPrimary": "洋服",
+          "readingSub": "ようふく",
+          "romaji": "youfuku",
+          "meaningVi": "quần áo kiểu phương Tây",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1369,
+          "lang": "ja",
+          "scriptPrimary": "横",
+          "readingSub": "よこ",
+          "romaji": "yoko",
+          "meaningVi": "bên cạnh, bên, chiều rộng",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1370,
+          "lang": "ja",
+          "scriptPrimary": "四つ",
+          "readingSub": "よっつ",
+          "romaji": "yottsu",
+          "meaningVi": "bốn cái ( đếm vật nói chung )",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1371,
+          "lang": "ja",
+          "scriptPrimary": "夜",
+          "readingSub": "よる",
+          "romaji": "yoru",
+          "meaningVi": "buổi tối, ban đêm",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1372,
+          "lang": "ja",
+          "scriptPrimary": "来月",
+          "readingSub": "らいげつ",
+          "romaji": "raigetsu",
+          "meaningVi": "tháng sau",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1373,
+          "lang": "ja",
+          "scriptPrimary": "来週",
+          "readingSub": "らいしゅう",
+          "romaji": "raishuu",
+          "meaningVi": "tuần sau",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1374,
+          "lang": "ja",
+          "scriptPrimary": "来年",
+          "readingSub": "らいねん",
+          "romaji": "rainen",
+          "meaningVi": "năm sau",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        },
+        {
+          "id": 1375,
+          "lang": "ja",
+          "scriptPrimary": "ラジオ",
+          "readingSub": "",
+          "romaji": "rajio",
+          "meaningVi": "radio",
+          "wordType": "noun",
+          "topicId": "ja_n5_15"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_16",
+      "orderIndex": 16,
+      "level": "JLPT N5",
+      "wordTypeGroup": "noun",
+      "titleVi": "Danh từ JLPT N5 (Phần 16)",
+      "wordCount": 12,
+      "minLevel": 6,
+      "words": [
+        {
+          "id": 1376,
+          "lang": "ja",
+          "scriptPrimary": "ラジカセ / ラジオカセット",
+          "readingSub": "",
+          "romaji": "rajikase / rajiokasetto",
+          "meaningVi": "đài cassette",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1377,
+          "lang": "ja",
+          "scriptPrimary": "留学生",
+          "readingSub": "りゅうがくせい",
+          "romaji": "ryuugakusei",
+          "meaningVi": "du học sinh",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1378,
+          "lang": "ja",
+          "scriptPrimary": "両親",
+          "readingSub": "りょうしん",
+          "romaji": "ryoushin",
+          "meaningVi": "bố mẹ",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1379,
+          "lang": "ja",
+          "scriptPrimary": "料理",
+          "readingSub": "りょうり",
+          "romaji": "ryouri",
+          "meaningVi": "nấu ăn, món ăn",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1380,
+          "lang": "ja",
+          "scriptPrimary": "旅行",
+          "readingSub": "りょこう",
+          "romaji": "ryokou",
+          "meaningVi": "du lịch",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1381,
+          "lang": "ja",
+          "scriptPrimary": "冷蔵庫",
+          "readingSub": "れいぞうこ",
+          "romaji": "reizouko",
+          "meaningVi": "tủ lạnh",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1382,
+          "lang": "ja",
+          "scriptPrimary": "レストラン",
+          "readingSub": "",
+          "romaji": "resutoran",
+          "meaningVi": "nhà hàng",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1383,
+          "lang": "ja",
+          "scriptPrimary": "廊下",
+          "readingSub": "ろうか",
+          "romaji": "rouka",
+          "meaningVi": "hành lang",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1384,
+          "lang": "ja",
+          "scriptPrimary": "六",
+          "readingSub": "ろく",
+          "romaji": "roku",
+          "meaningVi": "sáu",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1385,
+          "lang": "ja",
+          "scriptPrimary": "ワイシャツ",
+          "readingSub": "",
+          "romaji": "waishatsu",
+          "meaningVi": "áo sơ mi",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1386,
+          "lang": "ja",
+          "scriptPrimary": "私",
+          "readingSub": "わたくし",
+          "romaji": "watakushi",
+          "meaningVi": "tôi( khiêm nhường ngữ)",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        },
+        {
+          "id": 1387,
+          "lang": "ja",
+          "scriptPrimary": "私",
+          "readingSub": "わたし",
+          "romaji": "watashi",
+          "meaningVi": "Tôi",
+          "wordType": "noun",
+          "topicId": "ja_n5_16"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_17",
+      "orderIndex": 17,
+      "level": "JLPT N5",
+      "wordTypeGroup": "verb",
+      "titleVi": "Động từ JLPT N5 (Phần 1)",
+      "wordCount": 25,
+      "minLevel": 6,
+      "words": [
+        {
+          "id": 1388,
+          "lang": "ja",
+          "scriptPrimary": "会う",
+          "readingSub": "あう",
+          "romaji": "au",
+          "meaningVi": "Gặp mặt",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1389,
+          "lang": "ja",
+          "scriptPrimary": "開く",
+          "readingSub": "あく",
+          "romaji": "aku",
+          "meaningVi": "mở ( tự động từ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1390,
+          "lang": "ja",
+          "scriptPrimary": "開ける",
+          "readingSub": "あける",
+          "romaji": "akeru",
+          "meaningVi": "mở (tha động từ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1391,
+          "lang": "ja",
+          "scriptPrimary": "上げる",
+          "readingSub": "あげる",
+          "romaji": "ageru",
+          "meaningVi": "Nâng lên, tăng lên",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1392,
+          "lang": "ja",
+          "scriptPrimary": "遊ぶ",
+          "readingSub": "あそぶ",
+          "romaji": "asobu",
+          "meaningVi": "Chơi",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1393,
+          "lang": "ja",
+          "scriptPrimary": "浴びる",
+          "readingSub": "あびる",
+          "romaji": "abiru",
+          "meaningVi": "tắm ( vòi hoa sen)",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1394,
+          "lang": "ja",
+          "scriptPrimary": "洗う",
+          "readingSub": "あらう",
+          "romaji": "arau",
+          "meaningVi": "rửa",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1395,
+          "lang": "ja",
+          "scriptPrimary": "ある",
+          "readingSub": "",
+          "romaji": "aru",
+          "meaningVi": "Có ( dùng cho đồ vật, vật vô tri vô giác)",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1396,
+          "lang": "ja",
+          "scriptPrimary": "歩く",
+          "readingSub": "あるく",
+          "romaji": "aruku",
+          "meaningVi": "đi bộ",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1397,
+          "lang": "ja",
+          "scriptPrimary": "いる",
+          "readingSub": "",
+          "romaji": "iru",
+          "meaningVi": "có (được sử dụng cho người và động vật)",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1398,
+          "lang": "ja",
+          "scriptPrimary": "要る",
+          "readingSub": "いる",
+          "romaji": "iru",
+          "meaningVi": "cần",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1399,
+          "lang": "ja",
+          "scriptPrimary": "入れる",
+          "readingSub": "いれる",
+          "romaji": "ireru",
+          "meaningVi": "Cho vào, đưa vào",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1400,
+          "lang": "ja",
+          "scriptPrimary": "歌う",
+          "readingSub": "うたう",
+          "romaji": "utau",
+          "meaningVi": "hát",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1401,
+          "lang": "ja",
+          "scriptPrimary": "生まれる",
+          "readingSub": "うまれる",
+          "romaji": "umareru",
+          "meaningVi": "được sinh ra",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1402,
+          "lang": "ja",
+          "scriptPrimary": "売る",
+          "readingSub": "うる",
+          "romaji": "uru",
+          "meaningVi": "bán",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1403,
+          "lang": "ja",
+          "scriptPrimary": "教える",
+          "readingSub": "おしえる",
+          "romaji": "oshieru",
+          "meaningVi": "dạy, chỉ cho biết",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1404,
+          "lang": "ja",
+          "scriptPrimary": "覚える",
+          "readingSub": "おぼえる",
+          "romaji": "oboeru",
+          "meaningVi": "nhớ",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1405,
+          "lang": "ja",
+          "scriptPrimary": "降りる",
+          "readingSub": "おりる",
+          "romaji": "oriru",
+          "meaningVi": "xuống",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1406,
+          "lang": "ja",
+          "scriptPrimary": "終る",
+          "readingSub": "おわる",
+          "romaji": "owaru",
+          "meaningVi": "kết thúc",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1407,
+          "lang": "ja",
+          "scriptPrimary": "買う",
+          "readingSub": "かう",
+          "romaji": "kau",
+          "meaningVi": "mua",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1408,
+          "lang": "ja",
+          "scriptPrimary": "返す",
+          "readingSub": "かえす",
+          "romaji": "kaesu",
+          "meaningVi": "trả lại",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1409,
+          "lang": "ja",
+          "scriptPrimary": "帰る",
+          "readingSub": "かえる",
+          "romaji": "kaeru",
+          "meaningVi": "về",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1410,
+          "lang": "ja",
+          "scriptPrimary": "かかる",
+          "readingSub": "",
+          "romaji": "kakaru",
+          "meaningVi": "mất, tốn( thời gian, tiền bạc…)",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1411,
+          "lang": "ja",
+          "scriptPrimary": "書く",
+          "readingSub": "かく",
+          "romaji": "kaku",
+          "meaningVi": "viết",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        },
+        {
+          "id": 1412,
+          "lang": "ja",
+          "scriptPrimary": "貸す",
+          "readingSub": "かす",
+          "romaji": "kasu",
+          "meaningVi": "cho vay, cho mượn",
+          "wordType": "verb",
+          "topicId": "ja_n5_17"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_18",
+      "orderIndex": 18,
+      "level": "JLPT N5",
+      "wordTypeGroup": "verb",
+      "titleVi": "Động từ JLPT N5 (Phần 2)",
+      "wordCount": 25,
+      "minLevel": 6,
+      "words": [
+        {
+          "id": 1413,
+          "lang": "ja",
+          "scriptPrimary": "借りる",
+          "readingSub": "かりる",
+          "romaji": "kariru",
+          "meaningVi": "vay, mượn",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1414,
+          "lang": "ja",
+          "scriptPrimary": "消える",
+          "readingSub": "きえる",
+          "romaji": "kieru",
+          "meaningVi": "biến mất, tắt ( điện)",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1415,
+          "lang": "ja",
+          "scriptPrimary": "聞く",
+          "readingSub": "きく",
+          "romaji": "kiku",
+          "meaningVi": "nghe, hỏi",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1416,
+          "lang": "ja",
+          "scriptPrimary": "切る",
+          "readingSub": "きる",
+          "romaji": "kiru",
+          "meaningVi": "cắt",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1417,
+          "lang": "ja",
+          "scriptPrimary": "着る",
+          "readingSub": "きる",
+          "romaji": "kiru",
+          "meaningVi": "mặc( đưa từ trên xuống như áo…)",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1418,
+          "lang": "ja",
+          "scriptPrimary": "曇る",
+          "readingSub": "くもる",
+          "romaji": "kumoru",
+          "meaningVi": "có mây, nhiều mây",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1419,
+          "lang": "ja",
+          "scriptPrimary": "来る",
+          "readingSub": "くる",
+          "romaji": "kuru",
+          "meaningVi": "đến",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1420,
+          "lang": "ja",
+          "scriptPrimary": "答える",
+          "readingSub": "こたえる",
+          "romaji": "kotaeru",
+          "meaningVi": "trả lời",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1421,
+          "lang": "ja",
+          "scriptPrimary": "コピーする",
+          "readingSub": "",
+          "romaji": "kopi-suru",
+          "meaningVi": "copy, sao chép",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1422,
+          "lang": "ja",
+          "scriptPrimary": "困る",
+          "readingSub": "こまる",
+          "romaji": "komaru",
+          "meaningVi": "bối rối, khó khăn, rắc rối",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1423,
+          "lang": "ja",
+          "scriptPrimary": "散歩",
+          "readingSub": "さんぽする",
+          "romaji": "sanposuru",
+          "meaningVi": "đi dạo",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1424,
+          "lang": "ja",
+          "scriptPrimary": "閉まる",
+          "readingSub": "しまる",
+          "romaji": "shimaru",
+          "meaningVi": "đóng ( tự động từ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1425,
+          "lang": "ja",
+          "scriptPrimary": "閉める",
+          "readingSub": "しめる",
+          "romaji": "shimeru",
+          "meaningVi": "đóng ( tha động từ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1426,
+          "lang": "ja",
+          "scriptPrimary": "知る",
+          "readingSub": "しる",
+          "romaji": "shiru",
+          "meaningVi": "biết",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1427,
+          "lang": "ja",
+          "scriptPrimary": "吸う",
+          "readingSub": "すう",
+          "romaji": "suu",
+          "meaningVi": "hút",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1428,
+          "lang": "ja",
+          "scriptPrimary": "住む",
+          "readingSub": "すむ",
+          "romaji": "sumu",
+          "meaningVi": "sống",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1429,
+          "lang": "ja",
+          "scriptPrimary": "する",
+          "readingSub": "",
+          "romaji": "suru",
+          "meaningVi": "làm, chơi, tổ chức…",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1430,
+          "lang": "ja",
+          "scriptPrimary": "座る",
+          "readingSub": "すわる",
+          "romaji": "suwaru",
+          "meaningVi": "ngồi",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1431,
+          "lang": "ja",
+          "scriptPrimary": "掃除する",
+          "readingSub": "そうじする",
+          "romaji": "soujisuru",
+          "meaningVi": "dọn dẹp",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1432,
+          "lang": "ja",
+          "scriptPrimary": "出す",
+          "readingSub": "だす",
+          "romaji": "dasu",
+          "meaningVi": "lấy ra, nộp, gửi (thư)",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1433,
+          "lang": "ja",
+          "scriptPrimary": "立つ",
+          "readingSub": "たつ",
+          "romaji": "tatsu",
+          "meaningVi": "đứng",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1434,
+          "lang": "ja",
+          "scriptPrimary": "頼む",
+          "readingSub": "たのむ",
+          "romaji": "tanomu",
+          "meaningVi": "nhờ",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1435,
+          "lang": "ja",
+          "scriptPrimary": "食べる",
+          "readingSub": "たべる",
+          "romaji": "taberu",
+          "meaningVi": "ăn",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1436,
+          "lang": "ja",
+          "scriptPrimary": "使う",
+          "readingSub": "つかう",
+          "romaji": "tsukau",
+          "meaningVi": "sử dụng",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        },
+        {
+          "id": 1437,
+          "lang": "ja",
+          "scriptPrimary": "疲れる",
+          "readingSub": "つかれる",
+          "romaji": "tsukareru",
+          "meaningVi": "mệt mỏi",
+          "wordType": "verb",
+          "topicId": "ja_n5_18"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_19",
+      "orderIndex": 19,
+      "level": "JLPT N5",
+      "wordTypeGroup": "verb",
+      "titleVi": "Động từ JLPT N5 (Phần 3)",
+      "wordCount": 25,
+      "minLevel": 7,
+      "words": [
+        {
+          "id": 1438,
+          "lang": "ja",
+          "scriptPrimary": "着く",
+          "readingSub": "つく",
+          "romaji": "tsuku",
+          "meaningVi": "đến",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1439,
+          "lang": "ja",
+          "scriptPrimary": "作る",
+          "readingSub": "つくる",
+          "romaji": "tsukuru",
+          "meaningVi": "làm, chế tạo, nấu ăn",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1440,
+          "lang": "ja",
+          "scriptPrimary": "つける",
+          "readingSub": "",
+          "romaji": "tsukeru",
+          "meaningVi": "bật",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1441,
+          "lang": "ja",
+          "scriptPrimary": "勤める",
+          "readingSub": "つとめる",
+          "romaji": "tsutomeru",
+          "meaningVi": "làm việc",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1442,
+          "lang": "ja",
+          "scriptPrimary": "出かける",
+          "readingSub": "でかける",
+          "romaji": "dekakeru",
+          "meaningVi": "đi ra ngoài",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1443,
+          "lang": "ja",
+          "scriptPrimary": "出る",
+          "readingSub": "でる",
+          "romaji": "deru",
+          "meaningVi": "ra, rời khỏi, xuất hiện",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1444,
+          "lang": "ja",
+          "scriptPrimary": "飛ぶ",
+          "readingSub": "とぶ",
+          "romaji": "tobu",
+          "meaningVi": "bay, nhảy",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1445,
+          "lang": "ja",
+          "scriptPrimary": "止まる",
+          "readingSub": "とまる",
+          "romaji": "tomaru",
+          "meaningVi": "dừng lại ( tự động từ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1446,
+          "lang": "ja",
+          "scriptPrimary": "止める",
+          "readingSub": "とめる",
+          "romaji": "tomeru",
+          "meaningVi": "Đỗ, đậu ( xe, đài..) ( Tha động từ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1447,
+          "lang": "ja",
+          "scriptPrimary": "取る",
+          "readingSub": "とる",
+          "romaji": "toru",
+          "meaningVi": "lấy ( muối…)",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1448,
+          "lang": "ja",
+          "scriptPrimary": "撮る",
+          "readingSub": "とる",
+          "romaji": "toru",
+          "meaningVi": "chụp ảnh hoặc quay phim",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1449,
+          "lang": "ja",
+          "scriptPrimary": "鳴く",
+          "readingSub": "なく",
+          "romaji": "naku",
+          "meaningVi": "kêu , hót",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1450,
+          "lang": "ja",
+          "scriptPrimary": "無くす",
+          "readingSub": "なくす",
+          "romaji": "nakusu",
+          "meaningVi": "làm mất, đánh mất",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1451,
+          "lang": "ja",
+          "scriptPrimary": "習う",
+          "readingSub": "ならう",
+          "romaji": "narau",
+          "meaningVi": "học",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1452,
+          "lang": "ja",
+          "scriptPrimary": "並ぶ",
+          "readingSub": "ならぶ",
+          "romaji": "narabu",
+          "meaningVi": "xếp hàng, ngang bằng",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1453,
+          "lang": "ja",
+          "scriptPrimary": "並べる",
+          "readingSub": "ならべる",
+          "romaji": "naraberu",
+          "meaningVi": "sắp xếp, bố trí",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1454,
+          "lang": "ja",
+          "scriptPrimary": "なる",
+          "readingSub": "",
+          "romaji": "naru",
+          "meaningVi": "trở nên, trở thành",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1455,
+          "lang": "ja",
+          "scriptPrimary": "脱ぐ",
+          "readingSub": "ぬぐ",
+          "romaji": "nugu",
+          "meaningVi": "cởi",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1456,
+          "lang": "ja",
+          "scriptPrimary": "寝る",
+          "readingSub": "ねる",
+          "romaji": "neru",
+          "meaningVi": "đi ngủ, ngủ",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1457,
+          "lang": "ja",
+          "scriptPrimary": "登る",
+          "readingSub": "のぼる",
+          "romaji": "noboru",
+          "meaningVi": "leo lên",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1458,
+          "lang": "ja",
+          "scriptPrimary": "飲む",
+          "readingSub": "のむ",
+          "romaji": "nomu",
+          "meaningVi": "uống",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1459,
+          "lang": "ja",
+          "scriptPrimary": "乗る",
+          "readingSub": "のる",
+          "romaji": "noru",
+          "meaningVi": "lên ( tàu, xe…) cưỡi ngựa",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1460,
+          "lang": "ja",
+          "scriptPrimary": "入る",
+          "readingSub": "はいる",
+          "romaji": "hairu",
+          "meaningVi": "vào, đi vào",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1461,
+          "lang": "ja",
+          "scriptPrimary": "履く",
+          "readingSub": "はく",
+          "romaji": "haku",
+          "meaningVi": "mặc, đi ( từ dưới lên)",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        },
+        {
+          "id": 1462,
+          "lang": "ja",
+          "scriptPrimary": "始まる",
+          "readingSub": "はじまる",
+          "romaji": "hajimaru",
+          "meaningVi": "được bắt đầu ( tự động từ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_19"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_20",
+      "orderIndex": 20,
+      "level": "JLPT N5",
+      "wordTypeGroup": "verb",
+      "titleVi": "Động từ JLPT N5 (Phần 4)",
+      "wordCount": 25,
+      "minLevel": 7,
+      "words": [
+        {
+          "id": 1463,
+          "lang": "ja",
+          "scriptPrimary": "始める",
+          "readingSub": "はじめる",
+          "romaji": "hajimeru",
+          "meaningVi": "bắt đầu( tha động từ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1464,
+          "lang": "ja",
+          "scriptPrimary": "走る",
+          "readingSub": "はしる",
+          "romaji": "hashiru",
+          "meaningVi": "chạy",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1465,
+          "lang": "ja",
+          "scriptPrimary": "働く",
+          "readingSub": "はたらく",
+          "romaji": "hataraku",
+          "meaningVi": "làm việc",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1466,
+          "lang": "ja",
+          "scriptPrimary": "話す",
+          "readingSub": "はなす",
+          "romaji": "hanasu",
+          "meaningVi": "nói chuyện",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1467,
+          "lang": "ja",
+          "scriptPrimary": "貼る",
+          "readingSub": "はる",
+          "romaji": "haru",
+          "meaningVi": "dán",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1468,
+          "lang": "ja",
+          "scriptPrimary": "晴れる",
+          "readingSub": "はれる",
+          "romaji": "hareru",
+          "meaningVi": "có nắng, thời tiết đẹp",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1469,
+          "lang": "ja",
+          "scriptPrimary": "引く",
+          "readingSub": "ひく",
+          "romaji": "hiku",
+          "meaningVi": "kéo",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1470,
+          "lang": "ja",
+          "scriptPrimary": "弾く",
+          "readingSub": "ひく",
+          "romaji": "hiku",
+          "meaningVi": "chơi ( nhạc cụ)",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1471,
+          "lang": "ja",
+          "scriptPrimary": "吹く",
+          "readingSub": "ふく",
+          "romaji": "fuku",
+          "meaningVi": "thổi",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1472,
+          "lang": "ja",
+          "scriptPrimary": "降る",
+          "readingSub": "ふる",
+          "romaji": "furu",
+          "meaningVi": "rơi (mưa, tuyết)",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1473,
+          "lang": "ja",
+          "scriptPrimary": "勉強する",
+          "readingSub": "べんきょうする",
+          "romaji": "benkyousuru",
+          "meaningVi": "học",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1474,
+          "lang": "ja",
+          "scriptPrimary": "曲る",
+          "readingSub": "まがる",
+          "romaji": "magaru",
+          "meaningVi": "rẽ, cong",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1475,
+          "lang": "ja",
+          "scriptPrimary": "待つ",
+          "readingSub": "まつ",
+          "romaji": "matsu",
+          "meaningVi": "chờ đợi",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1476,
+          "lang": "ja",
+          "scriptPrimary": "見せる",
+          "readingSub": "みせる",
+          "romaji": "miseru",
+          "meaningVi": "cho xem",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1477,
+          "lang": "ja",
+          "scriptPrimary": "見る",
+          "readingSub": "みる",
+          "romaji": "miru",
+          "meaningVi": "xem, nhìn, trông",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1478,
+          "lang": "ja",
+          "scriptPrimary": "持つ",
+          "readingSub": "もつ",
+          "romaji": "motsu",
+          "meaningVi": "mang, cầm",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1479,
+          "lang": "ja",
+          "scriptPrimary": "休む",
+          "readingSub": "やすむ",
+          "romaji": "yasumu",
+          "meaningVi": "nghỉ, nghỉ ngơi",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1480,
+          "lang": "ja",
+          "scriptPrimary": "やる",
+          "readingSub": "",
+          "romaji": "yaru",
+          "meaningVi": "làm",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1481,
+          "lang": "ja",
+          "scriptPrimary": "呼ぶ",
+          "readingSub": "よぶ",
+          "romaji": "yobu",
+          "meaningVi": "gọi",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1482,
+          "lang": "ja",
+          "scriptPrimary": "読む",
+          "readingSub": "よむ",
+          "romaji": "yomu",
+          "meaningVi": "đọc",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1483,
+          "lang": "ja",
+          "scriptPrimary": "練習",
+          "readingSub": "れんしゅうする",
+          "romaji": "renshuusuru",
+          "meaningVi": "thực hành, luyện tập",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1484,
+          "lang": "ja",
+          "scriptPrimary": "分かる",
+          "readingSub": "わかる",
+          "romaji": "wakaru",
+          "meaningVi": "hiểu, nắm được",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1485,
+          "lang": "ja",
+          "scriptPrimary": "忘れる",
+          "readingSub": "わすれる",
+          "romaji": "wasureru",
+          "meaningVi": "quên",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1486,
+          "lang": "ja",
+          "scriptPrimary": "渡す",
+          "readingSub": "わたす",
+          "romaji": "watasu",
+          "meaningVi": "đưa cho",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        },
+        {
+          "id": 1487,
+          "lang": "ja",
+          "scriptPrimary": "渡る",
+          "readingSub": "わたる",
+          "romaji": "wataru",
+          "meaningVi": "đi qua, băng qua",
+          "wordType": "verb",
+          "topicId": "ja_n5_20"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_21",
+      "orderIndex": 21,
+      "level": "JLPT N5",
+      "wordTypeGroup": "adj_i",
+      "titleVi": "Tính từ đuôi い N5 (Phần 1)",
+      "wordCount": 25,
+      "minLevel": 7,
+      "words": [
+        {
+          "id": 1488,
+          "lang": "ja",
+          "scriptPrimary": "青い",
+          "readingSub": "あおい",
+          "romaji": "aoi",
+          "meaningVi": "Xanh da trời",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1489,
+          "lang": "ja",
+          "scriptPrimary": "赤い",
+          "readingSub": "あかい",
+          "romaji": "akai",
+          "meaningVi": "màu đỏ",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1490,
+          "lang": "ja",
+          "scriptPrimary": "明い",
+          "readingSub": "あかるい",
+          "romaji": "akarui",
+          "meaningVi": "sáng, tươi sáng, vui vẻ, sáng sủa",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1491,
+          "lang": "ja",
+          "scriptPrimary": "暖かい",
+          "readingSub": "あたたかい",
+          "romaji": "atatakai",
+          "meaningVi": "ấm áp",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1492,
+          "lang": "ja",
+          "scriptPrimary": "新しい",
+          "readingSub": "あたらしい",
+          "romaji": "atarashii",
+          "meaningVi": "mới",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1493,
+          "lang": "ja",
+          "scriptPrimary": "暑い",
+          "readingSub": "あつい",
+          "romaji": "atsui",
+          "meaningVi": "nóng( thời tiết)",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1494,
+          "lang": "ja",
+          "scriptPrimary": "熱い",
+          "readingSub": "あつい",
+          "romaji": "atsui",
+          "meaningVi": "nóng ( khi chạm vào)",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1495,
+          "lang": "ja",
+          "scriptPrimary": "厚い",
+          "readingSub": "あつい",
+          "romaji": "atsui",
+          "meaningVi": "dày",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1496,
+          "lang": "ja",
+          "scriptPrimary": "危ない",
+          "readingSub": "あぶない",
+          "romaji": "abunai",
+          "meaningVi": "nguy hiểm",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1497,
+          "lang": "ja",
+          "scriptPrimary": "甘い",
+          "readingSub": "あまい",
+          "romaji": "amai",
+          "meaningVi": "ngọt,ngọt ngào",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1498,
+          "lang": "ja",
+          "scriptPrimary": "いい/よい",
+          "readingSub": "",
+          "romaji": "ii/yoi",
+          "meaningVi": "tốt",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1499,
+          "lang": "ja",
+          "scriptPrimary": "忙しい",
+          "readingSub": "いそがしい",
+          "romaji": "isogashii",
+          "meaningVi": "bận rộn",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1500,
+          "lang": "ja",
+          "scriptPrimary": "痛い",
+          "readingSub": "いたい",
+          "romaji": "itai",
+          "meaningVi": "đau",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1501,
+          "lang": "ja",
+          "scriptPrimary": "うるさい",
+          "readingSub": "",
+          "romaji": "urusai",
+          "meaningVi": "ồn ào, gây phiền nhiễu",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1502,
+          "lang": "ja",
+          "scriptPrimary": "美味しい",
+          "readingSub": "おいしい",
+          "romaji": "oishii",
+          "meaningVi": "ngon",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1503,
+          "lang": "ja",
+          "scriptPrimary": "多い",
+          "readingSub": "おおい",
+          "romaji": "ooi",
+          "meaningVi": "nhiều",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1504,
+          "lang": "ja",
+          "scriptPrimary": "大きい",
+          "readingSub": "おおきい",
+          "romaji": "ookii",
+          "meaningVi": "to, lớn",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1505,
+          "lang": "ja",
+          "scriptPrimary": "遅い",
+          "readingSub": "おそい",
+          "romaji": "osoi",
+          "meaningVi": "muộn, chậm",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1506,
+          "lang": "ja",
+          "scriptPrimary": "重い",
+          "readingSub": "おもい",
+          "romaji": "omoi",
+          "meaningVi": "nặng",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1507,
+          "lang": "ja",
+          "scriptPrimary": "おもしろい",
+          "readingSub": "",
+          "romaji": "omoshiroi",
+          "meaningVi": "thú vị",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1508,
+          "lang": "ja",
+          "scriptPrimary": "辛い",
+          "readingSub": "からい",
+          "romaji": "karai",
+          "meaningVi": "cay",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1509,
+          "lang": "ja",
+          "scriptPrimary": "軽い",
+          "readingSub": "かるい",
+          "romaji": "karui",
+          "meaningVi": "nhẹ",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1510,
+          "lang": "ja",
+          "scriptPrimary": "かわいい",
+          "readingSub": "",
+          "romaji": "kawaii",
+          "meaningVi": "dễ thương",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1511,
+          "lang": "ja",
+          "scriptPrimary": "黄色い",
+          "readingSub": "きいろい",
+          "romaji": "kiiroi",
+          "meaningVi": "màu vàng",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        },
+        {
+          "id": 1512,
+          "lang": "ja",
+          "scriptPrimary": "汚い",
+          "readingSub": "きたない",
+          "romaji": "kitanai",
+          "meaningVi": "bẩn",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_21"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_22",
+      "orderIndex": 22,
+      "level": "JLPT N5",
+      "wordTypeGroup": "adj_i",
+      "titleVi": "Tính từ đuôi い N5 (Phần 2)",
+      "wordCount": 25,
+      "minLevel": 8,
+      "words": [
+        {
+          "id": 1513,
+          "lang": "ja",
+          "scriptPrimary": "暗い",
+          "readingSub": "くらい",
+          "romaji": "kurai",
+          "meaningVi": "tối",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1514,
+          "lang": "ja",
+          "scriptPrimary": "寒い",
+          "readingSub": "さむい",
+          "romaji": "samui",
+          "meaningVi": "lạnh",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1515,
+          "lang": "ja",
+          "scriptPrimary": "白い",
+          "readingSub": "しろい",
+          "romaji": "shiroi",
+          "meaningVi": "trắng",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1516,
+          "lang": "ja",
+          "scriptPrimary": "少ない",
+          "readingSub": "すくない",
+          "romaji": "sukunai",
+          "meaningVi": "một chút, một ít",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1517,
+          "lang": "ja",
+          "scriptPrimary": "涼しい",
+          "readingSub": "すずしい",
+          "romaji": "suzushii",
+          "meaningVi": "mát",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1518,
+          "lang": "ja",
+          "scriptPrimary": "狭い",
+          "readingSub": "せまい",
+          "romaji": "semai",
+          "meaningVi": "hẹp",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1519,
+          "lang": "ja",
+          "scriptPrimary": "楽しい",
+          "readingSub": "たのしい",
+          "romaji": "tanoshii",
+          "meaningVi": "vui",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1520,
+          "lang": "ja",
+          "scriptPrimary": "小さい",
+          "readingSub": "ちいさい",
+          "romaji": "chiisai",
+          "meaningVi": "nhỏ",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1521,
+          "lang": "ja",
+          "scriptPrimary": "近い",
+          "readingSub": "ちかい",
+          "romaji": "chikai",
+          "meaningVi": "gần",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1522,
+          "lang": "ja",
+          "scriptPrimary": "つまらない",
+          "readingSub": "",
+          "romaji": "tsumaranai",
+          "meaningVi": "nhàm chán",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1523,
+          "lang": "ja",
+          "scriptPrimary": "冷たい",
+          "readingSub": "つめたい",
+          "romaji": "tsumetai",
+          "meaningVi": "lạnh,buốt ( khi chạm vào)",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1524,
+          "lang": "ja",
+          "scriptPrimary": "遠い",
+          "readingSub": "とおい",
+          "romaji": "tooi",
+          "meaningVi": "xa",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1525,
+          "lang": "ja",
+          "scriptPrimary": "長い",
+          "readingSub": "ながい",
+          "romaji": "nagai",
+          "meaningVi": "dài",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1526,
+          "lang": "ja",
+          "scriptPrimary": "早い",
+          "readingSub": "はやい",
+          "romaji": "hayai",
+          "meaningVi": "sớm",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1527,
+          "lang": "ja",
+          "scriptPrimary": "速い",
+          "readingSub": "はやい",
+          "romaji": "hayai",
+          "meaningVi": "nhanh chóng",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1528,
+          "lang": "ja",
+          "scriptPrimary": "広い",
+          "readingSub": "ひろい",
+          "romaji": "hiroi",
+          "meaningVi": "rộng rãi, rộng",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1529,
+          "lang": "ja",
+          "scriptPrimary": "太い",
+          "readingSub": "ふとい",
+          "romaji": "futoi",
+          "meaningVi": "béo",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1530,
+          "lang": "ja",
+          "scriptPrimary": "古い",
+          "readingSub": "ふるい",
+          "romaji": "furui",
+          "meaningVi": "cũ ( không dùng cho người)",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1531,
+          "lang": "ja",
+          "scriptPrimary": "欲しい",
+          "readingSub": "ほしい",
+          "romaji": "hoshii",
+          "meaningVi": "muốn",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1532,
+          "lang": "ja",
+          "scriptPrimary": "細い",
+          "readingSub": "ほそい",
+          "romaji": "hosoi",
+          "meaningVi": "gầy, hẹp, thon",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1533,
+          "lang": "ja",
+          "scriptPrimary": "まずい",
+          "readingSub": "",
+          "romaji": "mazui",
+          "meaningVi": "dở ( món ăn), không ổn rồi",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1534,
+          "lang": "ja",
+          "scriptPrimary": "丸い",
+          "readingSub": "まるい",
+          "romaji": "marui",
+          "meaningVi": "tròn",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1535,
+          "lang": "ja",
+          "scriptPrimary": "短い",
+          "readingSub": "みじかい",
+          "romaji": "mijikai",
+          "meaningVi": "ngắn",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1536,
+          "lang": "ja",
+          "scriptPrimary": "難しい",
+          "readingSub": "むずかしい",
+          "romaji": "muzukashii",
+          "meaningVi": "khó",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        },
+        {
+          "id": 1537,
+          "lang": "ja",
+          "scriptPrimary": "安い",
+          "readingSub": "やすい",
+          "romaji": "yasui",
+          "meaningVi": "giá rẻ",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_22"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_23",
+      "orderIndex": 23,
+      "level": "JLPT N5",
+      "wordTypeGroup": "adj_i",
+      "titleVi": "Tính từ đuôi い N5 (Phần 3)",
+      "wordCount": 4,
+      "minLevel": 8,
+      "words": [
+        {
+          "id": 1538,
+          "lang": "ja",
+          "scriptPrimary": "弱い",
+          "readingSub": "よわい",
+          "romaji": "yowai",
+          "meaningVi": "yếu",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_23"
+        },
+        {
+          "id": 1539,
+          "lang": "ja",
+          "scriptPrimary": "強い",
+          "readingSub": "つよい",
+          "romaji": "tsuyoi",
+          "meaningVi": "mạnh",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_23"
+        },
+        {
+          "id": 1540,
+          "lang": "ja",
+          "scriptPrimary": "若い",
+          "readingSub": "わかい",
+          "romaji": "wakai",
+          "meaningVi": "trẻ",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_23"
+        },
+        {
+          "id": 1541,
+          "lang": "ja",
+          "scriptPrimary": "悪い",
+          "readingSub": "わるい",
+          "romaji": "warui",
+          "meaningVi": "xấu",
+          "wordType": "adj_i",
+          "topicId": "ja_n5_23"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_24",
+      "orderIndex": 24,
+      "level": "JLPT N5",
+      "wordTypeGroup": "adj_na",
+      "titleVi": "Tính từ đuôi な N5",
+      "wordCount": 22,
+      "minLevel": 8,
+      "words": [
+        {
+          "id": 1542,
+          "lang": "ja",
+          "scriptPrimary": "嫌",
+          "readingSub": "いや",
+          "romaji": "iya",
+          "meaningVi": "Chán, ghét, khó chịu",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1543,
+          "lang": "ja",
+          "scriptPrimary": "いろいろ",
+          "readingSub": "",
+          "romaji": "iroiro",
+          "meaningVi": "Nhiều, đa dạng",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1544,
+          "lang": "ja",
+          "scriptPrimary": "すてき",
+          "readingSub": "",
+          "romaji": "suteki",
+          "meaningVi": "Đẹp, hay",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1545,
+          "lang": "ja",
+          "scriptPrimary": "嫌い",
+          "readingSub": "きらい",
+          "romaji": "kirai",
+          "meaningVi": "ghét, không thích",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1546,
+          "lang": "ja",
+          "scriptPrimary": "きれい",
+          "readingSub": "",
+          "romaji": "kirei",
+          "meaningVi": "đẹp, sạch sẽ",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1547,
+          "lang": "ja",
+          "scriptPrimary": "結構",
+          "readingSub": "けっこう",
+          "romaji": "kekkou",
+          "meaningVi": "đủ",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1548,
+          "lang": "ja",
+          "scriptPrimary": "元気",
+          "readingSub": "げんき",
+          "romaji": "genki",
+          "meaningVi": "khỏe mạnh",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1549,
+          "lang": "ja",
+          "scriptPrimary": "静か",
+          "readingSub": "しずか",
+          "romaji": "shizuka",
+          "meaningVi": "yên tĩnh",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1550,
+          "lang": "ja",
+          "scriptPrimary": "上手",
+          "readingSub": "じょうず",
+          "romaji": "jouzu",
+          "meaningVi": "giỏi, khéo",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1551,
+          "lang": "ja",
+          "scriptPrimary": "丈夫",
+          "readingSub": "じょうぶ",
+          "romaji": "joubu",
+          "meaningVi": "chắc, bền",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1552,
+          "lang": "ja",
+          "scriptPrimary": "好き",
+          "readingSub": "すき",
+          "romaji": "suki",
+          "meaningVi": "thích",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1553,
+          "lang": "ja",
+          "scriptPrimary": "大丈夫",
+          "readingSub": "だいじょうぶ",
+          "romaji": "daijoubu",
+          "meaningVi": "không sao, không vấn đề gì",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1554,
+          "lang": "ja",
+          "scriptPrimary": "大好き",
+          "readingSub": "だいすき",
+          "romaji": "daisuki",
+          "meaningVi": "rất thích",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1555,
+          "lang": "ja",
+          "scriptPrimary": "大切",
+          "readingSub": "たいせつ",
+          "romaji": "taisetsu",
+          "meaningVi": "quan trọng, quý giá",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1556,
+          "lang": "ja",
+          "scriptPrimary": "大変",
+          "readingSub": "たいへん",
+          "romaji": "taihen",
+          "meaningVi": "khó khăn, vất vả",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1557,
+          "lang": "ja",
+          "scriptPrimary": "小さな",
+          "readingSub": "ちいさな",
+          "romaji": "chiisana",
+          "meaningVi": "Nhỏ",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1558,
+          "lang": "ja",
+          "scriptPrimary": "賑やか",
+          "readingSub": "にぎやか",
+          "romaji": "nigiyaka",
+          "meaningVi": "náo nhiệt",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1559,
+          "lang": "ja",
+          "scriptPrimary": "暇",
+          "readingSub": "ひま",
+          "romaji": "hima",
+          "meaningVi": "rảnh rỗi",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1560,
+          "lang": "ja",
+          "scriptPrimary": "便利",
+          "readingSub": "べんり",
+          "romaji": "benri",
+          "meaningVi": "tiện lợi",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1561,
+          "lang": "ja",
+          "scriptPrimary": "りっぱ",
+          "readingSub": "",
+          "romaji": "rippa",
+          "meaningVi": "lộng lẫy, tuyệt vời",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1562,
+          "lang": "ja",
+          "scriptPrimary": "不便",
+          "readingSub": "ふべん",
+          "romaji": "fuben",
+          "meaningVi": "Bất tiện",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        },
+        {
+          "id": 1563,
+          "lang": "ja",
+          "scriptPrimary": "簡単",
+          "readingSub": "かんたん",
+          "romaji": "kantan",
+          "meaningVi": "Đơn giản",
+          "wordType": "adj_na",
+          "topicId": "ja_n5_24"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_25",
+      "orderIndex": 25,
+      "level": "JLPT N5",
+      "wordTypeGroup": "adv_expr",
+      "titleVi": "Phó từ & Giao tiếp N5 (Phần 1)",
+      "wordCount": 25,
+      "minLevel": 9,
+      "words": [
+        {
+          "id": 1564,
+          "lang": "ja",
+          "scriptPrimary": "一緒",
+          "readingSub": "いっしょ",
+          "romaji": "issho",
+          "meaningVi": "cùng nhau",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1565,
+          "lang": "ja",
+          "scriptPrimary": "後",
+          "readingSub": "あと",
+          "romaji": "ato",
+          "meaningVi": "sau đó",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1566,
+          "lang": "ja",
+          "scriptPrimary": "あのう",
+          "readingSub": "",
+          "romaji": "anou",
+          "meaningVi": "à, ừm… (dùng trong giao tiếp)",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1567,
+          "lang": "ja",
+          "scriptPrimary": "いいえ",
+          "readingSub": "",
+          "romaji": "iie",
+          "meaningVi": "không",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1568,
+          "lang": "ja",
+          "scriptPrimary": "いかが",
+          "readingSub": "",
+          "romaji": "ikaga",
+          "meaningVi": "như thế nào (cách nói lịch sự của どう)",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1569,
+          "lang": "ja",
+          "scriptPrimary": "いくつ",
+          "readingSub": "",
+          "romaji": "ikutsu",
+          "meaningVi": "bao nhiêu cái? bao nhiêu tuổi?",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1570,
+          "lang": "ja",
+          "scriptPrimary": "いくら",
+          "readingSub": "",
+          "romaji": "ikura",
+          "meaningVi": "bao nhiêu? (Hỏi giá tiền)",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1571,
+          "lang": "ja",
+          "scriptPrimary": "いつ",
+          "readingSub": "",
+          "romaji": "itsu",
+          "meaningVi": "khi nào",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1572,
+          "lang": "ja",
+          "scriptPrimary": "いつも",
+          "readingSub": "",
+          "romaji": "itsumo",
+          "meaningVi": "luôn luôn",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1573,
+          "lang": "ja",
+          "scriptPrimary": "ええ",
+          "readingSub": "",
+          "romaji": "ee",
+          "meaningVi": "Vâng, có.. (bằng はい)",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1574,
+          "lang": "ja",
+          "scriptPrimary": "先",
+          "readingSub": "さき",
+          "romaji": "saki",
+          "meaningVi": "trước (làm cái gì đó trước)",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1575,
+          "lang": "ja",
+          "scriptPrimary": "しかし",
+          "readingSub": "",
+          "romaji": "shikashi",
+          "meaningVi": "Tuy nhiên",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1576,
+          "lang": "ja",
+          "scriptPrimary": "すぐに",
+          "readingSub": "",
+          "romaji": "suguni",
+          "meaningVi": "ngay lập tức",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1577,
+          "lang": "ja",
+          "scriptPrimary": "その",
+          "readingSub": "",
+          "romaji": "sono",
+          "meaningVi": "~đó",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1578,
+          "lang": "ja",
+          "scriptPrimary": "それから",
+          "readingSub": "",
+          "romaji": "sorekara",
+          "meaningVi": "sau đó",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1579,
+          "lang": "ja",
+          "scriptPrimary": "それでは",
+          "readingSub": "",
+          "romaji": "soredeha",
+          "meaningVi": "vậy thì, thế thì",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1580,
+          "lang": "ja",
+          "scriptPrimary": "たくさん",
+          "readingSub": "",
+          "romaji": "takusan",
+          "meaningVi": "nhiều",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1581,
+          "lang": "ja",
+          "scriptPrimary": "たぶん",
+          "readingSub": "",
+          "romaji": "tabun",
+          "meaningVi": "có thể, có lẽ",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1582,
+          "lang": "ja",
+          "scriptPrimary": "誰",
+          "readingSub": "だれ",
+          "romaji": "dare",
+          "meaningVi": "ai, người nào",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1583,
+          "lang": "ja",
+          "scriptPrimary": "誰",
+          "readingSub": "だれか",
+          "romaji": "dareka",
+          "meaningVi": "ai đó",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1584,
+          "lang": "ja",
+          "scriptPrimary": "だんだん",
+          "readingSub": "",
+          "romaji": "dandan",
+          "meaningVi": "dần",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1585,
+          "lang": "ja",
+          "scriptPrimary": "ちょうど",
+          "readingSub": "",
+          "romaji": "choudo",
+          "meaningVi": "vừa đúng, vừa đủ",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1586,
+          "lang": "ja",
+          "scriptPrimary": "ちょっと",
+          "readingSub": "",
+          "romaji": "chotto",
+          "meaningVi": "một ít, một chút",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1587,
+          "lang": "ja",
+          "scriptPrimary": "次",
+          "readingSub": "つぎ",
+          "romaji": "tsugi",
+          "meaningVi": "tiếp theo",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        },
+        {
+          "id": 1588,
+          "lang": "ja",
+          "scriptPrimary": "どう",
+          "readingSub": "",
+          "romaji": "dou",
+          "meaningVi": "như thế nào",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_25"
+        }
+      ]
+    },
+    {
+      "code": "ja_n5_26",
+      "orderIndex": 26,
+      "level": "JLPT N5",
+      "wordTypeGroup": "adv_expr",
+      "titleVi": "Phó từ & Giao tiếp N5 (Phần 2)",
+      "wordCount": 13,
+      "minLevel": 9,
+      "words": [
+        {
+          "id": 1589,
+          "lang": "ja",
+          "scriptPrimary": "どうして",
+          "readingSub": "",
+          "romaji": "doushite",
+          "meaningVi": "tại sao",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1590,
+          "lang": "ja",
+          "scriptPrimary": "どうぞ",
+          "readingSub": "",
+          "romaji": "douzo",
+          "meaningVi": "xin mời",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1591,
+          "lang": "ja",
+          "scriptPrimary": "どこ",
+          "readingSub": "",
+          "romaji": "doko",
+          "meaningVi": "chỗ nào",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1592,
+          "lang": "ja",
+          "scriptPrimary": "どちら",
+          "readingSub": "",
+          "romaji": "dochira",
+          "meaningVi": "phía nào",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1593,
+          "lang": "ja",
+          "scriptPrimary": "どっち",
+          "readingSub": "",
+          "romaji": "docchi",
+          "meaningVi": "phía nào (thân mật của どちら)",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1594,
+          "lang": "ja",
+          "scriptPrimary": "どれ",
+          "readingSub": "",
+          "romaji": "dore",
+          "meaningVi": "cái nào",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1595,
+          "lang": "ja",
+          "scriptPrimary": "なぜ",
+          "readingSub": "",
+          "romaji": "naze",
+          "meaningVi": "tại sao",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1596,
+          "lang": "ja",
+          "scriptPrimary": "など",
+          "readingSub": "",
+          "romaji": "nado",
+          "meaningVi": "vân vân",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1597,
+          "lang": "ja",
+          "scriptPrimary": "何",
+          "readingSub": "なん/なに",
+          "romaji": "nan/nani",
+          "meaningVi": "gì, cái gì",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1598,
+          "lang": "ja",
+          "scriptPrimary": "はい",
+          "readingSub": "",
+          "romaji": "hai",
+          "meaningVi": "vâng, có",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1599,
+          "lang": "ja",
+          "scriptPrimary": "ほか",
+          "readingSub": "",
+          "romaji": "hoka",
+          "meaningVi": "khác",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1600,
+          "lang": "ja",
+          "scriptPrimary": "まっすぐ",
+          "readingSub": "",
+          "romaji": "massugu",
+          "meaningVi": "thẳng",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        },
+        {
+          "id": 1601,
+          "lang": "ja",
+          "scriptPrimary": "さあ",
+          "readingSub": "",
+          "romaji": "saa",
+          "meaningVi": "dùng để chuyển đề tài",
+          "wordType": "adv_expr",
+          "topicId": "ja_n5_26"
+        }
+      ]
+    }
+  ]
+}
