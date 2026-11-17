@@ -649,11 +649,15 @@ import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/grow
       justify-content: center;
       margin-bottom: 4px;
     }
-    .action-icon img {
+    .action-icon img, .action-icon svg {
       max-height: 100%;
       max-width: 100%;
       object-fit: contain;
       image-rendering: pixelated;
+    }
+    .action-icon .kraft-seed-packet {
+      max-height: 100%;
+      flex-shrink: 0;
     }
     .action-label {
       font-size: 12px;
