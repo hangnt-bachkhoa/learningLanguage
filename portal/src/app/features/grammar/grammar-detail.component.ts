@@ -565,5 +565,6 @@ export class GrammarDetailComponent implements OnInit {
     if (updated) {
       this.topic.set({ ...updated, isStudied: true });
     }
+    this.state.emitQuestEvent('GRAMMAR_STUDIED', t.code);
   }
 }

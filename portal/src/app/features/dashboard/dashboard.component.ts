@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { GameStateService } from '../../core/services/game-state.service';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
+import { DailyQuestsWidgetComponent } from './daily-quests-widget.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, DailyQuestsWidgetComponent],
   template: `
     <div class="dashboard-screen">
       <!-- Header với tiêu đề sách và cối xay gió (Screen 1 Mockup) -->
@@ -55,23 +56,8 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
         </a>
       </div>
 
-      <!-- Khung Nhiệm Vụ Hôm Nay (Daily Quest) -->
-      <div class="vintage-card tasks-card">
-        <div class="tasks-header">
-          <span class="tasks-title">Nhiệm vụ hôm nay</span>
-          <span class="leaf-icon">🍃</span>
-        </div>
-
-        <div class="task-list">
-          @for (task of state.dailyTasks(); track task.id) {
-            <div class="task-row" [class.task-row-done]="task.done">
-              <span class="vintage-chk" [class.done]="task.done">{{ task.done ? '✓' : '○' }}</span>
-              <span class="task-name">{{ task.title }}</span>
-              <span class="task-count">{{ task.current }}/{{ task.target }}</span>
-            </div>
-          }
-        </div>
-      </div>
+      <!-- Khung Nhiệm Vụ Hôm Nay (Daily Quests & Streak Engine) -->
+      <app-daily-quests-widget></app-daily-quests-widget>
     </div>
   `,
   styles: [`

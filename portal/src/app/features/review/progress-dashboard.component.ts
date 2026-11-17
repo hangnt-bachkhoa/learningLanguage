@@ -2,6 +2,7 @@ import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../core/services/game-state.service';
 import { GrammarService } from '../../core/services/grammar.service';
+import { DailyQuestService } from '../../core/services/daily-quest.service';
 import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.constant';
 import { CROP_CATALOG } from '../../core/constants/crop-catalog.constant';
 import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
@@ -129,18 +130,18 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
           <div class="streak-banner">
             <span class="flame-emoji">🔥</span>
             <div>
-              <div class="streak-title">Chuỗi học tập: <strong>{{ state.studyStreak() }} ngày liên tiếp</strong></div>
-              <div class="streak-hint">Học từ mới hoặc làm bài tập mỗi ngày để không đứt chuỗi!</div>
+              <div class="streak-title">Chuỗi học tập: <strong>{{ dailyQuest.currentStreak() }} ngày liên tiếp</strong></div>
+              <div class="streak-hint">Làm mới sau: {{ dailyQuest.countdownToMidnight() }} · Mở rương 3/3 khi hoàn thành đủ!</div>
             </div>
           </div>
 
           <!-- 3 Nhiệm vụ hôm nay -->
           <div class="daily-tasks-list">
-            @for (task of state.dailyTasks(); track task.id) {
-              <div class="task-row" [class.task-done]="task.done">
-                <span class="task-checkbox">{{ task.done ? '✓' : '○' }}</span>
-                <span class="task-name">{{ task.title }}</span>
-                <span class="task-progress">{{ task.current }}/{{ task.target }}</span>
+            @for (task of dailyQuest.quests(); track task.id) {
+              <div class="task-row" [class.task-done]="task.status === 'COMPLETED_UNCLAIMED' || task.status === 'CLAIMED'">
+                <span class="task-checkbox">{{ task.status === 'CLAIMED' ? '✓' : (task.status === 'COMPLETED_UNCLAIMED' ? '★' : '○') }}</span>
+                <span class="task-name">{{ task.titleVi }}</span>
+                <span class="task-progress">{{ task.currentCount }}/{{ task.targetCount }}</span>
               </div>
             }
           </div>
@@ -531,6 +532,7 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 export class ProgressDashboardComponent {
   state = inject(GameStateService);
   grammar = inject(GrammarService);
+  dailyQuest = inject(DailyQuestService);
   assets = FARM_ASSETS;
 
   // 1. Phễu ghi nhớ từ vựng

@@ -160,3 +160,39 @@ export interface DailyCohortRow {
   day14DueCount?: number;
   day14NextDate?: string;
 }
+
+export type QuestEventType =
+  | 'VOCAB_LEARNED'
+  | 'GRAMMAR_STUDIED'
+  | 'REVIEW_COMPLETED'
+  | 'QUIZ_PASSED_2STAR'
+  | 'FARM_CARE_ACTION'
+  | 'CROP_HARVESTED';
+
+export type QuestStatus = 'IN_PROGRESS' | 'COMPLETED_UNCLAIMED' | 'CLAIMED';
+
+export interface DailyQuestItem {
+  id: string;
+  slot: 1 | 2 | 3;
+  titleVi: string;
+  eventType: QuestEventType;
+  currentCount: number;
+  targetCount: number;
+  status: QuestStatus;
+  routeTarget: string;
+  rewards: {
+    water?: number;
+    baseFertilizer?: number;
+    randomTierSeed?: number;
+  };
+}
+
+export interface DailyQuestState {
+  dateVn: string;
+  quests: DailyQuestItem[];
+  chestClaimed: boolean;
+  loggedEventRefs: string[];
+  currentStreak: number;
+  lastStreakDateVn: string | null;
+}
+

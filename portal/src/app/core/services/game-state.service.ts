@@ -1,5 +1,6 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
-import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessage, ShopItem, UserVocabReview, ReviewStage, DailyCohortRow } from '../models/game.models';
+import { Subject } from 'rxjs';
+import { FarmPlot, PlotStatus, UserInventory, PlannerBook, CartItem, ToastMessage, ShopItem, UserVocabReview, ReviewStage, DailyCohortRow, QuestEventType } from '../models/game.models';
 import { FarmApiService, LessonDto, VocabularyDto, FarmPlotDto, UserInventoryItemDto, QuizSubmitResultDto } from './farm-api.service';
 import { CROP_CATALOG } from '../constants/crop-catalog.constant';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
@@ -128,6 +129,13 @@ export class GameStateService {
 
   openMobileSidebar() {
     this.isMobileSidebarOpen.set(true);
+  }
+
+  // Event bus cho Daily Quests & Streak Engine (Decoupled & Event-Driven)
+  readonly questEvent$ = new Subject<{ type: QuestEventType; refId?: string }>();
+
+  emitQuestEvent(type: QuestEventType, refId?: string) {
+    this.questEvent$.next({ type, refId });
   }
 
   // Player Stats & Leveling (Rule 3: Reset XP on Level-Up, Cap at 1000 XP)
@@ -1277,6 +1285,7 @@ export class GameStateService {
     }
 
     this.recordDailyTaskActivity('vocab', 1);
+    this.emitQuestEvent('VOCAB_LEARNED', String(targetVocabId || word));
     this.saveToStorage();
   }
 
@@ -1331,6 +1340,7 @@ export class GameStateService {
 
     this.dailyReviewRewardsClaimed.set(result.nextDailyReviewRewardsClaimed);
     this.recordDailyTaskActivity('quiz', 1);
+    this.emitQuestEvent('REVIEW_COMPLETED', today);
     this.saveToStorage();
 
     const firstTryCorrectCount = Array.from(firstTryResults.values()).filter(v => v).length;
@@ -1482,6 +1492,10 @@ export class GameStateService {
       return nextStats;
     });
 
+    if (rewardRes.newStars >= 2) {
+      this.emitQuestEvent('QUIZ_PASSED_2STAR', `${lessonId}:${Date.now()}`);
+    }
+
     this.saveToStorage();
 
     const lesson = this.lessons().find(l => l.id === lessonId);
@@ -1623,6 +1637,7 @@ export class GameStateService {
     } : p));
 
     this.saveToStorage();
+    this.emitQuestEvent('FARM_CARE_ACTION', `plant:${plotIndex}:${Date.now()}`);
     this.showToast(`🌱 Đã gieo ${cropConfig?.nameVi || seed}! Cần tưới nước & bón phân cơ bản để kích hoạt tính giờ (${growthMinutes} phút).`);
 
     // Gửi lên Backend API nếu đang online
@@ -1679,6 +1694,7 @@ export class GameStateService {
     } : p));
 
     this.recordDailyTaskActivity('care', 1);
+    this.emitQuestEvent('FARM_CARE_ACTION', `water:${plotIndex}:${Date.now()}`);
     this.saveToStorage();
     if (bothReady) {
       this.showToast(`💧 Đã tưới nước! Đủ cả Nước & Phân bón, cây bắt đầu nảy mầm tính giờ!`);
@@ -1740,6 +1756,7 @@ export class GameStateService {
     } : p));
 
     this.recordDailyTaskActivity('care', 1);
+    this.emitQuestEvent('FARM_CARE_ACTION', `fertilize:${plotIndex}:${Date.now()}`);
     this.saveToStorage();
     if (bothReady) {
       this.showToast(`✨ Đã bón phân cơ bản! Đủ cả Nước & Phân bón, cây bắt đầu nảy mầm tính giờ!`);
@@ -1796,6 +1813,7 @@ export class GameStateService {
     } : p));
 
     this.recordDailyTaskActivity('care', 1);
+    this.emitQuestEvent('FARM_CARE_ACTION', `speedFertilize:${plotIndex}:${Date.now()}`);
     this.saveToStorage();
     if (isReady) {
       this.showToast(`⚡ Đã dùng Phân bón tăng tốc (-5 phút)! Cây đã chín ngay lập tức.`);
@@ -1855,6 +1873,7 @@ export class GameStateService {
     } : p));
 
     this.saveToStorage();
+    this.emitQuestEvent('CROP_HARVESTED', `harvest:${plotIndex}:${Date.now()}`);
     this.showToast(`✨ Thu hoạch ${cropConfig?.nameVi || 'nông sản'} thành công! +${gainedXp} XP, +${gainedCoins} Xu 🪙`);
 
     if (this.isApiConnected()) {
