@@ -140,7 +140,10 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
     .mobile-footer-dock.style-navy {
       background: #1C2B36;
       border-top: 1.5px solid rgba(232, 215, 168, 0.28);
-      padding: 7px 6px calc(14px + env(safe-area-inset-bottom, 16px));
+      padding-top: 7px;
+      padding-left: 6px;
+      padding-right: 6px;
+      padding-bottom: max(10px, env(safe-area-inset-bottom));
       box-shadow: 0 -4px 18px rgba(20, 32, 44, 0.35);
     }
 

@@ -10,6 +10,7 @@ import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { FarmPlot } from '../../core/models/game.models';
 import { computePlotCountdown, PlotCountdownResult } from '../../core/utils/growth-countdown.util';
 import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
+import { NotificationCenterService } from '../../core/services/notification-center.service';
 
 @Component({
   selector: 'app-farm',
@@ -312,7 +313,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   <span class="growth-percent-text">{{ cd.progress }}%</span>
                 </div>
 
-                <div class="inspector-action-row">
+                <div class="inspector-action-row dual-actions">
                   <button
                     type="button"
                     class="btn btn-speed-cta"
@@ -320,6 +321,15 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                     (click)="speedFertilizeSelectedPlot()">
                     <app-pixel-icon name="icon_sparkle" [size]="15"></app-pixel-icon>
                     <span>Dùng Tăng tốc (-10') (Còn {{ state.inventory().care.speedFertilizer || 0 }})</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-ics-reminder"
+                    [disabled]="!plot.harvestableAtUtc"
+                    (click)="downloadPlotHarvestIcs(plot)"
+                    title="Đặt lịch nhắc Apple Calendar (.ics) trên iPhone">
+                    <app-pixel-icon name="icon_calendar" [size]="15"></app-pixel-icon>
+                    <span>Nhắc lịch iPhone (.ics)</span>
                   </button>
                 </div>
                 @if ((state.inventory().care.speedFertilizer || 0) === 0) {
@@ -1020,6 +1030,33 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
     .inspector-action-row {
       display: flex;
       gap: 8px;
+    }
+    .inspector-action-row.dual-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .inspector-action-row.dual-actions .btn {
+      flex: 1;
+      min-width: 0;
+    }
+    .btn-ics-reminder {
+      background: var(--bg-paper) !important;
+      color: var(--navy) !important;
+      border: 1.5px solid var(--border-strong) !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      &:hover:not(:disabled) {
+        background: #EDE5D6 !important;
+        border-color: var(--navy) !important;
+      }
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+    @media (max-width: 480px) {
+      .inspector-action-row.dual-actions {
+        flex-direction: column;
+      }
     }
     .inspector-action-row .btn {
       width: 100%;
@@ -1779,6 +1816,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
 })
 export class FarmComponent implements OnInit {
   state = inject(GameStateService);
+  readonly notifCenter = inject(NotificationCenterService);
   assets = FARM_ASSETS;
   soilBackground = FARM_ASSETS.tilledSoil;
   private destroyRef = inject(DestroyRef);
@@ -2146,6 +2184,12 @@ export class FarmComponent implements OnInit {
     const idx = this.selectedPlotIndex();
     this.state.selectedTool.set('speed_fertilizer');
     this.state.speedFertilizePlot(idx);
+  }
+
+  downloadPlotHarvestIcs(plot: FarmPlot) {
+    if (!plot.harvestableAtUtc) return;
+    const cropName = this.getCropName(plot.crop);
+    this.notifCenter.downloadHarvestIcs(cropName, plot.index, plot.harvestableAtUtc);
   }
 
   harvestSelectedPlot() {
