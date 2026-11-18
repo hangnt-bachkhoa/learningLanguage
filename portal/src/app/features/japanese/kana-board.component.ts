@@ -5,11 +5,12 @@ import { JapaneseLearningService, JaQuizQuestion } from '../../core/services/jap
 import { GameStateService } from '../../core/services/game-state.service';
 import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
 import { KanaItem } from '../../core/constants/kana-catalog.constant';
+import { WritingPracticeComponent } from '../../shared/components/writing-practice/writing-practice.component';
 
 @Component({
   selector: 'app-kana-board',
   standalone: true,
-  imports: [CommonModule, RouterLink, PixelIconComponent],
+  imports: [CommonModule, RouterLink, PixelIconComponent, WritingPracticeComponent],
   template: `
     <div class="kana-screen">
       <!-- HEADER -->
@@ -117,7 +118,14 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
               <div class="kana-romaji">{{ k.romaji }}</div>
 
               <div class="card-bottom-audio">
-                <span class="audio-hint">
+                <button
+                  type="button"
+                  class="btn-write-card"
+                  (click)="$event.stopPropagation(); openWritingPractice(char)"
+                  title="✎ Tập viết nét chữ theo mẫu KanjiVG">
+                  <span>✎ Tập viết</span>
+                </button>
+                <span class="audio-hint" (click)="$event.stopPropagation(); speakChar(char)">
                   <app-pixel-icon name="icon_speaker" [size]="11"></app-pixel-icon>
                   <span>Phát âm</span>
                 </span>
@@ -224,6 +232,14 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
             }
           }
         </div>
+      }
+
+      <!-- MODAL TẬP VIẾT CHỮ THEO MẪU KANJIVG (Ô CHỮ ĐIỀN 米) -->
+      @if (writingChar()) {
+        <app-writing-practice
+          [wordOrChar]="writingChar()!"
+          (close)="writingChar.set(null)">
+        </app-writing-practice>
       }
     </div>
   `,
@@ -470,6 +486,29 @@ import { KanaItem } from '../../core/constants/kana-catalog.constant';
     }
     .card-bottom-audio {
       margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      width: 100%;
+    }
+    .btn-write-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 3px 6px;
+      border-radius: 6px;
+      background: var(--bg-paper);
+      border: 1px solid var(--border-strong);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      &:hover {
+        background: var(--navy);
+        color: #FFFDF9;
+      }
     }
     .audio-hint {
       display: inline-flex;
@@ -695,6 +734,11 @@ export class KanaBoardComponent {
   readonly scriptMode = signal<'hiragana' | 'katakana'>('hiragana');
   readonly groupFilter = signal<'all' | 'gojuon' | 'dakuon'>('all');
   readonly viewMode = signal<'board' | 'quiz'>('board');
+  readonly writingChar = signal<string | null>(null);
+
+  openWritingPractice(char: string): void {
+    this.writingChar.set(char);
+  }
 
   // Quiz state
   readonly quizQuestions = signal<JaQuizQuestion[]>([]);

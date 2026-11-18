@@ -7,11 +7,12 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
 import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
+import { WritingPracticeComponent } from '../../shared/components/writing-practice/writing-practice.component';
 
 @Component({
   selector: 'app-vocab',
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe, PosTagBadgeComponent, PixelIconComponent],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, PosTagBadgeComponent, PixelIconComponent, WritingPracticeComponent],
   template: `
     <div class="vocab-screen">
       <!-- Header điều hướng: < Danh sách bài học | Tiêu đề chủ đề | < 1/24 > -->
@@ -91,6 +92,13 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   [class.active]="jaService.showRomaji()"
                   (click)="toggleRomaji()">
                   Romaji: {{ jaService.showRomaji() ? 'BẬT' : 'TẮT' }}
+                </button>
+                <button
+                  type="button"
+                  class="ja-toggle-chip btn-kanji-writing"
+                  (click)="openWritingPad(currentWord.word)"
+                  title="✎ Luyện viết từng nét chữ theo chuẩn KanjiVG">
+                  <span>✎ Luyện viết Kanji</span>
                 </button>
               </div>
             }
@@ -204,6 +212,14 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
           </table>
         </div>
       </div>
+
+      <!-- MODAL TẬP VIẾT CHỮ THEO MẪU KANJIVG (Ô CHỮ ĐIỀN 米) -->
+      @if (writingWord()) {
+        <app-writing-practice
+          [wordOrChar]="writingWord()!"
+          (close)="writingWord.set(null)">
+        </app-writing-practice>
+      }
     </div>
   `,
   styles: [`
@@ -429,6 +445,16 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
       background: #78815D;
       color: #FFFDF9;
       border-color: #78815D;
+    }
+    .ja-toggle-chip.btn-kanji-writing {
+      background: #F4F7EE;
+      border-color: #B5C97B;
+      color: #385E2B;
+      font-weight: 700;
+      &:hover {
+        background: #385E2B;
+        color: #FFFDF9;
+      }
     }
     .ipa-audio-row {
       display: flex;
@@ -808,6 +834,12 @@ export class VocabComponent implements OnInit {
   assets = FARM_ASSETS;
 
   currentIndex = signal<number>(0);
+  readonly writingWord = signal<string | null>(null);
+
+  openWritingPad(word: string): void {
+    this.writingWord.set(word);
+  }
+
   isJa = computed(() => this.state.activeLang() === 'ja');
   isNonLatin = computed(() => {
     if (this.isJa()) return true;
