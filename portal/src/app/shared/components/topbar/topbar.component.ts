@@ -487,6 +487,7 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
     }
 
     .cart-btn {
+      position: relative;
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -497,15 +498,17 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
       font-weight: 600;
       font-size: 13px;
       color: var(--navy);
+      cursor: pointer;
       transition: background 0.15s;
     }
     .cart-btn:hover {
       background: #EDE5D6;
     }
     .cart-badge {
-      background: var(--rose);
-      color: #FFF;
+      background: #A65E65;
+      color: #FFFDF9;
       font-size: 10px;
+      font-weight: 700;
       padding: 1px 6px;
       border-radius: 999px;
     }
@@ -544,6 +547,25 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
         height: 32px;
         padding: 0;
         justify-content: center;
+      }
+      .cart-badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        min-width: 16px;
+        height: 16px;
+        padding: 0 3px;
+        border-radius: 999px;
+        background: #A65E65;
+        color: #FFFDF9;
+        font-size: 9.5px;
+        font-weight: 700;
+        line-height: 16px;
+        text-align: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        border: 1px solid #FFFDF9;
+        box-sizing: border-box;
+        pointer-events: none;
       }
     }
 
@@ -595,6 +617,7 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
         min-width: 15px;
         height: 15px;
         font-size: 9px;
+        line-height: 13px;
         padding: 0 2px;
       }
       .bell-dropdown {

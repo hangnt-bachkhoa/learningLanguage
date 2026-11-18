@@ -2036,6 +2036,29 @@ export class GameStateService {
     this.showToast(`Đã thêm "${item.name}" vào giỏ hàng`);
   }
 
+  updateCartQty(itemId: string, delta: number) {
+    this.cart.update(list => {
+      return list
+        .map(c => {
+          if (c.item.id === itemId) {
+            return { ...c, qty: c.qty + delta };
+          }
+          return c;
+        })
+        .filter(c => c.qty > 0);
+    });
+  }
+
+  removeFromCart(itemId: string) {
+    this.cart.update(list => list.filter(c => c.item.id !== itemId));
+    this.showToast('Đã xóa khỏi giỏ hàng.');
+  }
+
+  clearCart() {
+    this.cart.set([]);
+    this.showToast('Đã làm trống giỏ hàng.');
+  }
+
   checkoutCart() {
     const total = this.cartTotal();
     if (this.coins() < total) {
