@@ -1506,7 +1506,7 @@ export class GameStateService {
    */
   recordQuizCompletion(lessonId: number, firstTryResults: Record<number, boolean>): QuizSubmitResultDto {
     const entries = Object.entries(firstTryResults);
-    const totalQuestions = Math.max(10, entries.length);
+    const totalQuestions = Math.max(15, entries.length);
     const firstTryCorrectCount = entries.filter(([_, isOk]) => isOk).length;
 
     const currentProgress = this.userLessonProgress()[lessonId];

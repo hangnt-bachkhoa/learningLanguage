@@ -132,12 +132,23 @@ export interface QuizQuestionDto {
   word: string | null;
   phonetic: string | null;
   spriteKey?: string | null;
-  questionType?: 'meaning' | 'context' | 'listening' | 'vi_to_en';
-  format?: 'EN_TO_VI' | 'CONTEXT_CLOZE' | 'LISTENING' | 'VI_TO_EN';
+  questionType?: 'meaning' | 'context' | 'listening' | 'vi_to_en' | 'writing';
+  format?: 'EN_TO_VI' | 'CONTEXT_CLOZE' | 'LISTENING' | 'VI_TO_EN' | 'WRITING';
+  questionFormat?: 'MCQ' | 'WRITING';
+  targetChar?: string;
+  reading?: string;
+  meaningVi?: string;
   exampleEn?: string | null;
   exampleVi?: string | null;
   options: string[];
   correctOptionIndex?: number;
+  vocabFeedback?: {
+    word?: string;
+    phonetic?: string;
+    meaningVi?: string;
+    wordType?: string;
+  };
+  isRetry?: boolean;
 }
 
 export interface ShopProductDto {

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { VocabularyDto, QuizSessionDto } from './farm-api.service';
 import { DEFAULT_VOCABULARIES } from '../constants/default-vocabularies.constant';
 
+export const SESSION_SIZE = 15;
+
 export interface UserWordStat {
   userId: number;
   vocabId: number;
@@ -102,29 +104,35 @@ export interface BalancedQuizRewardResult {
   updatedRewardState: UserRewardState;
 }
 
-export function calculateBalancedQuizReward(
+/**
+ * Thuật toán tính thưởng 15 câu (15-Question Rebalance):
+ * - 3 Sao (★★★): 14 - 15 / 15 (>= 93%) -> 45 XP / 75 Xu
+ * - 2 Sao (★★☆): 12 - 13 / 15 (80% - 92%) -> 30 XP / 50 Xu
+ * - 1 Sao (★☆☆): < 12 / 15 (< 80%) -> 15 XP / 30 Xu
+ * - Delta Reward: Chỉ nhận phần chênh lệch khi vượt kỷ lục cũ
+ * - Speed Fertilizer: 8% ở 3★, 5% ở 2★ (Bảo hiểm Pity 15)
+ * - Hạt giống mở khóa: 1%/loại hạt, cap 1 gói/lần, daily cap 10 lượt (Bảo hiểm Pity 18)
+ */
+export function calculate15QReward(
   firstTryCorrect: number,
-  totalQuestions: number,
+  totalQuestions: number, // 15
   bestStarsClaimed: number,
   unlockedSeedIds: string[],
   rewardState: UserRewardState,
   todayStr: string
 ): BalancedQuizRewardResult {
-  // Reset giới hạn quay thưởng theo ngày
   let dailyRolls = rewardState.lastBonusRollDate === todayStr ? rewardState.dailyBonusRollsUsed : 0;
   let pityFert = rewardState.pityFertilizerMisses || 0;
   let pitySeed = rewardState.pitySeedMisses || 0;
-  let pitySpeedFert = rewardState.pitySpeedFertilizerMisses || 0;
 
   const ratio = totalQuestions > 0 ? firstTryCorrect / totalQuestions : 0;
-  const newStars = ratio === 1 ? 3 : ratio >= 0.8 ? 2 : 1;
+  const newStars = ratio >= 0.93 ? 3 : ratio >= 0.80 ? 2 : 1;
 
-  // Rule 2: 3-Star Delta Rewards (10 - 20 - 30 XP Scale, 20 - 35 - 50 Coins)
   const tierMap: Record<number, { xp: number; coins: number }> = {
     0: { xp: 0, coins: 0 },
-    1: { xp: 10, coins: 20 },
-    2: { xp: 20, coins: 35 },
-    3: { xp: 30, coins: 50 }
+    1: { xp: 15, coins: 30 },
+    2: { xp: 30, coins: 50 },
+    3: { xp: 45, coins: 75 }
   };
 
   let xpGained = 0;
@@ -132,47 +140,35 @@ export function calculateBalancedQuizReward(
   let updatedBestStars = bestStarsClaimed;
   const isMaxStarsAlready = newStars <= bestStarsClaimed;
 
-  // Rule 2: Deterministic Base Rewards (3-Star Delta System)
   if (newStars > bestStarsClaimed) {
     xpGained = tierMap[newStars].xp - (tierMap[bestStarsClaimed]?.xp || 0);
     coinsGained = tierMap[newStars].coins - (tierMap[bestStarsClaimed]?.coins || 0);
     updatedBestStars = newStars;
   }
 
-  let fertilizerGained = 0;
   let speedFertilizerGained = 0;
   let seedGainedId: string | null = null;
   const isEligibleForBonus = newStars >= 2 && dailyRolls < 10;
 
-  // Rule 3: Probabilistic Farm Drops (5% Phân bón cơ bản, 5% Phân bón tăng tốc, 1% Hạt giống có sẵn)
   if (isEligibleForBonus) {
     dailyRolls += 1;
 
-    // 5% Base Fertilizer (3% ở 2-Star) + Bảo hiểm tại 20 lần trượt
-    const fertProb = newStars === 3 ? 0.05 : 0.03;
-    if (pityFert >= 19 || Math.random() < fertProb) {
-      fertilizerGained = 1;
+    // 8% at 3★, 5% at 2★ + Pity at 15 (pityFert >= 14)
+    const fertProb = newStars === 3 ? 0.08 : 0.05;
+    if (pityFert >= 14 || Math.random() < fertProb) {
+      speedFertilizerGained = 1;
       pityFert = 0;
     } else {
       pityFert += 1;
     }
 
-    // 5% Speed Fertilizer (3% ở 2-Star) + Bảo hiểm tại 20 lần trượt (Care-Gated & Speed Fertilizer Rule)
-    const speedFertProb = newStars === 3 ? 0.05 : 0.03;
-    if (pitySpeedFert >= 19 || Math.random() < speedFertProb) {
-      speedFertilizerGained = 1;
-      pitySpeedFert = 0;
-    } else {
-      pitySpeedFert += 1;
-    }
-
-    // 1% mỗi loại hạt giống đang mở + Session Cap = 1 + Bảo hiểm tại 26 lần trượt
+    // 1% per unlocked seed + Cap 1/session + Pity at 18 (pitySeed >= 17)
     if (unlockedSeedIds.length > 0) {
       const hits = unlockedSeedIds.filter(() => Math.random() < 0.01);
       if (hits.length > 0) {
         seedGainedId = hits[Math.floor(Math.random() * hits.length)];
         pitySeed = 0;
-      } else if (pitySeed >= 25) {
+      } else if (pitySeed >= 17) {
         seedGainedId = unlockedSeedIds[Math.floor(Math.random() * unlockedSeedIds.length)];
         pitySeed = 0;
       } else {
@@ -186,7 +182,7 @@ export function calculateBalancedQuizReward(
     updatedBestStars,
     xpGained,
     coinsGained,
-    fertilizerGained,
+    fertilizerGained: 0,
     speedFertilizerGained,
     seedGainedId,
     isEligibleForBonus,
@@ -194,11 +190,29 @@ export function calculateBalancedQuizReward(
     updatedRewardState: {
       pityFertilizerMisses: pityFert,
       pitySeedMisses: pitySeed,
-      pitySpeedFertilizerMisses: pitySpeedFert,
+      pitySpeedFertilizerMisses: pityFert,
       dailyBonusRollsUsed: dailyRolls,
       lastBonusRollDate: todayStr
     }
   };
+}
+
+export function calculateBalancedQuizReward(
+  firstTryCorrect: number,
+  totalQuestions: number,
+  bestStarsClaimed: number,
+  unlockedSeedIds: string[],
+  rewardState: UserRewardState,
+  todayStr: string
+): BalancedQuizRewardResult {
+  return calculate15QReward(
+    firstTryCorrect,
+    totalQuestions,
+    bestStarsClaimed,
+    unlockedSeedIds,
+    rewardState,
+    todayStr
+  );
 }
 
 @Injectable({
@@ -207,7 +221,7 @@ export function calculateBalancedQuizReward(
 export class QuizEngineService {
 
   /**
-   * Thuật toán 1: Smart Pool Sampling (10 câu mỗi phiên)
+   * Thuật toán 1: Smart Pool Sampling (15 câu mỗi phiên)
    * Trọng số = (wrongCount * 50) + (attempts === 0 ? 30 : 0) + (daysSinceLastSeen >= 3 ? 20 : 0) + random(0, 15)
    */
   sampleQuizWords(
@@ -234,11 +248,11 @@ export class QuizEngineService {
     });
 
     scored.sort((a, b) => b.weight - a.weight);
-    const count = Math.min(10, topicWords.length);
+    const count = Math.min(SESSION_SIZE, topicWords.length);
     const selected = scored.slice(0, count).map(s => s.vocab);
 
-    // Nếu chủ đề có ít hơn 10 từ thì bốc thêm ngẫu nhiên cho đủ 10
-    while (selected.length < 10 && topicWords.length > 0) {
+    // Nếu chủ đề có ít hơn 15 từ thì bốc thêm ngẫu nhiên cho đủ 15
+    while (selected.length < SESSION_SIZE && topicWords.length > 0) {
       const extra = topicWords[Math.floor(Math.random() * topicWords.length)];
       selected.push(extra);
     }
@@ -247,7 +261,7 @@ export class QuizEngineService {
   }
 
   /**
-   * Thuật toán 2: Sinh 10 câu hỏi đa dạng với 4 format:
+   * Thuật toán 2: Sinh 15 câu hỏi đa dạng phân bổ đều 4 format:
    * typeCycle = ['EN_TO_VI', 'CONTEXT_CLOZE', 'LISTENING', 'VI_TO_EN']
    * và bộ Distractor 3 tầng (Tier 1 -> Tier 2 -> Tier 3).
    */

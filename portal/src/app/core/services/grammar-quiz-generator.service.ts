@@ -174,15 +174,15 @@ export class GrammarQuizGeneratorService {
   }
 
   /**
-   * Tạo bài kiểm tra Ngữ pháp Hybrid 10 câu (7 Dynamic + 3 Static)
+   * Tạo bài kiểm tra Ngữ pháp Hybrid 15 câu (10 Dynamic + 5 Static)
    */
   buildGrammarTestSession(
     topicCode: string,
     unlockedVocabs: CandidateVocabWord[],
     staticQuestions: GrammarQuestion[],
-    sessionSize = 10
+    sessionSize = 15
   ): GrammarQuizQuestionDto[] {
-    const targetDynamic = Math.min(7, sessionSize);
+    const targetDynamic = Math.min(10, sessionSize);
 
     // 1. Sinh các câu hỏi ngữ pháp động theo 3 Chiến lược
     const dynamicQuestions = this.generateDynamicQuestions(

@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { GameStateService } from '../../core/services/game-state.service';
@@ -7,11 +7,12 @@ import { FARM_ASSETS } from '../../core/constants/farm-assets.constant';
 import { SafeHtmlPipe } from '../../core/pipes/safe-html.pipe';
 import { FarmApiService, QuizQuestionDto, QuizSubmitResultDto, QuizSessionDto } from '../../core/services/farm-api.service';
 import { getDefaultQuizSession } from '../../core/constants/default-quiz-questions.constant';
-import { QuizEngineService } from '../../core/services/quiz-engine.service';
+import { QuizEngineService, calculate15QReward, SESSION_SIZE } from '../../core/services/quiz-engine.service';
 import { DEFAULT_VOCABULARIES } from '../../core/constants/default-vocabularies.constant';
 import { CROP_CATALOG } from '../../core/constants/crop-catalog.constant';
 import { PosTagBadgeComponent } from '../../shared/components/pos-tag-badge/pos-tag-badge.component';
 import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-icon.component';
+import { StrokeOrderService, extractPointsFromSvgPath } from '../../core/services/stroke-order.service';
 
 @Component({
   selector: 'app-quiz',
@@ -51,7 +52,7 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         @if (isLoading()) {
           <div class="vintage-card state-card">
             <app-pixel-icon name="icon_retry" [size]="24"></app-pixel-icon>
-            <p>Đang chuẩn bị 10 câu hỏi có trọng số thông minh...</p>
+            <p>Đang chuẩn bị 15 câu hỏi có trọng số thông minh...</p>
           </div>
         } @else if (queue().length === 0 && !isSubmitting()) {
           <div class="vintage-card state-card">
@@ -66,7 +67,9 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
               <div class="vintage-card question-card">
                 <!-- HUY HIỆU DẠNG CÂU HỎI -->
                 <div class="question-type-badge">
-                  @if (q.questionType === 'context') {
+                  @if (q.questionFormat === 'WRITING') {
+                    <span style="display:inline-flex; align-items:center; gap:5px;"><app-pixel-icon name="icon_tools" [size]="14"></app-pixel-icon> Luyện viết chữ</span>
+                  } @else if (q.questionType === 'context') {
                     <span style="display:inline-flex; align-items:center; gap:5px;"><app-pixel-icon name="icon_scroll" [size]="14"></app-pixel-icon> Ngữ cảnh TOEIC</span>
                   } @else if (q.questionType === 'listening') {
                     <span style="display:inline-flex; align-items:center; gap:5px;"><app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon> Nghe &amp; Chọn từ</span>
@@ -77,66 +80,186 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
                   }
                 </div>
 
-                <!-- NỘI DUNG CÂU HỎI THEO TỪNG DẠNG -->
-                <div class="prompt-box">
-                  @if (q.questionType === 'context') {
-                    <h2 class="context-prompt">{{ q.prompt }}</h2>
-                    @if (q.exampleVi) {
-                      <p class="context-vi">"{{ q.exampleVi }}"</p>
-                    }
-                  } @else if (q.questionType === 'listening') {
-                    <!-- Dạng 3: LISTENING - Ẩn hoàn toàn chữ và phiên âm, chỉ để lại nút nghe âm thanh -->
-                    <div class="listening-action-box">
-                      <button class="speaker-large-btn" (click)="state.speak(q.word || '')" title="Bấm để nghe phát âm">
-                        <app-pixel-icon name="icon_speaker" [size]="18"></app-pixel-icon>
-                        <span class="speaker-label">Nghe phát âm</span>
+                @if (q.questionFormat === 'WRITING') {
+                  <!-- DẠNG TẬP VIẾT CHỮ THEO MẪU KANJIVG (Ô CHỮ ĐIỀN 米) -->
+                  <div class="writing-quiz-block">
+                    <div class="writing-prompt-row">
+                      <div class="writing-prompt-meta">
+                        <span class="writing-prompt-badge">
+                          <app-pixel-icon name="icon_scroll" [size]="12"></app-pixel-icon>
+                          <span>Tập viết theo trí nhớ (米字格)</span>
+                        </span>
+                        <h2 class="writing-prompt-title">{{ q.prompt }}</h2>
+                      </div>
+                      <button
+                        type="button"
+                        class="speaker-mini-btn"
+                        (click)="speakJapanese(q.targetChar || q.word || '')"
+                        title="Nghe phát âm chuẩn">
+                        <app-pixel-icon name="icon_speaker" [size]="15"></app-pixel-icon>
                       </button>
                     </div>
-                    <h3 class="listening-prompt">{{ q.prompt }}</h3>
-                  } @else if (isViToEn(q)) {
-                    <!-- Dạng 4: VI_TO_EN - Chọn từ tiếng Anh từ nghĩa tiếng Việt -->
-                    <!-- TUYỆT ĐỐI KHÔNG HIỂN THỊ TỪ TIẾNG ANH VÀ PHIÊN ÂM VÌ ĐÓ LÀ ĐÁP ÁN! -->
-                    <div class="word-lead-box vi-lead-box">
-                      <p class="vi-prompt-sub">Chọn từ tiếng Anh có nghĩa là:</p>
-                      <h2 class="quiz-word vi-meaning-target">"{{ extractMeaning(q) }}"</h2>
-                    </div>
-                  } @else {
-                    <!-- Dạng 1: EN_TO_VI - Nghĩa tiếng Việt của từ tiếng Anh -->
-                    <div class="word-lead-box">
-                      <h2 class="quiz-word">{{ q.word }}</h2>
-                      <div class="word-meta-row">
-                        @if (q.phonetic) {
-                          <span class="word-phonetic">{{ cleanPhonetic(q.phonetic) }}</span>
+
+                    <!-- Ô CHỮ ĐIỀN (米字格) CHO QUIZ -->
+                    <div class="quiz-pad-stage" [class.shake]="writingShake()">
+                      <svg class="rice-grid-svg" viewBox="0 0 109 109">
+                        <rect x="1" y="1" width="107" height="107" fill="none" stroke="#D9C8B5" stroke-width="1.5" />
+                        <line x1="54.5" y1="1" x2="54.5" y2="108" stroke="#D9C8B5" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="1" y1="54.5" x2="108" y2="54.5" stroke="#D9C8B5" stroke-width="1" stroke-dasharray="3,3" />
+                        <line x1="1" y1="1" x2="108" y2="108" stroke="#E8D7A8" stroke-width="0.8" stroke-dasharray="2.5,3.5" opacity="0.65" />
+                        <line x1="1" y1="108" x2="108" y2="1" stroke="#E8D7A8" stroke-width="0.8" stroke-dasharray="2.5,3.5" opacity="0.65" />
+
+                        <!-- NÉT MỜ GỢI Ý (MẶC ĐỊNH ẨN; HIỆN KHI BẤM GỢI Ý HOẶC SAI 2 LẦN) -->
+                        @if (writingShowGhost()) {
+                          <g class="ghost-strokes-group" fill="none" stroke="#263847" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.28">
+                            @for (d of writingStrokes(); track $index) {
+                              <path [attr.d]="d" />
+                            }
+                          </g>
                         }
-                        <button class="speaker-mini-btn" (click)="state.speak(q.word || '')" title="Nghe âm thanh">
-                          <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
+
+                        <!-- NÉT ĐÃ VIẾT ĐÚNG (MỰC NAVY) -->
+                        <g class="locked-strokes-group" fill="none" stroke="#263847" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round">
+                          @for (d of writingLockedPaths(); track $index) {
+                            <path [attr.d]="d" />
+                          }
+                        </g>
+
+                        <!-- CHẤM ĐỎ BẮT ĐẦU NÉT -->
+                        @if (!writingCompleted() && writingStartPoint(); as pt) {
+                          <circle
+                            class="pulsing-start-dot"
+                            [attr.cx]="pt[0]"
+                            [attr.cy]="pt[1]"
+                            r="3.5"
+                            fill="#A65E65"
+                            stroke="#FFFDF9"
+                            stroke-width="1.5"
+                          />
+                        }
+                      </svg>
+
+                      <!-- CANVAS VIẾT -->
+                      <canvas
+                        #quizCanvas
+                        class="quiz-ink-canvas"
+                        (pointerdown)="onWritingPointerDown($event)"
+                        (pointermove)="onWritingPointerMove($event)"
+                        (pointerup)="onWritingPointerUp($event)"
+                        (pointercancel)="onWritingPointerCancel($event)">
+                      </canvas>
+
+                      @if (writingCompleted()) {
+                        <div class="completion-stamp-badge">
+                          <app-pixel-icon name="icon_check" [size]="16"></app-pixel-icon>
+                          <span>✓ Viết chính xác!</span>
+                        </div>
+                      }
+                    </div>
+
+                    <!-- THANH ĐIỀU KHIỂN & HỖ TRỢ NÉT VIẾT -->
+                    <div class="writing-controls-strip">
+                      <div class="stroke-progress-pill">
+                        Nét <strong>{{ writingCurrentStrokeIndex() }}</strong> / {{ writingStrokes().length }}
+                      </div>
+
+                      <div class="writing-btn-actions">
+                        <button
+                          type="button"
+                          class="btn-quiz-writing-action"
+                          [disabled]="writingShowGhost() || writingCompleted()"
+                          (click)="revealWritingHint()"
+                          title="Mở nét mờ gợi ý (sẽ mất điểm giọt sương và ôn lại cuối phiên)">
+                          <app-pixel-icon name="icon_lightbulb" [size]="13"></app-pixel-icon>
+                          <span>Xem gợi ý</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          class="btn-quiz-writing-action"
+                          [disabled]="writingCompleted()"
+                          (click)="resetWritingPad()"
+                          title="Xóa viết lại từ nét đầu">
+                          <app-pixel-icon name="icon_retry" [size]="13"></app-pixel-icon>
+                          <span>Viết lại</span>
                         </button>
                       </div>
                     </div>
-                    <p class="prompt-text">{{ q.prompt }}</p>
-                  }
-                </div>
 
-                <!-- DANH SÁCH 4 ĐÁP ÁN TRẮC NGHIỆM PHẲNG -->
-                <div class="options-grid">
-                  @for (opt of q.options; track opt; let idx = $index) {
-                    <button
-                      type="button"
-                      class="option-flat-btn"
-                      [class.selected]="selectedOptionIdx() === idx && feedbackState() === 'none'"
-                      [class.correct]="feedbackState() !== 'none' && idx === q.correctOptionIndex"
-                      [class.wrong]="feedbackState() === 'wrong' && selectedOptionIdx() === idx"
-                      [disabled]="feedbackState() !== 'none'"
-                      (click)="selectOption(idx)">
-                      <span class="option-idx">{{ ['A', 'B', 'C', 'D'][idx] }}</span>
-                      <span class="option-content">{{ opt }}</span>
-                    </button>
-                  }
-                </div>
+                    <!-- THÔNG BÁO LỖI / HƯỚNG DẪN KHI VIẾT -->
+                    @if (writingErrorMsg()) {
+                      <div class="writing-status-alert" [class.alert-hint]="writingShowGhost()">
+                        <app-pixel-icon [name]="writingShowGhost() ? 'icon_lightbulb' : 'icon_cross'" [size]="13"></app-pixel-icon>
+                        <span>{{ writingErrorMsg() }}</span>
+                      </div>
+                    }
+                  </div>
+                } @else {
+                  <!-- NỘI DUNG CÂU HỎI TRẮC NGHIỆM MCQ -->
+                  <div class="prompt-box">
+                    @if (q.questionType === 'context') {
+                      <h2 class="context-prompt">{{ q.prompt }}</h2>
+                      @if (q.exampleVi) {
+                        <p class="context-vi">"{{ q.exampleVi }}"</p>
+                      }
+                    } @else if (q.questionType === 'listening') {
+                      <!-- Dạng 3: LISTENING - Ẩn hoàn toàn chữ và phiên âm, chỉ để lại nút nghe âm thanh -->
+                      <div class="listening-action-box">
+                        <button class="speaker-large-btn" (click)="state.speak(q.word || '')" title="Bấm để nghe phát âm">
+                          <app-pixel-icon name="icon_speaker" [size]="18"></app-pixel-icon>
+                          <span class="speaker-label">Nghe phát âm</span>
+                        </button>
+                      </div>
+                      <h3 class="listening-prompt">{{ q.prompt }}</h3>
+                    } @else if (isViToEn(q)) {
+                      <!-- Dạng 4: VI_TO_EN - Chọn từ tiếng Anh từ nghĩa tiếng Việt -->
+                      <div class="word-lead-box vi-lead-box">
+                        <p class="vi-prompt-sub">Chọn từ tiếng Anh có nghĩa là:</p>
+                        <h2 class="quiz-word vi-meaning-target">"{{ extractMeaning(q) }}"</h2>
+                      </div>
+                    } @else {
+                      <!-- Dạng 1: EN_TO_VI - Nghĩa tiếng Việt của từ tiếng Anh -->
+                      <div class="word-lead-box">
+                        <h2 class="quiz-word">{{ q.word }}</h2>
+                        <div class="word-meta-row">
+                          @if (q.phonetic) {
+                            <span class="word-phonetic">{{ cleanPhonetic(q.phonetic) }}</span>
+                          }
+                          <button class="speaker-mini-btn" (click)="state.speak(q.word || '')" title="Nghe âm thanh">
+                            <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
+                          </button>
+                        </div>
+                      </div>
+                      <p class="prompt-text">{{ q.prompt }}</p>
+                    }
+                  </div>
+
+                  <!-- DANH SÁCH 4 ĐÁP ÁN TRẮC NGHIỆM PHẲNG -->
+                  <div class="options-grid">
+                    @for (opt of q.options; track opt; let idx = $index) {
+                      <button
+                        type="button"
+                        class="option-flat-btn"
+                        [class.selected]="selectedOptionIdx() === idx && feedbackState() === 'none'"
+                        [class.correct]="feedbackState() !== 'none' && idx === q.correctOptionIndex"
+                        [class.wrong]="feedbackState() === 'wrong' && selectedOptionIdx() === idx"
+                        [disabled]="feedbackState() !== 'none'"
+                        (click)="selectOption(idx)">
+                        <span class="option-idx">{{ ['A', 'B', 'C', 'D'][idx] }}</span>
+                        <span class="option-content">{{ opt }}</span>
+                      </button>
+                    }
+                  </div>
+                }
 
                 <!-- NÚT HÀNH ĐỘNG DƯỚI CÙNG & KHỐI THÔNG BÁO FEEDBACK (THAY THẾ VỊ TRÍ NÚT TIẾP TỤC) -->
                 <div class="check-action-bar">
-                  @if (feedbackState() === 'none') {
+                  @if (q.questionFormat === 'WRITING' && feedbackState() === 'none') {
+                    <div class="writing-guide-status">
+                      <app-pixel-icon name="icon_pin" [size]="13"></app-pixel-icon>
+                      <span>Vẽ từng nét theo chuẩn KanjiVG. Bắt đầu từ chấm đỏ.</span>
+                    </div>
+                  } @else if (feedbackState() === 'none') {
                     <button
                       class="btn btn-primary check-btn"
                       [disabled]="selectedOptionIdx() === null"
@@ -381,8 +504,8 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
               <!-- THÔNG SỐ PITY COUNTER & DAILY ROLL CAP CHỐNG XUI & CHỐNG CÀY -->
               <div class="pity-bar">
                 <span class="pity-pill">Lượt may mắn: <strong>{{ result()?.dailyBonusRollsUsed ?? state.userRewardState().dailyBonusRollsUsed }}/10</strong></span>
-                <span class="pity-pill">Bảo hiểm Hạt: <strong>{{ pitySeed() }}/26</strong></span>
-                <span class="pity-pill">Bảo hiểm Phân bón: <strong>{{ pityFert() }}/20</strong></span>
+                <span class="pity-pill">Bảo hiểm Hạt: <strong>{{ pitySeed() }}/18</strong></span>
+                <span class="pity-pill">Bảo hiểm Phân bón: <strong>{{ pityFert() }}/15</strong></span>
               </div>
             </div>
 
@@ -1407,16 +1530,192 @@ import { PixelIconComponent } from '../../shared/components/pixel-icon/pixel-ico
         gap: 6px;
       }
     }
+
+    /* ================= IN-QUIZ WRITING PAD (米字格) ================= */
+    .writing-quiz-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .writing-prompt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+    .writing-prompt-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .writing-prompt-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--rose, #A65E65);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .writing-prompt-title {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0;
+      line-height: 1.35;
+    }
+    .quiz-pad-stage {
+      position: relative;
+      width: min(76vw, 250px);
+      aspect-ratio: 1 / 1;
+      margin: 6px auto;
+      background: #FFFDF9;
+      border: 2px solid var(--border-strong, #D9C8B5);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      user-select: none;
+      -webkit-user-select: none;
+      &.shake {
+        animation: horizontalShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      }
+    }
+    .rice-grid-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .quiz-ink-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: crosshair;
+    }
+    .pulsing-start-dot {
+      animation: pulseDot 1.2s ease-in-out infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { r: 3.2px; opacity: 0.9; }
+      50% { r: 5.2px; opacity: 1; }
+    }
+    @keyframes horizontalShake {
+      10%, 90% { transform: translate3d(-2px, 0, 0); }
+      20%, 80% { transform: translate3d(3px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+    .completion-stamp-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      background: #78815D;
+      color: #FFFDF9;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      pointer-events: none;
+    }
+    .writing-controls-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 6px;
+      gap: 8px;
+    }
+    .stroke-progress-pill {
+      font-size: 12.5px;
+      color: var(--navy);
+      font-weight: 600;
+      strong {
+        color: var(--rose);
+        font-weight: 700;
+      }
+    }
+    .writing-btn-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-quiz-writing-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 10px;
+      background: var(--bg-card, #FFFDF9);
+      border: 1.5px solid var(--border-strong, #D9C8B5);
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      &:hover:not(:disabled) {
+        background: #EDE5D6;
+      }
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+    .writing-status-alert {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #FDF2F3;
+      border: 1px solid #E2AAB0;
+      color: var(--rose);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.35;
+      &.alert-hint {
+        background: #F4F7EE;
+        border-color: #B5C97B;
+        color: #385E2B;
+      }
+    }
+    .writing-guide-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px;
+      background: rgba(232, 215, 168, 0.35);
+      border: 1px dashed var(--border-strong);
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--navy);
+    }
   `]
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent implements OnInit, AfterViewChecked {
   state = inject(GameStateService);
   jaService = inject(JapaneseLearningService);
   quizEngine = inject(QuizEngineService);
+  strokeService = inject(StrokeOrderService);
   assets = FARM_ASSETS;
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private farmApi = inject(FarmApiService);
+
+  @ViewChild('quizCanvas') quizCanvasRef?: ElementRef<HTMLCanvasElement>;
 
   // Trạng thái bài kiểm tra
   lessonId = signal<number>(1);
@@ -1431,9 +1730,9 @@ export class QuizComponent implements OnInit {
   isSubmitting = signal<boolean>(false);
   isFinished = signal<boolean>(false);
 
-  // HÀNG ĐỢI LẶP CÂU SAI & TIẾN ĐỘ
+  // HÀNG ĐỢI LẶP CÂU SAI & TIẾN ĐỘ (15 CÂU)
   queue = signal<QuizQuestionDto[]>([]);
-  totalInitial = signal<number>(10);
+  totalInitial = signal<number>(SESSION_SIZE);
   masteredIds = signal<Set<number>>(new Set());
 
   // Lưu kết quả của riêng LẦN GẶP ĐẦU TIÊN: questionId -> isCorrect
@@ -1444,6 +1743,39 @@ export class QuizComponent implements OnInit {
   selectedOptionIdx = signal<number | null>(null);
   feedbackState = signal<'none' | 'correct' | 'wrong'>('none');
   feedbackDetail = signal<{ prompt: string; correctText: string; explanation?: string } | null>(null);
+
+  // Trạng thái Luyện viết chữ KanjiVG (Ô chữ điền 米)
+  writingCurrentStrokeIndex = signal<number>(0);
+  writingLockedPaths = signal<string[]>([]);
+  writingShowGhost = signal<boolean>(false);
+  writingCompleted = signal<boolean>(false);
+  writingShake = signal<boolean>(false);
+  writingErrorMsg = signal<string | null>(null);
+  writingFailsCount = signal<number>(0);
+
+  private isWritingPointerDown = false;
+  private currentWritingRawPoints: [number, number][] = [];
+  private canvasSetupDone = false;
+
+  // Ký tự tập viết hiện tại & các nét SVG tương ứng
+  writingTargetChar = computed(() => {
+    const q = this.currentQuestion();
+    if (!q) return 'あ';
+    return q.targetChar || (q.word ? q.word.trim().charAt(0) : 'あ');
+  });
+
+  writingStrokes = computed(() => {
+    const ch = this.writingTargetChar();
+    return this.strokeService.getStrokes(ch) || [];
+  });
+
+  writingStartPoint = computed<[number, number] | null>(() => {
+    const strokes = this.writingStrokes();
+    const idx = this.writingCurrentStrokeIndex();
+    if (idx >= strokes.length) return null;
+    const pts = extractPointsFromSvgPath(strokes[idx], 16);
+    return pts.length > 0 ? pts[0] : null;
+  });
 
   // Kết quả cuối cùng
   result = signal<QuizSubmitResultDto | null>(null);
@@ -1459,7 +1791,7 @@ export class QuizComponent implements OnInit {
     const word = q.word || '';
     const found = word ? this.state.findVocab(word)?.vocab : null;
 
-    let meaningVi = found?.meaningVi || '';
+    let meaningVi = found?.meaningVi || q.meaningVi || '';
     if (!meaningVi && q.correctOptionIndex !== undefined) {
       if (q.format === 'EN_TO_VI' || q.questionType === 'meaning') {
         meaningVi = q.options[q.correctOptionIndex] || '';
@@ -1481,11 +1813,11 @@ export class QuizComponent implements OnInit {
 
   // TIẾN ĐỘ ĐƠN ĐIỆU (MONOTONIC): Chỉ tăng khi 1 câu gốc được trả lời đúng
   progressPercent = computed(() => {
-    const total = this.totalInitial() || 10;
+    const total = this.totalInitial() || SESSION_SIZE;
     return Math.min(100, Math.round((this.masteredIds().size / total) * 100));
   });
 
-  // TÍNH TOÁN 5 GIỌT SƯƠNG:
+  // TÍNH TOÁN 6 GIỌT SƯƠNG:
   // Giọt sương chỉ bị mất khi làm SAI ở LẦN ĐẦU TIÊN
   firstTryWrongCount = computed(() => {
     let wrongs = 0;
@@ -1496,19 +1828,19 @@ export class QuizComponent implements OnInit {
   });
 
   dewDropsRemaining = computed(() => {
-    return Math.max(0, 5 - this.firstTryWrongCount());
+    return Math.max(0, 6 - this.firstTryWrongCount());
   });
 
   dewDropsState = computed(() => {
     const remaining = this.dewDropsRemaining();
-    return [remaining >= 1, remaining >= 2, remaining >= 3, remaining >= 4, remaining >= 5];
+    return [remaining >= 1, remaining >= 2, remaining >= 3, remaining >= 4, remaining >= 5, remaining >= 6];
   });
 
   dewDropsTooltip = computed(() => {
     const d = this.dewDropsRemaining();
-    if (d === 5) return '5 Giọt sương: Hạng 3 Sao ★★★ (Hoàn hảo)';
-    if (d >= 3) return `${d} Giọt sương: Hạng 2 Sao ★★ (Khá tốt)`;
-    return `${d} Giọt sương: Hạng 1 Sao ★ (Cần nỗ lực sửa sai)`;
+    if (d >= 5) return '6 Giọt sương: Hạng 3 Sao ★★★ (≥93%)';
+    if (d >= 3) return `${d} Giọt sương: Hạng 2 Sao ★★ (≥80%)`;
+    return `${d} Giọt sương: Hạng 1 Sao ★ (<80%)`;
   });
 
   ngOnInit() {
@@ -1526,6 +1858,13 @@ export class QuizComponent implements OnInit {
     });
   }
 
+  ngAfterViewChecked(): void {
+    if (this.currentQuestion()?.questionFormat === 'WRITING' && !this.canvasSetupDone && this.quizCanvasRef) {
+      this.setupCanvasResolution();
+      this.canvasSetupDone = true;
+    }
+  }
+
   loadJapaneseQuizSession(topicCode: string) {
     this.isLoading.set(true);
     this.isFinished.set(false);
@@ -1535,6 +1874,7 @@ export class QuizComponent implements OnInit {
     this.totalTriesCount.set(0);
     this.selectedOptionIdx.set(null);
     this.feedbackState.set('none');
+    this.canvasSetupDone = false;
 
     const topic = this.jaService.topics().find(t => t.code === topicCode) || this.jaService.topics()[0];
     this.lessonTitle.set(topic.titleVi);
@@ -1542,17 +1882,21 @@ export class QuizComponent implements OnInit {
     this.bestStarsClaimed.set(prog?.bestStarsClaimed || 0);
     this.sessionId.set(`local_ja_quiz_${topicCode}_${Date.now()}`);
 
-    const jaQs = this.jaService.generateN5QuizSession(topicCode, 10);
+    const jaQs = this.jaService.generateN5QuizSession(topicCode, SESSION_SIZE);
     const mapped: QuizQuestionDto[] = jaQs.map(q => ({
       id: q.vocabId,
       lessonId: 1000,
       prompt: q.prompt,
       word: q.scriptPrimary || q.audioText,
       phonetic: q.readingSub ? `/${q.readingSub}/` : null,
-      questionType: 'meaning',
-      format: 'EN_TO_VI',
+      questionType: q.questionFormat === 'WRITING' ? 'writing' : 'meaning',
+      format: q.questionFormat === 'WRITING' ? 'WRITING' : 'EN_TO_VI',
+      questionFormat: q.questionFormat || 'MCQ',
+      targetChar: q.targetChar,
+      reading: q.reading || q.readingSub,
+      meaningVi: q.meaningVi,
       exampleVi: q.explanationVi,
-      options: q.options,
+      options: q.options || [],
       correctOptionIndex: q.correctIndex,
       vocabFeedback: {
         word: q.scriptPrimary || q.audioText,
@@ -1563,8 +1907,9 @@ export class QuizComponent implements OnInit {
     }));
 
     this.queue.set(mapped);
-    this.totalInitial.set(mapped.length);
+    this.totalInitial.set(mapped.length > 0 ? mapped.length : SESSION_SIZE);
     this.isLoading.set(false);
+    this.initWritingStateForQuestion(mapped[0] || null);
   }
 
   loadQuizSession(lessonId: number) {
@@ -1576,6 +1921,7 @@ export class QuizComponent implements OnInit {
     this.totalTriesCount.set(0);
     this.selectedOptionIdx.set(null);
     this.feedbackState.set('none');
+    this.canvasSetupDone = false;
 
     // Chế độ Offline / Client-Side (GitHub Pages tĩnh): Tải câu hỏi từ Smart Engine ngay lập tức
     if (!this.state.isApiConnected()) {
@@ -1595,42 +1941,26 @@ export class QuizComponent implements OnInit {
 
           const list = session.questions;
           this.queue.set([...list]);
-          this.totalInitial.set(list.length > 0 ? list.length : 10);
+          this.totalInitial.set(list.length > 0 ? list.length : SESSION_SIZE);
           this.isLoading.set(false);
         } else {
           this.loadDefaultQuestions(lessonId);
         }
       },
       error: () => {
-        // Fallback gọi getQuizQuestions nếu quiz-session chưa khởi tạo xong
-        this.farmApi.getQuizQuestions(lessonId).subscribe({
-          next: (questions) => {
-            if (questions && questions.length > 0) {
-              this.queue.set([...questions]);
-              this.totalInitial.set(questions.length > 0 ? questions.length : 10);
-              this.isLoading.set(false);
-            } else {
-              this.loadDefaultQuestions(lessonId);
-            }
-          },
-          error: () => {
-            // Khi chạy tĩnh trên GitHub Pages không có backend API, tự động nạp bộ câu hỏi offline
-            this.loadDefaultQuestions(lessonId);
-          }
-        });
+        this.loadDefaultQuestions(lessonId);
       }
     });
   }
 
   private loadDefaultQuestions(lessonId: number) {
-    // Thuật toán 1 & 2: Smart Pool Sampling + Multi-Format Generator + 3-Tier Distractors
+    // Thuật toán 1 & 2: Smart Pool Sampling + Multi-Format Generator + 3-Tier Distractors (15 câu)
     const rawList = this.state.vocabulariesByLesson()[lessonId];
     const vocabs = (rawList && rawList.length > 0)
       ? rawList
       : (DEFAULT_VOCABULARIES[lessonId]?.length ? DEFAULT_VOCABULARIES[lessonId] : (DEFAULT_VOCABULARIES[1] || []));
     let generated = this.quizEngine.generateSessionQuestions(lessonId, vocabs, this.state.userWordStats());
 
-    // Bảo hiểm an toàn tuyệt đối: Nếu sinh rỗng, dùng dữ liệu mặc định từ default-quiz-questions
     let questions: QuizQuestionDto[];
     if (generated && generated.length > 0) {
       questions = generated.map(g => ({
@@ -1642,6 +1972,7 @@ export class QuizComponent implements OnInit {
         spriteKey: g.spriteKey,
         questionType: g.format === 'CONTEXT_CLOZE' ? 'context' : (g.format === 'LISTENING' ? 'listening' : (g.format === 'VI_TO_EN' ? 'vi_to_en' : 'meaning')),
         format: g.format,
+        questionFormat: 'MCQ',
         exampleEn: g.exampleEn,
         exampleVi: g.exampleVi,
         options: g.options,
@@ -1663,13 +1994,184 @@ export class QuizComponent implements OnInit {
     this.bestStarsClaimed.set(stars);
 
     this.queue.set([...questions]);
-    this.totalInitial.set(questions.length > 0 ? questions.length : 10);
+    this.totalInitial.set(questions.length > 0 ? questions.length : SESSION_SIZE);
     this.isLoading.set(false);
   }
 
+  // ===================== CANVAS & POINTER EVENTS CHO BẢNG VIẾT =====================
+  speakJapanese(charOrWord: string): void {
+    if (!charOrWord) return;
+    this.strokeService.playPronunciation(charOrWord);
+  }
+
+  private initWritingStateForQuestion(q: QuizQuestionDto | null): void {
+    this.writingCurrentStrokeIndex.set(0);
+    this.writingLockedPaths.set([]);
+    this.writingShowGhost.set(false);
+    this.writingCompleted.set(false);
+    this.writingShake.set(false);
+    this.writingErrorMsg.set(null);
+    this.writingFailsCount.set(0);
+    this.canvasSetupDone = false;
+    this.clearQuizCanvas();
+  }
+
+  private clearQuizCanvas(): void {
+    if (!this.quizCanvasRef?.nativeElement) return;
+    const cvs = this.quizCanvasRef.nativeElement;
+    const ctx = cvs.getContext('2d');
+    if (ctx) {
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
+    }
+  }
+
+  private setupCanvasResolution(): void {
+    if (!this.quizCanvasRef?.nativeElement) return;
+    const canvas = this.quizCanvasRef.nativeElement;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.scale(dpr, dpr);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#263847';
+      ctx.lineWidth = 4.5;
+    }
+  }
+
+  onWritingPointerDown(e: PointerEvent): void {
+    if (this.writingCompleted() || this.writingStrokes().length === 0) return;
+    const canvas = this.quizCanvasRef?.nativeElement;
+    if (!canvas) return;
+
+    canvas.setPointerCapture(e.pointerId);
+    this.isWritingPointerDown = true;
+    this.currentWritingRawPoints = [];
+
+    const rect = canvas.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width) * 109;
+    const ny = ((e.clientY - rect.top) / rect.height) * 109;
+    this.currentWritingRawPoints.push([nx, ny]);
+
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.beginPath();
+      ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    }
+  }
+
+  onWritingPointerMove(e: PointerEvent): void {
+    if (!this.isWritingPointerDown || this.writingCompleted()) return;
+    const canvas = this.quizCanvasRef?.nativeElement;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width) * 109;
+    const ny = ((e.clientY - rect.top) / rect.height) * 109;
+    this.currentWritingRawPoints.push([nx, ny]);
+
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+      ctx.stroke();
+    }
+  }
+
+  onWritingPointerUp(e: PointerEvent): void {
+    if (!this.isWritingPointerDown) return;
+    this.isWritingPointerDown = false;
+    const canvas = this.quizCanvasRef?.nativeElement;
+    if (canvas) {
+      try { canvas.releasePointerCapture(e.pointerId); } catch {}
+    }
+
+    const strokes = this.writingStrokes();
+    const idx = this.writingCurrentStrokeIndex();
+    const q = this.currentQuestion();
+    if (!q || idx >= strokes.length) return;
+
+    const targetStrokePath = strokes[idx];
+    const grade = this.strokeService.gradeStroke(this.currentWritingRawPoints, targetStrokePath);
+
+    if (grade.pass) {
+      // Đúng nét: Khóa nét mực xanh navy vào danh sách và tăng index nét
+      this.writingLockedPaths.update(p => [...p, targetStrokePath]);
+      this.clearQuizCanvas();
+      this.writingErrorMsg.set(null);
+      const nextIdx = idx + 1;
+      this.writingCurrentStrokeIndex.set(nextIdx);
+
+      // Nếu đã hoàn thành tất cả các nét của chữ
+      if (nextIdx >= strokes.length) {
+        this.writingCompleted.set(true);
+
+        const cleanlyOnFirstTry = this.writingFailsCount() < 2 && !this.writingShowGhost();
+        if (!this.firstTryResults.has(q.id)) {
+          this.firstTryResults.set(q.id, cleanlyOnFirstTry);
+        }
+
+        this.feedbackState.set('correct');
+        this.feedbackDetail.set({
+          prompt: q.prompt,
+          correctText: q.targetChar || q.word || '',
+          explanation: cleanlyOnFirstTry ? '✓ Viết chính xác!' : 'Đã hoàn tất nét viết!'
+        });
+
+        this.speakJapanese(this.writingTargetChar());
+      }
+    } else {
+      // Sai nét: Rung nhẹ ô chữ điền, tăng biến đếm lỗi
+      this.clearQuizCanvas();
+      this.writingShake.set(true);
+      setTimeout(() => this.writingShake.set(false), 450);
+
+      this.writingFailsCount.update(c => c + 1);
+
+      // Nếu sai 2 lần: Đánh dấu mất điểm giọt sương lần đầu & bật nét mờ để hướng dẫn
+      if (this.writingFailsCount() >= 2) {
+        if (!this.firstTryResults.has(q.id)) {
+          this.firstTryResults.set(q.id, false);
+        }
+        this.writingShowGhost.set(true);
+        this.writingErrorMsg.set('Đã mở nét mờ gợi ý. Hãy viết theo để hoàn tất câu này.');
+      } else {
+        this.writingErrorMsg.set(grade.reason || 'Nét chưa đúng, hãy thử lại từ chấm đỏ!');
+      }
+    }
+  }
+
+  onWritingPointerCancel(e: PointerEvent): void {
+    this.isWritingPointerDown = false;
+    this.clearQuizCanvas();
+  }
+
+  revealWritingHint(): void {
+    const q = this.currentQuestion();
+    if (q && !this.firstTryResults.has(q.id)) {
+      this.firstTryResults.set(q.id, false);
+    }
+    this.writingShowGhost.set(true);
+    this.writingErrorMsg.set('Đã mở nét mờ gợi ý để bạn tập vẽ theo.');
+  }
+
+  resetWritingPad(): void {
+    this.writingCurrentStrokeIndex.set(0);
+    this.writingLockedPaths.set([]);
+    this.writingCompleted.set(false);
+    this.writingErrorMsg.set(null);
+    this.clearQuizCanvas();
+  }
+
+  // ===================== ĐIỀU HƯỚNG & NỘP BÀI THI =====================
   isViToEn(q: QuizQuestionDto | null | undefined): boolean {
     if (!q) return false;
-    if (q.questionType === 'context' || q.questionType === 'listening') return false;
+    if (q.questionType === 'context' || q.questionType === 'listening' || q.questionFormat === 'WRITING') return false;
     if (q.format === 'VI_TO_EN' || q.questionType === 'vi_to_en') return true;
     if (q.prompt && (
       q.prompt.includes('Chọn từ tiếng Anh') ||
@@ -1679,7 +2181,6 @@ export class QuizComponent implements OnInit {
     )) {
       return true;
     }
-    // Nếu các đáp án A, B, C, D chứa từ tiếng Anh chính (q.word) -> chắc chắn là câu hỏi chọn từ tiếng Anh
     const targetWord = q.word ? q.word.trim().toLowerCase() : '';
     if (targetWord && q.options && q.options.some(opt => opt.trim().toLowerCase() === targetWord)) {
       return true;
@@ -1727,7 +2228,7 @@ export class QuizComponent implements OnInit {
     const isCorrect = selected === correctIdx;
     const correctText = q.options[correctIdx] || '';
 
-    // Thuật toán 3: GHI NHẬN KẾT QUẢ CHO LẦN ĐẦU TIÊN GẶP CÂU NÀY
+    // GHI NHẬN KẾT QUẢ CHO LẦN ĐẦU TIÊN GẶP CÂU NÀY
     if (!this.firstTryResults.has(q.id)) {
       this.firstTryResults.set(q.id, isCorrect);
     }
@@ -1739,7 +2240,6 @@ export class QuizComponent implements OnInit {
         correctText: correctText,
         explanation: q.exampleEn ? `Ví dụ: "${q.exampleEn}"` : (q.exampleVi ? `Dịch: "${q.exampleVi}"` : undefined)
       });
-      // Phát âm từ nếu có
       if (q.word) {
         this.state.speak(q.word);
       }
@@ -1757,22 +2257,39 @@ export class QuizComponent implements OnInit {
     const q = this.currentQuestion();
     if (!q) return;
 
-    const isCorrect = this.feedbackState() === 'correct';
     const currentQueue = [...this.queue()];
 
-    if (isCorrect) {
-      // Đã trả lời đúng: thêm vào tập đã thuộc (masteredIds), loại khỏi hàng đợi
-      this.masteredIds.update(set => {
-        const next = new Set(set);
-        next.add(q.id);
-        return next;
-      });
-      currentQueue.shift(); // Bỏ câu đầu hàng đợi
+    if (q.questionFormat === 'WRITING') {
+      const isCleanPass = this.firstTryResults.get(q.id) === true;
+      if (isCleanPass || q.isRetry) {
+        // Đã hoàn thành câu viết: thêm vào tập đã thuộc (masteredIds), loại khỏi hàng đợi
+        this.masteredIds.update(set => {
+          const next = new Set(set);
+          next.add(q.id);
+          return next;
+        });
+        currentQueue.shift();
+      } else {
+        // Viết có trợ giúp nét mờ/sai >= 2 lần: đẩy xuống cuối hàng đợi để viết lại
+        const retryItem = currentQueue.shift();
+        if (retryItem) {
+          currentQueue.push({ ...retryItem, isRetry: true });
+        }
+      }
     } else {
-      // Thuật toán 3: Error Recycling Loop - Trả lời sai: bỏ khỏi đầu hàng đợi và ĐẨY XUỐNG CUỐI HÀNG ĐỢI
-      const wrongItem = currentQueue.shift();
-      if (wrongItem) {
-        currentQueue.push({ ...wrongItem });
+      const isCorrect = this.feedbackState() === 'correct';
+      if (isCorrect) {
+        this.masteredIds.update(set => {
+          const next = new Set(set);
+          next.add(q.id);
+          return next;
+        });
+        currentQueue.shift();
+      } else {
+        const wrongItem = currentQueue.shift();
+        if (wrongItem) {
+          currentQueue.push({ ...wrongItem, isRetry: true });
+        }
       }
     }
 
@@ -1781,8 +2298,10 @@ export class QuizComponent implements OnInit {
     this.feedbackState.set('none');
     this.feedbackDetail.set(null);
 
-    // NẾU HÀNG ĐỢI ĐÃ TRỐNG (ĐÃ GIẢI QUYẾT HẾT CÁC CÂU) -> NỘP BÀI THI
-    if (currentQueue.length === 0) {
+    // Chuẩn bị trạng thái cho câu tiếp theo
+    if (currentQueue.length > 0) {
+      this.initWritingStateForQuestion(currentQueue[0]);
+    } else {
       this.submitFinalQuiz();
     }
   }
@@ -1791,17 +2310,48 @@ export class QuizComponent implements OnInit {
     this.isSubmitting.set(true);
 
     if (this.state.activeLang() === 'ja') {
-      const drops = this.dewDropsRemaining();
-      const stars = (drops === 5 ? 3 : drops >= 3 ? 2 : 1) as 1 | 2 | 3;
+      const correctCount = [...this.firstTryResults.values()].filter(Boolean).length;
+      const total = this.totalInitial() || SESSION_SIZE;
+      const percent = Math.round((correctCount / total) * 100);
+
+      // Tính thưởng 15 câu: 15–30–45 XP, 30–50–75 Xu, 8%/5% Phân bón tăng tốc, 1% Hạt giống
+      const rewardRes = calculate15QReward(
+        correctCount,
+        total,
+        this.bestStarsClaimed(),
+        this.state.getUnlockedSeedIds(),
+        this.state.userRewardState(),
+        new Date().toISOString().slice(0, 10)
+      );
+
+      this.state.userRewardState.set(rewardRes.updatedRewardState);
+
+      // Thưởng phân bón tăng tốc và hạt giống nếu trúng
+      if (rewardRes.speedFertilizerGained > 0) {
+        this.state.inventory.update(inv => ({
+          ...inv,
+          care: {
+            ...inv.care,
+            speedFertilizer: (inv.care.speedFertilizer || 0) + rewardRes.speedFertilizerGained
+          }
+        }));
+      }
+      if (rewardRes.seedGainedId) {
+        this.state.inventory.update(inv => ({
+          ...inv,
+          seeds: {
+            ...inv.seeds,
+            [rewardRes.seedGainedId!]: (inv.seeds[rewardRes.seedGainedId!] || 0) + 1
+          }
+        }));
+      }
+
+      const stars = rewardRes.newStars as 1 | 2 | 3;
       const jaRes = this.jaService.completeTopicQuiz(this.jaTopicCode(), stars);
 
       this.firstTryResults.forEach((val, vocabId) => {
         this.jaService.recordQuizAttempt(vocabId, val);
       });
-
-      const correctCount = [...this.firstTryResults.values()].filter(Boolean).length;
-      const total = this.totalInitial();
-      const percent = Math.round((correctCount / total) * 100);
 
       const submitResult: QuizSubmitResultDto = {
         lessonId: 1000,
@@ -1809,16 +2359,21 @@ export class QuizComponent implements OnInit {
         stars,
         correctAnswers: correctCount,
         isPassed: stars >= 1,
-        rewardGranted: jaRes.coinsAwarded > 0 || jaRes.xpAwarded > 0,
+        rewardGranted: jaRes.coinsAwarded > 0 || jaRes.xpAwarded > 0 || rewardRes.speedFertilizerGained > 0 || !!rewardRes.seedGainedId,
         rewardCoins: jaRes.coinsAwarded,
         rewardXp: jaRes.xpAwarded,
+        rewardFertilizer: rewardRes.speedFertilizerGained,
+        bonusSeedName: rewardRes.seedGainedId || undefined,
         isNewRecord: jaRes.isNewRecord,
         firstTryCorrectCount: correctCount,
         totalQuestions: total,
         message: stars === 3
-          ? 'Xuất sắc! Bạn đạt hạng 3 Sao bài thi Tiếng Nhật N5!'
-          : (stars === 2 ? 'Khá tốt! Đạt hạng 2 Sao bài thi N5!' : 'Hoàn thành bài kiểm tra N5!'),
-        bestStarsClaimed: this.jaService.topicProgress()[this.jaTopicCode()]?.bestStarsClaimed || stars
+          ? 'Xuất sắc! Bạn đạt hạng 3 Sao bài thi Tiếng Nhật (≥93%)!'
+          : (stars === 2 ? 'Khá tốt! Đạt hạng 2 Sao bài thi Tiếng Nhật (≥80%)!' : 'Hoàn thành bài kiểm tra Tiếng Nhật!'),
+        bestStarsClaimed: Math.max(this.bestStarsClaimed(), stars),
+        pitySeedMisses: rewardRes.updatedRewardState.pitySeedMisses,
+        pityFertilizerMisses: rewardRes.updatedRewardState.pityFertilizerMisses,
+        dailyBonusRollsUsed: rewardRes.updatedRewardState.dailyBonusRollsUsed
       };
 
       this.result.set(submitResult);
@@ -1829,12 +2384,10 @@ export class QuizComponent implements OnInit {
 
     const firstTryMap: Record<number, boolean> = {};
     this.firstTryResults.forEach((val, key) => {
-      // Chuẩn hóa ID từ vựng
       const vocabId = key > 10000 ? (key % 100) : key;
       firstTryMap[vocabId] = val;
     });
 
-    // Thuật toán 4: Chấm điểm an toàn & Tính thưởng chênh lệch Delta Reward trong LocalStorage
     const localResult = this.state.recordQuizCompletion(this.lessonId(), firstTryMap);
 
     const payload = {
@@ -1844,7 +2397,6 @@ export class QuizComponent implements OnInit {
       totalTries: this.totalTriesCount()
     };
 
-    // Nếu có Backend API, đồng thời gửi lên server để đồng bộ
     this.farmApi.submitQuizSession(payload).subscribe({
       next: (res) => {
         const mergedRes: QuizSubmitResultDto = {
@@ -1858,7 +2410,6 @@ export class QuizComponent implements OnInit {
         this.state.refreshProfile();
       },
       error: () => {
-        // Hoạt động offline hoàn hảo trên GitHub Pages không cần backend
         this.result.set(localResult);
         this.isSubmitting.set(false);
         this.isFinished.set(true);

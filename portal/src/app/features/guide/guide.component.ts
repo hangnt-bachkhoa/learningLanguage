@@ -395,18 +395,18 @@ interface GuideSection {
               <div class="rate-card">
                 <div class="rate-icon"><app-pixel-icon name="icon_plant_pot" [size]="26"></app-pixel-icon></div>
                 <div class="rate-info">
-                  <h4 class="rate-title">Phân Bón Vi Sinh</h4>
-                  <div class="rate-percent">Tỉ lệ rơi: <strong>5.0%</strong> / bài thi</div>
-                  <div class="rate-pity">Bảo hiểm nổ chắc chắn: <strong>Tối đa 20 lượt</strong></div>
+                  <h4 class="rate-title">Phân Bón Tăng Tốc</h4>
+                  <div class="rate-percent">Tỉ lệ rơi: <strong>8% (3★) / 5% (2★)</strong> / bài thi</div>
+                  <div class="rate-pity">Bảo hiểm nổ chắc chắn: <strong>Tối đa 15 lượt</strong></div>
                 </div>
               </div>
 
               <div class="rate-card">
                 <div class="rate-icon"><app-pixel-icon name="icon_carrot" [size]="26"></app-pixel-icon></div>
                 <div class="rate-info">
-                  <h4 class="rate-title">Hạt Giống Hiếm</h4>
-                  <div class="rate-percent">Tỉ lệ rơi: <strong>1.0%</strong> / bài thi</div>
-                  <div class="rate-pity">Bảo hiểm nổ chắc chắn: <strong>Tối đa 26 lượt</strong></div>
+                  <h4 class="rate-title">Hạt Giống Mở Khóa</h4>
+                  <div class="rate-percent">Tỉ lệ rơi: <strong>1.0%</strong> / loại hạt</div>
+                  <div class="rate-pity">Bảo hiểm nổ chắc chắn: <strong>Tối đa 18 lượt</strong></div>
                 </div>
               </div>
             </div>

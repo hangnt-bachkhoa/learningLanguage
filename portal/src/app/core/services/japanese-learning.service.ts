@@ -3,6 +3,7 @@ import N5_SEED from '../../../assets/data/jlpt_n5_vocab_seed.json';
 import { UserVocabReview } from '../models/game.models';
 import { GameStateService } from './game-state.service';
 import { LanguageContextService } from './language-context.service';
+import { StrokeOrderService } from './stroke-order.service';
 import { KANA_CATALOG, KanaItem } from '../constants/kana-catalog.constant';
 
 export type JaWordType = 'noun' | 'verb' | 'adj_i' | 'adj_na' | 'adv_expr';
@@ -53,12 +54,16 @@ export interface JaQuizQuestion {
   readingSub?: string;
   meaningVi?: string;
   wordType?: JaWordType;
+  questionFormat?: 'MCQ' | 'WRITING';
+  targetChar?: string;
+  reading?: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class JapaneseLearningService {
   private readonly gameState = inject(GameStateService);
   private readonly langContext = inject(LanguageContextService);
+  private readonly strokeService = inject(StrokeOrderService);
 
   private readonly WORD_STAT_KEY = 'language_farm_vocab_progress_ja_v1';
   private readonly TOPIC_STAR_KEY = 'language_farm_topic_stars_ja_v1';
@@ -304,19 +309,20 @@ export class JapaneseLearningService {
     const oldStars = curProgress.bestStarsClaimed || 0;
     const isNewRecord = stars > oldStars;
 
-    // Tính thưởng theo delta sao (1: 20 Xu / 10 XP; 2: 35 Xu / 20 XP; 3: 50 Xu / 30 XP)
+    // Tính thưởng theo delta sao 15-Question Rebalance (1: 30 Xu / 15 XP; 2: 50 Xu / 30 XP; 3: 75 Xu / 45 XP)
     let coinsAwarded = 0;
     let xpAwarded = 0;
 
-    if (stars === 3) {
-      coinsAwarded = oldStars === 2 ? 15 : oldStars === 1 ? 30 : 50;
-      xpAwarded = oldStars === 2 ? 10 : oldStars === 1 ? 20 : 30;
-    } else if (stars === 2) {
-      coinsAwarded = oldStars === 1 ? 15 : 35;
-      xpAwarded = oldStars === 1 ? 10 : 20;
-    } else {
-      coinsAwarded = oldStars === 0 ? 20 : 0;
-      xpAwarded = oldStars === 0 ? 10 : 0;
+    const tierMap: Record<number, { xp: number; coins: number }> = {
+      0: { xp: 0, coins: 0 },
+      1: { xp: 15, coins: 30 },
+      2: { xp: 30, coins: 50 },
+      3: { xp: 45, coins: 75 }
+    };
+
+    if (stars > oldStars) {
+      xpAwarded = tierMap[stars].xp - (tierMap[oldStars]?.xp || 0);
+      coinsAwarded = tierMap[stars].coins - (tierMap[oldStars]?.coins || 0);
     }
 
     if (coinsAwarded > 0) this.gameState.addCoins(coinsAwarded);
@@ -387,24 +393,125 @@ export class JapaneseLearningService {
     return nowMastered;
   }
 
-  // Sinh đề Quiz 10 câu tự động cho chủ đề N5 (Smart Pool Sampling)
-  generateN5QuizSession(topicCode: string, sessionSize = 10): JaQuizQuestion[] {
+  /**
+   * Rút trích danh sách ký tự đơn (Kanji hoặc Kana) khả dụng trong bộ dữ liệu n5_strokes.json
+   */
+  extractWritableCharsFromTopic(topic: JaTopicGroup): { char: string; word: JaVocabItem; reading: string; meaningVi: string }[] {
+    const list: { char: string; word: JaVocabItem; reading: string; meaningVi: string }[] = [];
+    const seenChars = new Set<string>();
+
+    for (const word of topic.words) {
+      // 1. Kiểm tra từng ký tự trong scriptPrimary (Kanji hoặc Kana)
+      for (const ch of Array.from(word.scriptPrimary)) {
+        if (!seenChars.has(ch) && this.strokeService.hasChar(ch)) {
+          seenChars.add(ch);
+          list.push({
+            char: ch,
+            word,
+            reading: word.readingSub || word.romaji,
+            meaningVi: word.meaningVi
+          });
+        }
+      }
+      // 2. Kiểm tra Kana trong readingSub
+      for (const ch of Array.from(word.readingSub || '')) {
+        if (!seenChars.has(ch) && this.strokeService.hasChar(ch)) {
+          seenChars.add(ch);
+          list.push({
+            char: ch,
+            word,
+            reading: ch,
+            meaningVi: `${word.meaningVi} (trong từ "${word.scriptPrimary}")`
+          });
+        }
+      }
+    }
+
+    // Nếu chủ đề có ít hơn 5 ký tự hợp lệ, bổ sung thêm Kana từ catalog để luôn đảm bảo luật 5-10 câu viết
+    if (list.length < 5) {
+      for (const [kIdx, k] of this.kanaCatalog().entries()) {
+        const ch = k.hiragana;
+        if (!seenChars.has(ch) && this.strokeService.hasChar(ch)) {
+          seenChars.add(ch);
+          list.push({
+            char: ch,
+            word: {
+              id: 9000 + kIdx,
+              topicId: topic.code,
+              lang: 'ja',
+              scriptPrimary: ch,
+              readingSub: k.romaji,
+              romaji: k.romaji,
+              meaningVi: `Chữ Kana âm "${k.romaji}"`,
+              wordType: 'noun'
+            },
+            reading: k.romaji,
+            meaningVi: `Chữ Kana âm "${k.romaji}"`
+          });
+          if (list.length >= 10) break;
+        }
+      }
+    }
+
+    return list;
+  }
+
+  // Sinh đề Quiz 15 câu tự động cho chủ đề N5: 5-10 câu Luyện viết + MCQ kết hợp (Tổng 15 câu)
+  generateN5QuizSession(topicCode: string, sessionSize = 15): JaQuizQuestion[] {
     const topic = this.topics().find(t => t.code === topicCode) ?? this.topics()[0];
     const stats = this.wordStats();
 
-    // 1. Smart Pool Sampling ưu tiên từ hay sai + từ chưa học
-    const sampled = [...topic.words]
-      .sort((a, b) => {
-        const sa = stats[a.id];
-        const sb = stats[b.id];
-        const wa = (sa?.wrongCount ?? 0) * 50 + (!sa?.learned ? 25 : 0) + Math.random() * 15;
-        const wb = (sb?.wrongCount ?? 0) * 50 + (!sb?.learned ? 25 : 0) + Math.random() * 15;
-        return wb - wa;
-      })
-      .slice(0, Math.min(sessionSize, topic.words.length));
+    // 1. Trích xuất danh sách ký tự tập viết hợp lệ (5..10 câu)
+    const eligibleWriteChars = this.extractWritableCharsFromTopic(topic);
+    
+    // Ưu tiên ký tự chưa thuộc hoặc hay viết sai
+    eligibleWriteChars.sort((a, b) => {
+      const aMastered = this.strokeService.isMastered(a.char) ? 1 : 0;
+      const bMastered = this.strokeService.isMastered(b.char) ? 1 : 0;
+      return aMastered - bMastered;
+    });
 
-    // 2. Sinh câu hỏi kết hợp: Hỏi cách đọc Hiragana và Hỏi nghĩa tiếng Việt
-    return sampled.map((target, idx) => {
+    const unmasteredCount = eligibleWriteChars.filter(c => !this.strokeService.isMastered(c.char)).length;
+    const writingTarget = unmasteredCount >= 8 ? Math.min(10, eligibleWriteChars.length) : 6;
+    const writingCount = eligibleWriteChars.length === 0
+      ? 0
+      : Math.min(10, Math.max(5, Math.min(writingTarget, eligibleWriteChars.length)));
+    const mcqCount = Math.max(1, sessionSize - writingCount);
+
+    // 2. Tạo các câu hỏi Luyện viết (WRITING_PROMPT)
+    const pickedWriteChars = eligibleWriteChars.slice(0, writingCount);
+    const writingQuestions: JaQuizQuestion[] = pickedWriteChars.map((item, idx) => ({
+      vocabId: 50000 + item.word.id * 10 + idx,
+      prompt: `Viết lại chữ có nghĩa "${item.meaningVi}" (Âm đọc: ${item.reading})`,
+      audioText: item.char,
+      options: [],
+      correctIndex: 0,
+      explanationVi: `Chữ [${item.char}] (đọc là "${item.reading}") nghĩa là: ${item.meaningVi}.`,
+      scriptPrimary: item.char,
+      readingSub: item.reading,
+      meaningVi: item.meaningVi,
+      wordType: item.word.wordType,
+      questionFormat: 'WRITING',
+      targetChar: item.char,
+      reading: item.reading
+    }));
+
+    // 3. Smart Pool Sampling cho phần trắc nghiệm MCQ
+    const sampledWords: JaVocabItem[] = [];
+    const pool = [...topic.words].sort((a, b) => {
+      const sa = stats[a.id];
+      const sb = stats[b.id];
+      const wa = (sa?.wrongCount ?? 0) * 50 + (!sa?.learned ? 25 : 0) + Math.random() * 15;
+      const wb = (sb?.wrongCount ?? 0) * 50 + (!sb?.learned ? 25 : 0) + Math.random() * 15;
+      return wb - wa;
+    });
+
+    for (let i = 0; i < mcqCount; i++) {
+      sampledWords.push(pool[i % pool.length]);
+    }
+
+    // 4. Sinh các câu hỏi trắc nghiệm MCQ (Reading & Meaning)
+    const mcqQuestions: JaQuizQuestion[] = sampledWords.map((target, idx) => {
       const hasKanji = target.readingSub.length > 0;
       const askReading = hasKanji && idx % 2 === 1;
 
@@ -421,7 +528,8 @@ export class JapaneseLearningService {
           scriptPrimary: target.scriptPrimary,
           readingSub: target.readingSub,
           meaningVi: target.meaningVi,
-          wordType: target.wordType
+          wordType: target.wordType,
+          questionFormat: 'MCQ'
         };
       } else {
         const distractors = this.pickDistractors(target, topic.words, 'meaningVi', 3);
@@ -437,10 +545,22 @@ export class JapaneseLearningService {
           scriptPrimary: target.scriptPrimary,
           readingSub: target.readingSub,
           meaningVi: target.meaningVi,
-          wordType: target.wordType
+          wordType: target.wordType,
+          questionFormat: 'MCQ'
         };
       }
     });
+
+    // 5. Hòa trộn đan xen MCQ và Writing câu hỏi (Interleaved Mix) để tạo trải nghiệm thú vị
+    const mixedSession: JaQuizQuestion[] = [];
+    let wPtr = 0;
+    let mPtr = 0;
+    while (wPtr < writingQuestions.length || mPtr < mcqQuestions.length) {
+      if (mPtr < mcqQuestions.length) mixedSession.push(mcqQuestions[mPtr++]);
+      if (wPtr < writingQuestions.length) mixedSession.push(writingQuestions[wPtr++]);
+    }
+
+    return mixedSession.slice(0, sessionSize);
   }
 
   // Sinh đề Quiz luyện tập Bảng chữ cái Kana (10 câu)
