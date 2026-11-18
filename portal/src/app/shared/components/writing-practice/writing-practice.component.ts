@@ -32,20 +32,22 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         <div class="modal-header">
           <div class="header-left">
             <span class="header-badge">
-              <app-pixel-icon name="icon_scroll" [size]="14"></app-pixel-icon>
-              <span>TẬP VIẾT TỰ ĐỘNG · KANJIVG</span>
+              <app-pixel-icon name="icon_scroll" [size]="13"></app-pixel-icon>
+              <span>米字格 · KANJIVG</span>
             </span>
-            <h3 class="header-title font-serif">Ô Chữ Điền (米字格)</h3>
+            <h3 class="header-title font-serif">
+              Tập viết: <span class="highlight-char">{{ selectedChar() }}</span>
+            </h3>
           </div>
 
           <div class="header-right">
             <!-- MODE TOGGLES -->
             <button
               type="button"
-              class="toggle-pill"
+              class="toggle-pill toggle-handedness"
               [class.active]="isLeftHanded()"
               (click)="toggleHandedness()"
-              title="Đổi bên tay viết (tránh bị tay che gợi ý)">
+              title="Đổi bên tay viết (tránh bị tay che gợi ý trên Tablet/Máy tính)">
               <app-pixel-icon name="icon_tools" [size]="13"></app-pixel-icon>
               <span>{{ isLeftHanded() ? 'Tay trái' : 'Tay phải' }}</span>
             </button>
@@ -67,7 +69,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         <!-- MULTI-CHARACTER WORD STRIP: [朝] [ご] [飯] -->
         @if (availableChars().length > 1) {
           <div class="char-selector-strip">
-            <span class="strip-label font-serif">Ký tự trong từ:</span>
+            <span class="strip-label font-serif">Ký tự:</span>
             <div class="char-pills-row">
               @for (ch of availableChars(); track ch) {
                 @let mastered = strokeService.isMastered(ch);
@@ -90,6 +92,26 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
         <div class="writing-body-grid">
           <!-- CỘT 1: BẢNG VIẾT Ô CHỮ ĐIỀN (米字格) -->
           <div class="pad-column">
+            <!-- MOBILE METADATA STRIP: Hiển thị trên màn hình nhỏ -->
+            <div class="mobile-pad-meta">
+              <div class="meta-left">
+                <span class="meta-char font-serif">{{ selectedChar() }}</span>
+                <span class="meta-strokes">
+                  Nét <strong>{{ currentStrokeIndex() }}</strong> / {{ currentStrokes().length }}
+                </span>
+              </div>
+              <div class="meta-right">
+                @if (strokeService.isMastered(selectedChar())) {
+                  <span class="meta-mastered-chip">
+                    <app-pixel-icon name="icon_star" [size]="11"></app-pixel-icon>
+                    <span>✓ Đã thuộc</span>
+                  </span>
+                } @else {
+                  <span class="meta-count-chip">Đúng: {{ strokeService.getSuccessCount(selectedChar()) }}/3</span>
+                }
+              </div>
+            </div>
+
             <div
               class="pad-stage"
               [class.shake]="shakeStage()"
@@ -187,7 +209,7 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
                 class="btn-pad-action btn-audio"
                 (click)="playAudio()"
                 title="Nghe phát âm chuẩn">
-                <app-pixel-icon name="icon_speaker" [size]="15"></app-pixel-icon>
+                <app-pixel-icon name="icon_speaker" [size]="14"></app-pixel-icon>
                 <span>Nghe</span>
               </button>
 
@@ -197,8 +219,8 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
                 [disabled]="isDemoPlaying()"
                 (click)="playDemoSequence()"
                 title="Xem thứ tự các nét theo hoạt ảnh tuần tự">
-                <app-pixel-icon name="icon_search" [size]="15"></app-pixel-icon>
-                <span>{{ isDemoPlaying() ? 'Đang chạy...' : 'Xem nét mẫu' }}</span>
+                <app-pixel-icon name="icon_search" [size]="14"></app-pixel-icon>
+                <span>{{ isDemoPlaying() ? 'Đang chạy' : 'Xem mẫu' }}</span>
               </button>
 
               <button
@@ -206,13 +228,37 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
                 class="btn-pad-action btn-reset"
                 (click)="resetPad()"
                 title="Xóa bảng và viết lại từ nét đầu">
-                <app-pixel-icon name="icon_retry" [size]="15"></app-pixel-icon>
+                <app-pixel-icon name="icon_retry" [size]="14"></app-pixel-icon>
                 <span>Viết lại</span>
               </button>
             </div>
+
+            <!-- MOBILE NEXT CHAR BUTTON -->
+            @if (hasNextChar()) {
+              <div class="mobile-next-char-wrap">
+                <button type="button" class="btn-next-char" (click)="goToNextChar()">
+                  <span>Ký tự tiếp theo: [{{ nextChar() }}]</span>
+                  <span class="arrow-icon">→</span>
+                </button>
+              </div>
+            }
+
+            <!-- MOBILE TIPS ACCORDION -->
+            <details class="mobile-tips-accordion">
+              <summary class="tips-summary">
+                <span class="summary-text font-serif">💡 Mẹo & Quy tắc bút thuận</span>
+                <span class="summary-arrow">▾</span>
+              </summary>
+              <ul class="tips-list">
+                <li>Bắt đầu đặt bút từ <strong>chấm đỏ</strong> nhấp nháy.</li>
+                <li>Viết từ <em>trên xuống dưới</em>, từ <em>trái qua phải</em>.</li>
+                <li>Nét ngang viết trước, nét sổ dọc viết sau.</li>
+                <li>Nét xiên trái (phẩy) trước nét xiên phải (mác).</li>
+              </ul>
+            </details>
           </div>
 
-          <!-- CỘT 2: THÔNG TIN KÝ TỰ & TIẾN ĐỘ -->
+          <!-- CỘT 2: THÔNG TIN KÝ TỰ & TIẾN ĐỘ (Desktop & Tablet) -->
           <div class="info-column">
             <div class="char-hero-display">
               <div class="char-large font-serif">{{ selectedChar() }}</div>
@@ -331,6 +377,13 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       font-weight: 700;
       color: var(--navy);
       margin: 0;
+    }
+    .highlight-char {
+      color: var(--navy);
+      background: #EAE2D2;
+      padding: 1px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
     }
     .header-right {
       display: flex;
@@ -687,30 +740,249 @@ import { PixelIconComponent } from '../pixel-icon/pixel-icon.component';
       }
     }
 
-    /* ================= 9. RESPONSIVE FOR MOBILE (< 768px) ================= */
+    /* ================= 9. MOBILE EXCLUSIVE ELEMENTS ================= */
+    .mobile-pad-meta {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 12px;
+      background: #FFFDF9;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+    }
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .meta-char {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .meta-strokes {
+      font-size: 12.5px;
+      color: var(--navy);
+      font-weight: 600;
+      strong {
+        color: var(--rose);
+        font-weight: 700;
+      }
+    }
+    .meta-right {
+      display: flex;
+      align-items: center;
+    }
+    .meta-mastered-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #3D662A;
+      background: #F4F7EE;
+      border: 1px solid #B5C97B;
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+    .meta-count-chip {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      background: #EFE8DC;
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    .mobile-next-char-wrap {
+      display: none;
+      width: 100%;
+    }
+
+    .mobile-tips-accordion {
+      display: none;
+      background: rgba(248, 244, 235, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    .tips-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--navy);
+      user-select: none;
+      list-style: none;
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+    .summary-text {
+      font-size: 12px;
+    }
+    .summary-arrow {
+      font-size: 12px;
+      color: var(--ink-muted);
+      transition: transform 0.2s ease;
+    }
+    .mobile-tips-accordion[open] .summary-arrow {
+      transform: rotate(180deg);
+    }
+    .mobile-tips-accordion .tips-list {
+      margin: 6px 0 2px;
+      padding-left: 18px;
+      font-size: 11px;
+      color: #4A5568;
+      line-height: 1.5;
+    }
+
+    /* ================= 10. RESPONSIVE FOR MOBILE (< 768px) ================= */
     @media (max-width: 768px) {
       .writing-modal-backdrop {
-        padding: 8px;
+        padding: 8px 10px;
+        align-items: center;
       }
       .writing-modal-card {
-        padding: 14px 14px;
-        max-height: 96vh;
-        gap: 10px;
+        padding: 12px 14px;
+        max-width: 380px;
+        max-height: 94vh;
+        gap: 8px;
+        border-radius: 16px;
+        scrollbar-width: thin;
+        &::-webkit-scrollbar {
+          width: 3px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #D9C8B5;
+          border-radius: 3px;
+        }
       }
+      .modal-header {
+        padding-bottom: 8px;
+        gap: 8px;
+      }
+      .header-left {
+        gap: 2px;
+        min-width: 0;
+      }
+      .header-badge {
+        font-size: 10px;
+        gap: 3px;
+      }
+      .header-title {
+        font-size: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .highlight-char {
+        padding: 0 5px;
+      }
+      .header-right {
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .toggle-handedness {
+        display: none !important;
+      }
+      .toggle-pill {
+        padding: 4px 8px;
+        font-size: 11px;
+        gap: 4px;
+      }
+      .btn-close-modal {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+        border-radius: 6px;
+      }
+
+      .char-selector-strip {
+        padding: 5px 8px;
+        gap: 6px;
+        border-radius: 8px;
+      }
+      .strip-label {
+        font-size: 11.5px;
+      }
+      .char-select-pill {
+        padding: 3px 8px;
+        gap: 4px;
+      }
+      .pill-char {
+        font-size: 13.5px;
+      }
+      .pill-stat {
+        font-size: 10px;
+      }
+
       .writing-body-grid {
+        display: flex;
         flex-direction: column !important;
+        gap: 8px;
       }
-      .info-column {
+      .pad-column {
+        gap: 8px;
         width: 100%;
       }
+
+      .mobile-pad-meta {
+        display: flex;
+      }
+      .info-column {
+        display: none !important;
+      }
+      .mobile-next-char-wrap {
+        display: block;
+      }
+      .mobile-tips-accordion {
+        display: block;
+      }
+
       .pad-stage {
-        max-width: 320px;
+        width: min(72vw, 260px);
+        max-width: 260px;
+        aspect-ratio: 1 / 1;
+        margin: 0 auto;
+        border-radius: 14px;
       }
-      .char-hero-display {
-        padding: 10px 14px;
+      .completion-stamp-badge {
+        bottom: 8px;
+        right: 8px;
+        padding: 4px 10px;
+        font-size: 11px;
       }
-      .char-large {
-        font-size: 40px;
+
+      .status-feedback-bar {
+        padding: 6px 10px;
+        font-size: 11.5px;
+        gap: 6px;
+        border-radius: 8px;
+        line-height: 1.3;
+      }
+
+      .pad-actions-row {
+        gap: 6px;
+      }
+      .btn-pad-action {
+        padding: 7px 4px;
+        font-size: 11.5px;
+        gap: 4px;
+        white-space: nowrap;
+        border-radius: 8px;
+        span {
+          white-space: nowrap;
+        }
+      }
+
+      .btn-next-char {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 8px;
       }
     }
   `]
