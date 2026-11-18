@@ -63,24 +63,20 @@ import { GameStateService } from './core/services/game-state.service';
       display: block;
       width: 100%;
     }
-    @media (max-width: 768px) {
-      .main-content {
-        margin-left: 0 !important;
-      }
-      .content-body {
-        flex: 1;
-        padding: 11px 4px calc(86px + env(safe-area-inset-bottom, 16px));
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-      }
-    }
     .content-body {
       flex: 1;
       padding: 24px 28px 48px;
       max-width: 1200px;
       width: 100%;
       margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0 !important;
+      }
+      .content-body {
+        padding: 12px 6px calc(100px + env(safe-area-inset-bottom, 20px));
+      }
     }
   `]
 })

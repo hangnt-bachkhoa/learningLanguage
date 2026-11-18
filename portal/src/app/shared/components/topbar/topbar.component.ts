@@ -24,8 +24,8 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
         </h1>
       </div>
       <div class="topbar-right">
-        <!-- BIỂU TƯỢNG CỜ NGÔN NGỮ HIỆN TẠI (ĐỒNG BỘ VỚI HỒ SƠ NGÔN NGỮ) -->
-        <div class="stat-pill lang-pill" [title]="'Hồ sơ đang học: ' + (state.activeLang() === 'en' ? 'Tiếng Anh (TOEIC)' : 'Tiếng Nhật (JLPT N5)')">
+        <!-- BIỂU TƯỢNG CỜ NGÔN NGỮ HIỆN TẠI (Ẩn trên mobile để header không bị chật) -->
+        <div class="stat-pill lang-pill hide-mobile" [title]="'Hồ sơ đang học: ' + (state.activeLang() === 'en' ? 'Tiếng Anh (TOEIC)' : 'Tiếng Nhật (JLPT N5)')">
           <span class="flag-icon">{{ state.activeLang() === 'en' ? '🇬🇧' : '🇯🇵' }}</span>
           <span class="hide-mobile">{{ state.activeLang() === 'en' ? 'EN' : 'JA' }}</span>
         </div>
@@ -168,7 +168,7 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
       display: flex;
       align-items: center;
       gap: 12px;
-      flex-shrink: 0;
+      min-width: 0;
     }
     .nav-toggle-btn {
       width: 38px;
@@ -516,29 +516,34 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
         min-height: 52px;
         padding-top: max(8px, env(safe-area-inset-top, 0px));
         padding-bottom: 8px;
-        padding-left: 12px;
-        padding-right: 12px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .topbar-left {
+        gap: 8px;
       }
       .page-title {
         font-size: 16px;
       }
-      .hide-mobile {
+      .hide-mobile, .lang-pill {
         display: none !important;
       }
       .topbar-right {
-        gap: 6px;
+        gap: 5px;
       }
       .stat-pill {
-        padding: 3.5px 8px;
-        font-size: 11.5px;
-      }
-      .cart-btn {
-        padding: 4px 8px;
-        font-size: 13px;
+        padding: 3px 6px;
+        font-size: 11px;
       }
       .bell-btn {
         width: 32px;
         height: 32px;
+      }
+      .cart-btn {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        justify-content: center;
       }
     }
 
@@ -548,14 +553,20 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
         padding-right: 8px;
       }
       .topbar-left {
-        gap: 8px;
+        gap: 6px;
       }
       .nav-toggle-btn {
-        width: 34px;
-        height: 34px;
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+      }
+      .topbar-logo-img {
+        width: 24px;
+        height: 24px;
       }
       .page-title {
-        font-size: 15px;
+        font-size: 14.5px;
+        gap: 6px;
       }
       .page-title .title-text {
         white-space: nowrap;
@@ -564,18 +575,33 @@ import { NotificationCenterService, NotificationAlert } from '../../../core/serv
         gap: 4px;
       }
       .stat-pill {
-        padding: 3px 6px;
-        font-size: 11px;
+        padding: 2.5px 5px;
+        font-size: 10.5px;
+        gap: 3px;
+      }
+      .bell-btn {
+        width: 30px;
+        height: 30px;
       }
       .cart-btn {
-        padding: 3px 7px;
-        font-size: 12px;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        justify-content: center;
+      }
+      .bell-badge, .cart-badge {
+        top: -4px;
+        right: -4px;
+        min-width: 15px;
+        height: 15px;
+        font-size: 9px;
+        padding: 0 2px;
       }
       .bell-dropdown {
         position: fixed;
-        top: calc(54px + env(safe-area-inset-top, 0px));
-        left: 10px;
-        right: 10px;
+        top: calc(52px + env(safe-area-inset-top, 0px));
+        left: 8px;
+        right: 8px;
         width: auto;
         max-width: 420px;
         margin: 0 auto;
