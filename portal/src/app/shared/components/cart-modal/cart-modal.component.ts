@@ -35,58 +35,60 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
               <div class="empty-icon-wrap">
                 <app-pixel-icon name="icon_cart" [size]="32"></app-pixel-icon>
               </div>
-              <h4 class="serif-title empty-title">Giỏ hàng của bạn đang trống!</h4>
+              <h4 class="serif-title empty-title">Giỏ hàng đang trống!</h4>
               <p class="empty-desc">Khám phá Cửa Hàng để chọn thêm Hạt giống, Nước tưới và Phân bón cho nông trại.</p>
             </div>
           } @else {
             <div class="cart-items">
               @for (item of state.cart(); track item.item.id) {
-                <div class="cart-row">
-                  <!-- Thumbnail -->
-                  <div class="item-thumb" [innerHTML]="getSprite(item.item.sprite) | safeHtml"></div>
+                <div class="cart-card">
+                  <!-- HÀNG 1: THUMBNAIL + TÊN ĐẦY ĐỦ + NÚT XÓA -->
+                  <div class="card-top">
+                    <div class="item-thumb" [innerHTML]="getSprite(item.item.sprite) | safeHtml"></div>
+                    <div class="item-details">
+                      <div class="item-name" [title]="item.item.name">{{ item.item.name }}</div>
+                      <div class="unit-price">
+                        <app-pixel-icon name="icon_coin" [size]="12"></app-pixel-icon>
+                        <span>{{ item.item.price }} Xu / cái</span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="remove-item-btn"
+                      (click)="state.removeFromCart(item.item.id)"
+                      title="Xóa vật phẩm này">
+                      <app-pixel-icon name="icon_cross" [size]="11"></app-pixel-icon>
+                    </button>
+                  </div>
 
-                  <!-- Name & Unit price -->
-                  <div class="item-info">
-                    <div class="item-name">{{ item.item.name }}</div>
-                    <div class="unit-price">
-                      <app-pixel-icon name="icon_coin" [size]="12"></app-pixel-icon>
-                      <span>{{ item.item.price }} Xu / cái</span>
+                  <!-- HÀNG 2: BỘ TĂNG GIẢM SỐ LƯỢNG + TỔNG TIỀN VẬT PHẨM -->
+                  <div class="card-bottom">
+                    <div class="qty-stepper">
+                      <button
+                        type="button"
+                        class="step-btn"
+                        (click)="state.updateCartQty(item.item.id, -1)"
+                        title="Giảm 1">
+                        −
+                      </button>
+                      <span class="qty-val">{{ item.qty }}</span>
+                      <button
+                        type="button"
+                        class="step-btn"
+                        (click)="state.updateCartQty(item.item.id, 1)"
+                        title="Tăng 1">
+                        +
+                      </button>
+                    </div>
+
+                    <div class="item-subtotal">
+                      <span class="subtotal-label">Thành tiền:</span>
+                      <strong class="subtotal-val">
+                        <app-pixel-icon name="icon_coin" [size]="13"></app-pixel-icon>
+                        <span>{{ item.item.price * item.qty }} Xu</span>
+                      </strong>
                     </div>
                   </div>
-
-                  <!-- Quantity Stepper Controls -->
-                  <div class="qty-stepper">
-                    <button
-                      type="button"
-                      class="step-btn"
-                      (click)="state.updateCartQty(item.item.id, -1)"
-                      title="Giảm 1">
-                      −
-                    </button>
-                    <span class="qty-val">{{ item.qty }}</span>
-                    <button
-                      type="button"
-                      class="step-btn"
-                      (click)="state.updateCartQty(item.item.id, 1)"
-                      title="Tăng 1">
-                      +
-                    </button>
-                  </div>
-
-                  <!-- Subtotal -->
-                  <div class="item-subtotal">
-                    <app-pixel-icon name="icon_coin" [size]="13"></app-pixel-icon>
-                    <span>{{ item.item.price * item.qty }} Xu</span>
-                  </div>
-
-                  <!-- Remove Item Button -->
-                  <button
-                    type="button"
-                    class="remove-item-btn"
-                    (click)="state.removeFromCart(item.item.id)"
-                    title="Xóa vật phẩm này">
-                    <app-pixel-icon name="icon_cross" [size]="12"></app-pixel-icon>
-                  </button>
                 </div>
               }
             </div>
@@ -111,7 +113,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
               @if (state.coins() < state.cartTotal()) {
                 <div class="insufficient-alert">
                   <app-pixel-icon name="icon_warning" [size]="14"></app-pixel-icon>
-                  <span>Ví không đủ! Bạn còn thiếu <strong>{{ state.cartTotal() - state.coins() }} Xu</strong>. Hãy giảm bớt số lượng hoặc hoàn thành Quiz để tích lũy thêm Xu.</span>
+                  <span>Ví không đủ! Còn thiếu <strong>{{ state.cartTotal() - state.coins() }} Xu</strong>. Hãy giảm bớt số lượng hoặc tích lũy thêm Xu từ bài học.</span>
                 </div>
               }
             </div>
@@ -122,7 +124,8 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
         <div class="modal-footer">
           @if (state.cart().length > 0) {
             <button type="button" class="clear-all-btn" (click)="state.clearCart()">
-              Làm trống giỏ
+              <app-pixel-icon name="icon_cross" [size]="10"></app-pixel-icon>
+              <span>Làm trống giỏ</span>
             </button>
           }
           <div class="footer-actions">
@@ -130,7 +133,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
             @if (state.cart().length > 0) {
               <button
                 type="button"
-                class="btn btn-primary"
+                class="btn btn-primary btn-checkout"
                 [disabled]="state.coins() < state.cartTotal()"
                 (click)="checkout()">
                 Thanh toán ngay
@@ -143,7 +146,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
   `,
   styles: [`
     .cart-modal-box {
-      max-width: 520px;
+      max-width: 480px;
       width: 100%;
       background: var(--bg-card);
       border: 1px solid var(--border-strong);
@@ -155,7 +158,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
     }
 
     .modal-header {
-      padding: 14px 18px;
+      padding: 13px 16px;
       border-bottom: 1px solid var(--border);
       background: #FAF7F0;
       display: flex;
@@ -166,16 +169,17 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
     .header-title-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .cart-title {
-      font-size: 17px;
+      font-size: 16.5px;
       margin: 0;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       color: var(--navy);
+      font-weight: 700;
     }
 
     .cart-count-pill {
@@ -185,6 +189,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       border-radius: 999px;
       background: #A65E65;
       color: #FFFDF9;
+      line-height: 1.2;
     }
 
     .close-btn {
@@ -206,7 +211,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
     }
 
     .modal-body {
-      padding: 16px 18px;
+      padding: 14px 16px;
       max-height: 380px;
       overflow-y: auto;
     }
@@ -214,12 +219,12 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
     /* Empty state */
     .empty-cart-state {
       text-align: center;
-      padding: 28px 12px;
+      padding: 24px 12px;
     }
     .empty-icon-wrap {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 12px;
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 10px;
       border-radius: 50%;
       background: #F1E9DB;
       border: 1px dashed var(--border-strong);
@@ -236,7 +241,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
     .empty-desc {
       font-size: 12.5px;
       color: var(--ink-muted);
-      max-width: 300px;
+      max-width: 280px;
       margin: 0 auto;
       line-height: 1.4;
     }
@@ -248,18 +253,26 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       gap: 10px;
     }
 
-    .cart-row {
+    .cart-card {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px 12px;
       background: #FAF8F2;
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      transition: background 0.15s;
+      transition: background 0.15s, border-color 0.15s;
     }
-    .cart-row:hover {
+    .cart-card:hover {
       background: #F5EFE3;
+      border-color: #C8BBA5;
+    }
+
+    /* Card Top: Thumb + Name + Delete */
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .item-thumb {
@@ -282,7 +295,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       object-fit: contain;
     }
 
-    .item-info {
+    .item-details {
       flex: 1;
       min-width: 0;
     }
@@ -290,9 +303,8 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       font-weight: 700;
       font-size: 13.5px;
       color: var(--navy);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.3;
+      word-break: break-word;
     }
     .unit-price {
       font-size: 11.5px;
@@ -301,6 +313,37 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       align-items: center;
       gap: 4px;
       margin-top: 2px;
+      white-space: nowrap;
+    }
+
+    .remove-item-btn {
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: #A65E65;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s;
+      padding: 0;
+    }
+    .remove-item-btn:hover {
+      background: #FBE5E5;
+      color: #9C2738;
+    }
+
+    /* Card Bottom: Stepper + Subtotal */
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(217, 200, 181, 0.7);
     }
 
     /* Stepper Controls */
@@ -314,8 +357,8 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       flex-shrink: 0;
     }
     .step-btn {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -332,9 +375,9 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       background: #EDE5D6;
     }
     .qty-val {
-      min-width: 24px;
+      min-width: 26px;
       text-align: center;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 700;
       color: var(--navy);
       padding: 0 4px;
@@ -342,53 +385,39 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
 
     /* Subtotal */
     .item-subtotal {
-      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .subtotal-label {
+      font-size: 11.5px;
+      color: var(--ink-muted);
+    }
+    .subtotal-val {
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      font-size: 12.5px;
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--navy);
-      min-width: 60px;
-      justify-content: flex-end;
-    }
-
-    /* Remove button */
-    .remove-item-btn {
-      width: 24px;
-      height: 24px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      background: transparent;
-      color: var(--ink-muted);
-      border-radius: 4px;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all 0.15s;
-    }
-    .remove-item-btn:hover {
-      background: #FBE5E5;
-      color: #9C2738;
     }
 
     /* Summary Card */
     .cart-summary-card {
-      margin-top: 14px;
-      padding: 12px 14px;
+      margin-top: 12px;
+      padding: 10px 12px;
       background: #F7F3EA;
       border: 1px dashed var(--border-strong);
       border-radius: var(--radius-sm);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
     .summary-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--navy);
     }
     .summary-label {
@@ -403,13 +432,13 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
     .total-line {
       padding-top: 6px;
       border-top: 1px solid rgba(217, 200, 181, 0.6);
-      font-size: 14.5px;
+      font-size: 14px;
     }
     .total-coins {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 16px;
+      font-size: 15.5px;
       color: #8C5E2D;
     }
 
@@ -417,15 +446,15 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
     .insufficient-alert {
       display: flex;
       align-items: flex-start;
-      gap: 8px;
-      padding: 8px 10px;
+      gap: 6px;
+      padding: 7px 9px;
       background: #FBE5E5;
       border: 1px solid #E8B4B8;
       border-radius: 6px;
-      font-size: 11.5px;
+      font-size: 11px;
       color: #9C2738;
       line-height: 1.35;
-      margin-top: 4px;
+      margin-top: 2px;
     }
     .insufficient-alert strong {
       font-weight: 700;
@@ -433,7 +462,7 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
 
     /* Modal Footer */
     .modal-footer {
-      padding: 12px 18px;
+      padding: 11px 16px;
       background: #FAF7F0;
       border-top: 1px solid var(--border);
       display: flex;
@@ -442,23 +471,35 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       gap: 10px;
     }
     .clear-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       background: transparent;
       border: none;
-      color: #9C2738;
+      color: #A65E65;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      text-decoration: underline;
-      padding: 4px;
+      white-space: nowrap;
+      padding: 6px 4px;
+      border-radius: 4px;
+      transition: all 0.15s;
     }
     .clear-all-btn:hover {
-      color: #6D1724;
+      background: #FBE5E5;
+      color: #9C2738;
     }
     .footer-actions {
       display: flex;
       align-items: center;
       gap: 8px;
       margin-left: auto;
+    }
+    .btn-checkout {
+      white-space: nowrap;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .btn[disabled] {
@@ -475,22 +516,21 @@ import { SPRITES } from '../../../core/constants/crop-catalog.constant';
       .modal-body {
         padding: 12px;
       }
-      .cart-row {
-        gap: 8px;
-        padding: 8px;
+      .cart-card {
+        padding: 8px 10px;
       }
       .item-name {
-        font-size: 12.5px;
+        font-size: 13px;
       }
       .unit-price {
-        font-size: 10.5px;
-      }
-      .item-subtotal {
-        font-size: 11.5px;
-        min-width: 48px;
+        font-size: 11px;
       }
       .qty-stepper {
-        scale: 0.95;
+        scale: 0.96;
+        transform-origin: left center;
+      }
+      .subtotal-val {
+        font-size: 13px;
       }
     }
   `]
